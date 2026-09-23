@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #01090F;
+    color: #F8FAFC;
+    overflow-x: hidden;
+  }
+}
+
+/* Apple-style ultra-subtle edge vignette mask for the canvas */
+.canvas-mask {
+  mask-image: radial-gradient(ellipse 98% 94% at 50% 50%, #000 80%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 98% 94% at 50% 50%, #000 80%, transparent 100%);
+}
+
+/* Ambient glow utility */
+.orange-drop-glow {
+  box-shadow: 0 4px 30px rgba(255, 94, 30, 0.45);
+}
+
+.cyan-drop-glow {
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.35);
+}
+
+/* Pulse line animation */
+@keyframes scrollWheel {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(6px);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-scroll-wheel {
+  animation: scrollWheel 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Infinite horizontal sliding animation for Section 3 cards */
+@keyframes infiniteSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-infinite-slide {
+  display: flex;
+  width: max-content;
+  animation: infiniteSlide 38s linear infinite;
+  will-change: transform;
+}
+
