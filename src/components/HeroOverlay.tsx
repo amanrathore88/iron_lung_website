@@ -38,21 +38,21 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
         {/* Left Column: Headline, CTAs, & Badges */}
         <div className="w-full md:col-span-6 lg:col-span-6 md:max-w-[310px] lg:max-w-none flex flex-col items-start gap-2.5 sm:gap-3.5 lg:gap-5 pointer-events-auto">
           {/* Top Category Badge */}
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full bg-white/85 border border-slate-200/80 backdrop-blur-md shadow-sm">
-            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-[#FF5E1E]/15 flex items-center justify-center text-[#FF5E1E]">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/85 border border-slate-200/80 backdrop-blur-md shadow-sm">
+            <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF5E1E]/15 flex items-center justify-center text-[#FF5E1E]">
               <svg viewBox="0 0 24 24" className="w-2 sm:w-2.5 h-2 sm:h-2.5 text-[#FF5E1E] fill-current">
                 <path d="M12 3v9" />
                 <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
                 <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
               </svg>
             </div>
-            <span className="text-[9px] sm:text-xs font-semibold tracking-[0.18em] sm:tracking-[0.22em] text-slate-600 uppercase font-space font-['Space_Grotesk',sans-serif]">
+            <span className="text-[9.5px] sm:text-xs font-semibold tracking-[0.18em] sm:tracking-[0.22em] text-slate-600 uppercase font-space font-['Space_Grotesk',sans-serif]">
               A Healthier Tomorrow
             </span>
           </div>
 
-          {/* Main Headline with BlurText Animation */}
-          <h1 className="text-3xl xs:text-[34px] sm:text-4xl md:text-[44px] lg:text-[5.2rem] font-black tracking-tight leading-[1.08] lg:leading-[1.02] text-slate-950">
+          {/* Main Headline with BlurText Animation: Bold, prominent, properly scaled on mobile */}
+          <h1 className="text-[34px] xs:text-[38px] sm:text-4xl md:text-[44px] lg:text-[5.2rem] font-black tracking-tight leading-[1.06] lg:leading-[1.02] text-slate-950">
             <BlurText
               text="Breathe"
               delay={150}
@@ -80,17 +80,17 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             />
           </h1>
 
-          {/* Subtitle Paragraph */}
-          <p className="text-[11.5px] xs:text-xs sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-xs md:max-w-[300px] lg:max-w-lg leading-relaxed font-normal">
+          {/* Subtitle Paragraph: Readable, well-proportioned typography */}
+          <p className="text-[13px] xs:text-[14px] sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-[330px] md:max-w-[300px] lg:max-w-lg leading-relaxed font-normal">
             The next generation respiratory training system that helps you breathe cleaner, perform better and live healthier.
           </p>
 
-          {/* Action CTAs: Responsive side-by-side on mobile & tablet, generous on desktop */}
-          <div className="flex flex-row items-center gap-2 sm:gap-2.5 lg:gap-4 w-full sm:w-auto mt-0.5 sm:mt-1">
+          {/* Action CTAs: Confident touch targets, beautifully proportioned */}
+          <div className="flex flex-row items-center gap-2 xs:gap-3 sm:gap-2.5 lg:gap-4 w-full sm:w-auto mt-0.5 sm:mt-1">
             {/* Primary Discover Button */}
             <button
               onClick={onDiscover}
-              className="flex-1 sm:flex-initial px-4 md:px-4 lg:px-7 py-2.5 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-[11px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
             >
               <span>Discover Iron Lung</span>
               <ArrowRight size={14} className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4" />
@@ -99,13 +99,23 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             {/* Secondary Watch Video Button */}
             <button
               onClick={onOpenVideo}
-              className="px-3.5 md:px-3.5 lg:px-6 py-2.5 md:py-3 lg:py-4 rounded-full bg-white/85 hover:bg-white text-slate-900 text-[11px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              className="px-3.5 xs:px-4 md:px-3.5 lg:px-6 py-3 md:py-3 lg:py-4 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs xs:text-[13px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
             >
               <div className="w-4 h-4 sm:w-4 sm:h-4 lg:w-5 lg:h-5 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
                 <Play size={8} className="fill-white translate-x-[0.5px] lg:w-2.5 lg:h-2.5" />
               </div>
               <span>Watch Video</span>
             </button>
+          </div>
+
+          {/* Mobile 360° Interaction Hint: Placed neatly under action buttons, never overlapping the chair */}
+          <div className="md:hidden flex items-center justify-start w-full mt-1.5 pointer-events-none">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5E1E] animate-pulse" />
+              <span className="text-[9px] font-manrope font-bold tracking-wider text-slate-500 uppercase">
+                360° Drag to Rotate
+              </span>
+            </div>
           </div>
 
           {/* 3 Core Value Proposition Badges: Desktop & Tablet Only */}
@@ -219,16 +229,6 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               </span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Middle Interactive Hint Pill: Mobile only (signals touch interaction for the 3D model) */}
-      <div className="md:hidden flex items-center justify-center w-full my-auto pointer-events-none">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/60 backdrop-blur-md border border-slate-200/50 shadow-xs">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FF5E1E] animate-pulse" />
-          <span className="text-[9px] font-manrope font-semibold tracking-wider text-slate-600 uppercase">
-            360° Drag to Rotate
-          </span>
         </div>
       </div>
 

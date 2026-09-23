@@ -132,12 +132,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       camera.aspect = aspect;
       const isPortrait = aspect < 1.0;
 
-      // Responsive FOV: on mobile/tablet portrait, standard 40° FOV makes the model huge horizontally and clips edges.
-      // Scaling FOV proportionally preserves horizontal framing without distortion.
-      const baseFov = 40;
+      // Responsive FOV: on mobile/tablet portrait, calibrated to display the model with heroic presence without clipping
       if (vpW < 768) {
-        // Mobile portrait: scale FOV so full height of model fits comfortably between top buttons and bottom badges
-        camera.fov = Math.min(54, baseFov / Math.max(0.68, aspect * 1.3));
+        // Mobile portrait: 43° FOV gives the 3D model a large, heroic presence without shrinking or clipping
+        camera.fov = 43;
       } else if (vpW < 1024) {
         // Tablet: slightly wider FOV in portrait (46°) so model stays compact and never collides with left column or clips right edge
         camera.fov = isPortrait ? 46 : 42;
@@ -150,10 +148,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       let offsetY = 0;
       const p = scrollProgressRef.current;
       if (vpW < 768) {
-        // Mobile: Centered horizontally on hero, shifted down between buttons and bottom badges
+        // Mobile: Centered horizontally on hero, vertically balanced right beneath the CTA buttons with no awkward void
         if (p < 0.15) {
           responsiveRatio = 0.0;
-          offsetY = -h * 0.17;
+          offsetY = -h * 0.088;
         } else {
           responsiveRatio = xRatio * 0.35;
         }
