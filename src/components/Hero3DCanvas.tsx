@@ -132,26 +132,29 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       camera.aspect = aspect;
       const isPortrait = aspect < 1.0;
 
-      // Responsive FOV: on mobile/tablet portrait, calibrated to display the model with heroic presence without clipping
+      // Responsive FOV: Natural 40° FOV preserved across all devices, with slight 42° calibration for tablet portrait
+      const p = scrollProgressRef.current;
       if (vpW < 768) {
-        // Mobile portrait: 43° FOV gives the 3D model a large, heroic presence without shrinking or clipping
-        camera.fov = 43;
+        camera.fov = 41;
       } else if (vpW < 1024) {
-        // Tablet: slightly wider FOV in portrait (46°) so model stays compact and never collides with left column or clips right edge
-        camera.fov = isPortrait ? 46 : 42;
+        camera.fov = isPortrait ? 42 : 40;
       } else {
+        // Desktop / Laptop: 100% UNCHANGED
         camera.fov = 40;
       }
 
       // On portrait/mobile, keep horizontal offset subtle so model stays balanced without drifting off screen or colliding with text
       let responsiveRatio = xRatio;
       let offsetY = 0;
-      const p = scrollProgressRef.current;
       if (vpW < 768) {
         // Mobile: Centered horizontally on hero, vertically balanced right beneath the CTA buttons with no awkward void
         if (p < 0.15) {
           responsiveRatio = 0.0;
           offsetY = -h * 0.088;
+        } else if (p < 0.44) {
+          // Feature 01 Touch Screen: Perfectly centered horizontally in Zone 2, vertically centered with comfortable breathing space
+          responsiveRatio = 0.0;
+          offsetY = h * 0.016;
         } else {
           responsiveRatio = xRatio * 0.35;
         }
@@ -160,6 +163,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         if (p < 0.15) {
           responsiveRatio = isPortrait ? -0.26 : -0.16;
           offsetY = isPortrait ? -h * 0.02 : 0;
+        } else if (p < 0.44) {
+          // Feature 01 Touch Screen: Position console center at x ≈ 530px, completely clear of left column (0-280px)
+          responsiveRatio = isPortrait ? -0.19 : -0.21;
+          offsetY = 0;
         } else {
           responsiveRatio = isPortrait ? xRatio * 0.85 : xRatio * 0.90;
         }
@@ -457,6 +464,27 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       let destShadowOpacity: number;
       let destUvIntensity: number;
 
+      // Device-calibrated Stage 1 targets:
+      // Desktop: Exactly STAGE_1_SCREEN (target: (0, 0.53, -1.16), camPos: (0, 0.57, 0.58))
+      // Mobile (< 768): Calibrated pullback (camPos.z = 2.30) so full console fits within 390px phone width
+      // Tablet portrait (768 <= vpW < 1024): Calibrated pullback (camPos.z = 1.95) so console fits neatly on right side
+      const stage1Target = STAGE_1_SCREEN.target.clone();
+      const stage1CamPos = STAGE_1_SCREEN.camPos.clone();
+      const vpW = typeof window !== 'undefined' ? window.innerWidth : width;
+      const isPortraitMode = width / height < 1.0;
+
+      if (vpW < 768) {
+        stage1Target.x = 0.01;
+        stage1CamPos.x = 0.01;
+        stage1CamPos.z = 2.50; // Scales console so wings, buttons, and display have comfortable margins on phone
+        stage1CamPos.y = 0.53;
+      } else if (vpW < 1024 && isPortraitMode) {
+        stage1Target.x = 0.01;
+        stage1CamPos.x = 0.01;
+        stage1CamPos.z = 2.05; // Balanced framing on tablet portrait with comfortable margins
+        stage1CamPos.y = 0.54;
+      }
+
       if (p <= 0.14) {
         // Stage 0: Hero Section Turntable View
         destTarget = STAGE_0_HERO.target;
@@ -468,16 +496,16 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.24) {
         // Transition Stage 0 -> Stage 1 (Smoothly transitions to front screen angle)
         const t = smoothstep(0.14, 0.24, p);
-        destTarget = new THREE.Vector3().lerpVectors(STAGE_0_HERO.target, STAGE_1_SCREEN.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(STAGE_0_HERO.camPos, STAGE_1_SCREEN.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(STAGE_0_HERO.target, stage1Target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(STAGE_0_HERO.camPos, stage1CamPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_0_HERO.xOffsetRatio, STAGE_1_SCREEN.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(heroSpinAngle, STAGE_1_SCREEN.baseRotY, t);
         destShadowOpacity = THREE.MathUtils.lerp(STAGE_0_HERO.shadowOpacity, STAGE_1_SCREEN.shadowOpacity, t);
         destUvIntensity = 0.0;
       } else if (p <= 0.36) {
         // Stage 1: Front Touch Screen Feature View (100% locked)
-        destTarget = STAGE_1_SCREEN.target;
-        destCamPos = STAGE_1_SCREEN.camPos;
+        destTarget = stage1Target;
+        destCamPos = stage1CamPos;
         destXOffsetRatio = STAGE_1_SCREEN.xOffsetRatio;
         destBaseRotY = STAGE_1_SCREEN.baseRotY; // Math.PI
         destShadowOpacity = STAGE_1_SCREEN.shadowOpacity;
@@ -486,8 +514,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.46) {
         // Transition Stage 1 -> Stage 2 (Smoothly transitions to UV nozzle angle)
         const t = smoothstep(0.36, 0.46, p);
-        destTarget = new THREE.Vector3().lerpVectors(STAGE_1_SCREEN.target, STAGE_2_UV.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(STAGE_1_SCREEN.camPos, STAGE_2_UV.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(stage1Target, STAGE_2_UV.target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(stage1CamPos, STAGE_2_UV.camPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_1_SCREEN.xOffsetRatio, STAGE_2_UV.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(STAGE_1_SCREEN.baseRotY, STAGE_2_UV.baseRotY, t);
         destShadowOpacity = 0.0;
