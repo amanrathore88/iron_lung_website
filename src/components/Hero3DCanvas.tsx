@@ -152,9 +152,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           responsiveRatio = 0.0;
           offsetY = -h * 0.088;
         } else if (p < 0.44) {
-          // Feature 01 Touch Screen: Perfectly centered horizontally in Zone 2, vertically centered with comfortable breathing space
+          // Feature 01 Touch Screen: Perfectly centered horizontally, elevated into the optical center between header and bottom dock
           responsiveRatio = 0.0;
-          offsetY = h * 0.016;
+          offsetY = h * 0.082;
         } else {
           responsiveRatio = xRatio * 0.35;
         }

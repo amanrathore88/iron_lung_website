@@ -94,7 +94,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 01: Smart, Intuitive Touch Screen                */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-16 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between transition-all duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-20 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between transition-all duration-300 pointer-events-none"
         style={{
           opacity: sec1Opacity,
           transform: `translateY(${sec1TranslateY}px)`,
@@ -102,10 +102,19 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         }}
       >
         {/* On Tablet/Desktop: Combined left column with md:max-w-[240px] (tablet) or lg:max-w-xl (desktop) */}
-        {/* On Mobile: Header stays at top, cards stay at bottom, center is open for the 3D console */}
-        <div className="w-full md:max-w-[240px] lg:max-w-xl flex flex-col items-start gap-2 sm:gap-3 lg:gap-5 pointer-events-auto">
-          {/* Section Number & Kicker */}
-          <div className="flex flex-col items-start gap-0.5 sm:gap-1">
+        {/* On Mobile: Centered header at top, unified dock at bottom, center is open for 3D console */}
+        <div className="w-full flex flex-col items-center text-center md:items-start md:text-left gap-1.5 sm:gap-3 lg:gap-5 md:max-w-[240px] lg:max-w-xl pointer-events-auto">
+          {/* Mobile Centered Kicker Badge */}
+          <div className="flex md:hidden items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
+            <span className="text-xs font-black text-[#FF5E1E] tracking-tight">01</span>
+            <div className="w-1 h-1 rounded-full bg-slate-300" />
+            <span className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase">
+              PRODUCT INTERFACE
+            </span>
+          </div>
+
+          {/* Tablet/Desktop Left-Aligned Kicker (100% Unchanged) */}
+          <div className="hidden md:flex flex-col items-start gap-0.5 sm:gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
               <span className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight">
                 01
@@ -118,14 +127,14 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Heading & Description */}
-          <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
-            <h2 className="text-2xl xs:text-[26px] sm:text-3xl md:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.08] text-slate-950">
-              Smart, Intuitive <br />
+          <div className="flex flex-col items-center md:items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
+            <h2 className="text-[23px] xs:text-[25px] sm:text-3xl md:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
+              Smart, Intuitive <br className="hidden md:inline" />
               Touch Screen
             </h2>
 
             {/* Description */}
-            <p className="text-[11px] xs:text-xs sm:text-sm md:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal max-w-[310px] md:max-w-none">
+            <p className="text-[11.5px] sm:text-sm md:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal max-w-[320px] md:max-w-none mx-auto md:mx-0">
               A clear and easy-to-use interface that guides you through every session with real-time feedback and personalized settings.
             </p>
           </div>
@@ -184,13 +193,23 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         </div>
 
         {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Console */}
-        <div className="md:hidden flex-1 min-h-[140px] pointer-events-none" />
+        <div className="md:hidden flex-1 min-h-[100px] pointer-events-none" />
 
-        {/* MOBILE Bottom Cards Row: Placed neatly at the bottom on mobile screens (< 768px) */}
-        <div className="md:hidden w-full max-w-[360px] mx-auto flex flex-col gap-2 pointer-events-auto">
-          {/* Card 1 */}
-          <div className="py-2.5 px-3 rounded-xl bg-white/90 border border-slate-200/80 shadow-[0_4px_16px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-orange-50 flex items-center justify-center text-[#FF5E1E] shrink-0">
+        {/* MOBILE Bottom Unified Feature Dock: Clean, high-contrast, premium hardware controller card */}
+        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2.5 flex flex-col gap-1.5 pointer-events-auto mb-2 xs:mb-3">
+          {/* Header pill */}
+          <div className="px-1.5 pt-0.5 pb-1 flex items-center justify-between border-b border-slate-100">
+            <span className="text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
+              Core Capabilities
+            </span>
+            <span className="text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+              3 Modes
+            </span>
+          </div>
+
+          {/* Row 1 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0">
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#FF5E1E] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 3v9" />
                 <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
@@ -198,40 +217,40 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Guided Breathing Programs
               </span>
-              <span className="text-[10px] text-slate-500 font-medium mt-0.5">
+              <span className="text-[9.5px] text-slate-500 font-medium">
                 For all fitness levels
               </span>
             </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="py-2.5 px-3 rounded-xl bg-white/90 border border-slate-200/80 shadow-[0_4px_16px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-rose-50 flex items-center justify-center text-rose-500 shrink-0">
+          {/* Row 2 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-500 shrink-0">
               <Heart size={14} className="text-rose-500" />
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Real-Time Session Feedback
               </span>
-              <span className="text-[10px] text-slate-500 font-medium mt-0.5">
+              <span className="text-[9.5px] text-slate-500 font-medium">
                 Track your breathing performance
               </span>
             </div>
           </div>
 
-          {/* Card 3 */}
-          <div className="py-2.5 px-3 rounded-xl bg-white/90 border border-slate-200/80 shadow-[0_4px_16px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500 shrink-0">
+          {/* Row 3 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
               <Activity size={14} className="text-blue-500" />
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Simple & Intuitive Controls
               </span>
-              <span className="text-[10px] text-slate-500 font-medium mt-0.5">
+              <span className="text-[9.5px] text-slate-500 font-medium">
                 Designed for everyone
               </span>
             </div>
