@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { ConsoleButtonInfoCard, ButtonType } from './ConsoleButtonInfoCard';
 
 interface Hero3DCanvasProps {
   scrollProgress: number; // 0.0 to 1.0
@@ -110,6 +111,50 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     scrollProgressRef.current = scrollProgress;
   }, [scrollProgress]);
 
+  // Interactive Button Hotspots State (Stage 1: Front Screen)
+  const [activeButton, setActiveButton] = useState<ButtonType | null>(null);
+  const [anchorPos, setAnchorPos] = useState<{ x: number; y: number } | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+
+  const activeButtonRef = useRef<ButtonType | null>(null);
+  useEffect(() => {
+    activeButtonRef.current = activeButton;
+  }, [activeButton]);
+
+  const hotspotsContainerRef = useRef<HTMLDivElement | null>(null);
+  const hotspotTopRef = useRef<HTMLButtonElement | null>(null);
+  const hotspotLeftRef = useRef<HTMLButtonElement | null>(null);
+  const hotspotRightRef = useRef<HTMLButtonElement | null>(null);
+  const buttonMeshesRef = useRef<{
+    top: THREE.Object3D | null;
+    left: THREE.Object3D | null;
+    right: THREE.Object3D | null;
+  }>({ top: null, left: null, right: null });
+  const lastButtonPosRef = useRef<Record<string, { x: number; y: number }>>({});
+  const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
+  const mouseVecRef = useRef<THREE.Vector2>(new THREE.Vector2());
+  const tempBoxRef = useRef<THREE.Box3>(new THREE.Box3());
+  const tempCenterRef = useRef<THREE.Vector3>(new THREE.Vector3());
+
+  const handleButtonClick = (btn: ButtonType) => {
+    setActiveButton((prev) => {
+      if (prev === btn) return null;
+      const pos = lastButtonPosRef.current[btn];
+      if (pos) setAnchorPos(pos);
+      return btn;
+    });
+  };
+
+  useEffect(() => {
+    const handleWinResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleWinResize);
+    return () => window.removeEventListener('resize', handleWinResize);
+  }, []);
+
   useEffect(() => {
     const mountElem = mountRef.current;
     if (!mountElem) return;
@@ -124,6 +169,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
     camera.position.copy(STAGE_0_HERO.camPos);
     (window as any).__THREE_CAMERA__ = camera;
+    (window as any).THREE = THREE;
 
     const applyViewOffset = (w: number, h: number, xRatio: number) => {
       // Use viewport width (matching Tailwind CSS @media breakpoints) to avoid scrollbar width discrepancies
@@ -360,6 +406,15 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             // The chair is uniquely and exclusively defined by material 'Chair_2K'
             const matName = (mesh.material as THREE.Material)?.name || '';
             const isChairMesh = matName === 'Chair_2K';
+
+            // Identify hardware buttons on front screen console
+            if (mesh.name.includes('Button_1')) {
+              buttonMeshesRef.current.top = mesh;
+            } else if (mesh.name.includes('Button_3')) {
+              buttonMeshesRef.current.left = mesh;
+            } else if (mesh.name.includes('Button_2')) {
+              buttonMeshesRef.current.right = mesh;
+            }
 
             if (!isChairMesh) {
               // This is NOT the chair (it is the screen, gun, column, or base structure).
@@ -726,12 +781,130 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       shadowPlaneMat.opacity = Math.max(0, curShadowOpacity * 0.34);
       contactMat.opacity = Math.max(0, curShadowOpacity * 0.45);
 
+      // ----------------------------------------------------
+      // Button Hotspots Position Projection (Stage 1: 0.18 - 0.40)
+      // ----------------------------------------------------
+      const isStage1 = p >= 0.18 && p <= 0.40;
+      if (hotspotsContainerRef.current) {
+        if (
+          isStage1 &&
+          buttonMeshesRef.current.top &&
+          buttonMeshesRef.current.left &&
+          buttonMeshesRef.current.right
+        ) {
+          const projectBtn = (obj: THREE.Object3D) => {
+            tempBoxRef.current.setFromObject(obj);
+            tempBoxRef.current.getCenter(tempCenterRef.current);
+            const proj = tempCenterRef.current.clone().project(camera);
+            const screenX = (proj.x * 0.5 + 0.5) * width;
+            const screenY = (-(proj.y * 0.5) + 0.5) * height;
+            const visible =
+              proj.z > 0 &&
+              proj.z < 1 &&
+              proj.x >= -1.1 &&
+              proj.x <= 1.1 &&
+              proj.y >= -1.1 &&
+              proj.y <= 1.1;
+            return { x: screenX, y: screenY, visible };
+          };
+
+          const topPos = projectBtn(buttonMeshesRef.current.top);
+          const leftPos = projectBtn(buttonMeshesRef.current.left);
+          const rightPos = projectBtn(buttonMeshesRef.current.right);
+
+          lastButtonPosRef.current = {
+            uv: { x: topPos.x, y: topPos.y },
+            start: { x: leftPos.x, y: leftPos.y },
+            reset: { x: rightPos.x, y: rightPos.y },
+          };
+
+          if (hotspotTopRef.current) {
+            hotspotTopRef.current.style.transform = `translate3d(${topPos.x}px, ${topPos.y}px, 0)`;
+            hotspotTopRef.current.style.opacity = topPos.visible ? '1' : '0';
+            hotspotTopRef.current.style.pointerEvents = topPos.visible ? 'auto' : 'none';
+          }
+          if (hotspotLeftRef.current) {
+            hotspotLeftRef.current.style.transform = `translate3d(${leftPos.x}px, ${leftPos.y}px, 0)`;
+            hotspotLeftRef.current.style.opacity = leftPos.visible ? '1' : '0';
+            hotspotLeftRef.current.style.pointerEvents = leftPos.visible ? 'auto' : 'none';
+          }
+          if (hotspotRightRef.current) {
+            hotspotRightRef.current.style.transform = `translate3d(${rightPos.x}px, ${rightPos.y}px, 0)`;
+            hotspotRightRef.current.style.opacity = rightPos.visible ? '1' : '0';
+            hotspotRightRef.current.style.pointerEvents = rightPos.visible ? 'auto' : 'none';
+          }
+
+          // Smooth fade in as Stage 1 approaches and settles
+          const stage1Fade = Math.min(
+            1,
+            Math.max(0, p < 0.24 ? (p - 0.18) / 0.06 : (0.40 - p) / 0.05)
+          );
+          hotspotsContainerRef.current.style.opacity = stage1Fade.toString();
+          hotspotsContainerRef.current.style.pointerEvents =
+            stage1Fade > 0.1 ? 'auto' : 'none';
+        } else {
+          hotspotsContainerRef.current.style.opacity = '0';
+          hotspotsContainerRef.current.style.pointerEvents = 'none';
+        }
+      }
+
+      // Automatically close active button info card when scrolling away from Stage 1
+      if (activeButtonRef.current && (p < 0.16 || p > 0.42)) {
+        setActiveButton(null);
+      }
+
       controls.update();
       renderer.render(scene, camera);
       animFrameIdRef.current = requestAnimationFrame(animate);
     };
 
     animate();
+
+    // Raycaster click and pointermove event listeners for 3D buttons on canvas
+    const handleCanvasClick = (e: MouseEvent) => {
+      const p = scrollProgressRef.current;
+      if (p < 0.18 || p > 0.40) return;
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      mouseVecRef.current.set(x, y);
+      raycasterRef.current.setFromCamera(mouseVecRef.current, camera);
+      const buttons = [
+        buttonMeshesRef.current.top,
+        buttonMeshesRef.current.left,
+        buttonMeshesRef.current.right,
+      ].filter(Boolean) as THREE.Object3D[];
+      const hits = raycasterRef.current.intersectObjects(buttons, true);
+      if (hits.length > 0) {
+        const hit = hits[0].object;
+        if (hit.name.includes('Button_1')) handleButtonClick('uv');
+        else if (hit.name.includes('Button_3')) handleButtonClick('start');
+        else if (hit.name.includes('Button_2')) handleButtonClick('reset');
+      }
+    };
+
+    const handleCanvasPointerMove = (e: MouseEvent) => {
+      const p = scrollProgressRef.current;
+      if (p < 0.18 || p > 0.40) {
+        renderer.domElement.style.cursor = '';
+        return;
+      }
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      mouseVecRef.current.set(x, y);
+      raycasterRef.current.setFromCamera(mouseVecRef.current, camera);
+      const buttons = [
+        buttonMeshesRef.current.top,
+        buttonMeshesRef.current.left,
+        buttonMeshesRef.current.right,
+      ].filter(Boolean) as THREE.Object3D[];
+      const hits = raycasterRef.current.intersectObjects(buttons, true);
+      renderer.domElement.style.cursor = hits.length > 0 ? 'pointer' : '';
+    };
+
+    renderer.domElement.addEventListener('click', handleCanvasClick);
+    renderer.domElement.addEventListener('pointermove', handleCanvasPointerMove);
 
     // Resize Handler
     const handleResize = () => {
@@ -748,6 +921,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      renderer.domElement.removeEventListener('click', handleCanvasClick);
+      renderer.domElement.removeEventListener('pointermove', handleCanvasPointerMove);
       if (animFrameIdRef.current) {
         cancelAnimationFrame(animFrameIdRef.current);
       }
@@ -761,16 +936,116 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     };
   }, []);
 
-    return (
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-20">
-        {/* 3D WebGL Canvas Layer (passes pointer events on Hero turntable only) */}
-        <div
-          ref={mountRef}
-          style={{ touchAction: 'pan-y' }}
-          className={`w-full h-full relative ${
-            scrollProgress <= 0.14 ? 'cursor-grab active:cursor-grabbing pointer-events-auto' : 'pointer-events-none'
-          }`}
-        />
+  return (
+    <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-20">
+      {/* 3D WebGL Canvas Layer (passes pointer events on Hero turntable and Stage 1 button clicks) */}
+      <div
+        ref={mountRef}
+        style={{ touchAction: 'pan-y' }}
+        className={`w-full h-full relative ${
+          scrollProgress <= 0.14
+            ? 'cursor-grab active:cursor-grabbing pointer-events-auto'
+            : scrollProgress >= 0.18 && scrollProgress <= 0.40
+            ? 'pointer-events-auto'
+            : 'pointer-events-none'
+        }`}
+      />
+
+      {/* Interactive Hotspots for Feature 01 Buttons */}
+      <div
+        ref={hotspotsContainerRef}
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-30"
+        style={{ opacity: 0 }}
+      >
+        {/* Top Button Hotspot: UV Sanitization */}
+        <button
+          ref={hotspotTopRef}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleButtonClick('uv');
+          }}
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          title="Top Button: UV Sanitization"
+          aria-label="UV Sanitization Button"
+        >
+          {/* Radar Ring */}
+          <span className="absolute inset-0 rounded-full bg-purple-400 opacity-60 animate-ping" />
+          {/* Glass Halo */}
+          <span
+            className={`absolute inset-0 rounded-full bg-purple-500/25 backdrop-blur-xs border border-purple-400/90 shadow-[0_0_12px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-all ${
+              activeButton === 'uv'
+                ? 'scale-125 ring-2 ring-purple-400 ring-offset-2 ring-offset-slate-900'
+                : ''
+            }`}
+          />
+          {/* Solid Core Dot */}
+          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#a855f7] border border-purple-400 flex items-center justify-center">
+            <span className="w-1 h-1 rounded-full bg-purple-600" />
+          </span>
+        </button>
+
+        {/* Left Button Hotspot: Start */}
+        <button
+          ref={hotspotLeftRef}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleButtonClick('start');
+          }}
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          title="Left Button: Start"
+          aria-label="Start Button"
+        >
+          {/* Radar Ring */}
+          <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" />
+          {/* Glass Halo */}
+          <span
+            className={`absolute inset-0 rounded-full bg-emerald-500/25 backdrop-blur-xs border border-emerald-400/90 shadow-[0_0_12px_rgba(16,185,129,0.7)] group-hover:scale-125 transition-all ${
+              activeButton === 'start'
+                ? 'scale-125 ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900'
+                : ''
+            }`}
+          />
+          {/* Solid Core Dot */}
+          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#10b981] border border-emerald-400 flex items-center justify-center">
+            <span className="w-1 h-1 rounded-full bg-emerald-600" />
+          </span>
+        </button>
+
+        {/* Right Button Hotspot: Reset */}
+        <button
+          ref={hotspotRightRef}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleButtonClick('reset');
+          }}
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          title="Right Button: Reset"
+          aria-label="Reset Button"
+        >
+          {/* Radar Ring */}
+          <span className="absolute inset-0 rounded-full bg-rose-400 opacity-60 animate-ping" />
+          {/* Glass Halo */}
+          <span
+            className={`absolute inset-0 rounded-full bg-rose-500/25 backdrop-blur-xs border border-rose-400/90 shadow-[0_0_12px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-all ${
+              activeButton === 'reset'
+                ? 'scale-125 ring-2 ring-rose-400 ring-offset-2 ring-offset-slate-900'
+                : ''
+            }`}
+          />
+          {/* Solid Core Dot */}
+          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#f43f5e] border border-rose-400 flex items-center justify-center">
+            <span className="w-1 h-1 rounded-full bg-rose-600" />
+          </span>
+        </button>
+      </div>
+
+      {/* Animated Popover Information Card (Only displays when a button is clicked) */}
+      <ConsoleButtonInfoCard
+        activeButton={activeButton}
+        onClose={() => setActiveButton(null)}
+        anchorPos={anchorPos}
+        isMobile={isMobile}
+      />
 
       {/* Loading HUD */}
       {!isLoaded && !loadError && (
