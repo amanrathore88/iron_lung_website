@@ -4,13 +4,15 @@ import { Menu, X } from 'lucide-react';
 interface HeroNavbarProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about') => void;
+  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works') => void;
+  activeSection?: string;
 }
 
 export const HeroNavbar: React.FC<HeroNavbarProps> = ({
   onBookDemo,
   onContactUs,
   onNavigateSection,
+  activeSection,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -48,31 +50,41 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
         <nav className="hidden md:flex items-center gap-3 lg:gap-6 xl:gap-9 text-xs lg:text-sm font-semibold text-slate-800 whitespace-nowrap shrink">
           <button
             onClick={() => onNavigateSection?.('screen')}
-            className="hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer"
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
           >
             Technology
           </button>
           <button
-            onClick={() => onNavigateSection?.('uv')}
-            className="hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer"
+            onClick={() => onNavigateSection?.('how-it-works')}
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'how-it-works' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
           >
             How It Works
           </button>
           <button
             onClick={() => onNavigateSection?.('comfort')}
-            className="hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer"
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'comfort' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
           >
             Ergonomics
           </button>
           <button
             onClick={() => onNavigateSection?.('dashboard')}
-            className="hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer"
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'dashboard' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
           >
             Experience
           </button>
           <button
             onClick={() => onNavigateSection?.('about')}
-            className="hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer"
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'about' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
           >
             About
           </button>
@@ -129,16 +141,20 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 setMobileMenuOpen(false);
                 onNavigateSection?.('screen');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
               Technology
             </button>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onNavigateSection?.('uv');
+                onNavigateSection?.('how-it-works');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                activeSection === 'how-it-works' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
               How It Works
             </button>
@@ -147,7 +163,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 setMobileMenuOpen(false);
                 onNavigateSection?.('comfort');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                activeSection === 'comfort' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
               Ergonomics
             </button>
@@ -156,7 +174,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 setMobileMenuOpen(false);
                 onNavigateSection?.('dashboard');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                activeSection === 'dashboard' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
               Experience
             </button>
@@ -165,7 +185,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 setMobileMenuOpen(false);
                 onNavigateSection?.('about');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
+                activeSection === 'about' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
               About
             </button>

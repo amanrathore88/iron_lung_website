@@ -7,6 +7,7 @@ import { ScrollyFeaturesOverlay } from './components/ScrollyFeaturesOverlay';
 import { DashboardSectionOverlay } from './components/DashboardSectionOverlay';
 import { AboutSectionOverlay } from './components/AboutSectionOverlay';
 import { LandingBottomSections } from './components/LandingBottomSections';
+import { HowItWorksPage } from './components/HowItWorksPage';
 import { VideoModal } from './components/VideoModal';
 import { DemoModal } from './components/DemoModal';
 
@@ -20,10 +21,43 @@ export const App: React.FC = () => {
     mode: 'demo',
   });
 
+  const [currentView, setCurrentView] = useState<'home' | 'how-it-works'>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      const pathname = window.location.pathname.toLowerCase();
+      if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
+        return 'how-it-works';
+      }
+    }
+    return 'home';
+  });
+
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const scrollyTrackRef = useRef<HTMLDivElement>(null);
 
+  // Sync browser back/forward and hash changes
   useEffect(() => {
+    const handlePopState = () => {
+      const hash = window.location.hash.toLowerCase();
+      const pathname = window.location.pathname.toLowerCase();
+      if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
+        setCurrentView('how-it-works');
+      } else {
+        setCurrentView('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (currentView !== 'home') return;
+
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
@@ -47,7 +81,7 @@ export const App: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [currentView]);
 
   const scrollToStage = (progress: number) => {
     const track = scrollyTrackRef.current;
@@ -61,8 +95,31 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works') => {
+    if (section === 'how-it-works') {
+      if (currentView !== 'how-it-works') {
+        window.history.pushState(null, '', '#how-it-works');
+        setCurrentView('how-it-works');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
 
-  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about') => {
+    // Navigating back to home section
+    if (currentView !== 'home') {
+      window.history.pushState(null, '', '#');
+      setCurrentView('home');
+      setTimeout(() => {
+        if (section === 'hero') scrollToStage(0);
+        else if (section === 'screen') scrollToStage(0.28);
+        else if (section === 'uv') scrollToStage(0.50);
+        else if (section === 'comfort') scrollToStage(0.72);
+        else if (section === 'about') scrollToStage(0.84);
+        else if (section === 'dashboard') scrollToStage(0.98);
+      }, 60);
+      return;
+    }
+
     if (section === 'hero') scrollToStage(0);
     else if (section === 'screen') scrollToStage(0.28);
     else if (section === 'uv') scrollToStage(0.50);
@@ -73,56 +130,76 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative bg-white text-slate-900 font-sans select-none">
-      {/* Fixed Top Brand Navigation */}
-      <HeroNavbar
-        onBookDemo={() => setDemoModalState({ isOpen: true, mode: 'demo' })}
-        onContactUs={() => setDemoModalState({ isOpen: true, mode: 'contact' })}
-        onNavigateSection={handleNavigation}
-      />
-
-      {/* Multi-Stage Scrollytelling Track (h-[760vh] calibrated for smooth feature transitions, editorial About Us, & cinematic sweep) */}
-      <div ref={scrollyTrackRef} className="relative h-[760vh] w-full">
-        {/* Sticky 100vh Viewport Pin */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
-          {/* Layer 0 (z-0): Studio Room Background */}
-          <StudioRoomBackground scrollProgress={scrollProgress} />
-
-          {/* Layer 1 (z-[10]): Editorial About Us Section Overlay (media_1790142628076.png) */}
-          <AboutSectionOverlay
-            scrollProgress={scrollProgress}
-            onOpenVideo={() => setIsVideoModalOpen(true)}
+      {currentView === 'how-it-works' ? (
+        <HowItWorksPage
+          onBookDemo={() => setDemoModalState({ isOpen: true, mode: 'demo' })}
+          onContactUs={() => setDemoModalState({ isOpen: true, mode: 'contact' })}
+          onNavigateSection={handleNavigation}
+        />
+      ) : (
+        <>
+          {/* Fixed Top Brand Navigation */}
+          <HeroNavbar
+            onBookDemo={() => setDemoModalState({ isOpen: true, mode: 'demo' })}
+            onContactUs={() => setDemoModalState({ isOpen: true, mode: 'contact' })}
+            onNavigateSection={handleNavigation}
+            activeSection={
+              scrollProgress > 0.90
+                ? 'dashboard'
+                : scrollProgress > 0.78
+                ? 'about'
+                : scrollProgress > 0.60
+                ? 'comfort'
+                : scrollProgress > 0.18
+                ? 'screen'
+                : 'hero'
+            }
           />
 
-          {/* Layer 2 (z-[15]): Section 4 User Dashboard Overlay (Revealed via soft cloudy mask following 3D model) */}
-          <DashboardSectionOverlay
-            scrollProgress={scrollProgress}
-            onExploreDashboard={() => setDemoModalState({ isOpen: true, mode: 'demo' })}
-            onOpenVideo={() => setIsVideoModalOpen(true)}
-          />
+          {/* Multi-Stage Scrollytelling Track (h-[760vh] calibrated for smooth feature transitions, editorial About Us, & cinematic sweep) */}
+          <div ref={scrollyTrackRef} className="relative h-[760vh] w-full">
+            {/* Sticky 100vh Viewport Pin */}
+            <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
+              {/* Layer 0 (z-0): Studio Room Background */}
+              <StudioRoomBackground scrollProgress={scrollProgress} />
 
-          {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
-          <Hero3DCanvas scrollProgress={scrollProgress} />
+              {/* Layer 1 (z-[10]): Editorial About Us Section Overlay (media_1790142628076.png) */}
+              <AboutSectionOverlay
+                scrollProgress={scrollProgress}
+                onOpenVideo={() => setIsVideoModalOpen(true)}
+              />
 
-          {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls) */}
-          <HeroOverlay
-            onDiscover={() => scrollToStage(0.28)}
-            onOpenVideo={() => setIsVideoModalOpen(true)}
-            scrollProgress={scrollProgress}
-          />
+              {/* Layer 2 (z-[15]): Section 4 User Dashboard Overlay (Revealed via soft cloudy mask following 3D model) */}
+              <DashboardSectionOverlay
+                scrollProgress={scrollProgress}
+                onExploreDashboard={() => setDemoModalState({ isOpen: true, mode: 'demo' })}
+                onOpenVideo={() => setIsVideoModalOpen(true)}
+              />
 
-          {/* Layer 4 (z-[30]): Scrollytelling Feature Overlays (Stage 1: Touch Screen, Stage 2: UV Sanitization, Stage 3: Ergonomic Chair) */}
-          <ScrollyFeaturesOverlay
-            scrollProgress={scrollProgress}
-            onExploreScreen={() => scrollToStage(0.28)}
-            onExploreUV={() => scrollToStage(0.50)}
-            onExploreChair={() => scrollToStage(0.72)}
-          />
-        </div>
-      </div>
+              {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
+              <Hero3DCanvas scrollProgress={scrollProgress} />
 
-      {/* Landing Page Bottom Sections (Integrated Capabilities, Air Quality Telemetry, Video Showcase, Partners Marquee, & Footer) */}
-      <LandingBottomSections />
+              {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls) */}
+              <HeroOverlay
+                onDiscover={() => scrollToStage(0.28)}
+                onOpenVideo={() => setIsVideoModalOpen(true)}
+                scrollProgress={scrollProgress}
+              />
 
+              {/* Layer 4 (z-[30]): Scrollytelling Feature Overlays (Stage 1: Touch Screen, Stage 2: UV Sanitization, Stage 3: Ergonomic Chair) */}
+              <ScrollyFeaturesOverlay
+                scrollProgress={scrollProgress}
+                onExploreScreen={() => scrollToStage(0.28)}
+                onExploreUV={() => scrollToStage(0.50)}
+                onExploreChair={() => scrollToStage(0.72)}
+              />
+            </div>
+          </div>
+
+          {/* Landing Page Bottom Sections (Integrated Capabilities, Air Quality Telemetry, Video Showcase, Partners Marquee, & Footer) */}
+          <LandingBottomSections />
+        </>
+      )}
 
       {/* Video Modal */}
       <VideoModal
