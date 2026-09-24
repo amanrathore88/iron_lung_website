@@ -12,15 +12,24 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   onExploreDashboard,
   onOpenVideo,
 }) => {
+  const isDesktop = typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+
   // Physical Airplane-Style Sweep Reveal Architecture:
-  // Starts revealing at 0.88 as the full 3D Iron Lung sweeps from left to right past About Us.
-  // By 0.98, the model has exited past the right border and Section 04 is 100% revealed.
+  // Starts revealing at 0.88 as the full 3D Iron Lung sweeps past About Us.
+  // Desktop Horizontal Sweep Reveal (0.88 - 0.98)
   const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.10));
   const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  // Dynamic Reveal Percentage (0% to 100%)
   const revealPct = ease * 100;
 
-  // Soft Gradient / Cloudy Edge Transition:
+  // Mobile / Tablet Elevation Reveal (0.885 - 0.98):
+  // Fades and elevates the dashboard into place as the 3D model sweeps and rotates across
+  const mobileProgress = Math.min(1, Math.max(0, (scrollProgress - 0.885) / 0.095));
+  const mobileEase =
+    mobileProgress < 0.5
+      ? 4 * mobileProgress * mobileProgress * mobileProgress
+      : 1 - Math.pow(-2 * mobileProgress + 2, 3) / 2;
+
+  // Soft Gradient / Cloudy Edge Transition (Desktop sweep):
   // Replaces the harsh, sharp cut line with an ultra-smooth feathered mask gradient (~16% / 220px width)
   const feather = 16;
   const fadeStart = Math.max(0, revealPct - feather);
@@ -28,10 +37,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const fadeMid2 = Math.max(0, revealPct - feather * 0.30);
   const fadeEnd = Math.min(100, revealPct);
 
-  // When fully revealed (revealPct >= 99.5), clear mask to none
+  // When fully revealed (revealPct >= 99.5) or on mobile/tablet, disable CSS mask to avoid GPU lag
   const maskGradient =
-    revealPct >= 99.5
-      ? 'none'
+    revealPct >= 99.5 || !isDesktop
+      ? undefined
       : `linear-gradient(to right, #000 0%, #000 ${fadeStart}%, rgba(0, 0, 0, 0.88) ${fadeMid1}%, rgba(0, 0, 0, 0.42) ${fadeMid2}%, rgba(0, 0, 0, 0.08) ${fadeMid2 + (fadeEnd - fadeMid2) * 0.7}%, transparent ${fadeEnd}%, transparent 100%)`;
 
   const isInteractive = scrollProgress >= 0.98;
@@ -42,15 +51,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
   return (
     <div
-      className="absolute inset-0 w-full h-full overflow-hidden z-[25] lg:z-[15] bg-[#FAF7F2]"
+      className={`absolute inset-0 w-full h-full overflow-hidden ${
+        isInteractive ? 'z-[30]' : 'z-[15]'
+      } bg-[#FAF7F2]`}
       style={{
         maskImage: maskGradient,
         WebkitMaskImage: maskGradient,
+        opacity: isDesktop ? 1.0 : mobileEase,
+        transform: isDesktop ? undefined : `translateY(${(1 - mobileEase) * 20}px)`,
         pointerEvents: isInteractive ? 'auto' : 'none',
       }}
     >
-      {/* Soft Atmospheric Cloudy Mist along the leading transition edge */}
-      {revealPct > 2 && revealPct < 99 && (
+      {/* Soft Atmospheric Cloudy Mist along the leading transition edge (Desktop only) */}
+      {isDesktop && revealPct > 2 && revealPct < 99 && (
         <div
           className="absolute top-0 bottom-0 pointer-events-none z-20"
           style={{

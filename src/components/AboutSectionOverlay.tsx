@@ -11,11 +11,13 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   scrollProgress,
   onOpenVideo,
 }) => {
+  const isDesktop = typeof window !== 'undefined' ? window.innerWidth >= 1024 : true;
+
   // Pacing:
   // Starts fading in smoothly at 0.73 as the 3D model descends from Section 03
   // 100% visible & locked between 0.80 and 0.88
   // Between 0.88 and 0.98, fades/wipes out alongside the 3D model sweep to User Dashboard
-  if (scrollProgress < 0.73 || scrollProgress >= 0.98) {
+  if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.98 : 0.925)) {
     return null;
   }
 
@@ -35,11 +37,15 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
     : 1 - Math.pow(-2 * contentEntryProgress + 2, 3) / 2;
   const contentTranslateY = (1 - contentEntryEase) * 16;
 
-  // Smooth exit opacity alongside 3D model sweep between 0.88 and 0.93
-  const exitProgress = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.05));
+  // Seamless exit opacity:
+  // On desktop, exits alongside horizontal model sweep between 0.88 and 0.94
+  // On mobile (< 1024px), exits cleanly between 0.88 and 0.91 before dashboard cards rise in
+  const exitDuration = isDesktop ? 0.06 : 0.03;
+  const exitProgress = Math.min(1, Math.max(0, (scrollProgress - 0.88) / exitDuration));
   const exitOpacity = scrollProgress >= 0.88 ? 1 - exitProgress : 1.0;
 
-  const currentBackdropOpacity = backdropEntryEase * exitOpacity;
+  // Keep backdrop steady on mobile so warm cream tone seamlessly continues into the dashboard
+  const currentBackdropOpacity = backdropEntryEase * (isDesktop ? exitOpacity : 1.0);
   const currentContentOpacity = contentEntryEase * exitOpacity;
 
   // Left column accents (quotes) fade out immediately at start of sweep (0.88 - 0.905)
@@ -52,9 +58,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   const isInteractive = scrollProgress >= 0.81 && scrollProgress <= 0.88;
 
   // Seamless Airplane-Style Wipe: As the 3D model sweeps left-to-right into User Dashboard (0.88 - 0.98),
-  // wipe out 'Our Story' behind the leading edge so zero ghosting or card overlap ever occurs
+  // wipe out 'Our Story' behind the leading edge so zero ghosting or card overlap ever occurs (desktop only)
   let maskStyle: React.CSSProperties = {};
-  if (scrollProgress >= 0.88) {
+  if (isDesktop && scrollProgress >= 0.88) {
     const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.10));
     const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     const wipePct = ease * 100;
@@ -69,7 +75,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
   return (
     <div
-      className="absolute inset-0 w-full h-full overflow-hidden z-[25] lg:z-[10] pointer-events-none select-none"
+      className="absolute inset-0 w-full h-full overflow-hidden z-[10] pointer-events-none select-none"
       style={{
         ...maskStyle,
       }}
@@ -79,7 +85,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       {/* Full-bleed across the entire screen from left to right    */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-200"
+        className="absolute inset-0 w-full h-full pointer-events-none"
         style={{
           opacity: currentBackdropOpacity,
           backgroundColor: '#FAF7F2',
@@ -163,7 +169,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       {/* Desktop: Pinned to left: 36.3vw matching reference       */}
       {/* ======================================================== */}
       <div
-        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-y-auto lg:overflow-visible transition-all duration-200"
+        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-y-auto lg:overflow-visible"
         style={{
           opacity: currentContentOpacity,
           pointerEvents: isInteractive ? 'auto' : 'none',
