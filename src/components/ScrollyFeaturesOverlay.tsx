@@ -453,83 +453,166 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 03: Ergonomic Biometric Training Chair (Left Col) */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex items-center justify-between transition-all duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-20 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between transition-all duration-300 pointer-events-none"
         style={{
           opacity: sec3Opacity,
           transform: `translateY(${sec3TranslateY}px)`,
           display: sec3Opacity <= 0.01 ? 'none' : 'flex',
         }}
       >
-        {/* Left Column Content */}
-        <div className="w-full max-w-lg lg:max-w-xl flex flex-col items-start gap-3.5 sm:gap-5 pointer-events-auto">
-          {/* Section Number & Kicker */}
-          <div className="flex flex-col items-start gap-1">
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <span className="text-xl sm:text-3xl font-black text-[#FF5E1E] tracking-tight">
-                03
-              </span>
-              <div className="w-6 sm:w-8 h-[2px] bg-[#FF5E1E] rounded-full" />
-            </div>
-            <span className="text-[9.5px] sm:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5">
+        {/* MOBILE Top Header: Centered kicker, heading, description */}
+        <div className="md:hidden w-full flex flex-col items-center text-center gap-1.5 pointer-events-auto">
+          {/* Mobile Centered Kicker Badge */}
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
+            <span className="text-xs font-black text-[#FF5E1E] tracking-tight">03</span>
+            <div className="w-1 h-1 rounded-full bg-slate-300" />
+            <span className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase">
               ERGONOMIC DESIGN
             </span>
           </div>
 
-          {/* Heading & Description with responsive glass backdrop on mobile for maximum legibility */}
-          <div className="flex flex-col items-start gap-2 sm:gap-3 p-3 sm:p-0 rounded-2xl bg-white/75 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-white/50 sm:border-none shadow-sm sm:shadow-none w-full max-w-md">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.08] text-slate-950">
-              Engineered for <br />
+          {/* Heading & Description */}
+          <div className="flex flex-col items-center gap-1 w-full max-w-md">
+            <h2 className="text-[23px] xs:text-[25px] font-black tracking-tight leading-[1.12] text-slate-950">
+              Engineered for Optimal Posture
+            </h2>
+            <p className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto">
+              Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
+            </p>
+          </div>
+        </div>
+
+        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Chair */}
+        <div className="md:hidden flex-1 min-h-[100px] pointer-events-none" />
+
+        {/* MOBILE Bottom Unified Feature Dock: Clean, high-contrast, premium hardware controller card */}
+        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2.5 flex flex-col gap-1.5 pointer-events-auto mb-2 xs:mb-3">
+          {/* Header pill */}
+          <div className="px-1.5 pt-0.5 pb-1 flex items-center justify-between border-b border-slate-100">
+            <span className="text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
+              Biometric Seating
+            </span>
+            <span className="text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+              Posture Tuned
+            </span>
+          </div>
+
+          {/* Row 1 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0">
+              <Activity size={14} className="text-[#FF5E1E]" />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+                Thoracic Spine Alignment
+              </span>
+              <span className="text-[9.5px] text-slate-500 font-medium">
+                Maximizes lung capacity & airflow
+              </span>
+            </div>
+          </div>
+
+          {/* Row 2 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
+              <Shield size={14} className="text-indigo-500" />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+                Medical-Grade Cushioning
+              </span>
+              <span className="text-[9.5px] text-slate-500 font-medium">
+                High-density pressure-relief memory foam
+              </span>
+            </div>
+          </div>
+
+          {/* Row 3 */}
+          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
+            <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
+              <Sliders size={14} className="text-blue-500" />
+            </div>
+            <div className="flex flex-col min-w-0">
+              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+                Multi-Point Adjustment
+              </span>
+              <span className="text-[9.5px] text-slate-500 font-medium">
+                Tailored recline & lumbar support
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* TABLET & DESKTOP Left Column Content (hidden on mobile) */}
+        <div className="hidden md:flex w-full md:max-w-[245px] lg:max-w-xl flex-col items-start gap-2 sm:gap-3 lg:gap-5 pointer-events-auto">
+          {/* Section Number & Kicker */}
+          <div className="flex flex-col items-start gap-0.5 sm:gap-1">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight">
+                03
+              </span>
+              <div className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full" />
+            </div>
+            <span className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5">
+              ERGONOMIC DESIGN
+            </span>
+          </div>
+
+          {/* Heading & Description */}
+          <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
+            <h2 className="text-2xl sm:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
+              Engineered for <br className="hidden lg:inline" />
               Optimal Posture
             </h2>
 
             {/* Description */}
-            <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-normal">
+            <p className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal">
               Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
             </p>
           </div>
 
           {/* 3 Value Cards Stack */}
-          <div className="flex flex-col gap-2 sm:gap-3 w-full max-w-md mt-0.5 sm:mt-1">
+          <div className="flex flex-col gap-2 lg:gap-3 w-full max-w-[245px] lg:max-w-md mt-0.5 lg:mt-1">
             {/* Card 1 */}
-            <div className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 sm:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-                <Activity size={16} className="text-slate-800 sm:w-5 sm:h-5" />
+            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
+              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+                <Activity size={14} className="text-slate-800 lg:w-5 lg:h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Thoracic Spine Alignment
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium mt-0.5">
+                <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
                   Maximizes lung capacity & airflow
                 </span>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 sm:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-                <Shield size={16} className="text-slate-800 sm:w-5 sm:h-5" />
+            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
+              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+                <Shield size={14} className="text-slate-800 lg:w-5 lg:h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Medical-Grade Cushioning
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium mt-0.5">
+                <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
                   High-density pressure-relief memory foam
                 </span>
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 sm:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-                <Sliders size={16} className="text-slate-800 sm:w-5 sm:h-5" />
+            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
+              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+                <Sliders size={14} className="text-slate-800 lg:w-5 lg:h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Multi-Point Adjustment
                 </span>
-                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium mt-0.5">
+                <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
                   Tailored recline & lumbar support
                 </span>
               </div>

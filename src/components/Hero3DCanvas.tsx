@@ -159,6 +159,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           // Feature 02 UV Handpiece: Centered horizontally, elevated into the optical center between header and bottom dock
           responsiveRatio = -0.04;
           offsetY = h * 0.055;
+        } else if (p < 0.76) {
+          // Feature 03 Ergonomic Chair: Centered horizontally, lowered into Zone 2 optical sweet spot
+          responsiveRatio = 0.0;
+          offsetY = -h * 0.045;
         } else {
           responsiveRatio = xRatio * 0.35;
         }
@@ -175,6 +179,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           // Feature 02 UV Handpiece: Shifted cleanly to LEFT column on tablet (x ≈ 210px), elevated to crop console out of top frame
           responsiveRatio = isPortrait ? 0.20 : 0.195;
           offsetY = isPortrait ? h * 0.20 : 0;
+        } else if (p < 0.76) {
+          // Feature 03 Ergonomic Chair: Shifted cleanly to RIGHT column on tablet (x ≈ 540px), completely clear of left column
+          responsiveRatio = isPortrait ? -0.24 : -0.19;
+          offsetY = 0;
         } else {
           responsiveRatio = isPortrait ? xRatio * 0.85 : xRatio * 0.90;
         }
@@ -480,6 +488,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       const stage1CamPos = STAGE_1_SCREEN.camPos.clone();
       const stage2Target = STAGE_2_UV.target.clone();
       const stage2CamPos = STAGE_2_UV.camPos.clone();
+      const stage3Target = STAGE_3_CHAIR.target.clone();
+      const stage3CamPos = STAGE_3_CHAIR.camPos.clone();
       const vpW = typeof window !== 'undefined' ? window.innerWidth : width;
       const isPortraitMode = width / height < 1.0;
 
@@ -494,6 +504,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         stage2CamPos.z = 1.95;
         stage2CamPos.y = 0.06;
         stage2Target.y = 0.01;
+
+        // Stage 3 Ergonomic Chair on Mobile:
+        // Pull back camera so full chair (seat, backrest, armrests, headrest) fits comfortably between header and dock
+        stage3CamPos.z = 4.15;
+        stage3CamPos.y = -0.14;
+        stage3Target.y = -0.32;
       } else if (vpW < 1024 && isPortraitMode) {
         stage1Target.x = 0.01;
         stage1CamPos.x = 0.01;
@@ -504,6 +520,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         // Scale handpiece cleanly to fit inside left column (x ≈ 0-420px) without overlapping right side text
         stage2CamPos.z = 1.68;
         stage2CamPos.y = 0.03;
+
+        // Stage 3 Ergonomic Chair on Tablet Portrait:
+        // Pull back camera slightly to fit cleanly in right column without overlapping left column text
+        stage3CamPos.z = 2.75;
+        stage3CamPos.y = -0.18;
       }
 
       if (p <= 0.14) {
@@ -553,16 +574,16 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.68) {
         // Transition Stage 2 -> Stage 3 (Smoothly transitions to Ergonomic Chair view)
         const t = smoothstep(0.58, 0.68, p);
-        destTarget = new THREE.Vector3().lerpVectors(stage2Target, STAGE_3_CHAIR.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(stage2CamPos, STAGE_3_CHAIR.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(stage2Target, stage3Target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(stage2CamPos, stage3CamPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_2_UV.xOffsetRatio, STAGE_3_CHAIR.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(STAGE_2_UV.baseRotY, STAGE_3_CHAIR.baseRotY, t);
         destShadowOpacity = THREE.MathUtils.lerp(STAGE_2_UV.shadowOpacity, STAGE_3_CHAIR.shadowOpacity, t);
         destUvIntensity = 0.0;
       } else if (p <= 0.73) {
         // Stage 3: Ergonomic Biometric Training Chair (100% locked in right column)
-        destTarget = STAGE_3_CHAIR.target;
-        destCamPos = STAGE_3_CHAIR.camPos;
+        destTarget = stage3Target;
+        destCamPos = stage3CamPos;
         destXOffsetRatio = STAGE_3_CHAIR.xOffsetRatio; // -0.19
         destBaseRotY = STAGE_3_CHAIR.baseRotY; // -0.42 rad (~ -24°)
         destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
@@ -571,8 +592,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.81) {
         // Transition Stage 3 -> Stage 4 About Us (Descends downwards, pulling back and gliding into left column of Our Story)
         const t = smoothstep(0.73, 0.81, p);
-        destTarget = new THREE.Vector3().lerpVectors(STAGE_3_CHAIR.target, STAGE_4_ABOUT.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(STAGE_3_CHAIR.camPos, STAGE_4_ABOUT.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(stage3Target, STAGE_4_ABOUT.target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(stage3CamPos, STAGE_4_ABOUT.camPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_3_CHAIR.xOffsetRatio, STAGE_4_ABOUT.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_4_ABOUT.baseRotY, t);
         destBaseRotZ = THREE.MathUtils.lerp(0.0, STAGE_4_ABOUT.baseRotZ, t);
