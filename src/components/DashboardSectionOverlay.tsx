@@ -212,91 +212,92 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       {/* Side-by-side balanced 2-column layout where text and devices */}
       {/* NEVER collide or obscure each other                         */}
       {/* ============================================================ */}
-      <div className="hidden md:flex lg:hidden absolute inset-0 w-full h-full flex-col justify-between pt-20 pb-5 px-6 sm:px-8 max-w-5xl mx-auto">
+      <div className="hidden md:flex lg:hidden absolute inset-0 w-full h-full flex-col justify-between pt-22 pb-6 px-8 sm:px-10 max-w-5xl mx-auto">
         {/* Main 2-Column Content */}
-        <div className="flex-1 flex items-center justify-between gap-6 pointer-events-auto">
-          {/* Left Column Text (48%) */}
-          <div className="w-[48%] flex flex-col items-start gap-2.5">
+        <div className="flex-1 flex items-center justify-between gap-7 pointer-events-auto my-auto">
+          {/* Left Column Text (49%) */}
+          <div className="w-[49%] flex flex-col items-start gap-3">
             <div className="flex items-center gap-2">
               <div className="w-5 h-[2px] bg-[#FF5E1E] rounded-full" />
-              <span className="text-[10px] font-bold tracking-[0.20em] text-slate-500 uppercase font-mono">
+              <span className="text-[11px] font-bold tracking-[0.22em] text-slate-500 uppercase font-mono">
                 USER DASHBOARD
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-[1.1] text-slate-950">
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight leading-[1.08] text-slate-950">
               More Than Data. <br />
               <span className="text-[#FF5E1E]">A Healthier You.</span>
             </h2>
 
-            <p className="text-xs text-slate-600 leading-relaxed font-normal">
+            <p className="text-[13px] sm:text-sm text-slate-600 leading-relaxed font-normal">
               Your personal dashboard brings everything together — track sessions, analyze trends and stay motivated on your journey to better breathing.
             </p>
 
             {/* 3 Compact Feature Rows */}
-            <div className="flex flex-col gap-2 w-full mt-1">
-              <div className="p-2 rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-orange-50 text-[#FF5E1E] flex items-center justify-center shrink-0">
-                  <BarChart3 size={14} className="text-[#FF5E1E]" />
+            <div className="flex flex-col gap-2.5 w-full mt-1">
+              <div className="p-2.5 rounded-xl bg-white/95 border border-slate-200/80 shadow-xs flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-orange-50 text-[#FF5E1E] flex items-center justify-center shrink-0">
+                  <BarChart3 size={16} className="text-[#FF5E1E]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-900 leading-tight">Track Progress</span>
-                  <span className="text-[10px] text-slate-500 leading-tight">Session history & performance metrics</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Track Progress</span>
+                  <span className="text-[10.5px] sm:text-xs text-slate-500 leading-tight mt-0.5">Session history & performance metrics</span>
                 </div>
               </div>
 
-              <div className="p-2 rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
-                  <Heart size={14} className="text-blue-500 stroke-[2.2]" />
+              <div className="p-2.5 rounded-xl bg-white/95 border border-slate-200/80 shadow-xs flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+                  <Heart size={16} className="text-blue-500 stroke-[2.2]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-900 leading-tight">Health Insights</span>
-                  <span className="text-[10px] text-slate-500 leading-tight">Breathing waveforms & 60Hz biofeedback</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Health Insights</span>
+                  <span className="text-[10.5px] sm:text-xs text-slate-500 leading-tight mt-0.5">Breathing waveforms & 60Hz biofeedback</span>
                 </div>
               </div>
 
-              <div className="p-2 rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                  <Settings size={14} className="text-emerald-600 stroke-[2.2]" />
+              <div className="p-2.5 rounded-xl bg-white/95 border border-slate-200/80 shadow-xs flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Settings size={16} className="text-emerald-600 stroke-[2.2]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold text-slate-900 leading-tight">Personalized Goals</span>
-                  <span className="text-[10px] text-slate-500 leading-tight">Customized targets & RFID athlete sync</span>
+                  <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Personalized Goals</span>
+                  <span className="text-[10.5px] sm:text-xs text-slate-500 leading-tight mt-0.5">Customized targets & RFID athlete sync</span>
                 </div>
               </div>
             </div>
 
             {/* Tablet Action Buttons */}
-            <div className="flex items-center gap-2.5 pt-1.5">
+            <div className="flex items-center gap-2.5 pt-2">
               <button
                 onClick={onExploreDashboard}
-                className="group inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-md transition-all active:scale-95 cursor-pointer"
+                className="group inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-semibold text-xs shadow-md transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
               >
                 <span>Explore Dashboard</span>
                 <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
               </button>
               <button
                 onClick={onOpenVideo}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-white text-slate-800 font-semibold text-xs border border-slate-200/70 shadow-xs transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-white hover:bg-slate-50 text-slate-900 font-semibold text-xs border border-slate-200/80 shadow-xs transition-all active:scale-95 cursor-pointer whitespace-nowrap shrink-0"
               >
-                <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center">
-                  <Play size={8} className="fill-white translate-x-0.5" />
+                <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
+                  <Play size={7} className="fill-white translate-x-0.5" />
                 </div>
                 <span>Watch Video</span>
               </button>
             </div>
           </div>
 
-          {/* Right Column Showcase (52%) */}
-          <div className="w-[52%] flex items-center justify-center">
-            <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.08)] border border-slate-200/80 bg-white/50 backdrop-blur-sm group">
+          {/* Right Column Showcase (51%) */}
+          <div className="w-[51%] flex items-center justify-center">
+            <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.09)] border border-slate-200/85 bg-white/60 backdrop-blur-md group">
               <img
                 src="/images/dashboard-showcase.png"
                 alt="Iron Lung Dashboard and Smartphone App"
                 className="w-full h-auto object-contain block transition-transform duration-500 group-hover:scale-[1.02]"
               />
-              <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[9.5px] font-mono tracking-wider uppercase font-semibold">
-                Telemetry 60Hz
+              <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[10px] font-mono tracking-wider uppercase font-semibold flex items-center gap-1.5 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5E1E] animate-pulse" />
+                <span>Telemetry 60Hz</span>
               </div>
             </div>
           </div>
@@ -305,7 +306,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* Tablet Bottom Tag */}
         <div className="flex items-center gap-2 pt-2 pointer-events-none">
           <div className="w-5 h-[2px] bg-[#FF5E1E] rounded-full" />
-          <span className="text-[10px] font-bold tracking-[0.20em] text-slate-400 uppercase font-mono">
+          <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.20em] text-slate-400 uppercase font-mono">
             SAME BREATH. A BRIGHTER TOMORROW.
           </span>
         </div>
@@ -313,109 +314,113 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
       {/* ============================================================ */}
       {/* 3. MOBILE LAYOUT (< md - screens under 768px)                */}
-      {/* Purpose-built vertical flow: crisp heading, crystal-clear    */}
-      {/* devices preview card, 3 mini-badges, action buttons, & tag.  */}
-      {/* Harmonious spacing, unified alignment across all elements.    */}
+      {/* Purpose-built vertical flow: balanced top-to-bottom rhythm,  */}
+      {/* natural breathing space below navbar, high-res showcase,     */}
+      {/* polished feature cards, and accessible touch actions.        */}
       {/* ============================================================ */}
-      <div className="flex md:hidden absolute inset-0 w-full h-full flex-col justify-between pt-16 sm:pt-20 pb-4 px-4.5 xs:px-5 pointer-events-auto">
-        {/* Unified Cohesive Column (Centered Vertically in Available Space) */}
-        <div className="my-auto w-full max-w-[400px] mx-auto flex flex-col items-start">
+      <div className="flex md:hidden absolute inset-0 w-full h-full flex-col justify-between pt-16 sm:pt-20 pb-4 px-4.5 xs:px-5 pointer-events-auto overflow-y-auto">
+        <div className="w-full max-w-[420px] mx-auto flex-1 flex flex-col justify-between py-1 min-h-[560px]">
           {/* Top Header */}
           <div className="w-full flex flex-col items-start gap-1">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
-              <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.20em] text-slate-500 uppercase font-mono">
+              <div className="w-5 h-[2px] bg-[#FF5E1E] rounded-full" />
+              <span className="text-[10px] xs:text-[10.5px] font-bold tracking-[0.24em] text-slate-500 uppercase font-mono">
                 USER DASHBOARD
               </span>
             </div>
 
-            <h2 className="text-[22px] xs:text-[24px] sm:text-[26px] font-black tracking-tight leading-[1.12] text-slate-950 mt-0.5">
-              More Than Data. <span className="text-[#FF5E1E]">A Healthier You.</span>
+            <h2 className="text-[25px] xs:text-[27px] font-black tracking-tight leading-[1.08] text-slate-950 mt-1">
+              More Than Data. <br />
+              <span className="text-[#FF5E1E]">A Healthier You.</span>
             </h2>
 
-            <p className="text-[11.5px] xs:text-[12px] text-slate-600 leading-snug mt-0.5">
-              Your personal dashboard brings everything together — track sessions, analyze trends and stay motivated.
+            <p className="text-[12px] xs:text-[12.5px] text-slate-600 leading-relaxed font-normal mt-0.5">
+              Your personal dashboard brings everything together — track sessions, analyze trends, and stay motivated.
             </p>
           </div>
 
           {/* Center Visual Showcase Card */}
-          <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.06)] border border-slate-200/90 bg-white/70 backdrop-blur-sm mt-3 xs:mt-3.5 group">
+          <div className="relative w-full rounded-2xl xs:rounded-3xl overflow-hidden shadow-[0_12px_32px_rgba(0,0,0,0.07)] border border-slate-200/90 bg-white/70 backdrop-blur-sm group my-auto max-h-[220px]">
             <img
               src="/images/dashboard-showcase.png"
-              alt="Iron Lung Dashboard & App"
-              className="w-full h-[145px] xs:h-[165px] object-cover object-[center_38%] block"
+              alt="Iron Lung Dashboard & Smartphone App"
+              className="w-full h-auto aspect-[16/9.8] object-cover object-[center_35%] block"
             />
-            <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[8.5px] xs:text-[9px] font-mono tracking-wider uppercase font-semibold">
-              Real-Time Cloud Sync
+            <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[8.5px] xs:text-[9px] font-mono tracking-wider uppercase font-semibold flex items-center gap-1.5 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5E1E] animate-pulse" />
+              <span>Real-Time Cloud Sync</span>
             </div>
           </div>
 
-          {/* 3 Compact Feature Pills Grid */}
-          <div className="grid grid-cols-3 gap-2 w-full mt-2.5 xs:mt-3">
-            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-lg bg-orange-50 text-[#FF5E1E] flex items-center justify-center mb-1">
-                <BarChart3 size={13} className="text-[#FF5E1E]" />
+          {/* Bottom Interactive Area: 3 Cards + Action Buttons */}
+          <div className="w-full flex flex-col gap-2.5 xs:gap-3">
+            {/* 3 Compact Feature Cards */}
+            <div className="grid grid-cols-3 gap-2 xs:gap-2.5 w-full">
+              <div className="py-2.5 px-1.5 xs:px-2 rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col items-center text-center">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-orange-50 text-[#FF5E1E] flex items-center justify-center mb-1 shadow-xs">
+                  <BarChart3 size={15} className="text-[#FF5E1E]" />
+                </div>
+                <span className="text-[10.5px] xs:text-[11.5px] font-bold text-slate-900 leading-tight">
+                  Track Trends
+                </span>
+                <span className="text-[8.5px] xs:text-[9.5px] text-slate-500 font-medium leading-tight mt-0.5">
+                  Session logs
+                </span>
               </div>
-              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-                Track Trends
-              </span>
-              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
-                Session logs
-              </span>
+
+              <div className="py-2.5 px-1.5 xs:px-2 rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col items-center text-center">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center mb-1 shadow-xs">
+                  <Heart size={15} className="text-blue-500 stroke-[2.2]" />
+                </div>
+                <span className="text-[10.5px] xs:text-[11.5px] font-bold text-slate-900 leading-tight">
+                  Bio Insights
+                </span>
+                <span className="text-[8.5px] xs:text-[9.5px] text-slate-500 font-medium leading-tight mt-0.5">
+                  Waveforms
+                </span>
+              </div>
+
+              <div className="py-2.5 px-1.5 xs:px-2 rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.03)] flex flex-col items-center text-center">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1 shadow-xs">
+                  <Settings size={15} className="text-emerald-600 stroke-[2.2]" />
+                </div>
+                <span className="text-[10.5px] xs:text-[11.5px] font-bold text-slate-900 leading-tight">
+                  Custom Goals
+                </span>
+                <span className="text-[8.5px] xs:text-[9.5px] text-slate-500 font-medium leading-tight mt-0.5">
+                  Target metrics
+                </span>
+              </div>
             </div>
 
-            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center mb-1">
-                <Heart size={13} className="text-blue-500 stroke-[2.2]" />
-              </div>
-              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-                Bio Insights
-              </span>
-              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
-                Waveforms
-              </span>
-            </div>
-
-            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
-              <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1">
-                <Settings size={13} className="text-emerald-600 stroke-[2.2]" />
-              </div>
-              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-                Custom Goals
-              </span>
-              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
-                Target metrics
-              </span>
+            {/* Action Buttons: 2 Equal Width Buttons matching exact width of cards & image */}
+            <div className="grid grid-cols-2 gap-2.5 w-full">
+              <button
+                onClick={onExploreDashboard}
+                className="group w-full py-2.5 xs:py-3 px-3 rounded-full bg-slate-950 hover:bg-slate-800 text-white font-semibold text-xs shadow-md shadow-slate-900/15 flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+              >
+                <span>Explore Dashboard</span>
+                <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+              </button>
+              <button
+                onClick={onOpenVideo}
+                className="w-full py-2.5 xs:py-3 px-3 rounded-full bg-white hover:bg-slate-50 text-slate-900 font-semibold text-xs border border-slate-200/90 shadow-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+              >
+                <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center">
+                  <Play size={7} className="fill-white translate-x-0.5" />
+                </div>
+                <span>Watch Video</span>
+              </button>
             </div>
           </div>
 
-          {/* Action Buttons: 2 Equal Width Buttons matching exact width of cards & image */}
-          <div className="grid grid-cols-2 gap-2.5 w-full mt-2.5 xs:mt-3">
-            <button
-              onClick={onExploreDashboard}
-              className="group w-full py-2.5 px-3 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
-            >
-              <span>Explore Dashboard</span>
-              <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
-            </button>
-            <button
-              onClick={onOpenVideo}
-              className="w-full py-2.5 px-3 rounded-full bg-white/95 hover:bg-white text-slate-800 font-semibold text-xs border border-slate-200/90 shadow-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
-            >
-              <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center">
-                <Play size={7} className="fill-white translate-x-0.5" />
-              </div>
-              <span>Watch Video</span>
-            </button>
+          {/* Mobile Bottom Tag */}
+          <div className="w-full flex items-center justify-center gap-2 pt-2 pb-0.5 pointer-events-none">
+            <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
+            <span className="text-[9.5px] font-bold tracking-[0.20em] text-slate-400 uppercase font-mono">
+              SAME BREATH. A BRIGHTER TOMORROW.
+            </span>
           </div>
-        </div>
-
-        {/* Mobile Bottom Tag */}
-        <div className="w-full max-w-[400px] mx-auto flex items-center gap-2 pt-1 pointer-events-none">
-          <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
-          <span className="text-[9px] xs:text-[9.5px] font-bold tracking-[0.18em] text-slate-400 uppercase font-mono">
-            SAME BREATH. A BRIGHTER TOMORROW.
-          </span>
         </div>
       </div>
     </div>
