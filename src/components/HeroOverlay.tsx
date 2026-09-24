@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Play, Leaf, Shield, Heart, BarChart3 } from 'lucide-react';
+import { ArrowRight, Play, Heart, BarChart3 } from 'lucide-react';
 import BlurText from './BlurText';
 
 interface HeroOverlayProps {
@@ -37,19 +37,6 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
       <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-6 lg:gap-8 items-start md:items-center mt-0 mb-auto md:my-auto">
         {/* Left Column: Headline, CTAs, & Badges */}
         <div className="w-full md:col-span-6 lg:col-span-6 md:max-w-[310px] lg:max-w-none flex flex-col items-start gap-2.5 sm:gap-3.5 lg:gap-5 pointer-events-auto">
-          {/* Top Category Badge */}
-          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/85 border border-slate-200/80 backdrop-blur-md shadow-sm">
-            <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#FF5E1E]/15 flex items-center justify-center text-[#FF5E1E]">
-              <svg viewBox="0 0 24 24" className="w-2 sm:w-2.5 h-2 sm:h-2.5 text-[#FF5E1E] fill-current">
-                <path d="M12 3v9" />
-                <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
-              </svg>
-            </div>
-            <span className="text-[9.5px] sm:text-xs font-semibold tracking-[0.18em] sm:tracking-[0.22em] text-slate-600 uppercase font-space font-['Space_Grotesk',sans-serif]">
-              A Healthier Tomorrow
-            </span>
-          </div>
 
           {/* Main Headline with BlurText Animation: Bold, prominent, properly scaled on mobile */}
           <h1 className="text-[34px] xs:text-[38px] sm:text-4xl md:text-[44px] lg:text-[5.2rem] font-black tracking-tight leading-[1.06] lg:leading-[1.02] text-slate-950">
@@ -118,59 +105,6 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             </div>
           </div>
 
-          {/* 3 Core Value Proposition Badges: Desktop & Tablet Only */}
-          <div className="hidden md:grid grid-cols-3 gap-1.5 lg:gap-3.5 pt-2 sm:pt-3.5 lg:pt-6 w-full md:max-w-[310px] lg:max-w-lg">
-            {/* Badge 1: Cleaner Air Intake */}
-            <div className="flex items-center gap-1 md:gap-1.5 lg:gap-2.5 p-1.5 lg:p-2.5 rounded-xl bg-white/70 border border-slate-200/80 shadow-sm backdrop-blur-sm">
-              <div className="p-1 lg:p-1.5 rounded-lg bg-slate-100 text-slate-700 shrink-0">
-                <Leaf size={11} className="text-slate-700 lg:w-3.5 lg:h-3.5" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-[7.5px] lg:text-[10px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                  CLEANER
-                </span>
-                <span className="text-[6.5px] lg:text-[9px] text-slate-500 font-medium uppercase leading-tight truncate">
-                  AIR INTAKE
-                </span>
-              </div>
-            </div>
-
-            {/* Badge 2: Advanced UV Purification */}
-            <div className="flex items-center gap-1 md:gap-1.5 lg:gap-2.5 p-1.5 lg:p-2.5 rounded-xl bg-white/70 border border-slate-200/80 shadow-sm backdrop-blur-sm">
-              <div className="p-1 lg:p-1.5 rounded-lg bg-slate-100 text-slate-700 shrink-0">
-                <Shield size={11} className="text-slate-700 lg:w-3.5 lg:h-3.5" />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-[7.5px] lg:text-[10px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                  ADVANCED
-                </span>
-                <span className="text-[6.5px] lg:text-[9px] text-slate-500 font-medium uppercase leading-tight truncate">
-                  UV PURIFY
-                </span>
-              </div>
-            </div>
-
-            {/* Badge 3: Better Respiratory Health */}
-            <div className="flex items-center gap-1 md:gap-1.5 lg:gap-2.5 p-1.5 lg:p-2.5 rounded-xl bg-white/70 border border-slate-200/80 shadow-sm backdrop-blur-sm">
-              <div className="p-1 lg:p-1.5 rounded-lg bg-slate-100 text-slate-700 shrink-0">
-                <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 lg:w-3.5 lg:h-3.5 text-slate-700 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3v8" />
-                  <path d="M9 7l-3 3" />
-                  <path d="M15 7l3 3" />
-                  <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                  <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
-                </svg>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-[7.5px] lg:text-[10px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                  BETTER
-                </span>
-                <span className="text-[6.5px] lg:text-[9px] text-slate-500 font-medium uppercase leading-tight truncate">
-                  WELLNESS
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Empty Spacer Column for 3D Model in center-right */}
@@ -232,77 +166,8 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
         </div>
       </div>
 
-      {/* Mobile Bottom Highlight Bar: 3 Compact Badges + Trust Statement */}
-      <div className="md:hidden flex flex-col gap-2 w-full pointer-events-auto">
-        {/* 3 Compact Badges */}
-        <div className="grid grid-cols-3 gap-1.5 w-full">
-          {/* Badge 1: Cleaner Air */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-xl bg-white/85 border border-slate-200/80 shadow-xs backdrop-blur-md">
-            <div className="p-1 rounded-md bg-slate-100 text-slate-700 shrink-0">
-              <Leaf size={11} className="text-slate-700" />
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-[7.5px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                CLEANER
-              </span>
-              <span className="text-[6.5px] text-slate-500 font-medium uppercase leading-tight truncate">
-                AIR INTAKE
-              </span>
-            </div>
-          </div>
-
-          {/* Badge 2: UV Purify */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-xl bg-white/85 border border-slate-200/80 shadow-xs backdrop-blur-md">
-            <div className="p-1 rounded-md bg-slate-100 text-slate-700 shrink-0">
-              <Shield size={11} className="text-slate-700" />
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-[7.5px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                ADVANCED
-              </span>
-              <span className="text-[6.5px] text-slate-500 font-medium uppercase leading-tight truncate">
-                UV PURIFY
-              </span>
-            </div>
-          </div>
-
-          {/* Badge 3: Better Wellness */}
-          <div className="flex items-center gap-1.5 p-1.5 rounded-xl bg-white/85 border border-slate-200/80 shadow-xs backdrop-blur-md">
-            <div className="p-1 rounded-md bg-slate-100 text-slate-700 shrink-0">
-              <svg viewBox="0 0 24 24" className="w-2.5 h-2.5 text-slate-700 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3v8" />
-                <path d="M9 7l-3 3" />
-                <path d="M15 7l3 3" />
-                <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
-              </svg>
-            </div>
-            <div className="flex flex-col min-w-0">
-              <span className="text-[7.5px] font-black tracking-wider text-slate-900 uppercase leading-tight truncate">
-                BETTER
-              </span>
-              <span className="text-[6.5px] text-slate-500 font-medium uppercase leading-tight truncate">
-                WELLNESS
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Trust Pill */}
-        <div className="flex items-center gap-2 text-[8.5px] font-bold tracking-[0.10em] text-slate-500 uppercase px-2.5 py-1 rounded-full bg-white/85 border border-slate-200/60 backdrop-blur-sm self-start">
-          <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full shrink-0" />
-          <span className="truncate">Trusted by healthcare & fitness leaders worldwide</span>
-        </div>
-      </div>
-
-      {/* Desktop & Tablet Bottom Trust Bar (100% Unchanged on Desktop) */}
-      <div className="hidden md:flex relative w-full items-center justify-start pointer-events-auto pt-2 sm:pt-4">
-        {/* Left Trust Statement with Orange Dash */}
-        <div className="flex items-center gap-2.5 text-[9px] sm:text-[11px] font-bold tracking-[0.14em] text-slate-500 uppercase px-2.5 py-1 rounded-full bg-white/70 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none">
-          <div className="w-5 sm:w-6 h-[2px] bg-[#FF5E1E] rounded-full shrink-0" />
-          <span>Trusted by healthcare professionals, fitness centers and businesses worldwide.</span>
-        </div>
-      </div>
+      {/* Invisible bottom spacer to preserve exact pixel-perfect desktop/tablet grid vertical alignment */}
+      <div className="hidden md:block w-full h-8 pointer-events-none" />
     </div>
   );
 };
