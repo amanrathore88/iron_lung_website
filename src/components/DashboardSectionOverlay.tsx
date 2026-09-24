@@ -302,102 +302,105 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       {/* 3. MOBILE LAYOUT (< md - screens under 768px)                */}
       {/* Purpose-built vertical flow: crisp heading, crystal-clear    */}
       {/* devices preview card, 3 mini-badges, action buttons, & tag.  */}
-      {/* Guaranteed to fit comfortably within 100vh with ZERO cutoff. */}
+      {/* Harmonious spacing, unified alignment across all elements.    */}
       {/* ============================================================ */}
-      <div className="flex md:hidden absolute inset-0 w-full h-full flex-col justify-between pt-16 xs:pt-18 pb-3 px-4 xs:px-5 pointer-events-auto">
-        {/* Top Header */}
-        <div className="flex flex-col items-start gap-1">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
-            <span className="text-[9px] xs:text-[10px] font-bold tracking-[0.20em] text-slate-500 uppercase font-mono">
-              USER DASHBOARD
-            </span>
-          </div>
-
-          <h2 className="text-[21px] xs:text-[23px] sm:text-[26px] font-black tracking-tight leading-[1.08] text-slate-950">
-            More Than Data. <span className="text-[#FF5E1E]">A Healthier You.</span>
-          </h2>
-
-          <p className="text-[11px] xs:text-[11.5px] text-slate-600 leading-snug max-w-sm line-clamp-2">
-            Your personal dashboard brings everything together — track sessions, analyze trends and stay motivated.
-          </p>
-        </div>
-
-        {/* Center Visual Showcase Card */}
-        <div className="relative w-full max-w-[390px] mx-auto my-1 rounded-xl xs:rounded-2xl overflow-hidden shadow-[0_10px_28px_rgba(0,0,0,0.08)] border border-slate-200/90 bg-white/70 backdrop-blur-sm group">
-          <img
-            src="/images/dashboard-showcase.png"
-            alt="Iron Lung Dashboard & App"
-            className="w-full h-auto max-h-[175px] xs:max-h-[200px] object-cover object-center block"
-          />
-          <div className="absolute bottom-2 left-2.5 px-2 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[8.5px] font-mono tracking-wider uppercase font-semibold">
-            Real-Time Cloud Sync
-          </div>
-        </div>
-
-        {/* 3 Compact Feature Pills Grid */}
-        <div className="grid grid-cols-3 gap-1.5 w-full max-w-[390px] mx-auto my-0.5">
-          <div className="p-1.5 rounded-lg xs:rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex flex-col items-center text-center">
-            <div className="w-5 h-5 xs:w-6 xs:h-6 rounded-md bg-orange-50 text-[#FF5E1E] flex items-center justify-center mb-0.5">
-              <BarChart3 size={12} className="text-[#FF5E1E]" />
+      <div className="flex md:hidden absolute inset-0 w-full h-full flex-col justify-between pt-16 sm:pt-20 pb-4 px-4.5 xs:px-5 pointer-events-auto">
+        {/* Unified Cohesive Column (Centered Vertically in Available Space) */}
+        <div className="my-auto w-full max-w-[400px] mx-auto flex flex-col items-start">
+          {/* Top Header */}
+          <div className="w-full flex flex-col items-start gap-1">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
+              <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.20em] text-slate-500 uppercase font-mono">
+                USER DASHBOARD
+              </span>
             </div>
-            <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-              Track Trends
-            </span>
-            <span className="text-[8px] text-slate-500 leading-tight mt-0.5 hidden xs:inline">
-              Session logs
-            </span>
+
+            <h2 className="text-[22px] xs:text-[24px] sm:text-[26px] font-black tracking-tight leading-[1.12] text-slate-950 mt-0.5">
+              More Than Data. <span className="text-[#FF5E1E]">A Healthier You.</span>
+            </h2>
+
+            <p className="text-[11.5px] xs:text-[12px] text-slate-600 leading-snug mt-0.5">
+              Your personal dashboard brings everything together — track sessions, analyze trends and stay motivated.
+            </p>
           </div>
 
-          <div className="p-1.5 rounded-lg xs:rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex flex-col items-center text-center">
-            <div className="w-5 h-5 xs:w-6 xs:h-6 rounded-md bg-blue-50 text-blue-500 flex items-center justify-center mb-0.5">
-              <Heart size={12} className="text-blue-500 stroke-[2.2]" />
+          {/* Center Visual Showcase Card */}
+          <div className="relative w-full rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.06)] border border-slate-200/90 bg-white/70 backdrop-blur-sm mt-3 xs:mt-3.5 group">
+            <img
+              src="/images/dashboard-showcase.png"
+              alt="Iron Lung Dashboard & App"
+              className="w-full h-[145px] xs:h-[165px] object-cover object-[center_38%] block"
+            />
+            <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[8.5px] xs:text-[9px] font-mono tracking-wider uppercase font-semibold">
+              Real-Time Cloud Sync
             </div>
-            <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-              Bio Insights
-            </span>
-            <span className="text-[8px] text-slate-500 leading-tight mt-0.5 hidden xs:inline">
-              Waveforms
-            </span>
           </div>
 
-          <div className="p-1.5 rounded-lg xs:rounded-xl bg-white/90 border border-slate-200/80 shadow-xs flex flex-col items-center text-center">
-            <div className="w-5 h-5 xs:w-6 xs:h-6 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center mb-0.5">
-              <Settings size={12} className="text-emerald-600 stroke-[2.2]" />
+          {/* 3 Compact Feature Pills Grid */}
+          <div className="grid grid-cols-3 gap-2 w-full mt-2.5 xs:mt-3">
+            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
+              <div className="w-6 h-6 rounded-lg bg-orange-50 text-[#FF5E1E] flex items-center justify-center mb-1">
+                <BarChart3 size={13} className="text-[#FF5E1E]" />
+              </div>
+              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
+                Track Trends
+              </span>
+              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
+                Session logs
+              </span>
             </div>
-            <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
-              Custom Goals
-            </span>
-            <span className="text-[8px] text-slate-500 leading-tight mt-0.5 hidden xs:inline">
-              Targets
-            </span>
-          </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center justify-center gap-2 xs:gap-2.5 pt-0.5">
-          <button
-            onClick={onExploreDashboard}
-            className="group inline-flex items-center justify-center gap-1.5 px-4 xs:px-5 py-1.5 xs:py-2 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-md shadow-slate-900/10 transition-all active:scale-95 cursor-pointer"
-          >
-            <span>Explore Dashboard</span>
-            <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
-          </button>
-          <button
-            onClick={onOpenVideo}
-            className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 xs:py-2 rounded-full bg-white/90 hover:bg-white text-slate-800 font-semibold text-xs border border-slate-200 shadow-xs transition-all active:scale-95 cursor-pointer"
-          >
-            <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center">
-              <Play size={7} className="fill-white translate-x-0.5" />
+            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
+              <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center mb-1">
+                <Heart size={13} className="text-blue-500 stroke-[2.2]" />
+              </div>
+              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
+                Bio Insights
+              </span>
+              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
+                Waveforms
+              </span>
             </div>
-            <span>Watch Video</span>
-          </button>
+
+            <div className="py-2 px-1.5 rounded-xl bg-white/95 border border-slate-200/85 shadow-xs flex flex-col items-center text-center">
+              <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1">
+                <Settings size={13} className="text-emerald-600 stroke-[2.2]" />
+              </div>
+              <span className="text-[10px] xs:text-[10.5px] font-bold text-slate-900 leading-tight">
+                Custom Goals
+              </span>
+              <span className="text-[8px] xs:text-[8.5px] text-slate-500 leading-tight mt-0.5">
+                Target metrics
+              </span>
+            </div>
+          </div>
+
+          {/* Action Buttons: 2 Equal Width Buttons matching exact width of cards & image */}
+          <div className="grid grid-cols-2 gap-2.5 w-full mt-2.5 xs:mt-3">
+            <button
+              onClick={onExploreDashboard}
+              className="group w-full py-2.5 px-3 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs shadow-md shadow-slate-900/10 flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+            >
+              <span>Explore Dashboard</span>
+              <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
+            </button>
+            <button
+              onClick={onOpenVideo}
+              className="w-full py-2.5 px-3 rounded-full bg-white/95 hover:bg-white text-slate-800 font-semibold text-xs border border-slate-200/90 shadow-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+            >
+              <div className="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center">
+                <Play size={7} className="fill-white translate-x-0.5" />
+              </div>
+              <span>Watch Video</span>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Bottom Tag */}
-        <div className="flex items-center justify-center gap-1.5 pt-0.5 pointer-events-none">
-          <div className="w-3.5 h-[1.5px] bg-[#FF5E1E] rounded-full" />
-          <span className="text-[8px] xs:text-[8.5px] font-bold tracking-[0.18em] text-slate-400 uppercase font-mono">
+        <div className="w-full max-w-[400px] mx-auto flex items-center gap-2 pt-1 pointer-events-none">
+          <div className="w-4 h-[2px] bg-[#FF5E1E] rounded-full" />
+          <span className="text-[9px] xs:text-[9.5px] font-bold tracking-[0.18em] text-slate-400 uppercase font-mono">
             SAME BREATH. A BRIGHTER TOMORROW.
           </span>
         </div>
