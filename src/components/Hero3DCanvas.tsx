@@ -155,6 +155,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           // Feature 01 Touch Screen: Perfectly centered horizontally, elevated into the optical center between header and bottom dock
           responsiveRatio = 0.0;
           offsetY = h * 0.082;
+        } else if (p < 0.60) {
+          // Feature 02 UV Handpiece: Centered horizontally, elevated into the optical center between header and bottom dock
+          responsiveRatio = -0.04;
+          offsetY = h * 0.055;
         } else {
           responsiveRatio = xRatio * 0.35;
         }
@@ -167,6 +171,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           // Feature 01 Touch Screen: Position console center at x ≈ 530px, completely clear of left column (0-280px)
           responsiveRatio = isPortrait ? -0.19 : -0.21;
           offsetY = 0;
+        } else if (p < 0.60) {
+          // Feature 02 UV Handpiece: Shifted cleanly to LEFT column on tablet (x ≈ 210px), elevated to crop console out of top frame
+          responsiveRatio = isPortrait ? 0.20 : 0.195;
+          offsetY = isPortrait ? h * 0.20 : 0;
         } else {
           responsiveRatio = isPortrait ? xRatio * 0.85 : xRatio * 0.90;
         }
@@ -470,6 +478,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       // Tablet portrait (768 <= vpW < 1024): Calibrated pullback (camPos.z = 1.95) so console fits neatly on right side
       const stage1Target = STAGE_1_SCREEN.target.clone();
       const stage1CamPos = STAGE_1_SCREEN.camPos.clone();
+      const stage2Target = STAGE_2_UV.target.clone();
+      const stage2CamPos = STAGE_2_UV.camPos.clone();
       const vpW = typeof window !== 'undefined' ? window.innerWidth : width;
       const isPortraitMode = width / height < 1.0;
 
@@ -478,11 +488,22 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         stage1CamPos.x = 0.01;
         stage1CamPos.z = 2.50; // Scales console so wings, buttons, and display have comfortable margins on phone
         stage1CamPos.y = 0.53;
+
+        // Stage 2 UV Handpiece on Mobile:
+        // Pull back camera so full handpiece (barrel, body, handle, cable) fits comfortably between header and dock
+        stage2CamPos.z = 1.95;
+        stage2CamPos.y = 0.06;
+        stage2Target.y = 0.01;
       } else if (vpW < 1024 && isPortraitMode) {
         stage1Target.x = 0.01;
         stage1CamPos.x = 0.01;
         stage1CamPos.z = 2.05; // Balanced framing on tablet portrait with comfortable margins
         stage1CamPos.y = 0.54;
+
+        // Stage 2 UV Handpiece on Tablet Portrait:
+        // Scale handpiece cleanly to fit inside left column (x ≈ 0-420px) without overlapping right side text
+        stage2CamPos.z = 1.68;
+        stage2CamPos.y = 0.03;
       }
 
       if (p <= 0.14) {
@@ -514,16 +535,16 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.46) {
         // Transition Stage 1 -> Stage 2 (Smoothly transitions to UV nozzle angle)
         const t = smoothstep(0.36, 0.46, p);
-        destTarget = new THREE.Vector3().lerpVectors(stage1Target, STAGE_2_UV.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(stage1CamPos, STAGE_2_UV.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(stage1Target, stage2Target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(stage1CamPos, stage2CamPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_1_SCREEN.xOffsetRatio, STAGE_2_UV.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(STAGE_1_SCREEN.baseRotY, STAGE_2_UV.baseRotY, t);
         destShadowOpacity = 0.0;
         destUvIntensity = 0.0;
       } else if (p <= 0.58) {
         // Stage 2: UV Sanitization Handpiece View (100% locked)
-        destTarget = STAGE_2_UV.target;
-        destCamPos = STAGE_2_UV.camPos;
+        destTarget = stage2Target;
+        destCamPos = stage2CamPos;
         destXOffsetRatio = STAGE_2_UV.xOffsetRatio;
         destBaseRotY = STAGE_2_UV.baseRotY; // ~0.839
         destShadowOpacity = STAGE_2_UV.shadowOpacity;
@@ -532,8 +553,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p < 0.68) {
         // Transition Stage 2 -> Stage 3 (Smoothly transitions to Ergonomic Chair view)
         const t = smoothstep(0.58, 0.68, p);
-        destTarget = new THREE.Vector3().lerpVectors(STAGE_2_UV.target, STAGE_3_CHAIR.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(STAGE_2_UV.camPos, STAGE_3_CHAIR.camPos, t);
+        destTarget = new THREE.Vector3().lerpVectors(stage2Target, STAGE_3_CHAIR.target, t);
+        destCamPos = new THREE.Vector3().lerpVectors(stage2CamPos, STAGE_3_CHAIR.camPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(STAGE_2_UV.xOffsetRatio, STAGE_3_CHAIR.xOffsetRatio, t);
         destBaseRotY = interpolateAngle(STAGE_2_UV.baseRotY, STAGE_3_CHAIR.baseRotY, t);
         destShadowOpacity = THREE.MathUtils.lerp(STAGE_2_UV.shadowOpacity, STAGE_3_CHAIR.shadowOpacity, t);
