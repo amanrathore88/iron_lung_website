@@ -6,6 +6,7 @@ import { HeroOverlay } from './components/HeroOverlay';
 import { ScrollyFeaturesOverlay } from './components/ScrollyFeaturesOverlay';
 import { DashboardSectionOverlay } from './components/DashboardSectionOverlay';
 import { AboutSectionOverlay } from './components/AboutSectionOverlay';
+import { LandingBottomSections } from './components/LandingBottomSections';
 import { VideoModal } from './components/VideoModal';
 import { DemoModal } from './components/DemoModal';
 
@@ -118,6 +119,9 @@ export const App: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Landing Page Bottom Sections (Integrated Capabilities, Air Quality Telemetry, Video Showcase, Partners Marquee, & Footer) */}
+      <LandingBottomSections />
 
 
       {/* Video Modal */}

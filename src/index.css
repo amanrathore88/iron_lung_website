@@ -1,6 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Geist:wght@300;400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Offwhite base palette */
+  --background: 40 18% 97%; /* #F8F7F4 premium offwhite */
+  --foreground: 240 6% 12%; /* #1e1e22 deep dark grey */
+
+  --card: 40 14% 93%; /* #F1EFE9 offwhite card */
+  --card-foreground: 240 6% 12%;
+
+  --popover: 40 18% 97%;
+  --popover-foreground: 240 6% 12%;
+
+  --primary: 25 100% 50%; /* #ff6900 vibrant orange */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 40 12% 91%; /* #ECE9E1 */
+  --secondary-foreground: 240 6% 12%;
+
+  --muted: 40 10% 88%;
+  --muted-foreground: 240 4% 40%; /* #636368 balanced dark grey */
+
+  --accent: 25 100% 50%; /* #ff6900 */
+  --accent-foreground: 0 0% 100%;
+
+  --border: 40 10% 84%; /* #d8d6cd subtle offwhite border */
+  --input: 40 10% 84%;
+  --ring: 25 100% 50%;
+
+  --radius: 0.5rem;
+
+  /* Custom tokens */
+  --steel: 40 10% 80%;
+  --iron-orange: #ff6900;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Geist', sans-serif;
+}
 
 @layer base {
   body {
@@ -61,4 +100,28 @@
   animation: infiniteSlide 38s linear infinite;
   will-change: transform;
 }
+
+/* Marquee infinite scroll for Partners */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 2rem)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 
