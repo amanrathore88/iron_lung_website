@@ -176,54 +176,57 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* LEFT SUB-COLUMN: Story marker, Headline, Paragraph, Video */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-5 flex flex-col items-start z-10 lg:absolute lg:top-[80px] xl:top-[86px] lg:left-[4.5%] xl:left-[5%] lg:w-[28%] lg:max-w-[280px] xl:max-w-[320px]">
-            {/* Section Chapter Marker */}
-            <div className="flex items-center gap-2 mb-2.5 lg:mb-3 z-20 pointer-events-none">
-              <div className="flex flex-col items-center">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#0A1118]" />
-                <div className="w-[1px] h-3 bg-[#0A1118]/30" />
+          <div className="w-full md:col-span-5 flex flex-col items-start justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[4.5%] xl:left-[5%] lg:w-[28%] lg:max-w-[285px] xl:max-w-[325px]">
+            {/* Top Group: Marker, Headline, Paragraph */}
+            <div className="flex flex-col items-start">
+              {/* Section Chapter Marker */}
+              <div className="flex items-center gap-2 mb-2.5 lg:mb-3 z-20 pointer-events-none">
+                <div className="flex flex-col items-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#0A1118]" />
+                  <div className="w-[1px] h-3 bg-[#0A1118]/30" />
+                </div>
+                <div className="flex flex-col font-manrope font-medium text-[9px] lg:text-[9.5px] xl:text-[10px] tracking-[0.28em] text-[#0A1118] uppercase leading-[1.25]">
+                  <span>OUR</span>
+                  <span>STORY</span>
+                </div>
               </div>
-              <div className="flex flex-col font-manrope font-medium text-[9px] lg:text-[9.5px] xl:text-[10px] tracking-[0.28em] text-[#0A1118] uppercase leading-[1.25]">
-                <span>OUR</span>
-                <span>STORY</span>
-              </div>
+
+              {/* Primary Editorial Headline Stack */}
+              <h2
+                className="flex flex-col items-start tracking-tight text-[#0A1118] select-none"
+                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+              >
+                <span
+                  className="italic font-normal text-[34px] xs:text-[38px] sm:text-[42px] lg:text-[44px] xl:text-[52px] text-[#0A1118] leading-[0.88] mb-0.5"
+                  style={{ letterSpacing: '-0.02em' }}
+                >
+                  People
+                </span>
+                <span
+                  className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                >
+                  Breathe
+                </span>
+                <span
+                  className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                >
+                  Brighter
+                </span>
+                <span
+                  className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                >
+                  Lives<span className="text-[#FF5E1E]">.</span>
+                </span>
+              </h2>
+
+              {/* Narrative Paragraph */}
+              <p className="font-manrope font-normal text-[10.5px] sm:text-[11px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.48] max-w-xl lg:max-w-[270px] xl:max-w-[310px] mt-2.5 sm:mt-3 xl:mt-3.5">
+                Iron Lung was born from a simple belief — better breathing creates a brighter, healthier, more human future. We combine science, design and technology to make respiratory wellness accessible to everyone.
+              </p>
             </div>
 
-            {/* Primary Editorial Headline Stack */}
-            <h2
-              className="flex flex-col items-start tracking-tight text-[#0A1118] select-none"
-              style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-            >
-              <span
-                className="italic font-normal text-[34px] xs:text-[38px] sm:text-[42px] lg:text-[42px] xl:text-[50px] text-[#0A1118] leading-[0.88] mb-0.5"
-                style={{ letterSpacing: '-0.02em' }}
-              >
-                People
-              </span>
-              <span
-                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
-              >
-                Breathe
-              </span>
-              <span
-                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
-              >
-                Brighter
-              </span>
-              <span
-                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
-              >
-                Lives<span className="text-[#FF5E1E]">.</span>
-              </span>
-            </h2>
-
-            {/* Narrative Paragraph */}
-            <p className="font-manrope font-normal text-[10.5px] sm:text-[11px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.48] max-w-xl lg:max-w-[265px] xl:max-w-[305px] mt-2.5 sm:mt-3 xl:mt-3.5">
-              Iron Lung was born from a simple belief — better breathing creates a brighter, healthier, more human future. We combine science, design and technology to make respiratory wellness accessible to everyone.
-            </p>
-
-            {/* Video Trigger */}
-            <div className="mt-3 sm:mt-3.5 xl:mt-4 z-10 pointer-events-auto">
+            {/* Video Trigger (Anchored in bottom zone of left column) */}
+            <div className="mt-4 lg:mt-auto pt-2 z-10 pointer-events-auto">
               <button
                 onClick={onOpenVideo}
                 aria-label="Play Our Story Video"
@@ -241,14 +244,14 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           </div>
 
           {/* ======================================================== */}
-          {/* RIGHT SECTION: Structured 3-Row Architectural Grid        */}
+          {/* RIGHT SECTION: Structured 4-Row Editorial Grid            */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-7 flex flex-col z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:left-[34%] xl:left-[33%] lg:right-[3.5%] lg:w-auto lg:max-w-[620px] xl:max-w-[660px] mt-6 md:mt-0">
+          <div className="w-full md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-6 md:mt-0">
             
-            {/* ROW 1: Mountain Image + Right Rail */}
-            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-start mb-2 lg:mb-2 xl:mb-2.5">
+            {/* ROW 1: Mountain Image + Right Rail (Flexibly expands to fill upper vertical space) */}
+            <div className="flex-1 min-h-[140px] grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-2 lg:mb-2.5 xl:mb-3.5">
               {/* Upper Mountain Landscape Image */}
-              <div className="relative w-full aspect-[16/9] sm:aspect-[1.7/1] lg:aspect-[1.75/1] xl:aspect-[1.65/1] max-h-[165px] lg:max-h-[175px] xl:max-h-[200px] 2xl:max-h-[225px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+              <div className="relative w-full h-full min-h-[140px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <img
                   src="/images/about-mountain-hq.png"
                   alt="A clearer tomorrow for everyone"
@@ -293,9 +296,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
             </div>
 
-            {/* ROW 2: Face Image — full width */}
-            <div className="relative mb-2 lg:mb-2 xl:mb-2.5">
-              <div className="relative w-full aspect-[2.4/1] sm:aspect-[2.6/1] lg:aspect-[2.8/1] xl:aspect-[2.6/1] max-h-[130px] lg:max-h-[140px] xl:max-h-[160px] 2xl:max-h-[180px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+            {/* ROW 2: Face Image — full width (Flexibly fills middle vertical space) */}
+            <div className="flex-[0.78] min-h-[110px] relative mb-2 lg:mb-2.5 xl:mb-3.5">
+              <div className="relative w-full h-full min-h-[110px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <img
                   src="/images/about-face-hq.png"
                   alt="Breath fuels possibility"
@@ -316,7 +319,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
               {/* Architectural Circle Overlay bridging Mountain and Face photos */}
               <div
-                className="hidden sm:block absolute top-[-45px] xl:top-[-55px] right-[10px] sm:right-[15px] lg:right-[20px] w-[150px] h-[150px] lg:w-[170px] lg:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full border border-white/45 pointer-events-none z-25"
+                className="hidden sm:block absolute top-[-40px] xl:top-[-50px] right-[10px] sm:right-[15px] lg:right-[20px] w-[150px] h-[150px] lg:w-[170px] lg:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full border border-white/45 pointer-events-none z-25"
                 style={{
                   maskImage: 'radial-gradient(circle, #000 70%, transparent 100%)',
                   WebkitMaskImage: 'radial-gradient(circle, #000 70%, transparent 100%)',
@@ -325,14 +328,14 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 3: Stats with Times New Roman + Animated Lung Seal */}
-            <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto">
+            <div className="shrink-0 flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto py-1">
               
               {/* 4 Key Metrics */}
               <div className="grid grid-cols-4 sm:flex items-center justify-between w-full py-0.5 gap-1.5 sm:gap-0">
                 {/* Stat 1: 10K+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     10K+
@@ -348,7 +351,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 {/* Stat 2: 5+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     5+
@@ -364,7 +367,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 {/* Stat 3: 20+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     20+
@@ -380,7 +383,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 {/* Stat 4: 100% */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     100%
@@ -422,8 +425,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
             </div>
 
-            {/* ROW 4: Bottom Purpose Editorial Rule */}
-            <div className="flex items-center gap-2 sm:gap-4 mt-1.5 lg:mt-2 xl:mt-2.5 pointer-events-none z-10 w-full">
+            {/* ROW 4: Bottom Purpose Editorial Rule (Anchored at the bottom baseline, aligned with 01 / 04) */}
+            <div className="shrink-0 flex items-center gap-2 sm:gap-4 pt-1.5 lg:pt-2 pointer-events-none z-10 w-full">
               <span className="font-manrope font-medium text-[6.5px] sm:text-[7px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.22em] text-[#0A1118] uppercase shrink-0">
                 OUR PURPOSE
               </span>
