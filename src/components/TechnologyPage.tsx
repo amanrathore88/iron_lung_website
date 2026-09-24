@@ -3,8 +3,6 @@ import { HeroNavbar } from "./HeroNavbar";
 import Footer from "./Footer";
 import ConsoleInteractiveSection from "./ConsoleInteractiveSection";
 import HardwareSpecsMatrixSection from "./HardwareSpecsMatrixSection";
-import DeviceSpecsSection from "./DeviceSpecsSection";
-import DeviceAnatomySection from "./DeviceAnatomySection";
 
 interface TechnologyPageProps {
   onBookDemo: () => void;
@@ -41,12 +39,6 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
 
         {/* 2. Unified Hardware Specifications, Dimensions, Weight & Pricing Matrix */}
         <HardwareSpecsMatrixSection onReserve={onContactUs} reserveUrl="#contact" />
-
-        {/* 3. Detailed Hardware Specs & Lineup Comparison Card */}
-        <DeviceSpecsSection onReserve={onContactUs} reserveUrl="#contact" />
-
-        {/* 4. Multi-Stage Scroll-Linked Device Anatomy (Display, Hub, UV Chamber) */}
-        <DeviceAnatomySection />
       </main>
 
       {/* Cinematic Shared Footer */}
