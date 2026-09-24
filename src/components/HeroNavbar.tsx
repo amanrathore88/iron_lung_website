@@ -25,25 +25,13 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
             e.preventDefault();
             onNavigateSection?.('hero');
           }}
-          className="flex flex-col group cursor-pointer text-left shrink-0"
+          className="flex items-center group cursor-pointer text-left shrink-0 py-0.5"
         >
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-[#FF5E1E] to-[#FF3D00] flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-none stroke-current" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3v9" />
-                <path d="M9 7l-3 3" />
-                <path d="M15 7l3 3" />
-                <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
-              </svg>
-            </div>
-            <span className="text-base sm:text-xl lg:text-2xl font-black tracking-wider text-slate-900">
-              IRON <span className="text-[#FF5E1E]">LUNG</span>
-            </span>
-          </div>
-          <span className="text-[7px] sm:text-[9px] tracking-[0.16em] sm:tracking-[0.24em] font-bold text-slate-500 uppercase ml-8 sm:ml-10 mt-0.5 whitespace-nowrap">
-            BREATHE BETTER. LIVE BETTER.
-          </span>
+          <img
+            src="/images/ironlung-logo.png"
+            alt="Iron Lung"
+            className="h-7 sm:h-8 md:h-8.5 lg:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+          />
         </button>
 
         {/* Center Desktop Navigation */}
