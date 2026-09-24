@@ -157,10 +157,13 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       {/* ======================================================== */}
       {/* 3. Main About Editorial Canvas                           */}
       {/* Mobile/Tablet: Full-width fluid container with scroll    */}
+      {/* ======================================================== */}
+      {/* 3. Main About Editorial Canvas                           */}
+      {/* Mobile/Tablet: Full-width fluid container with scroll    */}
       {/* Desktop: Pinned to left: 36.3vw matching reference       */}
       {/* ======================================================== */}
       <div
-        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-y-auto lg:overflow-hidden transition-all duration-200"
+        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-y-auto lg:overflow-visible transition-all duration-200"
         style={{
           opacity: currentContentOpacity,
           pointerEvents: isInteractive ? 'auto' : 'none',
@@ -173,14 +176,14 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* LEFT SUB-COLUMN: Story marker, Headline, Paragraph, Video */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-5 flex flex-col items-start z-10 lg:absolute lg:top-[140px] xl:top-[148px] lg:left-[3.8%] lg:w-[29%] lg:max-w-[330px] xl:max-w-[360px]">
+          <div className="w-full md:col-span-5 flex flex-col items-start z-10 lg:absolute lg:top-[80px] xl:top-[86px] lg:left-[4.5%] xl:left-[5%] lg:w-[28%] lg:max-w-[280px] xl:max-w-[320px]">
             {/* Section Chapter Marker */}
-            <div className="flex items-center gap-2 mb-3 lg:mb-0 lg:absolute lg:-top-[58px] lg:left-0 z-20 pointer-events-none">
+            <div className="flex items-center gap-2 mb-2.5 lg:mb-3 z-20 pointer-events-none">
               <div className="flex flex-col items-center">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#0A1118]" />
                 <div className="w-[1px] h-3 bg-[#0A1118]/30" />
               </div>
-              <div className="flex flex-col font-manrope font-medium text-[9.5px] lg:text-[10.5px] tracking-[0.28em] text-[#0A1118] uppercase leading-[1.25]">
+              <div className="flex flex-col font-manrope font-medium text-[9px] lg:text-[9.5px] xl:text-[10px] tracking-[0.28em] text-[#0A1118] uppercase leading-[1.25]">
                 <span>OUR</span>
                 <span>STORY</span>
               </div>
@@ -192,47 +195,47 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
             >
               <span
-                className="italic font-normal text-[36px] xs:text-[42px] sm:text-[48px] lg:text-[54px] xl:text-[62px] text-[#0A1118] leading-[0.88] mb-0.5"
+                className="italic font-normal text-[34px] xs:text-[38px] sm:text-[42px] lg:text-[42px] xl:text-[50px] text-[#0A1118] leading-[0.88] mb-0.5"
                 style={{ letterSpacing: '-0.02em' }}
               >
                 People
               </span>
               <span
-                className="font-bold text-[28px] xs:text-[34px] sm:text-[40px] lg:text-[46px] xl:text-[52px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
               >
                 Breathe
               </span>
               <span
-                className="font-bold text-[28px] xs:text-[34px] sm:text-[40px] lg:text-[46px] xl:text-[52px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
               >
                 Brighter
               </span>
               <span
-                className="font-bold text-[28px] xs:text-[34px] sm:text-[40px] lg:text-[46px] xl:text-[52px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
+                className="font-bold text-[26px] xs:text-[30px] sm:text-[34px] lg:text-[35px] xl:text-[41px] text-[#0A1118] leading-[0.88] tracking-[-0.025em]"
               >
                 Lives<span className="text-[#FF5E1E]">.</span>
               </span>
             </h2>
 
             {/* Narrative Paragraph */}
-            <p className="font-manrope font-normal text-[11.5px] sm:text-[12.5px] lg:text-[13px] xl:text-[14px] text-[#4A5568] leading-[1.5] max-w-xl lg:max-w-[340px] mt-3.5 sm:mt-4 lg:mt-4.5">
+            <p className="font-manrope font-normal text-[10.5px] sm:text-[11px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.48] max-w-xl lg:max-w-[265px] xl:max-w-[305px] mt-2.5 sm:mt-3 xl:mt-3.5">
               Iron Lung was born from a simple belief — better breathing creates a brighter, healthier, more human future. We combine science, design and technology to make respiratory wellness accessible to everyone.
             </p>
 
             {/* Video Trigger */}
-            <div className="mt-4 sm:mt-4.5 lg:mt-5 z-10 pointer-events-auto">
+            <div className="mt-3 sm:mt-3.5 xl:mt-4 z-10 pointer-events-auto">
               <button
                 onClick={onOpenVideo}
                 aria-label="Play Our Story Video"
-                className="group flex items-center gap-2.5 sm:gap-3.5 cursor-pointer focus:outline-none"
+                className="group flex items-center gap-2.5 sm:gap-3 cursor-pointer focus:outline-none"
               >
-                <div className="w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-105 group-hover:bg-[#FF5E1E] transition-all shrink-0">
-                  <Play size={12} className="fill-white translate-x-[1px] text-white" />
+                <div className="w-[32px] h-[32px] sm:w-[35px] sm:h-[35px] lg:w-[36px] lg:h-[36px] xl:w-[40px] xl:h-[40px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-105 group-hover:bg-[#FF5E1E] transition-all shrink-0">
+                  <Play size={11} className="fill-white translate-x-[1px] text-white" />
                 </div>
-                <span className="whitespace-nowrap font-manrope font-semibold text-[10px] sm:text-[11px] lg:text-[12px] uppercase tracking-[0.18em] text-[#0A1118] group-hover:text-[#FF5E1E] transition-colors">
+                <span className="whitespace-nowrap font-manrope font-semibold text-[9.5px] sm:text-[10px] lg:text-[10.5px] xl:text-[11px] uppercase tracking-[0.18em] text-[#0A1118] group-hover:text-[#FF5E1E] transition-colors">
                   OUR STORY
                 </span>
-                <div className="w-8 sm:w-11 lg:w-14 h-[1.5px] bg-[#0A1118]/40 transition-colors group-hover:bg-[#FF5E1E]" />
+                <div className="w-8 sm:w-10 lg:w-12 xl:w-14 h-[1.5px] bg-[#0A1118]/40 transition-colors group-hover:bg-[#FF5E1E]" />
               </button>
             </div>
           </div>
@@ -240,20 +243,20 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* RIGHT SECTION: Structured 3-Row Architectural Grid        */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-7 flex flex-col z-10 lg:absolute lg:top-[80px] lg:top-[88px] lg:left-[33.5%] lg:right-[4%] lg:max-w-[670px] mt-6 md:mt-0">
+          <div className="w-full md:col-span-7 flex flex-col z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:left-[34%] xl:left-[33%] lg:right-[3.5%] lg:w-auto lg:max-w-[620px] xl:max-w-[660px] mt-6 md:mt-0">
             
             {/* ROW 1: Mountain Image + Right Rail */}
-            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-5 lg:gap-x-7 items-start mb-2.5 lg:mb-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-start mb-2 lg:mb-2 xl:mb-2.5">
               {/* Upper Mountain Landscape Image */}
-              <div className="relative w-full aspect-[16/9] sm:aspect-[1.62/1] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+              <div className="relative w-full aspect-[16/9] sm:aspect-[1.7/1] lg:aspect-[1.75/1] xl:aspect-[1.65/1] max-h-[165px] lg:max-h-[175px] xl:max-h-[200px] 2xl:max-h-[225px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <img
                   src="/images/about-mountain-hq.png"
                   alt="A clearer tomorrow for everyone"
                   className="w-full h-full object-cover block"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent pointer-events-none z-10" />
-                <div className="absolute bottom-2.5 left-3 sm:bottom-3 sm:left-4 lg:bottom-3.5 lg:left-4.5 pointer-events-none z-20 flex flex-col items-start">
-                  <span className="font-manrope font-semibold text-[7.5px] sm:text-[8.5px] lg:text-[10px] tracking-[0.22em] text-white uppercase leading-[1.35] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+                <div className="absolute bottom-2 left-2.5 sm:bottom-2.5 sm:left-3.5 lg:bottom-3 lg:left-4 pointer-events-none z-20 flex flex-col items-start">
+                  <span className="font-manrope font-semibold text-[7.5px] sm:text-[8px] lg:text-[9px] xl:text-[10px] tracking-[0.22em] text-white uppercase leading-[1.35] drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                     A CLEARER <br />
                     TOMORROW <br />
                     FOR EVERYONE
@@ -262,11 +265,11 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
 
               {/* Right Rail: Healthier People + Inspired by Nature */}
-              <div className="w-full sm:w-[115px] lg:w-[140px] flex flex-row sm:flex-col items-start justify-between self-stretch gap-4 sm:gap-0">
+              <div className="w-full sm:w-[110px] lg:w-[125px] xl:w-[140px] flex flex-row sm:flex-col items-start justify-between self-stretch gap-4 sm:gap-0">
                 {/* Top: "Healthier People, Brighter Tomorrows" */}
-                <div className="flex flex-col items-start gap-1">
-                  <span className="text-sm sm:text-base font-serif text-slate-400 font-bold leading-none">"</span>
-                  <div className="flex flex-col font-manrope font-semibold text-[8.5px] sm:text-[9.5px] lg:text-[10.5px] tracking-[0.22em] text-[#0A1118] uppercase leading-[1.4]">
+                <div className="flex flex-col items-start gap-0.5 xl:gap-1">
+                  <span className="text-xs sm:text-sm xl:text-base font-serif text-slate-400 font-bold leading-none">"</span>
+                  <div className="flex flex-col font-manrope font-semibold text-[8px] sm:text-[8.5px] lg:text-[9px] xl:text-[10.5px] tracking-[0.22em] text-[#0A1118] uppercase leading-[1.38]">
                     <span>HEALTHIER</span>
                     <span>PEOPLE</span>
                     <span>BRIGHTER</span>
@@ -277,13 +280,13 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
                 {/* Bottom: "Inspired by Nature, Built by People..." */}
                 <div className="flex flex-col items-start sm:mt-auto">
-                  <div className="font-manrope font-normal text-[7.5px] sm:text-[8px] lg:text-[8.5px] tracking-[0.16em] text-slate-500 uppercase leading-[1.6]">
+                  <div className="font-manrope font-normal text-[7px] sm:text-[7.5px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.16em] text-slate-500 uppercase leading-[1.55]">
                     INSPIRED BY NATURE. <br className="hidden sm:inline" />
                     BUILT BY PEOPLE. <br className="hidden sm:inline" />
                     DRIVEN BY A HEALTHIER <br className="hidden sm:inline" />
                     TOMORROW.
                   </div>
-                  <span className="font-manrope font-medium text-[8.5px] sm:text-[9px] lg:text-[9.5px] tracking-widest text-slate-800 mt-1 sm:mt-1.5">
+                  <span className="font-manrope font-medium text-[8px] sm:text-[8.5px] lg:text-[8.5px] xl:text-[9.5px] tracking-widest text-slate-800 mt-1">
                     01 ―
                   </span>
                 </div>
@@ -291,21 +294,21 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 2: Face Image — full width */}
-            <div className="relative mb-2.5 lg:mb-3">
-              <div className="relative w-full aspect-[2.4/1] sm:aspect-[2.5/1] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+            <div className="relative mb-2 lg:mb-2 xl:mb-2.5">
+              <div className="relative w-full aspect-[2.4/1] sm:aspect-[2.6/1] lg:aspect-[2.8/1] xl:aspect-[2.6/1] max-h-[130px] lg:max-h-[140px] xl:max-h-[160px] 2xl:max-h-[180px] rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <img
                   src="/images/about-face-hq.png"
                   alt="Breath fuels possibility"
                   className="w-full h-full object-cover object-[center_36%] block"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-transparent pointer-events-none z-10" />
-                <div className="absolute bottom-2 left-3 sm:bottom-2.5 sm:left-4 lg:bottom-3 lg:left-4.5 pointer-events-none z-20">
-                  <span className="font-manrope font-semibold text-[8px] sm:text-[9px] lg:text-[10px] tracking-[0.24em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+                <div className="absolute bottom-1.5 left-2.5 sm:bottom-2 sm:left-3.5 lg:bottom-2.5 lg:left-4 pointer-events-none z-20">
+                  <span className="font-manrope font-semibold text-[7.5px] sm:text-[8px] lg:text-[9px] xl:text-[10px] tracking-[0.24em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                     02 ―
                   </span>
                 </div>
-                <div className="absolute bottom-2 right-3 sm:bottom-2.5 sm:right-4 lg:bottom-3 lg:right-4.5 pointer-events-none z-20 text-right">
-                  <span className="font-manrope font-semibold text-[7px] sm:text-[8px] lg:text-[9px] tracking-[0.20em] text-white uppercase drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+                <div className="absolute bottom-1.5 right-2.5 sm:bottom-2 sm:right-3.5 lg:bottom-2.5 lg:right-4 pointer-events-none z-20 text-right">
+                  <span className="font-manrope font-semibold text-[6.5px] sm:text-[7.5px] lg:text-[8px] xl:text-[9px] tracking-[0.20em] text-white uppercase drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                     BREATH FUELS POSSIBILITY
                   </span>
                 </div>
@@ -313,7 +316,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
               {/* Architectural Circle Overlay bridging Mountain and Face photos */}
               <div
-                className="hidden sm:block absolute top-[-55px] right-[10px] sm:right-[15px] lg:right-[20px] w-[170px] h-[170px] lg:w-[210px] lg:h-[210px] rounded-full border border-white/45 pointer-events-none z-25"
+                className="hidden sm:block absolute top-[-45px] xl:top-[-55px] right-[10px] sm:right-[15px] lg:right-[20px] w-[150px] h-[150px] lg:w-[170px] lg:h-[170px] xl:w-[210px] xl:h-[210px] rounded-full border border-white/45 pointer-events-none z-25"
                 style={{
                   maskImage: 'radial-gradient(circle, #000 70%, transparent 100%)',
                   WebkitMaskImage: 'radial-gradient(circle, #000 70%, transparent 100%)',
@@ -322,67 +325,67 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 3: Stats with Times New Roman + Animated Lung Seal */}
-            <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-5 lg:gap-x-7 items-center pointer-events-auto">
+            <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto">
               
               {/* 4 Key Metrics */}
-              <div className="grid grid-cols-4 sm:flex items-center justify-between w-full py-1 sm:py-0.5 gap-1.5 sm:gap-0">
+              <div className="grid grid-cols-4 sm:flex items-center justify-between w-full py-0.5 gap-1.5 sm:gap-0">
                 {/* Stat 1: 10K+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[21px] lg:text-[27px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     10K+
                   </span>
-                  <span className="font-manrope font-medium text-[6px] sm:text-[7.5px] lg:text-[8.5px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-0.5 xl:mt-1">
                     PEOPLE <br />
                     BREATHING BETTER
                   </span>
                 </div>
 
-                <div className="hidden sm:block w-[1px] h-6 sm:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
+                <div className="hidden sm:block w-[1px] h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
 
                 {/* Stat 2: 5+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[21px] lg:text-[27px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     5+
                   </span>
-                  <span className="font-manrope font-medium text-[6px] sm:text-[7.5px] lg:text-[8.5px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-0.5 xl:mt-1">
                     YEARS OF <br />
                     INNOVATION
                   </span>
                 </div>
 
-                <div className="hidden sm:block w-[1px] h-6 sm:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
+                <div className="hidden sm:block w-[1px] h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
 
                 {/* Stat 3: 20+ */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[21px] lg:text-[27px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     20+
                   </span>
-                  <span className="font-manrope font-medium text-[6px] sm:text-[7.5px] lg:text-[8.5px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-0.5 xl:mt-1">
                     COUNTRIES <br />
                     AND GROWING
                   </span>
                 </div>
 
-                <div className="hidden sm:block w-[1px] h-6 sm:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
+                <div className="hidden sm:block w-[1px] h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2" />
 
                 {/* Stat 4: 100% */}
                 <div className="flex flex-col text-center sm:text-left">
                   <span
-                    className="font-bold text-[16px] sm:text-[21px] lg:text-[27px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[16px] sm:text-[19px] lg:text-[21px] xl:text-[25px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     100%
                   </span>
-                  <span className="font-manrope font-medium text-[6px] sm:text-[7.5px] lg:text-[8.5px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-tight mt-0.5 xl:mt-1">
                     COMMITTED TO <br />
                     A HEALTHIER YOU
                   </span>
@@ -390,8 +393,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
 
               {/* Lung Seal */}
-              <div className="w-auto sm:w-[115px] lg:w-[140px] flex items-center justify-center shrink-0 mt-1 sm:mt-0">
-                <div className="relative w-12 h-12 sm:w-16 sm:h-16 lg:w-[72px] lg:h-[72px] flex items-center justify-center">
+              <div className="w-auto sm:w-[110px] lg:w-[125px] xl:w-[140px] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-[50px] lg:h-[50px] xl:w-[62px] xl:h-[62px] flex items-center justify-center">
                   <svg viewBox="0 0 100 100" className="w-full h-full animate-[spin_28s_linear_infinite]">
                     <defs>
                       <path
@@ -407,7 +410,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                   </svg>
                   {/* Center Animated Orange Lung Icon */}
                   <div className="absolute inset-0 flex items-center justify-center text-[#FF5E1E] pointer-events-none">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5.5 sm:h-5.5 fill-none stroke-[#FF5E1E] animate-pulse" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[18px] lg:h-[18px] xl:w-5 xl:h-5 fill-none stroke-[#FF5E1E] animate-pulse" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 3v9" />
                       <path d="M9 7l-3 3" />
                       <path d="M15 7l3 3" />
@@ -420,12 +423,12 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 4: Bottom Purpose Editorial Rule */}
-            <div className="flex items-center gap-2 sm:gap-4 mt-2.5 lg:mt-3 pointer-events-none z-10 w-full">
-              <span className="font-manrope font-medium text-[7px] sm:text-[8px] lg:text-[9px] tracking-[0.22em] text-[#0A1118] uppercase shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 mt-1.5 lg:mt-2 xl:mt-2.5 pointer-events-none z-10 w-full">
+              <span className="font-manrope font-medium text-[6.5px] sm:text-[7px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.22em] text-[#0A1118] uppercase shrink-0">
                 OUR PURPOSE
               </span>
               <div className="h-[1px] flex-1 bg-slate-300/70" />
-              <span className="font-manrope font-medium text-[7px] sm:text-[8px] lg:text-[9px] tracking-[0.22em] text-slate-500 uppercase shrink-0">
+              <span className="font-manrope font-medium text-[6.5px] sm:text-[7px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.22em] text-slate-500 uppercase shrink-0">
                 TECHNOLOGY FOR A BRIGHTER TOMORROW
               </span>
             </div>

@@ -64,7 +64,7 @@ const STAGE_3_CHAIR = {
 const STAGE_4_ABOUT = {
   target: new THREE.Vector3(0, -0.26, 0),
   camPos: new THREE.Vector3(0.0, 0.12, 8.0),
-  xOffsetRatio: 0.312, // Accurately frames chair and machine inside left column
+  xOffsetRatio: 0.345, // Accurately frames chair inside circular outline with complete clearance from editorial text
   baseRotY: 0.95, // Exact angle matching user reference image (chair on left, pole on right)
   baseRotZ: 0.0, // Straightened (no Z-axis tilt)
   shadowOpacity: 0.20,
