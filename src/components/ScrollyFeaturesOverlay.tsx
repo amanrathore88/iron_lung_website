@@ -453,7 +453,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 03: Ergonomic Biometric Training Chair (Left Col) */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-20 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between transition-all duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-16 pb-3 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between transition-all duration-300 pointer-events-none"
         style={{
           opacity: sec3Opacity,
           transform: `translateY(${sec3TranslateY}px)`,

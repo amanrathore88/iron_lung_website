@@ -160,9 +160,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           responsiveRatio = -0.04;
           offsetY = h * 0.055;
         } else if (p < 0.76) {
-          // Feature 03 Ergonomic Chair: Centered horizontally, lowered into Zone 2 optical sweet spot
+          // Feature 03 Ergonomic Chair: Centered horizontally, elevated into Zone 2 optical sweet spot above dock
           responsiveRatio = 0.0;
-          offsetY = -h * 0.045;
+          offsetY = h * 0.025;
         } else {
           responsiveRatio = xRatio * 0.35;
         }
@@ -506,10 +506,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         stage2Target.y = 0.01;
 
         // Stage 3 Ergonomic Chair on Mobile:
-        // Pull back camera so full chair (seat, backrest, armrests, headrest) fits comfortably between header and dock
-        stage3CamPos.z = 4.15;
-        stage3CamPos.y = -0.14;
-        stage3Target.y = -0.32;
+        // Pull back camera so full chair (seat cushion, backrest, armrests, headrest) is 100% visible between header and dock
+        stage3CamPos.z = 5.10;
+        stage3CamPos.y = -0.32;
+        stage3Target.y = -0.46;
       } else if (vpW < 1024 && isPortraitMode) {
         stage1Target.x = 0.01;
         stage1CamPos.x = 0.01;
