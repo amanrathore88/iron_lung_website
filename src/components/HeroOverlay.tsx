@@ -26,7 +26,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
 
   return (
     <div
-      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-16 sm:pt-24 lg:pt-32 pb-3 sm:pb-8 transition-opacity duration-150 overflow-hidden pointer-events-none"
+      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-[94px] sm:pt-24 lg:pt-32 pb-3 sm:pb-8 transition-opacity duration-150 overflow-hidden pointer-events-none"
       style={{
         opacity: heroOpacity,
         transform: `translateY(${heroTranslateY}px)`,
@@ -93,16 +93,6 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               </div>
               <span>Watch Video</span>
             </button>
-          </div>
-
-          {/* Mobile 360° Interaction Hint: Placed neatly under action buttons, never overlapping the chair */}
-          <div className="md:hidden flex items-center justify-start w-full mt-1.5 pointer-events-none">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-xs">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5E1E] animate-pulse" />
-              <span className="text-[9px] font-manrope font-bold tracking-wider text-slate-500 uppercase">
-                360° Drag to Rotate
-              </span>
-            </div>
           </div>
 
         </div>
