@@ -687,72 +687,118 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         destBaseRotY = interpolateAngle(STAGE_2_UV.baseRotY, STAGE_3_CHAIR.baseRotY, t);
         destShadowOpacity = THREE.MathUtils.lerp(STAGE_2_UV.shadowOpacity, STAGE_3_CHAIR.shadowOpacity, t);
         destUvIntensity = 0.0;
-      } else if (p <= 0.73) {
-        // Stage 3: Ergonomic Biometric Training Chair (100% locked in right column)
-        destTarget = stage3Target;
-        destCamPos = stage3CamPos;
-        destXOffsetRatio = s3X;
-        destOffsetYRatio = s3Y;
-        destBaseRotY = STAGE_3_CHAIR.baseRotY; // -0.42 rad (~ -24°)
-        destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
-        destUvIntensity = STAGE_3_CHAIR.uvIntensity;
-        heroSpinAngle = STAGE_3_CHAIR.baseRotY;
-      } else if (p < 0.81) {
-        // Transition Stage 3 -> Stage 4 About Us (Descends downwards, pulling back and gliding into left column of Our Story)
-        const t = smoothstep(0.73, 0.81, p);
-        destTarget = new THREE.Vector3().lerpVectors(stage3Target, STAGE_4_ABOUT.target, t);
-        destCamPos = new THREE.Vector3().lerpVectors(stage3CamPos, STAGE_4_ABOUT.camPos, t);
-        destXOffsetRatio = THREE.MathUtils.lerp(s3X, s4X, t);
-        destOffsetYRatio = THREE.MathUtils.lerp(s3Y, s4Y, t);
-        destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_4_ABOUT.baseRotY, t);
-        destBaseRotZ = THREE.MathUtils.lerp(0.0, STAGE_4_ABOUT.baseRotZ, t);
-        destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, STAGE_4_ABOUT.shadowOpacity, t);
-        destUvIntensity = 0.0;
-        heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-      } else if (p <= 0.88) {
-        // Stage 4: About Us Section (100% locked in left column, full machine framed)
-        destTarget = STAGE_4_ABOUT.target;
-        destCamPos = STAGE_4_ABOUT.camPos;
-        destXOffsetRatio = s4X;
-        destOffsetYRatio = s4Y;
-        destBaseRotY = STAGE_4_ABOUT.baseRotY;
-        destBaseRotZ = STAGE_4_ABOUT.baseRotZ;
-        destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
-        destUvIntensity = 0.0;
-        heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-      } else if (p < 0.98) {
-        // Stage 5: Cinematic Sweep & Reveal across to User Dashboard (360° rotation, growing in scale, gliding to right)
-        const t = (p - 0.88) / (0.98 - 0.88);
-        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-        destTarget = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
-        destCamPos = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.camPos, STAGE_5_SWEEP_END.camPos, ease);
-        destXOffsetRatio = THREE.MathUtils.lerp(s4X, s5X, ease);
-        destOffsetYRatio = THREE.MathUtils.lerp(s4Y, s5Y, ease);
-        destBaseRotY = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotY, STAGE_5_SWEEP_END.baseRotY, ease);
-        destBaseRotZ = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotZ, 0.0, ease);
-        destShadowOpacity = THREE.MathUtils.lerp(STAGE_4_ABOUT.shadowOpacity, STAGE_5_SWEEP_END.shadowOpacity, ease);
-        destUvIntensity = 0.0;
-        heroSpinAngle = destBaseRotY;
       } else {
-        // Culmination: Model Exited Completely Past Right Border
-        destTarget = STAGE_5_SWEEP_END.target;
-        destCamPos = STAGE_5_SWEEP_END.camPos;
-        destXOffsetRatio = s5X;
-        destOffsetYRatio = s5Y;
-        destBaseRotY = STAGE_5_SWEEP_END.baseRotY;
-        destBaseRotZ = 0.0;
-        destShadowOpacity = 0.0;
-        destUvIntensity = 0.0;
-        heroSpinAngle = STAGE_5_SWEEP_END.baseRotY;
+        if (vpW < 768) {
+          if (p <= 0.73) {
+          // Stage 3: Ergonomic Biometric Training Chair (Mobile)
+          destTarget = stage3Target;
+          destCamPos = stage3CamPos;
+          destXOffsetRatio = s3X;
+          destOffsetYRatio = s3Y;
+          destBaseRotY = STAGE_3_CHAIR.baseRotY;
+          destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
+          destUvIntensity = 0.0;
+          heroSpinAngle = STAGE_3_CHAIR.baseRotY;
+        } else if (p < 0.78) {
+          // Mobile Graceful Exit (0.73 -> 0.78):
+          // Model glides smoothly to the right edge with a gentle pull-back and concluding turn,
+          // dissolving cleanly to zero opacity before the About Us editorial story appears.
+          const tExit = smoothstep(0.73, 0.78, p);
+          destTarget = stage3Target;
+          destCamPos = new THREE.Vector3(
+            stage3CamPos.x,
+            stage3CamPos.y + 0.12 * tExit,
+            stage3CamPos.z + 1.10 * tExit
+          );
+          destXOffsetRatio = THREE.MathUtils.lerp(s3X, -0.95, tExit);
+          destOffsetYRatio = THREE.MathUtils.lerp(s3Y, 0.06, tExit);
+          destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_3_CHAIR.baseRotY + 0.32, tExit);
+          destBaseRotZ = 0.0;
+          destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, 0.0, tExit);
+          destUvIntensity = 0.0;
+          heroSpinAngle = destBaseRotY;
+        } else {
+          // Mobile p >= 0.78: Model is completely hidden through About Us & Dashboard
+          destTarget = stage3Target;
+          destCamPos = stage3CamPos;
+          destXOffsetRatio = -0.95;
+          destOffsetYRatio = 0.06;
+          destBaseRotY = STAGE_3_CHAIR.baseRotY + 0.32;
+          destBaseRotZ = 0.0;
+          destShadowOpacity = 0.0;
+          destUvIntensity = 0.0;
+          heroSpinAngle = destBaseRotY;
+        }
+      } else {
+        // Desktop / Laptop / Tablet: 100% UNCHANGED
+        if (p <= 0.73) {
+          // Stage 3: Ergonomic Biometric Training Chair (100% locked in right column)
+          destTarget = stage3Target;
+          destCamPos = stage3CamPos;
+          destXOffsetRatio = s3X;
+          destOffsetYRatio = s3Y;
+          destBaseRotY = STAGE_3_CHAIR.baseRotY; // -0.42 rad (~ -24°)
+          destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
+          destUvIntensity = STAGE_3_CHAIR.uvIntensity;
+          heroSpinAngle = STAGE_3_CHAIR.baseRotY;
+        } else if (p < 0.81) {
+          // Transition Stage 3 -> Stage 4 About Us (Descends downwards, pulling back and gliding into left column of Our Story)
+          const t = smoothstep(0.73, 0.81, p);
+          destTarget = new THREE.Vector3().lerpVectors(stage3Target, STAGE_4_ABOUT.target, t);
+          destCamPos = new THREE.Vector3().lerpVectors(stage3CamPos, STAGE_4_ABOUT.camPos, t);
+          destXOffsetRatio = THREE.MathUtils.lerp(s3X, s4X, t);
+          destOffsetYRatio = THREE.MathUtils.lerp(s3Y, s4Y, t);
+          destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_4_ABOUT.baseRotY, t);
+          destBaseRotZ = THREE.MathUtils.lerp(0.0, STAGE_4_ABOUT.baseRotZ, t);
+          destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, STAGE_4_ABOUT.shadowOpacity, t);
+          destUvIntensity = 0.0;
+          heroSpinAngle = STAGE_4_ABOUT.baseRotY;
+        } else if (p <= 0.88) {
+          // Stage 4: About Us Section (100% locked in left column, full machine framed)
+          destTarget = STAGE_4_ABOUT.target;
+          destCamPos = STAGE_4_ABOUT.camPos;
+          destXOffsetRatio = s4X;
+          destOffsetYRatio = s4Y;
+          destBaseRotY = STAGE_4_ABOUT.baseRotY;
+          destBaseRotZ = STAGE_4_ABOUT.baseRotZ;
+          destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
+          destUvIntensity = 0.0;
+          heroSpinAngle = STAGE_4_ABOUT.baseRotY;
+        } else if (p < 0.98) {
+          // Stage 5: Cinematic Sweep & Reveal across to User Dashboard (360° rotation, growing in scale, gliding to right)
+          const t = (p - 0.88) / (0.98 - 0.88);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+          destTarget = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
+          destCamPos = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.camPos, STAGE_5_SWEEP_END.camPos, ease);
+          destXOffsetRatio = THREE.MathUtils.lerp(s4X, s5X, ease);
+          destOffsetYRatio = THREE.MathUtils.lerp(s4Y, s5Y, ease);
+          destBaseRotY = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotY, STAGE_5_SWEEP_END.baseRotY, ease);
+          destBaseRotZ = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotZ, 0.0, ease);
+          destShadowOpacity = THREE.MathUtils.lerp(STAGE_4_ABOUT.shadowOpacity, STAGE_5_SWEEP_END.shadowOpacity, ease);
+          destUvIntensity = 0.0;
+          heroSpinAngle = destBaseRotY;
+        } else {
+          // Culmination: Model Exited Completely Past Right Border
+          destTarget = STAGE_5_SWEEP_END.target;
+          destCamPos = STAGE_5_SWEEP_END.camPos;
+          destXOffsetRatio = s5X;
+          destOffsetYRatio = s5Y;
+          destBaseRotY = STAGE_5_SWEEP_END.baseRotY;
+          destBaseRotZ = 0.0;
+          destShadowOpacity = 0.0;
+          destUvIntensity = 0.0;
+          heroSpinAngle = STAGE_5_SWEEP_END.baseRotY;
+        }
       }
+    }
 
       // Responsive lerp speed:
       // Mobile touch needs responsive tracking (0.20 - 0.24) so it never feels laggy behind touch scroll
       // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16)
       let lerpSpeed = p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
-        lerpSpeed = p >= 0.88 ? 0.24 : 0.20;
+        lerpSpeed = p >= 0.73 ? 0.22 : 0.20;
       } else if (vpW < 1024) {
         lerpSpeed = p >= 0.73 ? 0.18 : 0.12;
       }
@@ -762,7 +808,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       curXOffsetRatio += (destXOffsetRatio - curXOffsetRatio) * lerpSpeed;
       curOffsetYRatio += (destOffsetYRatio - curOffsetYRatio) * lerpSpeed;
 
-      if (p >= 0.88) {
+      if (p >= 0.88 && vpW >= 768) {
         // Continuous directional rotation during Stage 5 sweep (no modulo wrapping)
         curBaseRotY += (destBaseRotY - curBaseRotY) * lerpSpeed;
       } else {
@@ -778,8 +824,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       // 100% visible on Hero, Stage 1 (Screen), and Stage 2 (UV Gun) (p <= 0.58)
       // Smoothly dissolves away during transition (0.58 -> 0.66)
       // 100% hidden in Stage 3 (Chair) so only the chair is visible (0.66 -> 0.74)
-      // Smoothly restores to 1.0 during descent into About Us (0.74 -> 0.81)
-      // 100% visible throughout About Us and Dashboard sweep (0.81 -> 1.00)
+      // Smoothly restores to 1.0 during descent into About Us (0.74 -> 0.81) on Desktop
+      // On mobile, non-chair meshes remain hidden so they never pop in while chair is exiting
       let nonChairOpacity = 1.0;
       if (p > 0.58 && p < 0.66) {
         const t = smoothstep(0.58, 0.66, p);
@@ -787,22 +833,35 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (p >= 0.66 && p <= 0.74) {
         nonChairOpacity = 0.0;
       } else if (p > 0.74 && p < 0.81) {
-        const t = smoothstep(0.74, 0.81, p);
-        nonChairOpacity = t;
+        if (vpW < 768) {
+          nonChairOpacity = 0.0;
+        } else {
+          const t = smoothstep(0.74, 0.81, p);
+          nonChairOpacity = t;
+        }
       } else if (p >= 0.81) {
-        nonChairOpacity = 1.0;
+        nonChairOpacity = vpW < 768 ? 0.0 : 1.0;
       }
 
-      // Stage 5 Model Fade (0.90 -> 0.965):
-      // As the model sweeps across into Dashboard on mobile/tablet/desktop,
-      // smoothly fade the entire model to 0 opacity before visible = false at 0.98.
-      // This guarantees zero sudden disappearing pop or glitch!
+      // Stage 5 Model Fade:
+      // Mobile: Smoothly fade out the 3D model between 0.73 and 0.775
+      // Model is 100% gone before About Us editorial content appears at 0.78
+      // Desktop: Sweeps across during Stage 5 reveal (0.90 -> 0.965)
       let globalModelOpacity = 1.0;
-      if (p >= 0.90 && p < 0.965) {
-        const tSweepFade = smoothstep(0.90, 0.965, p);
-        globalModelOpacity = 1.0 - tSweepFade;
-      } else if (p >= 0.965) {
-        globalModelOpacity = 0.0;
+      if (vpW < 768) {
+        if (p > 0.73 && p < 0.775) {
+          const tFade = smoothstep(0.73, 0.775, p);
+          globalModelOpacity = 1.0 - tFade;
+        } else if (p >= 0.775) {
+          globalModelOpacity = 0.0;
+        }
+      } else {
+        if (p >= 0.90 && p < 0.965) {
+          const tSweepFade = smoothstep(0.90, 0.965, p);
+          globalModelOpacity = 1.0 - tSweepFade;
+        } else if (p >= 0.965) {
+          globalModelOpacity = 0.0;
+        }
       }
 
       (window as any).__SCROLL_STATE__ = { p, nonChairOpacity, globalModelOpacity, fadeCount: fadeMeshesRef.current.length };
@@ -857,7 +916,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
       // Model Visibility & Rotation Management
       if (modelGroupRef.current) {
-        modelGroupRef.current.visible = p < 0.98 && globalModelOpacity > 0.001;
+        const isVisibleProgress = vpW < 768 ? p < 0.78 : p < 0.98;
+        modelGroupRef.current.visible = isVisibleProgress && globalModelOpacity > 0.001;
         if (!isInteracting) {
           if (p > 0.14) {
             // When scrolling into feature sections, damp any leftover mouse drag offset to 0
