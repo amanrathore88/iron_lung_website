@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 interface HeroNavbarProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works') => void;
+  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => void;
   activeSection?: string;
 }
 
@@ -94,13 +94,21 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 flex-nowrap">
           <button
             onClick={onBookDemo}
-            className="hidden sm:inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold text-slate-800 border border-slate-300 bg-white/95 hover:bg-white hover:border-slate-400 shadow-sm transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+            className={`hidden sm:inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap cursor-pointer ${
+              activeSection === 'book-demo'
+                ? 'text-[#FF5E1E] border-2 border-[#FF5E1E] bg-[#FF5E1E]/10 font-bold shadow-sm'
+                : 'text-slate-800 border border-slate-300 bg-white/95 hover:bg-white hover:border-slate-400 shadow-sm'
+            }`}
           >
             Book a Demo
           </button>
           <button
             onClick={onContactUs}
-            className="px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_4px_16px_rgba(255,94,30,0.35)] hover:shadow-[0_6px_20px_rgba(255,94,30,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
+            className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold text-white transition-all duration-200 whitespace-nowrap cursor-pointer ${
+              activeSection === 'contact'
+                ? 'bg-[#E04B10] shadow-[0_0_20px_rgba(255,94,30,0.6)] ring-2 ring-orange-300 font-bold scale-[1.02]'
+                : 'bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_4px_16px_rgba(255,94,30,0.35)] hover:shadow-[0_6px_20px_rgba(255,94,30,0.5)] hover:scale-[1.02] active:scale-[0.98]'
+            }`}
           >
             Contact Us
           </button>
@@ -198,7 +206,11 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                   setMobileMenuOpen(false);
                   onBookDemo();
                 }}
-                className="w-full py-3 rounded-xl text-sm font-semibold text-white/90 border border-white/20 bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all"
+                className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
+                  activeSection === 'book-demo'
+                    ? 'text-[#FF5E1E] border border-[#FF5E1E] bg-[#FF5E1E]/15 font-bold shadow-sm'
+                    : 'text-white/90 border border-white/20 bg-white/5 hover:bg-white/10 active:scale-[0.98]'
+                }`}
               >
                 Book Demo
               </button>
@@ -207,7 +219,11 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                   setMobileMenuOpen(false);
                   onContactUs();
                 }}
-                className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_0_20px_rgba(255,94,30,0.4)] active:scale-[0.98] transition-all"
+                className={`w-full py-3 rounded-xl text-sm font-semibold text-white transition-all ${
+                  activeSection === 'contact'
+                    ? 'bg-[#E04B10] shadow-[0_0_25px_rgba(255,94,30,0.7)] ring-2 ring-orange-400 font-bold'
+                    : 'bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_0_20px_rgba(255,94,30,0.4)] active:scale-[0.98]'
+                }`}
               >
                 Contact Us
               </button>
