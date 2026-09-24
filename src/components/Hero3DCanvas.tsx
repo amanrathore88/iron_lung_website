@@ -782,12 +782,13 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       contactMat.opacity = Math.max(0, curShadowOpacity * 0.45);
 
       // ----------------------------------------------------
-      // Button Hotspots Position Projection (Stage 1: 0.18 - 0.40)
+      // Button Hotspots Position Projection (Stage 1: 0.235 - 0.365)
+      // Only display when Feature 01 is completely open & stationary
       // ----------------------------------------------------
-      const isStage1 = p >= 0.18 && p <= 0.40;
+      const isStage1Open = p >= 0.235 && p <= 0.365;
       if (hotspotsContainerRef.current) {
         if (
-          isStage1 &&
+          isStage1Open &&
           buttonMeshesRef.current.top &&
           buttonMeshesRef.current.left &&
           buttonMeshesRef.current.right
@@ -834,14 +835,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             hotspotRightRef.current.style.pointerEvents = rightPos.visible ? 'auto' : 'none';
           }
 
-          // Smooth fade in as Stage 1 approaches and settles
-          const stage1Fade = Math.min(
-            1,
-            Math.max(0, p < 0.24 ? (p - 0.18) / 0.06 : (0.40 - p) / 0.05)
-          );
-          hotspotsContainerRef.current.style.opacity = stage1Fade.toString();
-          hotspotsContainerRef.current.style.pointerEvents =
-            stage1Fade > 0.1 ? 'auto' : 'none';
+          hotspotsContainerRef.current.style.opacity = '1';
+          hotspotsContainerRef.current.style.pointerEvents = 'auto';
         } else {
           hotspotsContainerRef.current.style.opacity = '0';
           hotspotsContainerRef.current.style.pointerEvents = 'none';
@@ -849,7 +844,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       }
 
       // Automatically close active button info card when scrolling away from Stage 1
-      if (activeButtonRef.current && (p < 0.16 || p > 0.42)) {
+      if (activeButtonRef.current && (p < 0.22 || p > 0.38)) {
         setActiveButton(null);
       }
 
@@ -863,7 +858,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     // Raycaster click and pointermove event listeners for 3D buttons on canvas
     const handleCanvasClick = (e: MouseEvent) => {
       const p = scrollProgressRef.current;
-      if (p < 0.18 || p > 0.40) return;
+      if (p < 0.235 || p > 0.365) return;
       const rect = renderer.domElement.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -885,7 +880,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
     const handleCanvasPointerMove = (e: MouseEvent) => {
       const p = scrollProgressRef.current;
-      if (p < 0.18 || p > 0.40) {
+      if (p < 0.235 || p > 0.365) {
         renderer.domElement.style.cursor = '';
         return;
       }
@@ -954,7 +949,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       {/* Interactive Hotspots for Feature 01 Buttons */}
       <div
         ref={hotspotsContainerRef}
-        className="absolute inset-0 pointer-events-none transition-opacity duration-300 z-30"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-150 ease-out z-30"
         style={{ opacity: 0 }}
       >
         {/* Top Button Hotspot: UV Sanitization */}
@@ -964,7 +959,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('uv');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
           title="Top Button: UV Sanitization"
           aria-label="UV Sanitization Button"
         >
@@ -991,7 +986,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('start');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
           title="Left Button: Start"
           aria-label="Start Button"
         >
@@ -1018,7 +1013,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('reset');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer transition-transform duration-200 active:scale-90 pointer-events-auto"
+          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
           title="Right Button: Reset"
           aria-label="Reset Button"
         >

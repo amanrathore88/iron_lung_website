@@ -30,7 +30,7 @@ export const BUTTON_INFO_MAP: Record<ButtonType, ButtonData> = {
     title: 'UV-C Purification System',
     subtitle: 'Automated Dual-Chamber Cleanse',
     description:
-      'Initiates an automated medical-grade UV-C irradiation cycle through internal airflow channels and the user handset, neutralizing 99.9% of bacteria and pathogens between sessions.',
+      'Initiates an automated medical-grade UV-C irradiation cycle through airflow channels and handset, eliminating 99.9% of bacteria and pathogens.',
     specs: [
       { label: 'Efficacy', value: '99.9% Pathogen Elimination' },
       { label: 'Cycle Time', value: '60 Seconds Rapid Cycle' },
@@ -52,7 +52,7 @@ export const BUTTON_INFO_MAP: Record<ButtonType, ButtonData> = {
     title: 'One-Touch Protocol Start',
     subtitle: 'Adaptive Biometric Induction',
     description:
-      'Instantly activates the selected hyper-oxygenation or rhythmic training protocol, synchronizing variable-frequency air turbines with live respiratory feedback.',
+      'Activates hyper-oxygenation training protocol, synchronizing variable-frequency air turbines with real-time biometric feedback.',
     specs: [
       { label: 'Activation', value: 'One-Touch Instant Engage' },
       { label: 'Flow Control', value: 'Biometric Adaptive Delivery' },
@@ -74,7 +74,7 @@ export const BUTTON_INFO_MAP: Record<ButtonType, ButtonData> = {
     title: 'Emergency Stop & Reset',
     subtitle: 'Instant Pressure Neutralization',
     description:
-      'Safely halts all active airflow, vents internal pressure vessels, and recalibrates precision flow transducers to absolute zero baseline for the next user.',
+      'Safely halts all airflow, vents internal pressure vessels, and recalibrates precision flow transducers to absolute zero baseline.',
     specs: [
       { label: 'Response', value: '< 0.2s Rapid Neutralize' },
       { label: 'Sensor Calibration', value: 'Zero-Point Auto Tare' },
@@ -111,11 +111,11 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
   const renderIcon = () => {
     switch (activeButton) {
       case 'uv':
-        return <Sparkles className="w-5 h-5 text-purple-600" />;
+        return <Sparkles className="w-4 h-4 text-purple-600" />;
       case 'start':
-        return <Play className="w-5 h-5 text-emerald-600 fill-emerald-600" />;
+        return <Play className="w-4 h-4 text-emerald-600 fill-emerald-600" />;
       case 'reset':
-        return <RotateCcw className="w-5 h-5 text-rose-600" />;
+        return <RotateCcw className="w-4 h-4 text-rose-600" />;
     }
   };
 
@@ -132,22 +132,22 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
 
         {/* Card */}
         <div
-          className="relative w-full max-w-[360px] rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_20px_60px_rgba(0,0,0,0.22)] p-4 flex flex-col gap-3 backdrop-blur-xl animate-in zoom-in-95 duration-250 z-10"
+          className="relative w-full max-w-[340px] max-h-[calc(100vh-32px)] overflow-y-auto rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_20px_60px_rgba(0,0,0,0.22)] p-3.5 sm:p-4 flex flex-col gap-2.5 backdrop-blur-xl animate-in zoom-in-95 duration-200 z-10"
           style={{
             boxShadow: `0 20px 50px -10px ${data.glowColor}, 0 0 0 1px rgba(255, 255, 255, 0.8)`,
           }}
         >
           {/* Header row */}
-          <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+          <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
             <div className="flex items-center gap-2">
-              <div className={`w-8 h-8 rounded-xl ${data.iconBg} flex items-center justify-center shrink-0`}>
+              <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg ${data.iconBg} flex items-center justify-center shrink-0`}>
                 {renderIcon()}
               </div>
               <div className="flex flex-col">
-                <span className={`text-[9px] font-black tracking-widest uppercase ${data.badgeText}`}>
+                <span className={`text-[8.5px] font-black tracking-widest uppercase ${data.badgeText}`}>
                   {data.badge}
                 </span>
-                <span className="text-base font-black text-slate-900 tracking-tight leading-none mt-0.5">
+                <span className="text-sm sm:text-base font-black text-slate-900 tracking-tight leading-none mt-0.5">
                   {data.title}
                 </span>
               </div>
@@ -156,27 +156,27 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors shrink-0"
+              className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors shrink-0"
               aria-label="Close"
             >
-              <X size={15} />
+              <X size={13} />
             </button>
           </div>
 
           {/* Description */}
-          <p className="text-xs text-slate-600 leading-relaxed font-normal">
+          <p className="text-[11.5px] text-slate-600 leading-snug font-normal">
             {data.description}
           </p>
 
           {/* Specs List */}
-          <div className="flex flex-col gap-1.5 pt-1">
+          <div className="flex flex-col gap-1 pt-0.5">
             {data.specs.map((s, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between p-2 rounded-xl bg-slate-50/80 border border-slate-100 text-[11px]"
+                className="flex items-center justify-between py-1 px-2.5 rounded-lg bg-slate-50/80 border border-slate-100 text-[10.5px]"
               >
                 <div className="flex items-center gap-1.5 text-slate-500 font-medium">
-                  <CheckCircle2 size={13} className={data.iconText} />
+                  <CheckCircle2 size={12} className={data.iconText} />
                   <span>{s.label}</span>
                 </div>
                 <span className="font-bold text-slate-900">{s.value}</span>
@@ -185,7 +185,7 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
           </div>
 
           {/* Footer Action */}
-          <div className="flex items-center justify-between pt-1 text-[10px] text-slate-400 border-t border-slate-100">
+          <div className="flex items-center justify-between pt-1.5 text-[9.5px] text-slate-400 border-t border-slate-100">
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Live Hardware Function
@@ -197,20 +197,27 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
     );
   }
 
-  // On Desktop (>= 1024px): Anchored cleanly below the button cluster with clear space from left cards
-  const cardWidth = 325;
-  const buttonX = anchorPos ? anchorPos.x : 580;
-  const buttonY = anchorPos ? anchorPos.y : 480;
+  // On Desktop (>= 1024px): Anchored cleanly below the button cluster with strictly guaranteed bottom clearance
+  const cardWidth = 310;
+  const estimatedCardHeight = 220;
+  const buttonX = anchorPos ? anchorPos.x : 520;
+  const buttonY = anchorPos ? anchorPos.y : 540;
 
-  // Left feature cards end around X = 450px on desktop.
-  // Ensure left is at least 485px so it NEVER touches the left column cards.
-  let left = Math.max(485, Math.min(buttonX - 60, screenW - cardWidth - 30));
-  // Safely anchor below button without running off bottom
-  let top = Math.min(buttonY + 28, screenH - 290);
+  // Position card horizontally aligned with button, clear of left cards (>= 475px on wide desktop)
+  let left = Math.min(buttonX - 40, screenW - cardWidth - 24);
+  if (left < 475 && screenW >= 1200) {
+    left = 475;
+  } else if (left < 20) {
+    left = 20;
+  }
+
+  // Strictly clamp top position so the card NEVER cuts off at the bottom of the screen
+  let top = Math.min(buttonY + 18, screenH - estimatedCardHeight - 20);
+  if (top < 76) top = 76;
 
   return (
     <div
-      className="absolute z-40 pointer-events-auto animate-in fade-in zoom-in-95 duration-250"
+      className="absolute z-40 pointer-events-auto animate-in fade-in zoom-in-95 duration-200"
       style={{
         left: `${left}px`,
         top: `${top}px`,
@@ -219,22 +226,22 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
     >
       {/* Popover Card */}
       <div
-        className="relative w-full rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_24px_64px_rgba(0,0,0,0.18)] p-4 flex flex-col gap-3 backdrop-blur-xl transition-all"
+        className="relative w-full max-h-[calc(100vh-90px)] overflow-y-auto rounded-2xl bg-white/95 border border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.16)] p-3.5 flex flex-col gap-2 backdrop-blur-xl transition-all"
         style={{
-          boxShadow: `0 24px 60px -10px ${data.glowColor}, 0 0 0 1px rgba(255, 255, 255, 0.9)`,
+          boxShadow: `0 20px 50px -10px ${data.glowColor}, 0 0 0 1px rgba(255, 255, 255, 0.9)`,
         }}
       >
         {/* Header row */}
-        <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
-          <div className="flex items-center gap-2.5">
-            <div className={`w-9 h-9 rounded-xl ${data.iconBg} flex items-center justify-center shrink-0 shadow-sm`}>
+        <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+          <div className="flex items-center gap-2">
+            <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg ${data.iconBg} flex items-center justify-center shrink-0 shadow-xs`}>
               {renderIcon()}
             </div>
             <div className="flex flex-col">
-              <span className={`text-[9.5px] font-black tracking-widest uppercase ${data.badgeText}`}>
+              <span className={`text-[8.5px] sm:text-[9px] font-black tracking-widest uppercase ${data.badgeText}`}>
                 {data.badge}
               </span>
-              <span className="text-base font-black text-slate-900 tracking-tight leading-none mt-0.5">
+              <span className="text-[13.5px] sm:text-sm font-black text-slate-900 tracking-tight leading-none mt-0.5">
                 {data.title}
               </span>
             </div>
@@ -243,32 +250,32 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors shrink-0"
+            className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors shrink-0"
             aria-label="Close"
           >
-            <X size={15} />
+            <X size={13} />
           </button>
         </div>
 
         {/* Subtitle & Description */}
-        <div className="flex flex-col gap-1">
-          <span className="text-[11px] font-bold text-slate-700">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-[10.5px] font-bold text-slate-700 leading-tight">
             {data.subtitle}
           </span>
-          <p className="text-xs text-slate-600 leading-relaxed font-normal">
+          <p className="text-[11px] text-slate-600 leading-snug font-normal">
             {data.description}
           </p>
         </div>
 
         {/* Feature Specs */}
-        <div className="flex flex-col gap-1.5 pt-0.5">
+        <div className="flex flex-col gap-1 pt-0.5">
           {data.specs.map((s, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-between p-2 rounded-xl bg-slate-50/80 border border-slate-100 text-[11px]"
+              className="flex items-center justify-between py-1 px-2.5 rounded-lg bg-slate-50/90 border border-slate-100 text-[10.5px]"
             >
               <div className="flex items-center gap-1.5 text-slate-500 font-medium">
-                <CheckCircle2 size={13} className={data.iconText} />
+                <CheckCircle2 size={12} className={data.iconText} />
                 <span>{s.label}</span>
               </div>
               <span className="font-bold text-slate-900">{s.value}</span>
@@ -277,7 +284,7 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-1 text-[10px] text-slate-400 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-1.5 text-[9.5px] text-slate-400 border-t border-slate-100">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span>Hardware Function Active</span>
