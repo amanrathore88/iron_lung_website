@@ -508,6 +508,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         if (liveW > 0 && liveH > 0 && (liveW !== width || liveH !== height)) {
           width = liveW;
           height = liveH;
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
           renderer.setSize(width, height);
           renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         }
@@ -549,10 +551,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       const isPortraitMode = width / height < 1.0;
 
       if (vpW < 768) {
-        stage1Target.x = 0.01;
-        stage1CamPos.x = 0.01;
-        stage1CamPos.z = 2.50; // Scales console so wings, buttons, and display have comfortable margins on phone
-        stage1CamPos.y = 0.53;
+        stage1Target.x = 0.0;
+        stage1CamPos.x = 0.0;
+        stage1CamPos.z = 3.10; // Pull back console so both wings and button dots have comfortable margins on all mobile screens
+        stage1CamPos.y = 0.54;
 
         // Stage 2 UV Handpiece on Mobile:
         // Pull back camera so full handpiece (barrel, body, handle, cable) fits comfortably between header and dock
@@ -898,7 +900,33 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       renderer.domElement.style.cursor = hits.length > 0 ? 'pointer' : '';
     };
 
+    const handleCanvasTouchEnd = (e: TouchEvent) => {
+      const p = scrollProgressRef.current;
+      if (p < 0.235 || p > 0.365) return;
+      if (e.changedTouches.length === 0) return;
+      const touch = e.changedTouches[0];
+      const rect = renderer.domElement.getBoundingClientRect();
+      const x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+      mouseVecRef.current.set(x, y);
+      raycasterRef.current.setFromCamera(mouseVecRef.current, camera);
+      const buttons = [
+        buttonMeshesRef.current.top,
+        buttonMeshesRef.current.left,
+        buttonMeshesRef.current.right,
+      ].filter(Boolean) as THREE.Object3D[];
+      const hits = raycasterRef.current.intersectObjects(buttons, true);
+      if (hits.length > 0) {
+        e.preventDefault();
+        const hit = hits[0].object;
+        if (hit.name.includes('Button_1')) handleButtonClick('uv');
+        else if (hit.name.includes('Button_3')) handleButtonClick('start');
+        else if (hit.name.includes('Button_2')) handleButtonClick('reset');
+      }
+    };
+
     renderer.domElement.addEventListener('click', handleCanvasClick);
+    renderer.domElement.addEventListener('touchend', handleCanvasTouchEnd, { passive: false });
     renderer.domElement.addEventListener('pointermove', handleCanvasPointerMove);
 
     // Resize Handler
@@ -907,6 +935,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       width = mountElem.clientWidth;
       height = mountElem.clientHeight;
 
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
       applyViewOffset(width, height, curXOffsetRatio);
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -917,6 +947,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     return () => {
       window.removeEventListener('resize', handleResize);
       renderer.domElement.removeEventListener('click', handleCanvasClick);
+      renderer.domElement.removeEventListener('touchend', handleCanvasTouchEnd);
       renderer.domElement.removeEventListener('pointermove', handleCanvasPointerMove);
       if (animFrameIdRef.current) {
         cancelAnimationFrame(animFrameIdRef.current);
@@ -940,7 +971,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         className={`w-full h-full relative ${
           scrollProgress <= 0.14
             ? 'cursor-grab active:cursor-grabbing pointer-events-auto'
-            : scrollProgress >= 0.18 && scrollProgress <= 0.40
+            : scrollProgress >= 0.235 && scrollProgress <= 0.365
             ? 'pointer-events-auto'
             : 'pointer-events-none'
         }`}
@@ -959,23 +990,27 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('uv');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            handleButtonClick('uv');
+          }}
+          className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto z-10"
           title="Top Button: UV Sanitization"
           aria-label="UV Sanitization Button"
         >
           {/* Radar Ring */}
-          <span className="absolute inset-0 rounded-full bg-purple-400 opacity-60 animate-ping" />
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-purple-400 opacity-60 animate-ping" />
           {/* Glass Halo */}
           <span
-            className={`absolute inset-0 rounded-full bg-purple-500/25 backdrop-blur-xs border border-purple-400/90 shadow-[0_0_12px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-all ${
+            className={`pointer-events-none absolute inset-0 rounded-full bg-purple-500/25 backdrop-blur-xs border border-purple-400/90 shadow-[0_0_12px_rgba(168,85,247,0.7)] group-hover:scale-125 transition-all ${
               activeButton === 'uv'
                 ? 'scale-125 ring-2 ring-purple-400 ring-offset-2 ring-offset-slate-900'
                 : ''
             }`}
           />
           {/* Solid Core Dot */}
-          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#a855f7] border border-purple-400 flex items-center justify-center">
-            <span className="w-1 h-1 rounded-full bg-purple-600" />
+          <span className="pointer-events-none relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white shadow-[0_0_8px_#a855f7] border border-purple-400 flex items-center justify-center">
+            <span className="pointer-events-none w-1 h-1 rounded-full bg-purple-600" />
           </span>
         </button>
 
@@ -986,23 +1021,27 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('start');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            handleButtonClick('start');
+          }}
+          className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto z-10"
           title="Left Button: Start"
           aria-label="Start Button"
         >
           {/* Radar Ring */}
-          <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" />
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" />
           {/* Glass Halo */}
           <span
-            className={`absolute inset-0 rounded-full bg-emerald-500/25 backdrop-blur-xs border border-emerald-400/90 shadow-[0_0_12px_rgba(16,185,129,0.7)] group-hover:scale-125 transition-all ${
+            className={`pointer-events-none absolute inset-0 rounded-full bg-emerald-500/25 backdrop-blur-xs border border-emerald-400/90 shadow-[0_0_12px_rgba(16,185,129,0.7)] group-hover:scale-125 transition-all ${
               activeButton === 'start'
                 ? 'scale-125 ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900'
                 : ''
             }`}
           />
           {/* Solid Core Dot */}
-          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#10b981] border border-emerald-400 flex items-center justify-center">
-            <span className="w-1 h-1 rounded-full bg-emerald-600" />
+          <span className="pointer-events-none relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white shadow-[0_0_8px_#10b981] border border-emerald-400 flex items-center justify-center">
+            <span className="pointer-events-none w-1 h-1 rounded-full bg-emerald-600" />
           </span>
         </button>
 
@@ -1013,23 +1052,27 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             e.stopPropagation();
             handleButtonClick('reset');
           }}
-          className="absolute -top-3.5 -left-3.5 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto"
+          onTouchEnd={(e) => {
+            e.stopPropagation();
+            handleButtonClick('reset');
+          }}
+          className="absolute -top-3 -left-3 sm:-top-3.5 sm:-left-3.5 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full group cursor-pointer active:scale-90 pointer-events-auto z-10"
           title="Right Button: Reset"
           aria-label="Reset Button"
         >
           {/* Radar Ring */}
-          <span className="absolute inset-0 rounded-full bg-rose-400 opacity-60 animate-ping" />
+          <span className="pointer-events-none absolute inset-0 rounded-full bg-rose-400 opacity-60 animate-ping" />
           {/* Glass Halo */}
           <span
-            className={`absolute inset-0 rounded-full bg-rose-500/25 backdrop-blur-xs border border-rose-400/90 shadow-[0_0_12px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-all ${
+            className={`pointer-events-none absolute inset-0 rounded-full bg-rose-500/25 backdrop-blur-xs border border-rose-400/90 shadow-[0_0_12px_rgba(244,63,94,0.7)] group-hover:scale-125 transition-all ${
               activeButton === 'reset'
                 ? 'scale-125 ring-2 ring-rose-400 ring-offset-2 ring-offset-slate-900'
                 : ''
             }`}
           />
           {/* Solid Core Dot */}
-          <span className="relative w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white shadow-[0_0_8px_#f43f5e] border border-rose-400 flex items-center justify-center">
-            <span className="w-1 h-1 rounded-full bg-rose-600" />
+          <span className="pointer-events-none relative w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white shadow-[0_0_8px_#f43f5e] border border-rose-400 flex items-center justify-center">
+            <span className="pointer-events-none w-1 h-1 rounded-full bg-rose-600" />
           </span>
         </button>
       </div>
