@@ -262,7 +262,7 @@ export const APPLICATIONS = [
 interface HowItWorksPageProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => void;
+  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
 }
 
 export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
@@ -276,7 +276,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
   const activeMode = MODES[selectedModeIndex];
   const activeApp = APPLICATIONS[activeAppTab];
 
-  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => {
+  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
     if (section === 'how-it-works') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {

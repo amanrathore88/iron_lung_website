@@ -7,13 +7,14 @@ import { ScrollyFeaturesOverlay } from './components/ScrollyFeaturesOverlay';
 import { DashboardSectionOverlay } from './components/DashboardSectionOverlay';
 import { AboutSectionOverlay } from './components/AboutSectionOverlay';
 import { LandingBottomSections } from './components/LandingBottomSections';
+import { TechnologyPage } from './components/TechnologyPage';
 import { HowItWorksPage } from './components/HowItWorksPage';
 import { BookDemoPage } from './components/BookDemoPage';
 import { ContactPage } from './components/ContactPage';
 import { VideoModal } from './components/VideoModal';
 import { DemoModal } from './components/DemoModal';
 
-export type AppView = 'home' | 'how-it-works' | 'book-demo' | 'contact';
+export type AppView = 'home' | 'technology' | 'how-it-works' | 'book-demo' | 'contact';
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
@@ -29,6 +30,9 @@ export const App: React.FC = () => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
+      if (hash.includes('technology') || pathname.includes('technology')) {
+        return 'technology';
+      }
       if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
         return 'how-it-works';
       }
@@ -50,7 +54,9 @@ export const App: React.FC = () => {
     const handlePopState = () => {
       const hash = window.location.hash.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
-      if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
+      if (hash.includes('technology') || pathname.includes('technology')) {
+        setCurrentView('technology');
+      } else if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
         setCurrentView('how-it-works');
       } else if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         setCurrentView('book-demo');
@@ -109,7 +115,16 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => {
+  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
+    if (section === 'technology') {
+      if (currentView !== 'technology') {
+        window.history.pushState(null, '', '#technology');
+        setCurrentView('technology');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (section === 'how-it-works') {
       if (currentView !== 'how-it-works') {
         window.history.pushState(null, '', '#how-it-works');
@@ -162,7 +177,13 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative bg-white text-slate-900 font-sans select-none">
-      {currentView === 'how-it-works' ? (
+      {currentView === 'technology' ? (
+        <TechnologyPage
+          onBookDemo={() => handleNavigation('book-demo')}
+          onContactUs={() => handleNavigation('contact')}
+          onNavigateSection={handleNavigation}
+        />
+      ) : currentView === 'how-it-works' ? (
         <HowItWorksPage
           onBookDemo={() => handleNavigation('book-demo')}
           onContactUs={() => handleNavigation('contact')}

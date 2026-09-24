@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 interface HeroNavbarProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => void;
+  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
   activeSection?: string;
 }
 
@@ -49,9 +49,9 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
         {/* Center Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-3 lg:gap-6 xl:gap-9 text-xs lg:text-sm font-semibold text-slate-800 whitespace-nowrap shrink">
           <button
-            onClick={() => onNavigateSection?.('screen')}
+            onClick={() => onNavigateSection?.('technology')}
             className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
+              activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
             }`}
           >
             Technology
@@ -147,10 +147,10 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onNavigateSection?.('screen');
+                onNavigateSection?.('technology');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors ${
-                activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
               Technology

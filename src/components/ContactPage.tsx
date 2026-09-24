@@ -46,7 +46,7 @@ export const INQUIRY_CATEGORIES = [
 
 interface ContactPageProps {
   onBookDemo: () => void;
-  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => void;
+  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({
@@ -155,7 +155,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
     }
   };
 
-  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact') => {
+  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
     if (section === 'contact') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
