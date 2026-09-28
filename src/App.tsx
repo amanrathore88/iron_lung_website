@@ -46,7 +46,8 @@ export const App: React.FC = () => {
     return 'home';
   });
 
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [modelProgress, setModelProgress] = useState<number>(0);
+  const [dashboardFrameProgress, setDashboardFrameProgress] = useState<number>(0);
   const scrollyTrackRef = useRef<HTMLDivElement>(null);
 
   // Sync browser back/forward and hash changes
@@ -86,11 +87,16 @@ export const App: React.FC = () => {
           const track = scrollyTrackRef.current;
           if (track) {
             const trackTop = track.offsetTop;
-            const trackSpan = track.offsetHeight - window.innerHeight;
-            if (trackSpan > 0) {
-              const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
-              setScrollProgress(progress);
-            }
+            const vh = window.innerHeight;
+            const modelSpan = 6.6 * vh; // 660vh for 3D model & sweep reveal
+            const dashboardSpan = 3.0 * vh; // 300vh for video frames scrub
+            
+            const relY = Math.max(0, scrollY - trackTop);
+            const mProgress = Math.min(1, relY / modelSpan);
+            setModelProgress(mProgress);
+
+            const frameProgress = Math.min(1, Math.max(0, (relY - modelSpan) / dashboardSpan));
+            setDashboardFrameProgress(frameProgress);
           }
           ticking = false;
         });
@@ -103,13 +109,32 @@ export const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentView]);
 
-  const scrollToStage = (progress: number) => {
+  const scrollToStage = (stageVal: number | 'hero' | 'screen' | 'uv' | 'comfort' | 'about' | 'dashboard') => {
     const track = scrollyTrackRef.current;
     if (track) {
       const trackTop = track.offsetTop;
-      const trackSpan = track.offsetHeight - window.innerHeight;
+      const vh = window.innerHeight;
+      const modelSpan = 6.6 * vh;
+      let targetOffset = 0;
+
+      if (typeof stageVal === 'number') {
+        targetOffset = stageVal * modelSpan;
+      } else if (stageVal === 'hero') {
+        targetOffset = 0;
+      } else if (stageVal === 'screen') {
+        targetOffset = 0.28 * modelSpan;
+      } else if (stageVal === 'uv') {
+        targetOffset = 0.50 * modelSpan;
+      } else if (stageVal === 'comfort') {
+        targetOffset = 0.72 * modelSpan;
+      } else if (stageVal === 'about') {
+        targetOffset = 0.84 * modelSpan;
+      } else if (stageVal === 'dashboard') {
+        targetOffset = modelSpan; // At completion of sweep reveal with frame 1 ready
+      }
+
       window.scrollTo({
-        top: trackTop + progress * trackSpan,
+        top: trackTop + targetOffset,
         behavior: 'smooth',
       });
     }
@@ -157,22 +182,22 @@ export const App: React.FC = () => {
       window.history.pushState(null, '', '#');
       setCurrentView('home');
       setTimeout(() => {
-        if (section === 'hero') scrollToStage(0);
-        else if (section === 'screen') scrollToStage(0.28);
-        else if (section === 'uv') scrollToStage(0.50);
-        else if (section === 'comfort') scrollToStage(0.72);
-        else if (section === 'about') scrollToStage(0.84);
-        else if (section === 'dashboard') scrollToStage(0.98);
+        if (section === 'hero') scrollToStage('hero');
+        else if (section === 'screen') scrollToStage('screen');
+        else if (section === 'uv') scrollToStage('uv');
+        else if (section === 'comfort') scrollToStage('comfort');
+        else if (section === 'about') scrollToStage('about');
+        else if (section === 'dashboard') scrollToStage('dashboard');
       }, 60);
       return;
     }
 
-    if (section === 'hero') scrollToStage(0);
-    else if (section === 'screen') scrollToStage(0.28);
-    else if (section === 'uv') scrollToStage(0.50);
-    else if (section === 'comfort') scrollToStage(0.72);
-    else if (section === 'about') scrollToStage(0.84);
-    else if (section === 'dashboard') scrollToStage(0.98);
+    if (section === 'hero') scrollToStage('hero');
+    else if (section === 'screen') scrollToStage('screen');
+    else if (section === 'uv') scrollToStage('uv');
+    else if (section === 'comfort') scrollToStage('comfort');
+    else if (section === 'about') scrollToStage('about');
+    else if (section === 'dashboard') scrollToStage('dashboard');
   };
 
   return (
@@ -207,59 +232,60 @@ export const App: React.FC = () => {
             onContactUs={() => handleNavigation('contact')}
             onNavigateSection={handleNavigation}
             activeSection={
-              scrollProgress > 0.90
+              modelProgress >= 0.88
                 ? 'dashboard'
-                : scrollProgress > 0.78
+                : modelProgress >= 0.78
                 ? 'about'
-                : scrollProgress > 0.60
+                : modelProgress >= 0.60
                 ? 'comfort'
-                : scrollProgress > 0.18
+                : modelProgress >= 0.18
                 ? 'screen'
                 : 'hero'
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (h-[760vh] calibrated for smooth feature transitions, editorial About Us, & cinematic sweep) */}
-          <div ref={scrollyTrackRef} className="relative h-[760vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[1060vh]: 660vh for 3D model & sweep, 300vh for 120-frame video sequence) */}
+          <div ref={scrollyTrackRef} className="relative h-[1060vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
               {/* Layer 0 (z-0): Studio Room Background */}
-              <StudioRoomBackground scrollProgress={scrollProgress} />
+              <StudioRoomBackground scrollProgress={modelProgress} />
 
               {/* Layer 1 (z-[10]): Editorial About Us Section Overlay (media_1790142628076.png) */}
               <AboutSectionOverlay
-                scrollProgress={scrollProgress}
+                scrollProgress={modelProgress}
                 onOpenVideo={() => setIsVideoModalOpen(true)}
               />
 
-              {/* Layer 2 (z-[15]): Section 4 User Dashboard Overlay (Revealed via soft cloudy mask following 3D model) */}
+              {/* Layer 2 (z-[15]): Section 4 User Dashboard Overlay (Synchronized 120-frame video sequence) */}
               <DashboardSectionOverlay
-                scrollProgress={scrollProgress}
+                scrollProgress={modelProgress}
+                frameProgress={dashboardFrameProgress}
                 onExploreDashboard={() => handleNavigation('book-demo')}
                 onOpenVideo={() => setIsVideoModalOpen(true)}
               />
 
               {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
-              <Hero3DCanvas scrollProgress={scrollProgress} />
+              <Hero3DCanvas scrollProgress={modelProgress} />
 
               {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls) */}
               <HeroOverlay
-                onDiscover={() => scrollToStage(0.28)}
+                onDiscover={() => scrollToStage('screen')}
                 onOpenVideo={() => setIsVideoModalOpen(true)}
-                scrollProgress={scrollProgress}
+                scrollProgress={modelProgress}
               />
 
               {/* Layer 4 (z-[30]): Scrollytelling Feature Overlays (Stage 1: Touch Screen, Stage 2: UV Sanitization, Stage 3: Ergonomic Chair) */}
               <ScrollyFeaturesOverlay
-                scrollProgress={scrollProgress}
-                onExploreScreen={() => scrollToStage(0.28)}
-                onExploreUV={() => scrollToStage(0.50)}
-                onExploreChair={() => scrollToStage(0.72)}
+                scrollProgress={modelProgress}
+                onExploreScreen={() => scrollToStage('screen')}
+                onExploreUV={() => scrollToStage('uv')}
+                onExploreChair={() => scrollToStage('comfort')}
               />
             </div>
           </div>
 
-          {/* Landing Page Bottom Sections (Integrated Capabilities, Air Quality Telemetry, Video Showcase, Partners Marquee, & Footer) */}
+          {/* Landing Page Bottom Sections (Partners Marquee & Cinematic Footer) */}
           <LandingBottomSections />
         </>
       )}
