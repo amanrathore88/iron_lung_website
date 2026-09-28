@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { PopcornText } from './PopcornText';
+import type { AnimationOptions } from 'framer-motion';
+
+// Global single-play lifecycle guard:
+// Ensures the tagline text animation plays STRICTLY ONCE at the moment
+// the 3D model moves and the text appears, and never again while zooming or scrolling.
+let hasDashboardTextAnimatedGlobal = false;
+
+const POPCORN_SPRING_TRANSITION: AnimationOptions = {
+  type: 'spring',
+  stiffness: 380,
+  damping: 18,
+  mass: 1,
+};
 
 interface DashboardSectionOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
@@ -113,8 +126,23 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // Image zoom scale: zooms in from 0.76 up to 1.00
   const imageScale = 0.76 + 0.24 * splitEase;
 
-  const isTextActive = scrollProgress >= 0.88;
+  // Reset only if user navigates all the way back to the very top Hero section (< 0.15)
+  if (scrollProgress < 0.15) {
+    hasDashboardTextAnimatedGlobal = false;
+  }
+
+  // The 3D model moves to the side and the sweep reveals the text between 0.88 and 0.925
+  // Trigger the text animation specifically at the moment the 3D model moves and the text appears
+  const isSweepRevealingText = scrollProgress >= 0.885;
+  const isTextActive = isSweepRevealingText;
   const isInteractive = scrollProgress >= 0.92;
+
+  // Once the text appears, mark the global flag as true so it never re-animates on subsequent scrolling/zooming
+  useEffect(() => {
+    if (isSweepRevealingText && !hasDashboardTextAnimatedGlobal) {
+      hasDashboardTextAnimatedGlobal = true;
+    }
+  }, [isSweepRevealingText]);
 
   if (scrollProgress < 0.86) {
     return null;
@@ -180,9 +208,13 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               startOpacity={0}
               rotationRange={22}
               stagger={0.03}
-              transition={{ type: 'spring', stiffness: 380, damping: 18, mass: 1 }}
+              transition={POPCORN_SPRING_TRANSITION}
               appearTrigger="default"
               isActive={isTextActive}
+              hasAppearedAlready={hasDashboardTextAnimatedGlobal}
+              onAnimationComplete={() => {
+                hasDashboardTextAnimatedGlobal = true;
+              }}
             />
           </div>
         </div>
@@ -204,9 +236,13 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               startOpacity={0}
               rotationRange={22}
               stagger={0.03}
-              transition={{ type: 'spring', stiffness: 380, damping: 18, mass: 1 }}
+              transition={POPCORN_SPRING_TRANSITION}
               appearTrigger="default"
               isActive={isTextActive}
+              hasAppearedAlready={hasDashboardTextAnimatedGlobal}
+              onAnimationComplete={() => {
+                hasDashboardTextAnimatedGlobal = true;
+              }}
             />
           </div>
         </div>

@@ -37,6 +37,8 @@ export type PopcornTextProps = {
   appearTrigger?: "default" | "hover" | "scroll";
   scrollConfig?: ScrollConfig;
   isActive?: boolean;
+  hasAppearedAlready?: boolean;
+  onAnimationComplete?: () => void;
 };
 
 const defaultFont: FontStyle = {
@@ -66,10 +68,17 @@ export function PopcornText({
   appearTrigger: _appearTrigger = "default",
   scrollConfig: _scrollConfig = { position: "bottom", distance: 20 },
   isActive = true,
+  hasAppearedAlready = false,
+  onAnimationComplete,
 }: PopcornTextProps) {
   const [scope, animate] = useAnimate();
-  const hasAppearedRef = useRef(false);
+  const hasAppearedRef = useRef(Boolean(hasAppearedAlready));
   const isInitializedRef = useRef(false);
+
+  // Sync ref if prop updates to true
+  if (hasAppearedAlready && !hasAppearedRef.current) {
+    hasAppearedRef.current = true;
+  }
 
   // Normalize words array
   const wordsList: WordItem[] = useMemo(() => {
@@ -109,7 +118,7 @@ export function PopcornText({
   }, [allChars.length, rotationRange]);
 
   const resetToHidden = useCallback(() => {
-    if (!scope.current) return;
+    if (!scope.current || hasAppearedAlready || hasAppearedRef.current) return;
     animate(
       ".char",
       {
@@ -120,7 +129,7 @@ export function PopcornText({
       },
       { duration: 0 }
     );
-  }, [animate, startY, startScale, startOpacity, scope]);
+  }, [animate, startY, startScale, startOpacity, scope, hasAppearedAlready]);
 
   const runAppear = useCallback(() => {
     if (!scope.current) return;
@@ -133,32 +142,42 @@ export function PopcornText({
       },
     };
 
-    animate(
+    const anim = animate(
       ".char",
       { y: 0, scale: 1, opacity: 1, rotate: 0 },
       animationConfig as any
     );
-  }, [animate, transition, stagger, charsConfig, scope]);
 
-  // Initial hidden setup on mount
+    if (onAnimationComplete) {
+      anim.then(() => {
+        onAnimationComplete();
+      }).catch(() => {});
+    }
+  }, [animate, transition, stagger, charsConfig, scope, onAnimationComplete]);
+
+  // Initial hidden setup on mount: ONLY when not already appeared
   useEffect(() => {
     if (!isInitializedRef.current) {
       isInitializedRef.current = true;
-      resetToHidden();
+      if (!hasAppearedAlready && !hasAppearedRef.current) {
+        resetToHidden();
+      }
     }
-  }, [resetToHidden]);
+  }, [resetToHidden, hasAppearedAlready]);
 
   // Handle strictly one-time appear animation when isActive turns true
   useEffect(() => {
+    if (hasAppearedAlready) {
+      hasAppearedRef.current = true;
+      return;
+    }
+
     if (isActive && !hasAppearedRef.current) {
       hasAppearedRef.current = true;
-      const timer = setTimeout(runAppear, 30);
+      const timer = setTimeout(runAppear, 20);
       return () => clearTimeout(timer);
-    } else if (!isActive && hasAppearedRef.current) {
-      hasAppearedRef.current = false;
-      resetToHidden();
     }
-  }, [isActive, runAppear, resetToHidden]);
+  }, [isActive, runAppear, hasAppearedAlready]);
 
   const fontStyles = (font ?? {}) as React.CSSProperties;
   const safeTag = (TAGS as readonly string[]).includes(tag) ? tag : "h1";
@@ -217,6 +236,8 @@ export function PopcornText({
                       willChange: "transform, opacity",
                       transformOrigin: "center center",
                       "--start-rot": `${item.randomRotation}deg`,
+                      opacity: hasAppearedAlready ? 1 : undefined,
+                      transform: hasAppearedAlready ? "none" : undefined,
                     } as React.CSSProperties
                   }
                 >
