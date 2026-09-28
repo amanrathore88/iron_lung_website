@@ -58,13 +58,13 @@ export function PopcornText({
   tag = "h1",
   style,
 
-  startY = 35,
+  startY = 30,
   startScale = 0,
   startOpacity = 0,
-  rotationRange = 22,
+  rotationRange = 20,
 
-  stagger = 0.03,
-  transition = { type: "spring", stiffness: 380, damping: 18, mass: 1 },
+  stagger = 0.04,
+  transition = { type: "spring", stiffness: 350, damping: 14, mass: 1 },
   appearTrigger: _appearTrigger = "default",
   scrollConfig: _scrollConfig = { position: "bottom", distance: 20 },
   isActive = true,

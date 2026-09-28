@@ -9,8 +9,8 @@ let hasDashboardTextAnimatedGlobal = false;
 
 const POPCORN_SPRING_TRANSITION: AnimationOptions = {
   type: 'spring',
-  stiffness: 380,
-  damping: 18,
+  stiffness: 350,
+  damping: 14,
   mass: 1,
 };
 
@@ -102,17 +102,20 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // ---------------------------------------------------------------------------
   // 2. Scroll-Driven Text Off-Screen Exit & Image Zoom Transition (0.925 - 0.965)
   // ---------------------------------------------------------------------------
-  // - Popcorn Text plays strictly ONCE on section entry (0.88+)
-  // - When scrollProgress <= 0.925:
-  //   "YOUR DASHBOARD AWAITS" is centered, solid, and completely finished animating.
-  // - As user scrolls between 0.925 and 0.965:
-  //   - "YOUR DASHBOARD" accelerates UPWARDS and exits completely off-screen at the top.
-  //   - "AWAITS" accelerates DOWNWARDS and exits completely off-screen at the bottom.
-  //   - The User Dashboard image appears and zooms in between them (scale 0.76 -> 1.0, opacity 0 -> 1).
-  // - When scrollProgress >= 0.965:
-  //   Text is 100% off-screen and hidden.
-  //   User Dashboard image is fully centered, uncropped, and prominent.
-  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.925) / 0.045));
+  // ---------------------------------------------------------------------------
+  // 2. Text Popcorn Animation on 3D Model Exit & Subsequent Scroll Separation
+  // ---------------------------------------------------------------------------
+  // - When the 3D model sweeps completely out to the right (scrollProgress >= 0.920),
+  //   the text "YOUR DASHBOARD AWAITS" appears with the Popcorn Text animation.
+  // - It plays strictly once.
+  // - After that (scrollProgress >= 0.935), "YOUR DASHBOARD" simply moves UP,
+  //   "AWAITS" simply moves DOWN, and the User Dashboard image zooms in between them.
+  const isModelExitRight = scrollProgress >= 0.920;
+  const isTextActive = isModelExitRight;
+  const isInteractive = scrollProgress >= 0.920;
+
+  // Separation progress: begins once the text has appeared and settled
+  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.935) / 0.035));
   const splitEase =
     splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
 
@@ -131,18 +134,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
     hasDashboardTextAnimatedGlobal = false;
   }
 
-  // The 3D model moves to the side and the sweep reveals the text between 0.88 and 0.925
-  // Trigger the text animation specifically at the moment the 3D model moves and the text appears
-  const isSweepRevealingText = scrollProgress >= 0.885;
-  const isTextActive = isSweepRevealingText;
-  const isInteractive = scrollProgress >= 0.92;
-
-  // Once the text appears, mark the global flag as true so it never re-animates on subsequent scrolling/zooming
+  // Once the 3D model moves out to the right and text appears, mark the global flag as true so it never re-animates
   useEffect(() => {
-    if (isSweepRevealingText && !hasDashboardTextAnimatedGlobal) {
+    if (isModelExitRight && !hasDashboardTextAnimatedGlobal) {
       hasDashboardTextAnimatedGlobal = true;
     }
-  }, [isSweepRevealingText]);
+  }, [isModelExitRight]);
 
   if (scrollProgress < 0.86) {
     return null;
@@ -188,7 +185,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       <div
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8"
         style={{
-          display: textOpacity > 0.005 ? 'flex' : 'none',
+          display:
+            textOpacity > 0.005 && (hasDashboardTextAnimatedGlobal || isModelExitRight)
+              ? 'flex'
+              : 'none',
         }}
       >
         {/* Top Line: "YOUR DASHBOARD" -> moves up and out of view */}
@@ -203,11 +203,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <PopcornText
               wordsConfig={TOP_WORDS}
               font={isMobile ? MOBILE_FONT : DESKTOP_FONT}
-              startY={35}
+              startY={30}
               startScale={0}
               startOpacity={0}
-              rotationRange={22}
-              stagger={0.03}
+              rotationRange={20}
+              stagger={0.04}
               transition={POPCORN_SPRING_TRANSITION}
               appearTrigger="default"
               isActive={isTextActive}
@@ -231,11 +231,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <PopcornText
               wordsConfig={BOTTOM_WORDS}
               font={isMobile ? MOBILE_FONT : DESKTOP_FONT}
-              startY={35}
+              startY={30}
               startScale={0}
               startOpacity={0}
-              rotationRange={22}
-              stagger={0.03}
+              rotationRange={20}
+              stagger={0.04}
               transition={POPCORN_SPRING_TRANSITION}
               appearTrigger="default"
               isActive={isTextActive}
