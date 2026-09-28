@@ -17,9 +17,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // Physical Airplane-Style Sweep Reveal Architecture:
   // Starts revealing at 0.88 as the full 3D Iron Lung sweeps past About Us.
   // Desktop Horizontal Sweep Reveal (0.88 - 0.98)
+  // Perfectly synchronized in lockstep with the 3D model's flight trajectory across the screen.
+  // Stage 4 chair center: 15.5vw (s4X = 0.345)
+  // Stage 5 exit: ~120vw (s5X = -0.70)
   const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.10));
   const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  const revealPct = ease * 100;
+  const modelCenterPct = 15.5 + ease * 104.5;
+  // The reveal leading edge is aligned directly with the 3D model:
+  const revealPct = Math.min(116, Math.max(0, modelCenterPct + 2));
 
   // Mobile / Tablet Elevation Reveal (0.885 - 0.98):
   // Fades and elevates the dashboard into place as the 3D model sweeps and rotates across
@@ -30,11 +35,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       : 1 - Math.pow(-2 * mobileProgress + 2, 3) / 2;
 
   // Soft Gradient / Cloudy Edge Transition (Desktop sweep):
-  // Replaces the harsh, sharp cut line with an ultra-smooth feathered mask gradient (~16% / 220px width)
-  const feather = 16;
+  // Ultra-smooth feathered mask gradient (~18% / 250px width) centered directly on the 3D model
+  const feather = 18;
   const fadeStart = Math.max(0, revealPct - feather);
-  const fadeMid1 = Math.max(0, revealPct - feather * 0.65);
-  const fadeMid2 = Math.max(0, revealPct - feather * 0.30);
+  const fadeMid1 = Math.max(0, revealPct - feather * 0.60);
+  const fadeMid2 = Math.max(0, revealPct - feather * 0.25);
   const fadeEnd = Math.min(100, revealPct);
 
   // When fully revealed (revealPct >= 99.5) or on mobile/tablet, disable CSS mask to avoid GPU lag
@@ -63,12 +68,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       }}
     >
       {/* Soft Atmospheric Cloudy Mist along the leading transition edge (Desktop only) */}
-      {isDesktop && revealPct > 2 && revealPct < 99 && (
+      {isDesktop && revealPct > 5 && revealPct < 105 && (
         <div
           className="absolute top-0 bottom-0 pointer-events-none z-20"
           style={{
             left: `${fadeMid1}%`,
-            width: '200px',
+            width: '240px',
             transform: 'translateX(-50%)',
             background:
               'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.48) 0%, rgba(254, 251, 247, 0.22) 50%, transparent 80%)',

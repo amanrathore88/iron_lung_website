@@ -111,15 +111,16 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   const isInteractive = scrollProgress >= 0.81 && scrollProgress <= 0.88;
 
   // Seamless Airplane-Style Wipe: As the 3D model sweeps left-to-right into User Dashboard (0.88 - 0.98),
-  // wipe out 'Our Story' behind the leading edge so zero ghosting or card overlap ever occurs (desktop only)
+  // wipe out 'Our Story' in direct lockstep with the 3D model and white fade so zero ghosting or card overlap occurs (desktop only)
   let maskStyle: React.CSSProperties = {};
   if (isDesktop && scrollProgress >= 0.88) {
     const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.10));
     const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    const wipePct = ease * 100;
-    const wipeStart = Math.max(0, wipePct - 6);
-    const wipeEnd = Math.min(100, wipePct + 8);
-    const mask = `linear-gradient(to right, transparent 0%, transparent ${wipeStart}%, rgba(0,0,0,0.3) ${wipePct}%, #000 ${wipeEnd}%, #000 100%)`;
+    const modelCenterPct = 15.5 + ease * 104.5;
+    const wipePct = Math.min(100, Math.max(0, modelCenterPct + 2));
+    const wipeStart = Math.max(0, wipePct - 14);
+    const wipeEnd = Math.min(100, wipePct + 4);
+    const mask = `linear-gradient(to right, transparent 0%, transparent ${wipeStart}%, rgba(0,0,0,0.3) ${wipePct - 4}%, #000 ${wipeEnd}%, #000 100%)`;
     maskStyle = {
       maskImage: mask,
       WebkitMaskImage: mask,

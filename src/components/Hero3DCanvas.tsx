@@ -74,10 +74,11 @@ const STAGE_4_ABOUT = {
 // Stage 5: Sweep & Flight Reveal Keyframe across to User Dashboard (0.88 - 0.98)
 // Culminates exiting past the RIGHT border of the screen, growing in size (camPos.z: 4.90)
 // Base rotates a full 360 degrees (2*PI) continuously across the sweep
+// Calibrated to xOffsetRatio: -0.70 (screenX: 120vw) so the model center exits smoothly and stays in lockstep with the white fade
 const STAGE_5_SWEEP_END = {
   target: new THREE.Vector3(0, 0.05, 0),
   camPos: new THREE.Vector3(0.0, 0.35, 4.90),
-  xOffsetRatio: -0.90, // Shifts completely off the right edge of the screen
+  xOffsetRatio: -0.70, // Shifts completely off the right edge of the screen in lockstep with white fade
   baseRotY: 0.95 + Math.PI * 2.0, // Full 360-degree rotation across the sweep
   shadowOpacity: 0.0,
   uvIntensity: 0.0,
@@ -605,7 +606,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           s4X = 0.345 * 0.85;
           s4Y = 0.0;
 
-          s5X = -1.10;
+          s5X = -0.75;
           s5Y = 0.0;
         } else {
           s0X = -0.16;
@@ -623,7 +624,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           s4X = 0.345 * 0.90;
           s4Y = 0.0;
 
-          s5X = -1.10;
+          s5X = -0.75;
           s5Y = 0.0;
         }
       }
@@ -795,12 +796,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
       // Responsive lerp speed:
       // Mobile touch needs responsive tracking (0.20 - 0.24) so it never feels laggy behind touch scroll
-      // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16)
-      let lerpSpeed = p >= 0.73 ? 0.16 : 0.08;
+      // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with responsive tracking (0.28) during Stage 5 sweep
+      let lerpSpeed = p >= 0.88 ? 0.28 : p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
         lerpSpeed = p >= 0.73 ? 0.22 : 0.20;
       } else if (vpW < 1024) {
-        lerpSpeed = p >= 0.73 ? 0.18 : 0.12;
+        lerpSpeed = p >= 0.88 ? 0.26 : p >= 0.73 ? 0.18 : 0.12;
       }
 
       curTarget.lerp(destTarget, lerpSpeed);
