@@ -70,7 +70,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   // Starts fading in smoothly at 0.73 as the 3D model descends from Section 03
   // 100% visible & locked between 0.80 and 0.88
   // Between 0.88 and 0.98, fades/wipes out alongside the 3D model sweep to User Dashboard
-  if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.98 : 0.925)) {
+  if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.94 : 0.925)) {
     return null;
   }
 
@@ -93,7 +93,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   // Seamless exit opacity:
   // On desktop, exits alongside horizontal model sweep between 0.88 and 0.94
   // On mobile (< 1024px), exits cleanly between 0.88 and 0.91 before dashboard cards rise in
-  const exitDuration = isDesktop ? 0.06 : 0.03;
+  const exitDuration = isDesktop ? 0.05 : 0.03;
   const exitProgress = Math.min(1, Math.max(0, (scrollProgress - 0.88) / exitDuration));
   const exitOpacity = scrollProgress >= 0.88 ? 1 - exitProgress : 1.0;
 
@@ -114,7 +114,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   // wipe out 'Our Story' in direct lockstep with the 3D model and white fade so zero ghosting or card overlap occurs (desktop only)
   let maskStyle: React.CSSProperties = {};
   if (isDesktop && scrollProgress >= 0.88) {
-    const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.10));
+    const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.05));
     const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     const modelCenterPct = 15.5 + ease * 104.5;
     const wipePct = Math.min(100, Math.max(0, modelCenterPct + 2));

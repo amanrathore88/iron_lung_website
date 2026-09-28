@@ -765,9 +765,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
           destUvIntensity = 0.0;
           heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-        } else if (p < 0.98) {
+        } else if (p < 0.93) {
           // Stage 5: Cinematic Sweep & Reveal across to User Dashboard (360° rotation, growing in scale, gliding to right)
-          const t = (p - 0.88) / (0.98 - 0.88);
+          const t = (p - 0.88) / (0.93 - 0.88);
           const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
           destTarget = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
@@ -857,10 +857,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           globalModelOpacity = 0.0;
         }
       } else {
-        if (p >= 0.90 && p < 0.965) {
-          const tSweepFade = smoothstep(0.90, 0.965, p);
+        if (p >= 0.89 && p < 0.93) {
+          const tSweepFade = smoothstep(0.89, 0.93, p);
           globalModelOpacity = 1.0 - tSweepFade;
-        } else if (p >= 0.965) {
+        } else if (p >= 0.93) {
           globalModelOpacity = 0.0;
         }
       }

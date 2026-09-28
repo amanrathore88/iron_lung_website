@@ -123,7 +123,7 @@ export const App: React.FC = () => {
       } else if (stageVal === 'about') {
         targetProgress = 0.84;
       } else if (stageVal === 'dashboard') {
-        targetProgress = 0.98;
+        targetProgress = 0.97;
       }
 
       window.scrollTo({
@@ -237,8 +237,8 @@ export const App: React.FC = () => {
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (h-[780vh]: 3D model flight, feature scrollytelling, About Us, & sweep reveal) */}
-          <div ref={scrollyTrackRef} className="relative h-[780vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[860vh]: 3D model flight, feature scrollytelling, About Us, & sweep reveal) */}
+          <div ref={scrollyTrackRef} className="relative h-[860vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
               {/* Layer 0 (z-0): Studio Room Background */}
