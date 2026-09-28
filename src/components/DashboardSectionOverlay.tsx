@@ -55,8 +55,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
     <div
       className={`absolute inset-0 w-full h-full overflow-hidden ${
         isInteractive ? 'z-[30]' : 'z-[15]'
-      } bg-[#01090F] text-white`}
+      }`}
       style={{
+        backgroundColor: '#FAF7F2',
+        backgroundImage:
+          'radial-gradient(ellipse at 85% 20%, rgba(255, 255, 255, 0.75) 0%, rgba(250, 247, 242, 0) 70%), radial-gradient(ellipse at 18% 65%, rgba(255, 255, 255, 0.55) 0%, rgba(250, 247, 242, 0) 65%), radial-gradient(ellipse at center, rgba(255, 105, 0, 0.06) 0%, rgba(250, 247, 242, 0) 60%)',
         maskImage: maskGradient,
         WebkitMaskImage: maskGradient,
         opacity: isDesktop ? 1.0 : mobileEase,
@@ -79,64 +82,31 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         />
       )}
 
-      {/* Atmospheric Aurora Glow in the Center */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[70vh] rounded-full pointer-events-none z-0"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.18) 0%, rgba(255, 105, 0, 0.06) 40%, transparent 70%)',
-          filter: 'blur(60px)',
-        }}
-      />
-
-      {/* Subtle Tech Grid Lines */}
-      <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-20"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px)',
-          backgroundSize: '72px 72px',
-          maskImage: 'radial-gradient(ellipse at center, #000 30%, transparent 75%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, #000 30%, transparent 75%)',
-        }}
-      />
-
-      {/* Top Header Soft Gradient Fade */}
-      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#01090F]/80 via-[#01090F]/40 to-transparent pointer-events-none z-[10]" />
+      {/* Top Header Soft Gradient Fade (smooth blend beneath navbar) */}
+      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#FAF7F2]/90 via-[#FAF7F2]/40 to-transparent pointer-events-none z-[10]" />
 
       {/* ===================================================================== */}
-      {/* PROMINENT CENTERED TAGLINE WITH POPCORN ANIMATION                      */}
+      {/* PROMINENT CENTERED TAGLINE: "YOUR DASHBOARD AWAITS"                   */}
+      {/* "YOUR" & "AWAITS" in theme orange (#ff6900), "DASHBOARD" in black     */}
       {/* ===================================================================== */}
       <div className="relative z-20 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8 text-center pointer-events-auto">
-        {/* Small Elegant Pill Above Tagline */}
-        <div className="flex items-center gap-3 mb-6 sm:mb-8 opacity-80">
-          <span className="w-6 sm:w-8 h-[2px] bg-[#ff6900]" />
-          <span className="text-[11px] sm:text-xs font-semibold tracking-[0.3em] text-[#ff6900] uppercase font-mono">
-            USER DASHBOARD
-          </span>
-          <span className="w-6 sm:w-8 h-[2px] bg-[#ff6900]" />
-        </div>
-
-        {/* The Large Prominently Centered Tagline with Originkit Popcorn Pop Animation */}
         <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
           <PopcornText
-            text="YOUR DASHBOARD AWAITS"
-            color="#FFFFFF"
+            wordsConfig={[
+              { text: 'YOUR', color: '#ff6900' },
+              { text: 'DASHBOARD', color: '#000000' },
+              { text: 'AWAITS', color: '#ff6900' },
+            ]}
             startY={35}
             startScale={0}
             startOpacity={0}
-            rotationRange={20}
-            stagger={0.035}
-            transition={{ type: 'spring', stiffness: 350, damping: 14, mass: 1 }}
+            rotationRange={22}
+            stagger={0.03}
+            transition={{ type: 'spring', stiffness: 380, damping: 18, mass: 1 }}
             appearTrigger="default"
             isActive={isInteractive}
           />
         </div>
-
-        {/* Subtitle / Tagline Beneath */}
-        <p className="mt-6 sm:mt-8 text-xs sm:text-sm md:text-base text-slate-400 font-mono tracking-[0.25em] uppercase opacity-75">
-          SAME BREATH, A BRIGHTER TOMORROW.
-        </p>
       </div>
     </div>
   );

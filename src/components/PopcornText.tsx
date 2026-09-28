@@ -1,4 +1,4 @@
-// Popcorn Text — Originkit
+// Popcorn Text — Originkit (Enhanced with Multi-Colored Words & Word-Boundary Wrap Protection)
 
 "use client";
 
@@ -14,8 +14,14 @@ type FontStyle = React.CSSProperties;
 
 type ScrollConfig = { position: "top" | "bottom"; distance: number };
 
+export type WordItem = {
+  text: string;
+  color?: string;
+};
+
 export type PopcornTextProps = {
   text?: string;
+  wordsConfig?: WordItem[];
   font?: FontStyle;
   color?: string;
   tag?: Tag;
@@ -36,7 +42,7 @@ export type PopcornTextProps = {
 const defaultFont: FontStyle = {
   fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
   fontWeight: 800,
-  fontSize: "clamp(34px, 6.5vw, 96px)",
+  fontSize: "clamp(38px, 7vw, 102px)",
   lineHeight: "1.15em",
   letterSpacing: "-0.03em",
   textAlign: "center",
@@ -44,6 +50,7 @@ const defaultFont: FontStyle = {
 
 export function PopcornText({
   text = "YOUR DASHBOARD AWAITS",
+  wordsConfig,
   font = defaultFont,
   color = "#FFFFFF",
   tag = "h1",
@@ -63,20 +70,33 @@ export function PopcornText({
   const [scope, animate] = useAnimate();
   const hasAppearedRef = useRef(false);
 
-  // Split text into words to prevent breaking words across lines
-  const words = useMemo(() => (text ?? "").split(" "), [text]);
+  // Normalize words array
+  const wordsList: WordItem[] = useMemo(() => {
+    if (wordsConfig && wordsConfig.length > 0) {
+      return wordsConfig;
+    }
+    return (text ?? "").split(" ").map((w) => ({ text: w, color }));
+  }, [wordsConfig, text, color]);
+
+  // Combined full text for ARIA label
+  const fullText = useMemo(
+    () => wordsList.map((w) => w.text).join(" "),
+    [wordsList]
+  );
 
   // Total non-space characters for randomized shuffle order
-  const chars = useMemo(() => (text ?? "").replace(/\s/g, "").split(""), [text]);
+  const allChars = useMemo(() => {
+    return wordsList.flatMap((w) => w.text.split(""));
+  }, [wordsList]);
 
   const charsConfig = useMemo(() => {
-    const indices = chars.map((_, i) => i);
+    const indices = allChars.map((_, i) => i);
     for (let i = indices.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [indices[i], indices[j]] = [indices[j], indices[i]];
     }
 
-    return chars.map((char, index) => {
+    return allChars.map((char, index) => {
       const randomRotation = (Math.random() * 2 - 1) * rotationRange;
       return {
         char,
@@ -84,7 +104,7 @@ export function PopcornText({
         staggerOrder: indices[index],
       };
     });
-  }, [chars, rotationRange]);
+  }, [allChars, rotationRange]);
 
   const resetToHidden = useCallback(() => {
     if (!scope.current) return;
@@ -211,25 +231,25 @@ export function PopcornText({
     >
       <MotionTag
         ref={scope}
-        aria-label={text}
+        aria-label={fullText}
         style={{
           margin: 0,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
           alignItems: "center",
-          columnGap: "0.26em",
-          rowGap: "0.08em",
+          columnGap: "0.28em",
+          rowGap: "0.10em",
           ...fontStyles,
-          color,
         }}
       >
-        {words.map((word, wordIndex) => (
+        {wordsList.map((wordItem, wordIndex) => (
           <span
             key={wordIndex}
             className="inline-flex whitespace-nowrap"
+            style={{ color: wordItem.color || color }}
           >
-            {word.split("").map((char, charIndex) => {
+            {wordItem.text.split("").map((char, charIndex) => {
               const currentIdx = globalCharCounter++;
               const item = charsConfig[currentIdx] || {
                 char,
