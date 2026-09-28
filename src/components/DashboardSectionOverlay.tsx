@@ -251,17 +251,17 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       </div>
 
       {/* ===================================================================== */}
-      {/* LAYER 2: THE USER DASHBOARD IMAGE (Appears & Zooms in between)        */}
+      {/* LAYER 2: THE DESKTOP DASHBOARD MOCKUP (Appears & Zooms in between)    */}
       {/* ===================================================================== */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-8 sm:pb-10"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-6"
         style={{
           opacity: splitEase,
           pointerEvents: splitEase >= 0.85 ? 'auto' : 'none',
         }}
       >
         <div
-          className="relative w-full max-w-5xl xl:max-w-6xl max-h-[78vh] flex items-center justify-center transition-transform duration-75 will-change-transform"
+          className="relative w-full max-w-5xl xl:max-w-6xl max-h-[82vh] flex items-center justify-center transition-transform duration-75 will-change-transform"
           style={{
             transform: `scale(${imageScale})`,
           }}
@@ -271,26 +271,22 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute -inset-4 sm:-inset-8 md:-inset-14 rounded-[2rem] md:rounded-[3.5rem] pointer-events-none -z-10 transition-opacity duration-700"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.32) 0%, rgba(255, 105, 0, 0.12) 50%, transparent 72%)',
+                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 50%, transparent 72%)',
               filter: 'blur(42px)',
               opacity: splitEase,
             }}
           />
 
-          {/* Full Uncropped Dashboard Mockup */}
-          <div
-            className="relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-white shadow-2xl border border-black/10 transition-transform duration-300 hover:scale-[1.008]"
+          {/* Full Uncropped Desktop Monitor Mockup */}
+          <img
+            src="/images/dashboard/desktop-mockup.png"
+            alt="Iron Lung User Dashboard Desktop Mockup"
+            className="w-auto h-auto max-w-full max-h-[80vh] object-contain block select-none pointer-events-none transition-transform duration-300"
             style={{
-              boxShadow:
-                '0 0 90px -10px rgba(255, 105, 0, 0.28), 0 25px 60px -15px rgba(0, 0, 0, 0.14), 0 10px 20px -5px rgba(0, 0, 0, 0.05)',
+              filter:
+                'drop-shadow(0 28px 48px rgba(0, 0, 0, 0.16)) drop-shadow(0 8px 20px rgba(255, 105, 0, 0.12))',
             }}
-          >
-            <img
-              src="/images/dashboard/1.png"
-              alt="Iron Lung User Dashboard"
-              className="w-full h-auto max-h-[74vh] object-contain block select-none pointer-events-none"
-            />
-          </div>
+          />
         </div>
       </div>
     </div>
