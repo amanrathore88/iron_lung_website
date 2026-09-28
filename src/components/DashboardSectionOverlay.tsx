@@ -7,6 +7,33 @@ interface DashboardSectionOverlayProps {
   onOpenVideo?: () => void;
 }
 
+const TOP_WORDS = [
+  { text: 'YOUR', color: '#ff6900' },
+  { text: 'DASHBOARD', color: '#000000' },
+];
+
+const BOTTOM_WORDS = [
+  { text: 'AWAITS', color: '#ff6900' },
+];
+
+const DESKTOP_FONT: React.CSSProperties = {
+  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+  fontWeight: 800,
+  fontSize: 'clamp(48px, 7.5vw, 108px)',
+  lineHeight: '1.12em',
+  letterSpacing: '-0.03em',
+  textAlign: 'center',
+};
+
+const MOBILE_FONT: React.CSSProperties = {
+  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+  fontWeight: 800,
+  fontSize: 'clamp(38px, 9.5vw, 68px)',
+  lineHeight: '1.12em',
+  letterSpacing: '-0.03em',
+  textAlign: 'center',
+};
+
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
 }) => {
@@ -60,25 +87,33 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         }%, transparent ${fadeEnd}%, transparent 100%)`;
 
   // ---------------------------------------------------------------------------
-  // 2. Scroll-Driven Text Off-Screen Exit & Full Image Blooming Reveal (0.930 - 0.965)
+  // 2. Scroll-Driven Text Off-Screen Exit & Image Zoom Transition (0.925 - 0.965)
   // ---------------------------------------------------------------------------
-  // When scrollProgress <= 0.930:
-  // - "YOUR DASHBOARD AWAITS" is perfectly centered with full Popcorn spring animation.
-  // As user scrolls past 0.930 towards 0.965:
-  // - "YOUR DASHBOARD" accelerates UPWARDS and goes completely out of view off the top.
-  // - "AWAITS" accelerates DOWNWARDS and goes completely out of view off the bottom.
-  // - The uncropped User Dashboard image blooms into the optical center with warm ambient glow.
-  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.930) / 0.035));
+  // - Popcorn Text plays strictly ONCE on section entry (0.88+)
+  // - When scrollProgress <= 0.925:
+  //   "YOUR DASHBOARD AWAITS" is centered, solid, and completely finished animating.
+  // - As user scrolls between 0.925 and 0.965:
+  //   - "YOUR DASHBOARD" accelerates UPWARDS and exits completely off-screen at the top.
+  //   - "AWAITS" accelerates DOWNWARDS and exits completely off-screen at the bottom.
+  //   - The User Dashboard image appears and zooms in between them (scale 0.76 -> 1.0, opacity 0 -> 1).
+  // - When scrollProgress >= 0.965:
+  //   Text is 100% off-screen and hidden.
+  //   User Dashboard image is fully centered, uncropped, and prominent.
+  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.925) / 0.045));
   const splitEase =
     splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
 
-  // Physical travel distance to send text completely off the viewport edges
-  const exitTravelDistance = windowDimensions.height * 0.80 + 300;
+  // Distance required to guarantee complete off-screen exit beyond viewport edges
+  const exitTravelDistance = windowDimensions.height * 0.52 + 180;
   const topExitOffset = splitEase * exitTravelDistance;
   const bottomExitOffset = splitEase * exitTravelDistance;
-  const textOpacity = Math.max(0, 1 - splitEase * 1.5);
+  // Keep text sharp and clearly readable as it separates, fading smoothly as it approaches viewport bounds
+  const textOpacity = splitEase < 0.75 ? 1 : Math.max(0, 1 - (splitEase - 0.75) / 0.25);
 
-  const isTextActive = scrollProgress >= 0.87;
+  // Image zoom scale: zooms in from 0.76 up to 1.00
+  const imageScale = 0.76 + 0.24 * splitEase;
+
+  const isTextActive = scrollProgress >= 0.88;
   const isInteractive = scrollProgress >= 0.92;
 
   if (scrollProgress < 0.86) {
@@ -101,7 +136,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         pointerEvents: isInteractive ? 'auto' : 'none',
       }}
     >
-      {/* Soft Atmospheric Cloudy Mist along the leading transition edge (Desktop only) */}
+      {/* Soft Atmospheric Cloudy Mist along the leading transition edge (Desktop sweep) */}
       {isDesktop && revealPct > 5 && revealPct < 105 && (
         <div
           className="absolute top-0 bottom-0 pointer-events-none z-30"
@@ -120,7 +155,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#FAF7F2]/95 via-[#FAF7F2]/50 to-transparent pointer-events-none z-[10]" />
 
       {/* ===================================================================== */}
-      {/* LAYER 1: ORIGINAL POPCORN TEXT (Splits & Exits Completely Off-Screen) */}
+      {/* LAYER 1: POPCORN TEXT (Plays ONCE on entry, then glides off-screen)   */}
       {/* ===================================================================== */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8"
@@ -138,18 +173,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         >
           <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
             <PopcornText
-              wordsConfig={[
-                { text: 'YOUR', color: '#ff6900' },
-                { text: 'DASHBOARD', color: '#000000' },
-              ]}
-              font={{
-                fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
-                fontWeight: 800,
-                fontSize: isMobile ? 'clamp(38px, 9.5vw, 68px)' : 'clamp(48px, 7.5vw, 108px)',
-                lineHeight: '1.12em',
-                letterSpacing: '-0.03em',
-                textAlign: 'center',
-              }}
+              wordsConfig={TOP_WORDS}
+              font={isMobile ? MOBILE_FONT : DESKTOP_FONT}
               startY={35}
               startScale={0}
               startOpacity={0}
@@ -172,17 +197,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         >
           <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
             <PopcornText
-              wordsConfig={[
-                { text: 'AWAITS', color: '#ff6900' },
-              ]}
-              font={{
-                fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
-                fontWeight: 800,
-                fontSize: isMobile ? 'clamp(38px, 9.5vw, 68px)' : 'clamp(48px, 7.5vw, 108px)',
-                lineHeight: '1.12em',
-                letterSpacing: '-0.03em',
-                textAlign: 'center',
-              }}
+              wordsConfig={BOTTOM_WORDS}
+              font={isMobile ? MOBILE_FONT : DESKTOP_FONT}
               startY={35}
               startScale={0}
               startOpacity={0}
@@ -197,7 +213,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       </div>
 
       {/* ===================================================================== */}
-      {/* LAYER 2: THE USER DASHBOARD IMAGE (Full & Uncropped with Orange Glow) */}
+      {/* LAYER 2: THE USER DASHBOARD IMAGE (Appears & Zooms in between)        */}
       {/* ===================================================================== */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-8 sm:pb-10"
@@ -209,7 +225,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         <div
           className="relative w-full max-w-5xl xl:max-w-6xl max-h-[78vh] flex items-center justify-center transition-transform duration-75 will-change-transform"
           style={{
-            transform: `scale(${0.90 + 0.10 * splitEase})`,
+            transform: `scale(${imageScale})`,
           }}
         >
           {/* Ambient Warm Theme-Orange Backlight Glow */}

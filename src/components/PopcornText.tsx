@@ -1,4 +1,4 @@
-// Popcorn Text — Originkit (Enhanced with Multi-Colored Words & Word-Boundary Wrap Protection)
+// Popcorn Text — Originkit (Enhanced with Multi-Colored Words & Single-Run Lifecycle)
 
 "use client";
 
@@ -63,12 +63,13 @@ export function PopcornText({
 
   stagger = 0.03,
   transition = { type: "spring", stiffness: 380, damping: 18, mass: 1 },
-  appearTrigger = "default",
-  scrollConfig = { position: "bottom", distance: 20 },
+  appearTrigger: _appearTrigger = "default",
+  scrollConfig: _scrollConfig = { position: "bottom", distance: 20 },
   isActive = true,
 }: PopcornTextProps) {
   const [scope, animate] = useAnimate();
   const hasAppearedRef = useRef(false);
+  const isInitializedRef = useRef(false);
 
   // Normalize words array
   const wordsList: WordItem[] = useMemo(() => {
@@ -84,11 +85,12 @@ export function PopcornText({
     [wordsList]
   );
 
-  // Total non-space characters for randomized shuffle order
+  // Total non-space characters
   const allChars = useMemo(() => {
     return wordsList.flatMap((w) => w.text.split(""));
   }, [wordsList]);
 
+  // Character configuration (random rotation and stagger order)
   const charsConfig = useMemo(() => {
     const indices = allChars.map((_, i) => i);
     for (let i = indices.length - 1; i > 0; i--) {
@@ -104,7 +106,7 @@ export function PopcornText({
         staggerOrder: indices[index],
       };
     });
-  }, [allChars, rotationRange]);
+  }, [allChars.length, rotationRange]);
 
   const resetToHidden = useCallback(() => {
     if (!scope.current) return;
@@ -138,73 +140,20 @@ export function PopcornText({
     );
   }, [animate, transition, stagger, charsConfig, scope]);
 
+  // Initial hidden setup on mount
   useEffect(() => {
-    let rafId: number | null = null;
-    resetToHidden();
-
-    if (!isActive) return;
-
-    if (appearTrigger === "default") {
-      const t = setTimeout(runAppear, 50);
-      return () => clearTimeout(t);
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true;
+      resetToHidden();
     }
+  }, [resetToHidden]);
 
-    if (appearTrigger === "scroll") {
-      const el = scope.current;
-      if (!el) return;
-      const scrollPos = scrollConfig?.position ?? "bottom";
-      const scrollDist = Math.max(0, Math.min(100, scrollConfig?.distance ?? 20));
-
-      const check = () => {
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const rect = el.getBoundingClientRect();
-        if (scrollPos === "top") return rect.top <= vh * (scrollDist / 100);
-        return rect.bottom <= vh * (1 - scrollDist / 100);
-      };
-
-      if (check()) {
-        runAppear();
-        return;
-      }
-
-      let ticking = false;
-      const onScroll = () => {
-        if (!ticking) {
-          rafId = window.requestAnimationFrame(() => {
-            if (check()) {
-              runAppear();
-              window.removeEventListener("scroll", onScroll, true);
-              window.removeEventListener("resize", onScroll);
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
-      window.addEventListener("scroll", onScroll, true);
-      window.addEventListener("resize", onScroll);
-
-      return () => {
-        window.removeEventListener("scroll", onScroll, true);
-        window.removeEventListener("resize", onScroll);
-        if (rafId) window.cancelAnimationFrame(rafId);
-      };
-    }
-  }, [
-    appearTrigger,
-    scrollConfig?.position,
-    scrollConfig?.distance,
-    runAppear,
-    resetToHidden,
-    scope,
-    isActive,
-  ]);
-
-  // When isActive toggles from parent component (e.g. scroll reveal progress)
+  // Handle strictly one-time appear animation when isActive turns true
   useEffect(() => {
     if (isActive && !hasAppearedRef.current) {
       hasAppearedRef.current = true;
-      runAppear();
+      const timer = setTimeout(runAppear, 30);
+      return () => clearTimeout(timer);
     } else if (!isActive && hasAppearedRef.current) {
       hasAppearedRef.current = false;
       resetToHidden();
@@ -220,13 +169,13 @@ export function PopcornText({
 
   return (
     <div
-      onMouseEnter={() => {
-        runAppear();
-      }}
-      className="cursor-pointer select-none w-full flex justify-center"
       style={{
-        ...style,
+        position: "relative",
         overflow: "visible",
+        width: "max-content",
+        maxWidth: "100%",
+        display: "inline-block",
+        ...style,
       }}
     >
       <MotionTag
@@ -258,24 +207,21 @@ export function PopcornText({
               };
 
               return (
-                <motion.span
+                <span
                   key={charIndex}
-                  className="char inline-block"
-                  aria-hidden="true"
+                  className="char"
+                  data-char-idx={currentIdx}
                   style={
                     {
                       display: "inline-block",
-                      "--start-rot": `${item.randomRotation}deg`,
-                      rotate: `var(--start-rot)`,
-                      y: startY,
-                      scale: startScale,
-                      opacity: startOpacity,
                       willChange: "transform, opacity",
-                    } as any
+                      transformOrigin: "center center",
+                      "--start-rot": `${item.randomRotation}deg`,
+                    } as React.CSSProperties
                   }
                 >
                   {char}
-                </motion.span>
+                </span>
               );
             })}
           </span>
