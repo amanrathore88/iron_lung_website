@@ -237,8 +237,8 @@ export const App: React.FC = () => {
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (h-[860vh]: 3D model flight, feature scrollytelling, About Us, & sweep reveal) */}
-          <div ref={scrollyTrackRef} className="relative h-[860vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[920vh]: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
+          <div ref={scrollyTrackRef} className="relative h-[920vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
               {/* Layer 0 (z-0): Studio Room Background */}

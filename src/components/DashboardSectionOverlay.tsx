@@ -114,8 +114,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const isTextActive = isModelExitRight;
   const isInteractive = scrollProgress >= 0.920;
 
-  // Separation progress: begins once the text has appeared and settled
-  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.935) / 0.035));
+  // Separation progress: begins once the text has appeared and settled (0.930 - 0.955)
+  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.930) / 0.025));
   const splitEase =
     splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
 
@@ -126,8 +126,29 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // Keep text sharp and clearly readable as it separates, fading smoothly as it approaches viewport bounds
   const textOpacity = splitEase < 0.75 ? 1 : Math.max(0, 1 - (splitEase - 0.75) / 0.25);
 
-  // Image zoom scale: zooms in from 0.76 up to 1.00
-  const imageScale = 0.76 + 0.24 * splitEase;
+  // Desktop zoom-in scale: zooms in from 0.76 up to 1.00
+  const baseDesktopScale = 0.76 + 0.24 * splitEase;
+
+  // ---------------------------------------------------------------------------
+  // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition (0.968 - 0.992)
+  // ---------------------------------------------------------------------------
+  // As the user scrolls down past the desktop view:
+  // - The desktop image fades out into the background via a "zoom-out" animation.
+  // - The phone image slides up from the bottom into the center.
+  const phoneT = Math.min(1, Math.max(0, (scrollProgress - 0.968) / 0.024));
+  const phoneEase =
+    phoneT < 0.5 ? 4 * phoneT * phoneT * phoneT : 1 - Math.pow(-2 * phoneT + 2, 3) / 2;
+
+  // Desktop zooms out (1.00 -> 0.64), blurs into depth, and fades out (1.0 -> 0.0)
+  const desktopScale = baseDesktopScale * (1 - 0.36 * phoneEase);
+  const desktopOpacity = splitEase * (1 - phoneEase);
+  const desktopBlur = phoneEase * 6;
+
+  // Phone slides up from the bottom edge to the center (translateY: +100vh -> 0px)
+  const phoneTravelDistance = windowDimensions.height * 0.92 + 100;
+  const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance;
+  const phoneOpacity = phoneT <= 0.005 ? 0 : Math.min(1, phoneT / 0.28);
+  const phoneScale = 0.94 + 0.06 * phoneEase;
 
   // Reset only if user navigates all the way back to the very top Hero section (< 0.15)
   if (scrollProgress < 0.15) {
@@ -251,29 +272,30 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       </div>
 
       {/* ===================================================================== */}
-      {/* LAYER 2: THE DESKTOP DASHBOARD MOCKUP (Appears & Zooms in between)    */}
+      {/* LAYER 2: THE DESKTOP DASHBOARD MOCKUP (Zooms in, then zooms out/fades) */}
       {/* ===================================================================== */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-6"
         style={{
-          opacity: splitEase,
-          pointerEvents: splitEase >= 0.85 ? 'auto' : 'none',
+          opacity: desktopOpacity,
+          pointerEvents: splitEase >= 0.85 && phoneT < 0.2 ? 'auto' : 'none',
         }}
       >
         <div
-          className="relative w-full max-w-5xl xl:max-w-6xl max-h-[82vh] flex items-center justify-center transition-transform duration-75 will-change-transform"
+          className="relative w-full max-w-5xl xl:max-w-6xl max-h-[82vh] flex items-center justify-center will-change-transform"
           style={{
-            transform: `scale(${imageScale})`,
+            transform: `scale(${desktopScale})`,
+            filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
           {/* Ambient Warm Theme-Orange Backlight Glow */}
           <div
-            className="absolute -inset-4 sm:-inset-8 md:-inset-14 rounded-[2rem] md:rounded-[3.5rem] pointer-events-none -z-10 transition-opacity duration-700"
+            className="absolute -inset-4 sm:-inset-8 md:-inset-14 rounded-[2rem] md:rounded-[3.5rem] pointer-events-none -z-10"
             style={{
               background:
                 'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 50%, transparent 72%)',
               filter: 'blur(42px)',
-              opacity: splitEase,
+              opacity: desktopOpacity,
             }}
           />
 
@@ -281,10 +303,50 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <img
             src="/images/dashboard/desktop-mockup.png"
             alt="Iron Lung User Dashboard Desktop Mockup"
-            className="w-auto h-auto max-w-full max-h-[80vh] object-contain block select-none pointer-events-none transition-transform duration-300"
+            className="w-auto h-auto max-w-full max-h-[80vh] object-contain block select-none pointer-events-none"
             style={{
               filter:
                 'drop-shadow(0 28px 48px rgba(0, 0, 0, 0.16)) drop-shadow(0 8px 20px rgba(255, 105, 0, 0.12))',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* ===================================================================== */}
+      {/* LAYER 3: THE PHONE MOCKUP (Slides up from bottom as Desktop zooms out) */}
+      {/* ===================================================================== */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-6"
+        style={{
+          opacity: phoneOpacity,
+          pointerEvents: phoneEase >= 0.85 ? 'auto' : 'none',
+        }}
+      >
+        <div
+          className="relative flex items-center justify-center will-change-transform"
+          style={{
+            transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
+          }}
+        >
+          {/* Ambient Warm Theme-Orange Backlight Glow for Phone */}
+          <div
+            className="absolute -inset-6 sm:-inset-10 md:-inset-14 rounded-[3rem] pointer-events-none -z-10"
+            style={{
+              background:
+                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 50%, transparent 72%)',
+              filter: 'blur(38px)',
+              opacity: phoneEase,
+            }}
+          />
+
+          {/* Full Uncropped Phone Mockup */}
+          <img
+            src="/images/dashboard/phone-mockup.png"
+            alt="Iron Lung Mobile App Session Report Mockup"
+            className="w-auto h-auto max-w-[82vw] sm:max-w-[340px] md:max-w-[370px] max-h-[78vh] object-contain block select-none pointer-events-none"
+            style={{
+              filter:
+                'drop-shadow(0 26px 44px rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 18px rgba(255, 105, 0, 0.12))',
             }}
           />
         </div>
