@@ -46,8 +46,7 @@ export const App: React.FC = () => {
     return 'home';
   });
 
-  const [modelProgress, setModelProgress] = useState<number>(0);
-  const [dashboardFrameProgress, setDashboardFrameProgress] = useState<number>(0);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const scrollyTrackRef = useRef<HTMLDivElement>(null);
 
   // Sync browser back/forward and hash changes
@@ -87,16 +86,11 @@ export const App: React.FC = () => {
           const track = scrollyTrackRef.current;
           if (track) {
             const trackTop = track.offsetTop;
-            const vh = window.innerHeight;
-            const modelSpan = 6.6 * vh; // 660vh for 3D model & sweep reveal
-            const dashboardSpan = 3.0 * vh; // 300vh for video frames scrub
-            
-            const relY = Math.max(0, scrollY - trackTop);
-            const mProgress = Math.min(1, relY / modelSpan);
-            setModelProgress(mProgress);
-
-            const frameProgress = Math.min(1, Math.max(0, (relY - modelSpan) / dashboardSpan));
-            setDashboardFrameProgress(frameProgress);
+            const trackSpan = track.offsetHeight - window.innerHeight;
+            if (trackSpan > 0) {
+              const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
+              setScrollProgress(progress);
+            }
           }
           ticking = false;
         });
@@ -113,28 +107,27 @@ export const App: React.FC = () => {
     const track = scrollyTrackRef.current;
     if (track) {
       const trackTop = track.offsetTop;
-      const vh = window.innerHeight;
-      const modelSpan = 6.6 * vh;
-      let targetOffset = 0;
+      const trackSpan = track.offsetHeight - window.innerHeight;
+      let targetProgress = 0;
 
       if (typeof stageVal === 'number') {
-        targetOffset = stageVal * modelSpan;
+        targetProgress = stageVal;
       } else if (stageVal === 'hero') {
-        targetOffset = 0;
+        targetProgress = 0;
       } else if (stageVal === 'screen') {
-        targetOffset = 0.28 * modelSpan;
+        targetProgress = 0.28;
       } else if (stageVal === 'uv') {
-        targetOffset = 0.50 * modelSpan;
+        targetProgress = 0.50;
       } else if (stageVal === 'comfort') {
-        targetOffset = 0.72 * modelSpan;
+        targetProgress = 0.72;
       } else if (stageVal === 'about') {
-        targetOffset = 0.84 * modelSpan;
+        targetProgress = 0.84;
       } else if (stageVal === 'dashboard') {
-        targetOffset = modelSpan; // At completion of sweep reveal with frame 1 ready
+        targetProgress = 0.98;
       }
 
       window.scrollTo({
-        top: trackTop + targetOffset,
+        top: trackTop + targetProgress * trackSpan,
         behavior: 'smooth',
       });
     }
@@ -232,52 +225,49 @@ export const App: React.FC = () => {
             onContactUs={() => handleNavigation('contact')}
             onNavigateSection={handleNavigation}
             activeSection={
-              modelProgress >= 0.88
+              scrollProgress > 0.90
                 ? 'dashboard'
-                : modelProgress >= 0.78
+                : scrollProgress > 0.78
                 ? 'about'
-                : modelProgress >= 0.60
+                : scrollProgress > 0.60
                 ? 'comfort'
-                : modelProgress >= 0.18
+                : scrollProgress > 0.18
                 ? 'screen'
                 : 'hero'
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (h-[1060vh]: 660vh for 3D model & sweep, 300vh for 120-frame video sequence) */}
-          <div ref={scrollyTrackRef} className="relative h-[1060vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[780vh]: 3D model flight, feature scrollytelling, About Us, & sweep reveal) */}
+          <div ref={scrollyTrackRef} className="relative h-[780vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
               {/* Layer 0 (z-0): Studio Room Background */}
-              <StudioRoomBackground scrollProgress={modelProgress} />
+              <StudioRoomBackground scrollProgress={scrollProgress} />
 
               {/* Layer 1 (z-[10]): Editorial About Us Section Overlay (media_1790142628076.png) */}
               <AboutSectionOverlay
-                scrollProgress={modelProgress}
+                scrollProgress={scrollProgress}
                 onOpenVideo={() => setIsVideoModalOpen(true)}
               />
 
-              {/* Layer 2 (z-[15]): Section 4 User Dashboard Overlay (Synchronized 120-frame video sequence) */}
+              {/* Layer 2 (z-[15]): Prominent Centered Tagline: YOUR DASHBOARD AWAITS (Popcorn Pop Animation) */}
               <DashboardSectionOverlay
-                scrollProgress={modelProgress}
-                frameProgress={dashboardFrameProgress}
-                onExploreDashboard={() => handleNavigation('book-demo')}
-                onOpenVideo={() => setIsVideoModalOpen(true)}
+                scrollProgress={scrollProgress}
               />
 
               {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
-              <Hero3DCanvas scrollProgress={modelProgress} />
+              <Hero3DCanvas scrollProgress={scrollProgress} />
 
               {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls) */}
               <HeroOverlay
                 onDiscover={() => scrollToStage('screen')}
                 onOpenVideo={() => setIsVideoModalOpen(true)}
-                scrollProgress={modelProgress}
+                scrollProgress={scrollProgress}
               />
 
               {/* Layer 4 (z-[30]): Scrollytelling Feature Overlays (Stage 1: Touch Screen, Stage 2: UV Sanitization, Stage 3: Ergonomic Chair) */}
               <ScrollyFeaturesOverlay
-                scrollProgress={modelProgress}
+                scrollProgress={scrollProgress}
                 onExploreScreen={() => scrollToStage('screen')}
                 onExploreUV={() => scrollToStage('uv')}
                 onExploreChair={() => scrollToStage('comfort')}
