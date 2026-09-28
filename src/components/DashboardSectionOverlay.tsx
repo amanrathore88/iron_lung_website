@@ -186,7 +186,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8"
         style={{
           display:
-            textOpacity > 0.005 && (hasDashboardTextAnimatedGlobal || isModelExitRight)
+            textOpacity > 0.005 && isModelExitRight
               ? 'flex'
               : 'none',
         }}
@@ -209,7 +209,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               rotationRange={20}
               stagger={0.04}
               transition={POPCORN_SPRING_TRANSITION}
-              appearTrigger="default"
+              charIndexOffset={0}
+              totalCharsOverall={19}
               isActive={isTextActive}
               hasAppearedAlready={hasDashboardTextAnimatedGlobal}
               onAnimationComplete={() => {
@@ -237,7 +238,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               rotationRange={20}
               stagger={0.04}
               transition={POPCORN_SPRING_TRANSITION}
-              appearTrigger="default"
+              charIndexOffset={13}
+              totalCharsOverall={19}
               isActive={isTextActive}
               hasAppearedAlready={hasDashboardTextAnimatedGlobal}
               onAnimationComplete={() => {

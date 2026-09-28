@@ -1,18 +1,16 @@
-// Popcorn Text — Originkit (Enhanced with Multi-Colored Words & Single-Run Lifecycle)
+// Popcorn Text — Originkit
 
 "use client";
 
 import * as React from "react";
-import { useEffect, useRef, useCallback, useMemo } from "react";
-import { motion, useAnimate, type AnimationOptions } from "framer-motion";
+import { useMemo } from "react";
+import { motion, type AnimationOptions } from "framer-motion";
 
 const TAGS = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "div", "span"] as const;
 
 type Tag = (typeof TAGS)[number];
 
 type FontStyle = React.CSSProperties;
-
-type ScrollConfig = { position: "top" | "bottom"; distance: number };
 
 export type WordItem = {
   text: string;
@@ -34,24 +32,28 @@ export type PopcornTextProps = {
 
   stagger?: number;
   transition?: AnimationOptions;
-  appearTrigger?: "default" | "hover" | "scroll";
-  scrollConfig?: ScrollConfig;
+
+  charIndexOffset?: number;
+  totalCharsOverall?: number;
+
   isActive?: boolean;
   hasAppearedAlready?: boolean;
   onAnimationComplete?: () => void;
+  appearTrigger?: "default" | "hover" | "scroll";
+  scrollConfig?: { position: "top" | "bottom"; distance: number };
 };
 
 const defaultFont: FontStyle = {
-  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
-  fontWeight: 800,
-  fontSize: "clamp(38px, 7vw, 102px)",
-  lineHeight: "1.15em",
-  letterSpacing: "-0.03em",
+  fontFamily: "Inter",
+  fontWeight: 700,
+  fontSize: 120,
+  lineHeight: "1.5em",
+  letterSpacing: "0em",
   textAlign: "center",
 };
 
 export function PopcornText({
-  text = "YOUR DASHBOARD AWAITS",
+  text = "Your Dashboard Awaits",
   wordsConfig,
   font = defaultFont,
   color = "#FFFFFF",
@@ -65,21 +67,14 @@ export function PopcornText({
 
   stagger = 0.04,
   transition = { type: "spring", stiffness: 350, damping: 14, mass: 1 },
-  appearTrigger: _appearTrigger = "default",
-  scrollConfig: _scrollConfig = { position: "bottom", distance: 20 },
+
+  charIndexOffset = 0,
+  totalCharsOverall,
+
   isActive = true,
   hasAppearedAlready = false,
   onAnimationComplete,
 }: PopcornTextProps) {
-  const [scope, animate] = useAnimate();
-  const hasAppearedRef = useRef(Boolean(hasAppearedAlready));
-  const isInitializedRef = useRef(false);
-
-  // Sync ref if prop updates to true
-  if (hasAppearedAlready && !hasAppearedRef.current) {
-    hasAppearedRef.current = true;
-  }
-
   // Normalize words array
   const wordsList: WordItem[] = useMemo(() => {
     if (wordsConfig && wordsConfig.length > 0) {
@@ -94,97 +89,40 @@ export function PopcornText({
     [wordsList]
   );
 
-  // Total non-space characters
-  const allChars = useMemo(() => {
+  // Total characters in this component
+  const chars = useMemo(() => {
     return wordsList.flatMap((w) => w.text.split(""));
   }, [wordsList]);
 
-  // Character configuration (random rotation and stagger order)
+  // Stable random rotations and randomized stagger order matching Originkit
   const charsConfig = useMemo(() => {
-    const indices = allChars.map((_, i) => i);
+    const totalCount = totalCharsOverall || chars.length;
+    const indices = Array.from({ length: totalCount }, (_, i) => i);
     for (let i = indices.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
+      const temp = indices[i];
+      indices[i] = indices[j];
+      indices[j] = temp;
     }
 
-    return allChars.map((char, index) => {
+    return chars.map((char, index) => {
+      const globalIdx = charIndexOffset + index;
       const randomRotation = (Math.random() * 2 - 1) * rotationRange;
+      const staggerOrder = indices[globalIdx] !== undefined ? indices[globalIdx] : globalIdx;
       return {
         char,
         randomRotation,
-        staggerOrder: indices[index],
+        staggerOrder,
       };
     });
-  }, [allChars.length, rotationRange]);
-
-  const resetToHidden = useCallback(() => {
-    if (!scope.current || hasAppearedAlready || hasAppearedRef.current) return;
-    animate(
-      ".char",
-      {
-        y: startY,
-        scale: startScale,
-        opacity: startOpacity,
-        rotate: "var(--start-rot)",
-      },
-      { duration: 0 }
-    );
-  }, [animate, startY, startScale, startOpacity, scope, hasAppearedAlready]);
-
-  const runAppear = useCallback(() => {
-    if (!scope.current) return;
-
-    const animationConfig = {
-      ...transition,
-      delay: (i: number) => {
-        const order = charsConfig[i]?.staggerOrder ?? i;
-        return order * stagger;
-      },
-    };
-
-    const anim = animate(
-      ".char",
-      { y: 0, scale: 1, opacity: 1, rotate: 0 },
-      animationConfig as any
-    );
-
-    if (onAnimationComplete) {
-      anim.then(() => {
-        onAnimationComplete();
-      }).catch(() => {});
-    }
-  }, [animate, transition, stagger, charsConfig, scope, onAnimationComplete]);
-
-  // Initial hidden setup on mount: ONLY when not already appeared
-  useEffect(() => {
-    if (!isInitializedRef.current) {
-      isInitializedRef.current = true;
-      if (!hasAppearedAlready && !hasAppearedRef.current) {
-        resetToHidden();
-      }
-    }
-  }, [resetToHidden, hasAppearedAlready]);
-
-  // Handle strictly one-time appear animation when isActive turns true
-  useEffect(() => {
-    if (hasAppearedAlready) {
-      hasAppearedRef.current = true;
-      return;
-    }
-
-    if (isActive && !hasAppearedRef.current) {
-      hasAppearedRef.current = true;
-      const timer = setTimeout(runAppear, 20);
-      return () => clearTimeout(timer);
-    }
-  }, [isActive, runAppear, hasAppearedAlready]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chars.length, charIndexOffset, totalCharsOverall, rotationRange]);
 
   const fontStyles = (font ?? {}) as React.CSSProperties;
   const safeTag = (TAGS as readonly string[]).includes(tag) ? tag : "h1";
   const MotionTag = motion[safeTag as Tag] as any;
 
-  // Track global non-space character index across words
-  let globalCharCounter = 0;
+  let localCharIdx = 0;
 
   return (
     <div
@@ -198,7 +136,6 @@ export function PopcornText({
       }}
     >
       <MotionTag
-        ref={scope}
         aria-label={fullText}
         style={{
           margin: 0,
@@ -218,31 +155,69 @@ export function PopcornText({
             style={{ color: wordItem.color || color }}
           >
             {wordItem.text.split("").map((char, charIndex) => {
-              const currentIdx = globalCharCounter++;
+              const currentIdx = localCharIdx++;
               const item = charsConfig[currentIdx] || {
                 char,
                 randomRotation: 0,
                 staggerOrder: currentIdx,
               };
 
+              const shouldShow = isActive || hasAppearedAlready;
+              const isSettled = hasAppearedAlready;
+
               return (
-                <span
+                <motion.span
                   key={charIndex}
                   className="char"
-                  data-char-idx={currentIdx}
-                  style={
-                    {
-                      display: "inline-block",
-                      willChange: "transform, opacity",
-                      transformOrigin: "center center",
-                      "--start-rot": `${item.randomRotation}deg`,
-                      opacity: hasAppearedAlready ? 1 : undefined,
-                      transform: hasAppearedAlready ? "none" : undefined,
-                    } as React.CSSProperties
+                  data-char-idx={charIndexOffset + currentIdx}
+                  aria-hidden="true"
+                  initial={
+                    isSettled
+                      ? { y: 0, scale: 1, opacity: 1, rotate: 0 }
+                      : {
+                          y: startY,
+                          scale: startScale,
+                          opacity: startOpacity,
+                          rotate: item.randomRotation,
+                        }
                   }
+                  animate={
+                    shouldShow
+                      ? {
+                          y: 0,
+                          scale: 1,
+                          opacity: 1,
+                          rotate: 0,
+                        }
+                      : {
+                          y: startY,
+                          scale: startScale,
+                          opacity: startOpacity,
+                          rotate: item.randomRotation,
+                        }
+                  }
+                  transition={
+                    isSettled
+                      ? { duration: 0 }
+                      : {
+                          ...transition,
+                          delay: item.staggerOrder * stagger,
+                        }
+                  }
+                  onAnimationComplete={
+                    charIndexOffset + currentIdx ===
+                    (totalCharsOverall ? totalCharsOverall - 1 : chars.length - 1)
+                      ? onAnimationComplete
+                      : undefined
+                  }
+                  style={{
+                    display: "inline-block",
+                    transformOrigin: "center center",
+                    willChange: "transform, opacity",
+                  }}
                 >
-                  {char}
-                </span>
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
               );
             })}
           </span>
