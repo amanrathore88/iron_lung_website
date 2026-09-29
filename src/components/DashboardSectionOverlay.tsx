@@ -445,48 +445,52 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* MOBILE PORTRAIT LAYOUT FOR DESKTOP DASHBOARD VIEW (< 768px)       */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-between w-full max-w-[390px] h-full max-h-[760px] mx-auto will-change-transform py-1"
+          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-1"
           style={{
             transform: `scale(${desktopScale})`,
             filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
-          {/* Top Kicker & Title */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#FF5500]/25 shadow-sm mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
-              <span className="text-[8.5px] font-extrabold tracking-[0.20em] text-[#FF5500] uppercase">
+          {/* Top Kicker, 2-Line Headline & Subtitle */}
+          <div className="flex flex-col items-center text-center shrink-0 mb-3 px-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
+              <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 01 • DESKTOP WEB PORTAL
               </span>
             </div>
-            <h3 className="text-[17px] xs:text-[19px] font-black tracking-tight text-[#0A1118] leading-tight">
-              Personalised Command Center
+            <h3 className="text-[26px] xs:text-[30px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
+              Personalised
+              <span className="block text-[#FF4800]">Command Center</span>
             </h3>
+            <p className="text-[11.5px] xs:text-[12.5px] text-[#5A6578] font-normal leading-[1.42] max-w-[300px] mt-1.5">
+              A powerful desktop portal to track, understand and improve your respiratory performance.
+            </p>
           </div>
 
-          {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Metrics) */}
-          <div className="grid grid-cols-2 gap-2.5 w-full shrink-0 z-20">
+          {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
+          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
             {/* Top-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <GridDashboardIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <GridDashboardIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   PERSONALISED
                   <br />
                   DASHBOARD
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
+                  Get a clear overview of your daily plan, tasks and session progress.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                Get a clear overview of your daily plan, tasks and session progress.
-              </p>
             </motion.div>
 
             {/* Top-Right Card */}
@@ -494,45 +498,50 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <LungsHealthIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <LungsHealthIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   REAL-TIME
                   <br />
                   LUNG METRICS
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
+                  See your lung capacity, workouts and breathing volume at a glance.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                See your lung capacity, workouts and breathing volume at a glance.
-              </p>
             </motion.div>
           </div>
 
-          {/* Center Large Desktop Monitor + Animated Vertical/Angled SVG Pointer Lines & Pulsing Dots */}
-          <div className="relative w-full aspect-[360/236] flex items-center justify-center my-0.5 shrink-0">
+          {/* Center Large Desktop Monitor + Concentric Warm Halo + Bezel/Chin Connectors */}
+          <div className="relative w-full aspect-[360/248] flex items-center justify-center my-0 shrink-0">
+            {/* Concentric Soft Warm Peach Circles behind Monitor (Matches Reference) */}
+            <div className="absolute w-[84%] aspect-square rounded-full bg-[#FFE6D4]/45 border border-[#FF5500]/[0.06] pointer-events-none -z-10 flex items-center justify-center">
+              <div className="w-[76%] aspect-square rounded-full bg-[#FFD8BE]/40" />
+            </div>
+
             {/* Ambient Warm Theme-Orange Backlight Glow behind Monitor */}
             <div
-              className="absolute inset-x-[8%] inset-y-[12%] rounded-[2rem] pointer-events-none -z-10"
+              className="absolute inset-x-[10%] inset-y-[14%] rounded-[2rem] pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 54%, transparent 76%)',
-                filter: 'blur(26px)',
+                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.24) 0%, rgba(255, 105, 0, 0.08) 56%, transparent 76%)',
+                filter: 'blur(24px)',
               }}
             />
 
-            {/* Monitor Image (90% width of mobile stage — large and crisp) */}
+            {/* Monitor Image (Centered in 360x248 stage) */}
             <div
               className="absolute z-10"
               style={{
-                left: '5%',
-                top: '10%',
-                width: '90%',
-                height: '80%',
+                left: '9%',
+                top: '11%',
+                width: '82%',
+                height: '85%',
               }}
             >
               <img
@@ -541,59 +550,59 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 className="w-full h-full object-contain block select-none pointer-events-none"
                 style={{
                   filter:
-                    'drop-shadow(0 18px 32px rgba(0, 0, 0, 0.16)) drop-shadow(0 6px 14px rgba(255, 105, 0, 0.12))',
+                    'drop-shadow(0 18px 32px rgba(0, 0, 0, 0.16)) drop-shadow(0 6px 14px rgba(255, 105, 0, 0.10))',
                 }}
               />
             </div>
 
-            {/* SVG Pointer Lines & Pulsing Target Dots (viewBox 0 0 360 236) */}
+            {/* SVG Pointer Lines & Target Dots on Monitor Bezel/Chin (viewBox 0 0 360 248) */}
             <svg
-              viewBox="0 0 360 236"
+              viewBox="0 0 360 248"
               preserveAspectRatio="none"
               className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
             >
-              {/* 1. Top-Left Pointer: (73, 69) -> (73, 18) -> (88, 2) */}
+              {/* 1. Top-Left Connector: from top-left sidebar (50, 55) up-left to bottom of Card 1 (36, 0) */}
               <motion.path
-                d="M 73 69 L 73 18 L 88 2"
+                d="M 50 55 L 36 35 L 36 0"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.06, ease: 'easeOut' }}
               />
-              {/* 2. Top-Right Pointer: (285, 78) -> (285, 18) -> (270, 2) */}
+              {/* 2. Top-Right Connector: from right bezel (318, 62) up-right to bottom of Card 2 (330, 0) */}
               <motion.path
-                d="M 285 78 L 285 18 L 270 2"
+                d="M 318 62 L 330 42 L 330 0"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.12, ease: 'easeOut' }}
               />
-              {/* 3. Bottom-Left Pointer: (60, 146) -> (60, 218) -> (88, 234) */}
+              {/* 3. Bottom-Left Connector: from bottom-left chin (52, 194) down-left to top of Card 3 (36, 248) */}
               <motion.path
-                d="M 60 146 L 60 218 L 88 234"
+                d="M 52 194 L 52 208 L 36 226 L 36 248"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.18, ease: 'easeOut' }}
               />
-              {/* 4. Bottom-Right Pointer: (317, 129) -> (317, 218) -> (272, 234) */}
+              {/* 4. Bottom-Right Connector: from bottom-right chin (310, 194) down-right to top of Card 4 (326, 248) */}
               <motion.path
-                d="M 317 129 L 317 218 L 272 234"
+                d="M 310 194 L 310 208 L 326 226 L 326 248"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -601,24 +610,24 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 transition={{ duration: 0.48, delay: 0.24, ease: 'easeOut' }}
               />
 
-              {/* Pulsing Target Dots on Monitor Screen */}
+              {/* Pulsing Target Circles at Monitor Bezel & Chin */}
               {[
-                { cx: 73, cy: 69, delay: 0.02 },
-                { cx: 285, cy: 78, delay: 0.08 },
-                { cx: 60, cy: 146, delay: 0.14 },
-                { cx: 317, cy: 129, delay: 0.20 },
+                { cx: 50, cy: 55, delay: 0.02 },
+                { cx: 318, cy: 62, delay: 0.08 },
+                { cx: 52, cy: 194, delay: 0.14 },
+                { cx: 310, cy: 194, delay: 0.20 },
               ].map((dot, idx) => (
                 <g key={idx}>
                   {arePointersActive && (
                     <motion.circle
                       cx={dot.cx}
                       cy={dot.cy}
-                      r="5"
+                      r="7"
                       fill="none"
-                      stroke="#FF5500"
-                      strokeWidth="1.4"
-                      initial={{ r: 4.5, opacity: 0.75 }}
-                      animate={{ r: 12, opacity: 0 }}
+                      stroke="#FF4800"
+                      strokeWidth="1.5"
+                      initial={{ r: 6.5, opacity: 0.75 }}
+                      animate={{ r: 14, opacity: 0 }}
                       transition={{
                         duration: 1.8,
                         repeat: Infinity,
@@ -633,9 +642,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                     transition={{ type: 'spring', stiffness: 380, damping: 16, delay: dot.delay }}
                     style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
                   >
-                    <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="rgba(255, 255, 255, 0.85)" />
-                    <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="#FF5500" />
-                    <circle cx={dot.cx} cy={dot.cy} r="1.8" fill="#FFFFFF" />
+                    <circle cx={dot.cx} cy={dot.cy} r="6.8" fill="#FF4800" />
+                    <circle cx={dot.cx} cy={dot.cy} r="3.2" fill="#FFFFFF" />
                   </motion.g>
                 </g>
               ))}
@@ -643,28 +651,28 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           </div>
 
           {/* Bottom 2 Callout Cards (Track Your Lung Score & Train At Your Own Pace) */}
-          <div className="grid grid-cols-2 gap-2.5 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
             {/* Bottom-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <BarChartScoreIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <BarChartScoreIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   TRACK YOUR
                   <br />
                   LUNG SCORE
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
+                  Monitor your performance with detailed session data and track improvement over time.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                Monitor your performance with detailed session data and track improvement.
-              </p>
             </motion.div>
 
             {/* Bottom-Right Card */}
@@ -672,22 +680,22 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <BarChartScoreIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <BarChartScoreIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   TRAIN AT
                   <br />
                   YOUR OWN PACE
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
+                  Choose your difficulty level and track your training sessions with clear progress indicators.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                Choose your difficulty level and track training with clear progress indicators.
-              </p>
             </motion.div>
           </div>
         </div>
