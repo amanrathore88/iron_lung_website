@@ -26,7 +26,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
 
   return (
     <div
-      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-[94px] sm:pt-24 lg:pt-32 pb-3 sm:pb-8 transition-opacity duration-150 overflow-hidden pointer-events-none"
+      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-[94px] sm:pt-24 lg:pt-32 pb-3 sm:pb-8 md:transition-opacity md:duration-150 overflow-hidden pointer-events-none"
       style={{
         opacity: heroOpacity,
         transform: `translateY(${heroTranslateY}px)`,
