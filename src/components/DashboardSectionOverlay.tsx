@@ -17,7 +17,6 @@ const POPCORN_SPRING_TRANSITION: AnimationOptions = {
 
 interface DashboardSectionOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
-  videoScrollProgress?: number; // 0.0 to 1.0 (runway for video portal reveal after Phone stage)
   onExploreDashboard?: () => void;
   onOpenVideo?: () => void;
 }
@@ -137,7 +136,6 @@ const SaveReportDownloadIcon: React.FC = () => (
 
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
-  videoScrollProgress = 0,
 }) => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 1440,
@@ -233,20 +231,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const desktopOpacity = splitEase * (1 - phoneEase);
   const desktopBlur = phoneEase * 6;
 
-  // 4. Phone Zoom-Out & Fade into Depth as Video Showcase Enters (videoScrollProgress: 0.05 -> 0.50)
-  const videoExitRaw = Math.min(1, Math.max(0, (videoScrollProgress - 0.05) / 0.45));
-  const videoExitEase =
-    videoExitRaw < 0.5
-      ? 4 * videoExitRaw * videoExitRaw * videoExitRaw
-      : 1 - Math.pow(-2 * videoExitRaw + 2, 3) / 2;
-
-  // Phone slides up from the bottom edge to the center (translateY: +100vh -> 0px),
-  // and later zooms out into depth (1.00 -> 0.68) & fades out as the Video Section expands in
+  // Phone slides up from the bottom edge to the center (translateY: +100vh -> 0px)
   const phoneTravelDistance = windowDimensions.height * (isMobile ? 0.78 : 0.92) + 80;
-  const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance - videoExitEase * 36;
-  const phoneOpacity = (phoneT <= 0.005 ? 0 : Math.min(1, phoneT / 0.28)) * (1 - videoExitEase);
-  const phoneScale = (0.94 + 0.06 * phoneEase) * (1 - 0.32 * videoExitEase);
-  const phoneBlur = videoExitEase * 6;
+  const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance;
+  const phoneOpacity = phoneT <= 0.005 ? 0 : Math.min(1, phoneT / 0.28);
+  const phoneScale = 0.94 + 0.06 * phoneEase;
 
   // Phone pointers activation: triggers once the phone mockup settles into the center
   const arePhonePointersActive = isMobile ? scrollProgress >= 0.970 : scrollProgress >= 0.986;
@@ -1088,7 +1077,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-3 sm:px-6 md:px-10 pt-16 sm:pt-16 md:pt-20 pb-3 sm:pb-4"
         style={{
           opacity: phoneOpacity,
-          pointerEvents: phoneEase >= 0.85 && videoExitRaw < 0.2 ? 'auto' : 'none',
+          pointerEvents: phoneEase >= 0.85 ? 'auto' : 'none',
         }}
       >
         {/* ================================================================= */}
@@ -1098,7 +1087,6 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-1"
           style={{
             transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
-            filter: phoneBlur > 0.1 ? `blur(${phoneBlur.toFixed(2)}px)` : undefined,
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
@@ -1411,7 +1399,6 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             aspectRatio: '1024 / 485',
             containerType: 'inline-size',
             transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
-            filter: phoneBlur > 0.1 ? `blur(${phoneBlur.toFixed(2)}px)` : undefined,
           }}
         >
           {/* Ambient Warm Theme-Orange Backlight Glow behind Phone */}

@@ -6,7 +6,6 @@ import { HeroOverlay } from './components/HeroOverlay';
 import { ScrollyFeaturesOverlay } from './components/ScrollyFeaturesOverlay';
 import { DashboardSectionOverlay } from './components/DashboardSectionOverlay';
 import { AboutSectionOverlay } from './components/AboutSectionOverlay';
-import { CinematicVideoSection } from './components/CinematicVideoSection';
 import { LandingBottomSections } from './components/LandingBottomSections';
 import { TechnologyPage } from './components/TechnologyPage';
 import { HowItWorksPage } from './components/HowItWorksPage';
@@ -48,7 +47,6 @@ export const App: React.FC = () => {
   });
 
   const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const [videoScrollProgress, setVideoScrollProgress] = useState<number>(0);
   const scrollyTrackRef = useRef<HTMLDivElement>(null);
   const scrollProgressRef = useRef<number>(0);
   const mobileStageIndexRef = useRef<number>(0);
@@ -117,9 +115,7 @@ export const App: React.FC = () => {
       const track = scrollyTrackRef.current;
       if (!track) return;
       const trackTop = track.offsetTop;
-      const videoRunway = window.innerHeight * 1.8;
-      const totalSpan = track.offsetHeight - window.innerHeight;
-      const trackSpan = Math.max(1, totalSpan - videoRunway);
+      const trackSpan = track.offsetHeight - window.innerHeight;
       if (trackSpan <= 0) return;
 
       const clampedTarget = Math.max(0, Math.min(LAST_SNAP_STAGE, targetIdx));
@@ -154,7 +150,6 @@ export const App: React.FC = () => {
         const curP = startP + (targetP - startP) * ease;
         scrollProgressRef.current = curP;
         setScrollProgress(curP);
-        setVideoScrollProgress(0);
         window.scrollTo({
           top: trackTop + curP * trackSpan,
           behavior: 'instant' as ScrollBehavior,
@@ -165,7 +160,6 @@ export const App: React.FC = () => {
         } else {
           scrollProgressRef.current = targetP;
           setScrollProgress(targetP);
-          setVideoScrollProgress(0);
           window.scrollTo({
             top: trackTop + targetP * trackSpan,
             behavior: 'instant' as ScrollBehavior,
@@ -200,15 +194,9 @@ export const App: React.FC = () => {
           const track = scrollyTrackRef.current;
           if (track) {
             const trackTop = track.offsetTop;
-            const videoRunway = window.innerHeight * 1.8;
-            const totalSpan = track.offsetHeight - window.innerHeight;
-            const trackSpan = Math.max(1, totalSpan - videoRunway);
+            const trackSpan = track.offsetHeight - window.innerHeight;
             if (trackSpan > 0) {
               const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
-              const vProgress = Math.min(
-                1,
-                Math.max(0, (scrollY - (trackTop + trackSpan)) / Math.max(1, videoRunway))
-              );
 
               if (window.innerWidth < 768) {
                 // When scrolling UP natively from below About Us (progress > 0.84) back into About Us (<= 0.84),
@@ -218,7 +206,6 @@ export const App: React.FC = () => {
                   lastRawProgress = aboutP;
                   scrollProgressRef.current = aboutP;
                   setScrollProgress(aboutP);
-                  setVideoScrollProgress(0);
                   mobileStageIndexRef.current = LAST_SNAP_STAGE;
                   snapCooldownUntilRef.current = performance.now() + 380;
                   window.scrollTo({
@@ -235,7 +222,6 @@ export const App: React.FC = () => {
               lastRawProgress = progress;
               scrollProgressRef.current = progress;
               setScrollProgress(progress);
-              setVideoScrollProgress(vProgress);
             }
           }
           ticking = false;
@@ -440,9 +426,7 @@ export const App: React.FC = () => {
     const track = scrollyTrackRef.current;
     if (track) {
       const trackTop = track.offsetTop;
-      const videoRunway = window.innerHeight * 1.8;
-      const totalSpan = track.offsetHeight - window.innerHeight;
-      const trackSpan = Math.max(1, totalSpan - videoRunway);
+      const trackSpan = track.offsetHeight - window.innerHeight;
 
       if (window.innerWidth < 768 && animateMobileSnapRef.current && stageVal !== 'dashboard' && typeof stageVal !== 'number') {
         let targetIdx = 0;
@@ -583,8 +567,8 @@ export const App: React.FC = () => {
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (+180vh video reveal runway below Mobile Companion App) */}
-          <div ref={scrollyTrackRef} className="relative h-[1260vh] md:h-[1100vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[920vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
+          <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[920vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className={`sticky top-0 h-screen w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}
@@ -599,7 +583,6 @@ export const App: React.FC = () => {
               {/* Layer 2 (z-[15]): Prominent Centered Tagline: YOUR DASHBOARD AWAITS (Popcorn Pop Animation) */}
               <DashboardSectionOverlay
                 scrollProgress={scrollProgress}
-                videoScrollProgress={videoScrollProgress}
               />
 
               {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
@@ -618,11 +601,6 @@ export const App: React.FC = () => {
                 onExploreScreen={() => scrollToStage('screen')}
                 onExploreUV={() => scrollToStage('uv')}
                 onExploreChair={() => scrollToStage('comfort')}
-              />
-
-              {/* Layer 5 (z-[35]): Cinematic Hardware Video Showcase (Rises & expands after Mobile Companion App) */}
-              <CinematicVideoSection
-                videoScrollProgress={videoScrollProgress}
               />
             </div>
           </div>
