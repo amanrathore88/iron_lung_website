@@ -327,10 +327,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           {isMobile && (
             <div className="flex flex-col items-center mb-4">
               <div className="w-[1px] h-8 bg-gradient-to-b from-transparent to-[#FF5500]/40 mb-2.5" />
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 border border-[#FF5500]/20 shadow-[0_4px_16px_rgba(255,85,0,0.08)] backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500] animate-pulse" />
+              <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/90 border border-[#FF5500]/20 shadow-[0_4px_16px_rgba(255,85,0,0.08)] backdrop-blur-sm">
                 <span className="text-[9.5px] font-extrabold tracking-[0.22em] text-[#0A1118] uppercase">
-                  04 • CONNECTED ECOSYSTEM
+                  CONNECTED ECOSYSTEM
                 </span>
               </div>
             </div>
