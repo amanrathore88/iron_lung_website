@@ -26,6 +26,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
     Math.max(0, scrollProgress < 0.46 ? (scrollProgress - 0.38) / 0.08 : (0.66 - scrollProgress) / 0.08)
   );
   const sec2TranslateY = (1 - Math.min(1, Math.max(0, (scrollProgress - 0.38) / 0.08))) * 32;
+  const isSec2Active = scrollProgress >= 0.40 && scrollProgress <= 0.64;
 
   // Phase 3 (Section 03 - Ergonomic Chair): Fades in from 0.60, locked at 0.68-0.73, fades out cleanly by 0.76
   const sec3Opacity = Math.min(
@@ -33,6 +34,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
     Math.max(0, scrollProgress < 0.68 ? (scrollProgress - 0.60) / 0.08 : (0.76 - scrollProgress) / 0.03)
   );
   const sec3TranslateY = (1 - Math.min(1, Math.max(0, (scrollProgress - 0.60) / 0.08))) * 32;
+  const isSec3Active = scrollProgress >= 0.62 && scrollProgress <= 0.75;
 
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-hidden">
@@ -393,7 +395,12 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         {/* Left Column Area: Tag (Desktop/Laptop only to prevent mobile & tablet overlap) */}
         <div className="hidden lg:flex relative w-full lg:w-[48%] h-full flex-col justify-end pt-24 pb-12 sm:pb-16 pointer-events-none">
           {/* Left Bottom Tag: Cleaner Air A Healthier You */}
-          <div className="flex items-start gap-3 pointer-events-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={isSec2Active ? { duration: 0.5, delay: 0.95, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-start gap-3 pointer-events-auto"
+          >
             <div className="w-[3px] h-10 bg-[#FF5E1E] rounded-full shrink-0 shadow-sm" />
             <div className="flex flex-col">
               <span className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase">
@@ -403,28 +410,66 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 A Healthier You
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* MOBILE Top Header: Centered kicker, heading, description */}
         <div className="md:hidden w-full flex flex-col items-center text-center gap-1.5 pointer-events-auto">
           {/* Mobile Centered Kicker Badge */}
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-            <span className="text-xs font-black text-[#FF5E1E] tracking-tight">02</span>
-            <div className="w-1 h-1 rounded-full bg-slate-300" />
-            <span className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase">
+            <motion.span
+              initial={{ opacity: 0, y: 8 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={isSec2Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-xs font-black text-[#FF5E1E] tracking-tight"
+            >
+              02
+            </motion.span>
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={isSec2Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+              transition={isSec2Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              style={{ transformOrigin: 'left center' }}
+              className="w-1 h-1 rounded-full bg-slate-300"
+            />
+            <motion.span
+              initial={{ opacity: 0, y: 6 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+              transition={isSec2Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase"
+            >
               UV SANITIZATION
-            </span>
+            </motion.span>
           </div>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-center gap-1 w-full max-w-md">
             <h2 className="text-[23px] xs:text-[25px] font-black tracking-tight leading-[1.12] text-slate-950">
-              Built-In UV Purification
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec2Active ? { duration: 0.52, delay: 0.34, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block mr-[0.25em]"
+              >
+                Built-In
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec2Active ? { duration: 0.52, delay: 0.47, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block"
+              >
+                UV Purification
+              </motion.span>
             </h2>
-            <p className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={isSec2Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto"
+            >
               Advanced UV-C sanitization technology keeps the breathing interface clean and safe for every session.
-            </p>
+            </motion.p>
           </div>
         </div>
 
@@ -444,10 +489,20 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Row 1 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec2Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec2Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0"
+            >
               <Shield size={14} className="text-[#FF5E1E]" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Eliminates Bacteria & Viruses
@@ -456,13 +511,23 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 For a safer experience
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Row 2 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec2Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec2Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0"
+            >
               <Sparkles size={14} className="text-amber-500" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Automatic Sanitization
@@ -471,13 +536,23 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 Before and after each use
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Row 3 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec2Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec2Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0"
+            >
               <Leaf size={14} className="text-emerald-500" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Hygienic & Maintenance Friendly
@@ -486,7 +561,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 Designed for long-term use
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* TABLET & DESKTOP Right Column Content (hidden on mobile) */}
@@ -494,36 +569,82 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           {/* Section Number & Kicker */}
           <div className="flex flex-col items-start gap-0.5 sm:gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight">
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={isSec2Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight"
+              >
                 02
-              </span>
-              <div className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full" />
+              </motion.span>
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={isSec2Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+                transition={isSec2Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                style={{ transformOrigin: 'left center' }}
+                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full"
+              />
             </div>
-            <span className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5">
+            <motion.span
+              initial={{ opacity: 0, y: 6 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+              transition={isSec2Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5"
+            >
               UV SANITIZATION
-            </span>
+            </motion.span>
           </div>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
             <h2 className="text-2xl sm:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
-              Built-In <br className="hidden lg:inline" />
-              UV Purification
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec2Active ? { duration: 0.52, delay: 0.34, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block lg:block mr-[0.25em] lg:mr-0"
+              >
+                Built-In
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec2Active ? { duration: 0.52, delay: 0.47, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block lg:block"
+              >
+                UV Purification
+              </motion.span>
             </h2>
 
             {/* Description */}
-            <p className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={isSec2Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal"
+            >
               Advanced UV-C sanitization technology keeps the breathing interface clean and safe for every session.
-            </p>
+            </motion.p>
           </div>
 
           {/* 3 Value Cards Stack */}
           <div className="flex flex-col gap-2 lg:gap-3 w-full max-w-[245px] lg:max-w-md mt-0.5 lg:mt-1">
             {/* Card 1 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec2Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec2Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Shield size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Eliminates Bacteria & Viruses
@@ -532,13 +653,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   For a safer experience
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec2Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec2Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Sparkles size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Automatic Sanitization
@@ -547,13 +679,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   Before and after each use
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec2Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec2Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Leaf size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Hygienic & Maintenance Friendly
@@ -562,7 +705,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   Designed for long-term use
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -582,21 +725,59 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         <div className="md:hidden w-full flex flex-col items-center text-center gap-1.5 pointer-events-auto">
           {/* Mobile Centered Kicker Badge */}
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-            <span className="text-xs font-black text-[#FF5E1E] tracking-tight">03</span>
-            <div className="w-1 h-1 rounded-full bg-slate-300" />
-            <span className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase">
+            <motion.span
+              initial={{ opacity: 0, y: 8 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+              transition={isSec3Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-xs font-black text-[#FF5E1E] tracking-tight"
+            >
+              03
+            </motion.span>
+            <motion.div
+              initial={{ scaleX: 0, opacity: 0 }}
+              animate={isSec3Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+              transition={isSec3Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              style={{ transformOrigin: 'left center' }}
+              className="w-1 h-1 rounded-full bg-slate-300"
+            />
+            <motion.span
+              initial={{ opacity: 0, y: 6 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+              transition={isSec3Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase"
+            >
               ERGONOMIC DESIGN
-            </span>
+            </motion.span>
           </div>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-center gap-1 w-full max-w-md">
             <h2 className="text-[23px] xs:text-[25px] font-black tracking-tight leading-[1.12] text-slate-950">
-              Engineered for Optimal Posture
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec3Active ? { duration: 0.52, delay: 0.34, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block mr-[0.25em]"
+              >
+                Engineered for
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec3Active ? { duration: 0.52, delay: 0.47, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block"
+              >
+                Optimal Posture
+              </motion.span>
             </h2>
-            <p className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={isSec3Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto"
+            >
               Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
-            </p>
+            </motion.p>
           </div>
         </div>
 
@@ -616,10 +797,20 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Row 1 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec3Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec3Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0"
+            >
               <Activity size={14} className="text-[#FF5E1E]" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Thoracic Spine Alignment
@@ -628,13 +819,23 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 Maximizes lung capacity & airflow
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Row 2 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec3Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec3Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0"
+            >
               <Shield size={14} className="text-indigo-500" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Medical-Grade Cushioning
@@ -643,13 +844,23 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 High-density pressure-relief memory foam
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Row 3 */}
-          <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90">
-            <div className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={isSec3Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+          >
+            <motion.div
+              initial={{ scale: 0.85 }}
+              animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+              transition={isSec3Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0"
+            >
               <Sliders size={14} className="text-blue-500" />
-            </div>
+            </motion.div>
             <div className="flex flex-col min-w-0">
               <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
                 Multi-Point Adjustment
@@ -658,7 +869,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 Tailored recline & lumbar support
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* TABLET & DESKTOP Left Column Content (hidden on mobile) */}
@@ -666,36 +877,82 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           {/* Section Number & Kicker */}
           <div className="flex flex-col items-start gap-0.5 sm:gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight">
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                transition={isSec3Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight"
+              >
                 03
-              </span>
-              <div className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full" />
+              </motion.span>
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={isSec3Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+                transition={isSec3Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                style={{ transformOrigin: 'left center' }}
+                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full"
+              />
             </div>
-            <span className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5">
+            <motion.span
+              initial={{ opacity: 0, y: 6 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+              transition={isSec3Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[9px] sm:text-[10px] lg:text-xs font-bold tracking-[0.20em] sm:tracking-[0.22em] text-slate-500 uppercase mt-0.5"
+            >
               ERGONOMIC DESIGN
-            </span>
+            </motion.span>
           </div>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
             <h2 className="text-2xl sm:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
-              Engineered for <br className="hidden lg:inline" />
-              Optimal Posture
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec3Active ? { duration: 0.52, delay: 0.34, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block lg:block mr-[0.25em] lg:mr-0"
+              >
+                Engineered for
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 30 }}
+                animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={isSec3Active ? { duration: 0.52, delay: 0.47, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="inline-block lg:block"
+              >
+                Optimal Posture
+              </motion.span>
             </h2>
 
             {/* Description */}
-            <p className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              transition={isSec3Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal"
+            >
               Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
-            </p>
+            </motion.p>
           </div>
 
           {/* 3 Value Cards Stack */}
           <div className="flex flex-col gap-2 lg:gap-3 w-full max-w-[245px] lg:max-w-md mt-0.5 lg:mt-1">
             {/* Card 1 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec3Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec3Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Activity size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Thoracic Spine Alignment
@@ -704,13 +961,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   Maximizes lung capacity & airflow
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec3Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec3Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Shield size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Medical-Grade Cushioning
@@ -719,13 +987,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   High-density pressure-relief memory foam
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 */}
-            <div className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5 hover:scale-[1.01] transition-transform">
-              <div className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              whileHover={{ scale: 1.01 }}
+              transition={isSec3Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+              className="p-2 lg:p-4 rounded-xl lg:rounded-2xl bg-white/90 border border-slate-200/80 shadow-[0_8px_24px_rgba(0,0,0,0.05)] backdrop-blur-md flex items-center gap-2.5 lg:gap-3.5"
+            >
+              <motion.div
+                initial={{ scale: 0.85 }}
+                animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
+                transition={isSec3Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+              >
                 <Sliders size={14} className="text-slate-800 lg:w-5 lg:h-5" />
-              </div>
+              </motion.div>
               <div className="flex flex-col">
                 <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
                   Multi-Point Adjustment
@@ -734,14 +1013,19 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   Tailored recline & lumbar support
                 </span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Right Column Area: Tag & 3D Model Framing Space (Desktop only) */}
         <div className="hidden lg:flex relative w-full lg:w-[48%] h-full flex-col justify-end items-end pt-24 pb-12 sm:pb-16 pointer-events-none">
           {/* Right Bottom Tag: Active Recovery Maximum Comfort */}
-          <div className="flex items-start gap-3 pointer-events-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            transition={isSec3Active ? { duration: 0.5, delay: 0.95, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="flex items-start gap-3 pointer-events-auto"
+          >
             <div className="w-[3px] h-10 bg-[#FF5E1E] rounded-full shrink-0 shadow-sm" />
             <div className="flex flex-col">
               <span className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase">
@@ -751,7 +1035,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 Maximum Comfort
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
