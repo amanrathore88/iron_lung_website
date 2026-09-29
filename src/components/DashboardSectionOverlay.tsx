@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { PopcornText } from './PopcornText';
 import type { AnimationOptions } from 'framer-motion';
 
@@ -46,6 +47,34 @@ const MOBILE_FONT: React.CSSProperties = {
   letterSpacing: '-0.03em',
   textAlign: 'center',
 };
+
+// Custom SVG Icons matching the reference design
+const GridDashboardIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#D94E0F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
+    <rect x="13.5" y="3.5" width="7" height="7" rx="3.5" />
+    <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
+    <rect x="13.5" y="13.5" width="7" height="7" rx="1.5" />
+  </svg>
+);
+
+const BarChartScoreIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#D94E0F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="13" width="3.8" height="7" rx="1" />
+    <rect x="10.1" y="9" width="3.8" height="11" rx="1" />
+    <rect x="16.2" y="4" width="3.8" height="16" rx="1" />
+  </svg>
+);
+
+const LungsHealthIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-[58%] h-[58%]" stroke="#D94E0F" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 3v7" />
+    <path d="M12 8c-1.8 0-3.2 1.2-3.8 2.5" />
+    <path d="M12 8c1.8 0 3.2 1.2 3.8 2.5" />
+    <path d="M9.2 5.5C6.2 5.5 3.5 8.8 3.5 14c0 3.2 1.6 5.5 3.8 5.5 1.8 0 3.2-1.2 3.2-3.2V9.5c0-2.2-.5-4-1.3-4z" />
+    <path d="M14.8 5.5c3 0 5.7 3.3 5.7 8.5 0 3.2-1.6 5.5-3.8 5.5-1.8 0-3.2-1.2-3.2-3.2V9.5c0-2.2.5-4 1.3-4z" />
+  </svg>
+);
 
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
@@ -100,22 +129,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         }%, transparent ${fadeEnd}%, transparent 100%)`;
 
   // ---------------------------------------------------------------------------
-  // 2. Scroll-Driven Text Off-Screen Exit & Image Zoom Transition (0.925 - 0.965)
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
   // 2. Text Popcorn Animation on 3D Model Exit & Subsequent Scroll Separation
   // ---------------------------------------------------------------------------
-  // - When the 3D model sweeps completely out to the right (scrollProgress >= 0.920),
-  //   the text "YOUR DASHBOARD AWAITS" appears with the Popcorn Text animation.
-  // - It plays strictly once.
-  // - After that (scrollProgress >= 0.935), "YOUR DASHBOARD" simply moves UP,
-  //   "AWAITS" simply moves DOWN, and the User Dashboard image zooms in between them.
   const isModelExitRight = scrollProgress >= 0.920;
   const isTextActive = isModelExitRight;
   const isInteractive = scrollProgress >= 0.920;
 
-  // Separation progress: begins once the text has appeared and settled (0.930 - 0.955)
-  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.930) / 0.025));
+  // Separation progress: begins once the text has appeared and settled (0.930 - 0.952)
+  const splitT = Math.min(1, Math.max(0, (scrollProgress - 0.930) / 0.022));
   const splitEase =
     splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
 
@@ -123,19 +144,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const exitTravelDistance = windowDimensions.height * 0.52 + 180;
   const topExitOffset = splitEase * exitTravelDistance;
   const bottomExitOffset = splitEase * exitTravelDistance;
-  // Keep text sharp and clearly readable as it separates, fading smoothly as it approaches viewport bounds
   const textOpacity = splitEase < 0.75 ? 1 : Math.max(0, 1 - (splitEase - 0.75) / 0.25);
 
   // Desktop zoom-in scale: zooms in from 0.76 up to 1.00
   const baseDesktopScale = 0.76 + 0.24 * splitEase;
 
+  // Pointers activation: triggers once the desktop screen has zoomed into place
+  // and remains attached to the desktop stage as it zooms out for the phone transition
+  const arePointersActive = scrollProgress >= 0.948;
+
   // ---------------------------------------------------------------------------
-  // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition (0.968 - 0.992)
+  // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition (0.972 - 0.994)
   // ---------------------------------------------------------------------------
-  // As the user scrolls down past the desktop view:
-  // - The desktop image fades out into the background via a "zoom-out" animation.
-  // - The phone image slides up from the bottom into the center.
-  const phoneT = Math.min(1, Math.max(0, (scrollProgress - 0.968) / 0.024));
+  const phoneT = Math.min(1, Math.max(0, (scrollProgress - 0.972) / 0.022));
   const phoneEase =
     phoneT < 0.5 ? 4 * phoneT * phoneT * phoneT : 1 - Math.pow(-2 * phoneT + 2, 3) / 2;
 
@@ -272,43 +293,412 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       </div>
 
       {/* ===================================================================== */}
-      {/* LAYER 2: THE DESKTOP DASHBOARD MOCKUP (Zooms in, then zooms out/fades) */}
+      {/* LAYER 2: DESKTOP DASHBOARD MOCKUP + ANIMATED CALLOUT POINTERS         */}
       {/* ===================================================================== */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-6"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-2 sm:px-6 md:px-10 pt-14 sm:pt-16 md:pt-20 pb-2 sm:pb-4"
         style={{
           opacity: desktopOpacity,
           pointerEvents: splitEase >= 0.85 && phoneT < 0.2 ? 'auto' : 'none',
         }}
       >
         <div
-          className="relative w-full max-w-5xl xl:max-w-6xl max-h-[82vh] flex items-center justify-center will-change-transform"
+          className="relative w-full max-w-[1380px] aspect-[1024/484] max-h-[84vh] flex items-center justify-center will-change-transform mx-auto"
           style={{
             transform: `scale(${desktopScale})`,
             filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
-          {/* Ambient Warm Theme-Orange Backlight Glow */}
+          {/* Ambient Warm Theme-Orange Backlight Glow behind Monitor */}
           <div
-            className="absolute -inset-4 sm:-inset-8 md:-inset-14 rounded-[2rem] md:rounded-[3.5rem] pointer-events-none -z-10"
+            className="absolute left-[22%] right-[22%] top-[10%] bottom-[10%] rounded-[3rem] pointer-events-none -z-10"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 50%, transparent 72%)',
-              filter: 'blur(42px)',
+                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.26) 0%, rgba(255, 105, 0, 0.09) 52%, transparent 74%)',
+              filter: 'blur(40px)',
               opacity: desktopOpacity,
             }}
           />
 
-          {/* Full Uncropped Desktop Monitor Mockup */}
-          <img
-            src="/images/dashboard/desktop-mockup.png"
-            alt="Iron Lung User Dashboard Desktop Mockup"
-            className="w-auto h-auto max-w-full max-h-[80vh] object-contain block select-none pointer-events-none"
+          {/* Centered Desktop Monitor Mockup locked to reference stage coordinates */}
+          <div
+            className="absolute"
             style={{
-              filter:
-                'drop-shadow(0 28px 48px rgba(0, 0, 0, 0.16)) drop-shadow(0 8px 20px rgba(255, 105, 0, 0.12))',
+              left: '23.15%',
+              top: '9.8%',
+              width: '52.8%',
+              height: '84.8%',
             }}
-          />
+          >
+            <img
+              src="/images/dashboard/desktop-mockup.png"
+              alt="Iron Lung User Dashboard Desktop Mockup"
+              className="w-full h-full object-contain block select-none pointer-events-none"
+              style={{
+                filter:
+                  'drop-shadow(0 26px 44px rgba(0, 0, 0, 0.15)) drop-shadow(0 8px 18px rgba(255, 105, 0, 0.10))',
+              }}
+            />
+          </div>
+
+          {/* ================================================================= */}
+          {/* SVG POINTER LINES & PULSING TARGET DOTS (viewBox 0 0 1024 484)    */}
+          {/* ================================================================= */}
+          <svg
+            viewBox="0 0 1024 484"
+            className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
+          >
+            {/* 1. Top-Left Pointer Line: (328, 146) -> (238, 146) -> (205, 117) -> (81, 117) */}
+            <motion.path
+              d="M 328 146 L 238 146 L 205 117 L 81 117"
+              fill="none"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
+            />
+
+            {/* 2. Bottom-Left Pointer Line: (306, 313) -> (252, 313) -> (238, 301) -> (81, 301) */}
+            <motion.path
+              d="M 306 313 L 252 313 L 238 301 L 81 301"
+              fill="none"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.55, delay: 0.18, ease: 'easeOut' }}
+            />
+
+            {/* 3. Top-Right Pointer Line: (682, 165) -> (756, 165) -> (804, 124) -> (858, 124) */}
+            <motion.path
+              d="M 682 165 L 756 165 L 804 124 L 858 124"
+              fill="none"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.55, delay: 0.13, ease: 'easeOut' }}
+            />
+            {/* Top-Right Title Short Accent Line */}
+            <motion.line
+              x1="873"
+              y1="117"
+              x2="914"
+              y2="117"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.35, delay: 0.38, ease: 'easeOut' }}
+            />
+
+            {/* 4. Bottom-Right Pointer Line: (736, 276) -> (768, 276) -> (807, 310) -> (858, 310) */}
+            <motion.path
+              d="M 736 276 L 768 276 L 807 310 L 858 310"
+              fill="none"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.55, delay: 0.23, ease: 'easeOut' }}
+            />
+            {/* Bottom-Right Title Short Accent Line */}
+            <motion.line
+              x1="873"
+              y1="303"
+              x2="914"
+              y2="303"
+              stroke="#FF5500"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={
+                arePointersActive
+                  ? { pathLength: 1, opacity: 1 }
+                  : { pathLength: 0, opacity: 0 }
+              }
+              transition={{ duration: 0.35, delay: 0.46, ease: 'easeOut' }}
+            />
+
+            {/* Target Dots with Sonar Pulse Rings */}
+            {[
+              { cx: 328, cy: 146, delay: 0.02 },
+              { cx: 306, cy: 313, delay: 0.12 },
+              { cx: 682, cy: 165, delay: 0.07 },
+              { cx: 736, cy: 276, delay: 0.17 },
+            ].map((dot, idx) => (
+              <g key={idx}>
+                {/* Radiating Sonar Pulse Ring */}
+                {arePointersActive && (
+                  <motion.circle
+                    cx={dot.cx}
+                    cy={dot.cy}
+                    r="6"
+                    fill="none"
+                    stroke="#FF5500"
+                    strokeWidth="1.5"
+                    initial={{ r: 5.5, opacity: 0.75 }}
+                    animate={{ r: 14, opacity: 0 }}
+                    transition={{
+                      duration: 1.8,
+                      repeat: Infinity,
+                      delay: dot.delay + 0.3,
+                      ease: 'easeOut',
+                    }}
+                  />
+                )}
+                {/* Outer Orange Ring + White Core */}
+                <motion.g
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={
+                    arePointersActive
+                      ? { scale: 1, opacity: 1 }
+                      : { scale: 0, opacity: 0 }
+                  }
+                  transition={{
+                    type: 'spring',
+                    stiffness: 380,
+                    damping: 16,
+                    delay: dot.delay,
+                  }}
+                  style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
+                >
+                  <circle cx={dot.cx} cy={dot.cy} r="5.5" fill="#FF5500" />
+                  <circle cx={dot.cx} cy={dot.cy} r="2.1" fill="#FFFFFF" />
+                </motion.g>
+              </g>
+            ))}
+          </svg>
+
+          {/* ================================================================= */}
+          {/* 4 ANIMATED CALLOUT BLOCKS (Locked to 1024x484 percentage coords)  */}
+          {/* ================================================================= */}
+
+          {/* 1. TOP-LEFT: PERSONALISED DASHBOARD */}
+          <motion.div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              left: '2.73%',
+              top: '15.8%',
+              width: '19.5%',
+            }}
+            initial={{ opacity: 0, x: -16, y: 6 }}
+            animate={
+              arePointersActive
+                ? { opacity: 1, x: 0, y: 0 }
+                : { opacity: 0, x: -16, y: 6 }
+            }
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 22,
+              delay: 0.22,
+            }}
+          >
+            <div className="flex items-start gap-[6.5%]">
+              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+                <GridDashboardIcon />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(9px, 1.06vw, 14.8px)' }}
+                >
+                  PERSONALISED
+                  <br />
+                  DASHBOARD
+                </h4>
+                <p
+                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(8px, 0.84vw, 12px)' }}
+                >
+                  Get a clear overview of
+                  <br />
+                  your daily plan, tasks and
+                  <br />
+                  session progress.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 2. BOTTOM-LEFT: TRACK YOUR LUNG SCORE */}
+          <motion.div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              left: '2.73%',
+              top: '53.8%',
+              width: '19.5%',
+            }}
+            initial={{ opacity: 0, x: -16, y: 6 }}
+            animate={
+              arePointersActive
+                ? { opacity: 1, x: 0, y: 0 }
+                : { opacity: 0, x: -16, y: 6 }
+            }
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 22,
+              delay: 0.32,
+            }}
+          >
+            <div className="flex items-start gap-[6.5%]">
+              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+                <BarChartScoreIcon />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(9px, 1.06vw, 14.8px)' }}
+                >
+                  TRACK YOUR
+                  <br />
+                  LUNG SCORE
+                </h4>
+                <p
+                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(8px, 0.84vw, 12px)' }}
+                >
+                  Monitor your performance
+                  <br />
+                  with detailed session data
+                  <br />
+                  and track improvement
+                  <br />
+                  over time.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 3. TOP-RIGHT: REAL-TIME LUNG HEALTH METRICS */}
+          <motion.div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              left: '80.08%',
+              top: '15.8%',
+              width: '19.5%',
+            }}
+            initial={{ opacity: 0, x: 16, y: 6 }}
+            animate={
+              arePointersActive
+                ? { opacity: 1, x: 0, y: 0 }
+                : { opacity: 0, x: 16, y: 6 }
+            }
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 22,
+              delay: 0.27,
+            }}
+          >
+            <div className="flex items-start gap-[6.5%]">
+              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+                <LungsHealthIcon />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(9px, 1.06vw, 14.8px)' }}
+                >
+                  REAL-TIME
+                  <br />
+                  LUNG HEALTH METRICS
+                </h4>
+                <p
+                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(8px, 0.84vw, 12px)' }}
+                >
+                  See your lung capacity,
+                  <br />
+                  workouts and breathing
+                  <br />
+                  volume at a glance.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 4. BOTTOM-RIGHT: TRAIN AT YOUR OWN PACE */}
+          <motion.div
+            className="absolute z-20 pointer-events-none"
+            style={{
+              left: '80.08%',
+              top: '54.1%',
+              width: '19.5%',
+            }}
+            initial={{ opacity: 0, x: 16, y: 6 }}
+            animate={
+              arePointersActive
+                ? { opacity: 1, x: 0, y: 0 }
+                : { opacity: 0, x: 16, y: 6 }
+            }
+            transition={{
+              type: 'spring',
+              stiffness: 260,
+              damping: 22,
+              delay: 0.37,
+            }}
+          >
+            <div className="flex items-start gap-[6.5%]">
+              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+                <BarChartScoreIcon />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(9px, 1.06vw, 14.8px)' }}
+                >
+                  TRAIN AT
+                  <br />
+                  YOUR OWN PACE
+                </h4>
+                <p
+                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
+                  style={{ fontSize: 'clamp(8px, 0.84vw, 12px)' }}
+                >
+                  Choose your difficulty level
+                  <br />
+                  and track your training
+                  <br />
+                  sessions with clear progress
+                  <br />
+                  indicators.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
 
