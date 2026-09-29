@@ -114,6 +114,26 @@ const PdfReportIcon: React.FC = () => (
   </svg>
 );
 
+const SessionDocIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#FF5500" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+    <path d="M14 3v4.8h4.8" />
+    <line x1="8" y1="11" x2="14.5" y2="11" />
+    <line x1="8" y1="14" x2="15.5" y2="14" />
+    <line x1="8" y1="17" x2="13" y2="17" />
+  </svg>
+);
+
+const SaveReportDownloadIcon: React.FC = () => (
+  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#FF5500" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+    <path d="M14 3v4.8h4.8" />
+    <path d="M12 10.5v6" />
+    <path d="M9.5 14.2L12 16.7l2.5-2.5" />
+  </svg>
+);
+
+
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
 }) => {
@@ -1122,47 +1142,51 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* MOBILE PORTRAIT LAYOUT FOR PHONE COMPANION APP VIEW (< 768px)     */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-between w-full max-w-[390px] h-full max-h-[760px] mx-auto will-change-transform py-1"
+          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-1"
           style={{
             transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
           }}
         >
-          {/* Top Kicker & Title */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#FF5500]/25 shadow-sm mb-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
-              <span className="text-[8.5px] font-extrabold tracking-[0.20em] text-[#FF5500] uppercase">
+          {/* Top Kicker, 2-Line Headline & Subtitle */}
+          <div className="flex flex-col items-center text-center shrink-0 mb-2.5 px-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
+              <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
+              <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 02 • MOBILE COMPANION APP
               </span>
             </div>
-            <h3 className="text-[17px] xs:text-[19px] font-black tracking-tight text-[#0A1118] leading-tight">
-              Session Reports On The Go
+            <h3 className="text-[25px] xs:text-[29px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
+              Session Reports
+              <span className="block text-[#FF4800]">On The Go</span>
             </h3>
+            <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.38] max-w-[295px] mt-1">
+              Track your progress, analyse your sessions and stay motivated — anytime, anywhere.
+            </p>
           </div>
 
           {/* Top 2 Callout Cards (Session Details & Training Performance) */}
-          <div className="grid grid-cols-2 gap-2.5 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
             {/* Top-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <CalendarSessionIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <SessionDocIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   SESSION
                   <br />
                   DETAILS
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                  View the date, time and status of your training session at a glance.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                View the date, time and status of your training session at a glance.
-              </p>
             </motion.div>
 
             {/* Top-Right Card */}
@@ -1170,33 +1194,33 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <SolidBarChartIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <SolidBarChartIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   TRAINING
                   <br />
                   PERFORMANCE
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                  Check session duration, achieved volume and target completion live.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                Check session duration, achieved volume and target completion live.
-              </p>
             </motion.div>
           </div>
 
-          {/* Center Large Phone Mockup + Concentric Radar Rings + SVG Pointer Lines & Pulsing Dots */}
-          <div className="relative w-full aspect-[360/252] flex items-center justify-center my-0.5 shrink-0">
+          {/* Center Large Phone Mockup + Concentric Warm Halo Rings + SVG Pointer Lines & Target Dots */}
+          <div className="relative w-full aspect-[360/288] flex items-center justify-center my-0 shrink-0">
             {/* Ambient Warm Theme-Orange Backlight Glow behind Phone */}
             <div
-              className="absolute inset-x-[20%] inset-y-[8%] rounded-full pointer-events-none -z-10"
+              className="absolute inset-x-[18%] inset-y-[6%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(circle at center, rgba(255, 105, 0, 0.32) 0%, rgba(255, 105, 0, 0.12) 52%, transparent 74%)',
+                  'radial-gradient(circle at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 54%, transparent 76%)',
                 filter: 'blur(24px)',
                 opacity: phoneEase,
               }}
@@ -1204,23 +1228,23 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
             {/* Warm Elliptical Floor Shadow/Glow beneath the Phone */}
             <div
-              className="absolute left-[28%] right-[28%] bottom-[1%] h-[5%] rounded-full pointer-events-none -z-10"
+              className="absolute left-[26%] right-[26%] bottom-[1%] h-[5%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(235, 85, 15, 0.36) 0%, rgba(255, 105, 0, 0.14) 54%, transparent 78%)',
+                  'radial-gradient(ellipse at center, rgba(235, 85, 15, 0.34) 0%, rgba(255, 105, 0, 0.12) 54%, transparent 78%)',
                 filter: 'blur(8px)',
                 opacity: phoneEase,
               }}
             />
 
-            {/* Centered Phone Mockup (Large & crisp on mobile) */}
+            {/* Centered Phone Mockup (Prominent & balanced on mobile) */}
             <div
               className="absolute z-10"
               style={{
-                left: '33%',
-                top: '3%',
-                width: '34%',
-                height: '94%',
+                left: '25%',
+                top: '2.5%',
+                width: '50%',
+                height: '95%',
               }}
             >
               <img
@@ -1234,93 +1258,99 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               />
             </div>
 
-            {/* SVG Concentric Radar Rings, Pointer Lines & Target Dots (viewBox 0 0 360 252) */}
+            {/* SVG Concentric Warm Radar Rings behind Phone (viewBox 0 0 360 288) */}
             <svg
-              viewBox="0 0 360 252"
+              viewBox="0 0 360 288"
               preserveAspectRatio="none"
-              className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
+              className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
             >
-              {/* Concentric Radar Rings behind Phone (centered at 180, 126) */}
               <motion.circle
                 cx="180"
-                cy="126"
-                r="76"
-                fill="none"
-                stroke="rgba(255, 95, 20, 0.18)"
+                cy="144"
+                r="88"
+                fill="rgba(255, 206, 172, 0.28)"
+                stroke="rgba(255, 95, 20, 0.14)"
                 strokeWidth="1"
                 initial={{ scale: 0.85, opacity: 0 }}
                 animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.85, opacity: 0 }}
                 transition={{ duration: 0.55, delay: 0.02, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 126px' }}
+                style={{ transformOrigin: '180px 144px' }}
               />
               <motion.circle
                 cx="180"
-                cy="126"
-                r="96"
-                fill="none"
-                stroke="rgba(255, 95, 20, 0.13)"
+                cy="144"
+                r="116"
+                fill="rgba(255, 220, 194, 0.22)"
+                stroke="rgba(255, 95, 20, 0.12)"
                 strokeWidth="1"
                 initial={{ scale: 0.85, opacity: 0 }}
                 animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.85, opacity: 0 }}
                 transition={{ duration: 0.6, delay: 0.07, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 126px' }}
+                style={{ transformOrigin: '180px 144px' }}
               />
               <motion.circle
                 cx="180"
-                cy="126"
-                r="116"
-                fill="none"
-                stroke="rgba(255, 95, 20, 0.24)"
+                cy="144"
+                r="142"
+                fill="rgba(255, 232, 214, 0.16)"
+                stroke="rgba(255, 95, 20, 0.22)"
                 strokeWidth="1.1"
                 strokeDasharray="4 5"
                 initial={{ scale: 0.88, opacity: 0 }}
                 animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.88, opacity: 0 }}
                 transition={{ duration: 0.65, delay: 0.12, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 126px' }}
+                style={{ transformOrigin: '180px 144px' }}
               />
+            </svg>
 
-              {/* 1. Top-Left Pointer: (129, 51) -> (88, 26) -> (88, 2) */}
+            {/* SVG Foreground Pointer Lines & Target Dots (viewBox 0 0 360 288) */}
+            <svg
+              viewBox="0 0 360 288"
+              preserveAspectRatio="none"
+              className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
+            >
+              {/* 1. Top-Left Connector: from left phone bezel (114, 66) up-left to bottom of Card 1 (46, 0) */}
               <motion.path
-                d="M 129 51 L 88 26 L 88 2"
+                d="M 114 66 L 46 32 L 46 0"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.06, ease: 'easeOut' }}
               />
-              {/* 2. Top-Right Pointer: (183, 93) -> (268, 42) -> (268, 2) */}
+              {/* 2. Top-Right Connector: from right phone screen (226, 100) up-right to bottom of Card 2 (314, 0) */}
               <motion.path
-                d="M 183 93 L 268 42 L 268 2"
+                d="M 226 100 L 314 36 L 314 0"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.12, ease: 'easeOut' }}
               />
-              {/* 3. Bottom-Left Pointer: (141, 168) -> (88, 214) -> (88, 250) */}
+              {/* 3. Bottom-Left Connector: from lower-left lungs card (136, 196) down-left to top of Card 3 (46, 288) */}
               <motion.path
-                d="M 141 168 L 88 214 L 88 250"
+                d="M 136 196 L 46 246 L 46 288"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.18, ease: 'easeOut' }}
               />
-              {/* 4. Bottom-Right Pointer: (227, 127) -> (272, 182) -> (272, 250) */}
+              {/* 4. Bottom-Right Connector: from right phone edge (245, 182) down-right to top of Card 4 (314, 288) */}
               <motion.path
-                d="M 227 127 L 272 182 L 272 250"
+                d="M 245 182 L 314 238 L 314 288"
                 fill="none"
-                stroke="#FF5500"
-                strokeWidth="1.75"
+                stroke="#FF4800"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -1328,24 +1358,24 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 transition={{ duration: 0.48, delay: 0.24, ease: 'easeOut' }}
               />
 
-              {/* Pulsing Target Dots on Phone Screen */}
+              {/* Pulsing Target Dots on Phone Screen & Bezel */}
               {[
-                { cx: 129, cy: 51, delay: 0.02 },
-                { cx: 183, cy: 93, delay: 0.08 },
-                { cx: 141, cy: 168, delay: 0.14 },
-                { cx: 227, cy: 127, delay: 0.20 },
+                { cx: 114, cy: 66, delay: 0.02 },
+                { cx: 226, cy: 100, delay: 0.08 },
+                { cx: 136, cy: 196, delay: 0.14 },
+                { cx: 244, cy: 260, delay: 0.20 },
               ].map((dot, idx) => (
                 <g key={idx}>
                   {arePhonePointersActive && (
                     <motion.circle
                       cx={dot.cx}
                       cy={dot.cy}
-                      r="5.5"
+                      r="7"
                       fill="none"
-                      stroke="#FF5500"
-                      strokeWidth="1.4"
-                      initial={{ r: 5, opacity: 0.75 }}
-                      animate={{ r: 13, opacity: 0 }}
+                      stroke="#FF4800"
+                      strokeWidth="1.5"
+                      initial={{ r: 6.5, opacity: 0.75 }}
+                      animate={{ r: 14, opacity: 0 }}
                       transition={{
                         duration: 1.8,
                         repeat: Infinity,
@@ -1360,9 +1390,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                     transition={{ type: 'spring', stiffness: 380, damping: 16, delay: dot.delay }}
                     style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
                   >
-                    <circle cx={dot.cx} cy={dot.cy} r="6.8" fill="rgba(255, 255, 255, 0.85)" />
-                    <circle cx={dot.cx} cy={dot.cy} r="4.6" fill="#FF5500" />
-                    <circle cx={dot.cx} cy={dot.cy} r="1.8" fill="#FFFFFF" />
+                    <circle cx={dot.cx} cy={dot.cy} r="6.8" fill="#FF4800" />
+                    <circle cx={dot.cx} cy={dot.cy} r="3.2" fill="#FFFFFF" />
                   </motion.g>
                 </g>
               ))}
@@ -1370,28 +1399,28 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           </div>
 
           {/* Bottom 2 Callout Cards (Visual Breathing Feedback & Save Your Progress) */}
-          <div className="grid grid-cols-2 gap-2.5 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
             {/* Bottom-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <LungsHealthIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <LungsHealthIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   VISUAL BREATHING
                   <br />
                   FEEDBACK
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                  See your breathing pattern with clear visual insights and real-time feedback.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                See lung capacity visualised and follow guided inhale & exhale sessions.
-              </p>
             </motion.div>
 
             {/* Bottom-Right Card */}
@@ -1399,22 +1428,22 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-xl bg-white/92 backdrop-blur-md border border-[#FF5500]/20 p-2.5 shadow-[0_8px_24px_rgba(255,85,0,0.06)] flex flex-col justify-between"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
             >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
-                  <PdfReportIcon />
-                </div>
-                <h4 className="text-[#FF5500] font-extrabold text-[9.5px] xs:text-[10px] uppercase tracking-[0.02em] leading-[1.15]">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+                <SaveReportDownloadIcon />
+              </div>
+              <div className="flex-1 min-w-0 flex flex-col items-start">
+                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
                   SAVE YOUR
                   <br />
                   PROGRESS
                 </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
+                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                  All your session data is saved securely so you can track your improvement over time.
+                </p>
               </div>
-              <div className="w-6 h-[1.5px] bg-[#FF5500] my-1.5 rounded-full" />
-              <p className="text-[#23272F] text-[10px] xs:text-[10.5px] leading-[1.35] font-normal">
-                Download detailed session reports to track your improvement over time.
-              </p>
             </motion.div>
           </div>
         </div>
