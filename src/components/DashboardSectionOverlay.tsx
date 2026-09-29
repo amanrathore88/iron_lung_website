@@ -472,11 +472,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-3 px-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
+          <div className="flex flex-col items-center text-center shrink-0 mb-3.5 px-2">
+            <div className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-2">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
-                01 • DESKTOP WEB PORTAL
+                DESKTOP WEB PORTAL
               </span>
             </div>
             <h3 className="text-[26px] xs:text-[30px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
@@ -495,21 +494,18 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <GridDashboardIcon />
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
                   PERSONALISED
                   <br />
                   DASHBOARD
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
-                  Get a clear overview of your daily plan, tasks and session progress.
-                </p>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </motion.div>
 
@@ -518,21 +514,18 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <LungsHealthIcon />
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
                   REAL-TIME
                   <br />
                   LUNG METRICS
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
-                  See your lung capacity, workouts and breathing volume at a glance.
-                </p>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </motion.div>
           </div>
@@ -677,21 +670,18 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <BarChartScoreIcon />
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
                   TRACK YOUR
                   <br />
                   LUNG SCORE
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
-                  Monitor your performance with detailed session data and track improvement over time.
-                </p>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </motion.div>
 
@@ -700,21 +690,18 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <BarChartScoreIcon />
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
+                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
                   TRAIN AT
                   <br />
                   YOUR OWN PACE
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.36] font-normal">
-                  Choose your difficulty level and track your training sessions with clear progress indicators.
-                </p>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </motion.div>
           </div>
@@ -807,9 +794,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               transition={{ duration: 0.55, delay: 0.18, ease: 'easeOut' }}
             />
 
-            {/* 3. Top-Right Pointer Line: (682, 165) -> (756, 165) -> (804, 124) -> (858, 124) */}
+            {/* 3. Top-Right Pointer Line: (682, 165) -> (756, 165) -> (804, 117) -> (858, 117) */}
             <motion.path
-              d="M 682 165 L 756 165 L 804 124 L 858 124"
+              d="M 682 165 L 756 165 L 804 117 L 858 117"
               fill="none"
               stroke="#FF5500"
               strokeWidth="1.8"
@@ -841,9 +828,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               transition={{ duration: 0.35, delay: 0.38, ease: 'easeOut' }}
             />
 
-            {/* 4. Bottom-Right Pointer Line: (736, 276) -> (768, 276) -> (807, 310) -> (858, 310) */}
+            {/* 4. Bottom-Right Pointer Line: (736, 276) -> (768, 276) -> (807, 301) -> (858, 301) */}
             <motion.path
-              d="M 736 276 L 768 276 L 807 310 L 858 310"
+              d="M 736 276 L 768 276 L 807 301 L 858 301"
               fill="none"
               stroke="#FF5500"
               strokeWidth="1.8"
@@ -934,7 +921,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute z-20 pointer-events-none"
             style={{
               left: '2.734%',
-              top: '15.8%',
+              top: '15.0%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: -16, y: 6 }}
@@ -950,29 +937,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.22,
             }}
           >
-            <div className="flex items-start gap-[6.5%]">
+            <div className="flex items-center gap-[6.5%]">
               <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <GridDashboardIcon />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.38cqw' }}
                 >
                   PERSONALISED
                   <br />
                   DASHBOARD
                 </h4>
-                <p
-                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
-                  style={{ fontSize: '1.12cqw' }}
-                >
-                  Get a clear overview of
-                  <br />
-                  your daily plan, tasks and
-                  <br />
-                  session progress.
-                </p>
               </div>
             </div>
           </motion.div>
@@ -982,7 +959,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute z-20 pointer-events-none"
             style={{
               left: '2.734%',
-              top: '53.8%',
+              top: '53.0%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: -16, y: 6 }}
@@ -998,31 +975,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.32,
             }}
           >
-            <div className="flex items-start gap-[6.5%]">
+            <div className="flex items-center gap-[6.5%]">
               <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <BarChartScoreIcon />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.38cqw' }}
                 >
                   TRACK YOUR
                   <br />
                   LUNG SCORE
                 </h4>
-                <p
-                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
-                  style={{ fontSize: '1.12cqw' }}
-                >
-                  Monitor your performance
-                  <br />
-                  with detailed session data
-                  <br />
-                  and track improvement
-                  <br />
-                  over time.
-                </p>
               </div>
             </div>
           </motion.div>
@@ -1032,7 +997,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute z-20 pointer-events-none"
             style={{
               left: '80.078%',
-              top: '15.8%',
+              top: '15.0%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: 16, y: 6 }}
@@ -1048,29 +1013,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.27,
             }}
           >
-            <div className="flex items-start gap-[6.5%]">
+            <div className="flex items-center gap-[6.5%]">
               <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <LungsHealthIcon />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.38cqw' }}
                 >
                   REAL-TIME
                   <br />
                   LUNG HEALTH METRICS
                 </h4>
-                <p
-                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
-                  style={{ fontSize: '1.12cqw' }}
-                >
-                  See your lung capacity,
-                  <br />
-                  workouts and breathing
-                  <br />
-                  volume at a glance.
-                </p>
               </div>
             </div>
           </motion.div>
@@ -1080,7 +1035,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute z-20 pointer-events-none"
             style={{
               left: '80.078%',
-              top: '53.8%',
+              top: '53.0%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: 16, y: 6 }}
@@ -1096,31 +1051,19 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.37,
             }}
           >
-            <div className="flex items-start gap-[6.5%]">
+            <div className="flex items-center gap-[6.5%]">
               <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <BarChartScoreIcon />
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.38cqw' }}
                 >
                   TRAIN AT
                   <br />
                   YOUR OWN PACE
                 </h4>
-                <p
-                  className="text-[#23272F] font-normal leading-[1.42] mt-[15%] whitespace-nowrap"
-                  style={{ fontSize: '1.12cqw' }}
-                >
-                  Choose your difficulty level
-                  <br />
-                  and track your training
-                  <br />
-                  sessions with clear progress
-                  <br />
-                  indicators.
-                </p>
               </div>
             </div>
           </motion.div>
