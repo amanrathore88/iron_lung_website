@@ -161,6 +161,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     const mountElem = mountRef.current;
     if (!mountElem) return;
 
+    let isMounted = true;
+
     // 1. Scene Setup
     const scene = new THREE.Scene();
     scene.background = null;
@@ -241,6 +243,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     controls.dampingFactor = 0.06;
     controls.enableZoom = false; // Zoom explicitly disabled
     controls.enablePan = false;  // Pan explicitly disabled
+    const isMobileInit = typeof window !== 'undefined' && window.innerWidth < 768;
+    controls.enableRotate = !isMobileInit;
+    renderer.domElement.style.touchAction = 'none';
     controls.minPolarAngle = Math.PI / 2.12;
     controls.maxPolarAngle = Math.PI / 2.12;
     controls.target.copy(STAGE_0_HERO.target);
@@ -350,6 +355,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     loader.load(
       '/models/Final_Model(2K).glb',
       (gltf) => {
+        if (!isMounted) return;
         const model = gltf.scene;
 
         // Isolate the ergonomic chair meshes and non-chair components
@@ -413,6 +419,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
         fadeMeshesRef.current = fadeMeshes;
         chairMeshesRef.current = chairMeshes;
+        lastNonChairOpacity = -1;
+        lastGlobalOpacity = -1;
         (window as any).__THREE_DEBUG__ = {
           fadeCount: fadeMeshes.length,
           meshes: fadeMeshes.map((m) => ({ name: m.name, mat: (m.material as any)?.name })),
@@ -442,6 +450,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         setIsLoaded(true);
       },
       (xhr) => {
+        if (!isMounted) return;
         if (xhr.total > 0) {
           const percent = Math.round((xhr.loaded / xhr.total) * 100);
           setLoadingProgress(percent);
@@ -450,6 +459,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         }
       },
       (error) => {
+        if (!isMounted) return;
         console.error('Error loading 3D GLB model:', error);
         setLoadError('Failed to load 3D model.');
       }
@@ -795,11 +805,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     }
 
       // Responsive lerp speed:
-      // Mobile touch needs responsive tracking (0.20 - 0.24) so it never feels laggy behind touch scroll
+      // Mobile uses fast frame-rate-independent tracking since App.tsx already smooth-eases scrollProgress
       // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with responsive tracking (0.28) during Stage 5 sweep
       let lerpSpeed = p >= 0.88 ? 0.28 : p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
-        lerpSpeed = p >= 0.73 ? 0.22 : 0.20;
+        lerpSpeed = Math.max(0.45, Math.min(1, delta * 18));
       } else if (vpW < 1024) {
         lerpSpeed = p >= 0.88 ? 0.26 : p >= 0.73 ? 0.18 : 0.12;
       }
@@ -945,6 +955,13 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       shadowPlaneMat.opacity = Math.max(0, curShadowOpacity * 0.34);
       contactMat.opacity = Math.max(0, curShadowOpacity * 0.45);
 
+      // Update camera and model world matrices BEFORE projecting 3D button hotspots
+      controls.update();
+      camera.updateMatrixWorld();
+      if (modelGroupRef.current) {
+        modelGroupRef.current.updateMatrixWorld(true);
+      }
+
       // ----------------------------------------------------
       // Button Hotspots Position Projection (Stage 1: 0.235 - 0.365)
       // Only display when Feature 01 is completely open & stationary
@@ -1012,7 +1029,6 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         setActiveButton(null);
       }
 
-      controls.update();
       renderer.render(scene, camera);
       animFrameIdRef.current = requestAnimationFrame(animate);
     };
@@ -1062,11 +1078,23 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       renderer.domElement.style.cursor = hits.length > 0 ? 'pointer' : '';
     };
 
+    let touchStartClientX = 0;
+    let touchStartClientY = 0;
+    const handleCanvasTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        touchStartClientX = e.touches[0].clientX;
+        touchStartClientY = e.touches[0].clientY;
+      }
+    };
+
     const handleCanvasTouchEnd = (e: TouchEvent) => {
       const p = scrollProgressRef.current;
       if (p < 0.235 || p > 0.365) return;
       if (e.changedTouches.length === 0) return;
       const touch = e.changedTouches[0];
+      if (Math.hypot(touch.clientX - touchStartClientX, touch.clientY - touchStartClientY) > 10) {
+        return;
+      }
       const rect = renderer.domElement.getBoundingClientRect();
       const x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
@@ -1088,6 +1116,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     };
 
     renderer.domElement.addEventListener('click', handleCanvasClick);
+    renderer.domElement.addEventListener('touchstart', handleCanvasTouchStart, { passive: true });
     renderer.domElement.addEventListener('touchend', handleCanvasTouchEnd, { passive: false });
     renderer.domElement.addEventListener('pointermove', handleCanvasPointerMove);
 
@@ -1100,15 +1129,20 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       camera.aspect = width / height;
       applyViewOffset(width, height, curXOffsetRatio, curOffsetYRatio);
       renderer.setSize(width, height);
-      const resizeMaxDpr = (typeof window !== 'undefined' && window.innerWidth < 768) ? 1.5 : 2;
+      const isMobileResize = typeof window !== 'undefined' && window.innerWidth < 768;
+      controls.enableRotate = !isMobileResize;
+      renderer.domElement.style.touchAction = 'none';
+      const resizeMaxDpr = isMobileResize ? 1.5 : 2;
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, resizeMaxDpr));
     };
 
     window.addEventListener('resize', handleResize);
 
     return () => {
+      isMounted = false;
       window.removeEventListener('resize', handleResize);
       renderer.domElement.removeEventListener('click', handleCanvasClick);
+      renderer.domElement.removeEventListener('touchstart', handleCanvasTouchStart);
       renderer.domElement.removeEventListener('touchend', handleCanvasTouchEnd);
       renderer.domElement.removeEventListener('pointermove', handleCanvasPointerMove);
       if (animFrameIdRef.current) {
@@ -1126,13 +1160,13 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-20">
-      {/* 3D WebGL Canvas Layer (passes pointer events on Hero turntable and Stage 1 button clicks) */}
+      {/* 3D WebGL Canvas Layer (passes pointer events on desktop Hero turntable and Stage 1 button clicks) */}
       <div
         ref={mountRef}
-        style={{ touchAction: 'pan-y' }}
+        style={{ touchAction: 'none' }}
         className={`w-full h-full relative ${
           scrollProgress <= 0.14
-            ? 'cursor-grab active:cursor-grabbing pointer-events-auto'
+            ? 'pointer-events-none md:pointer-events-auto md:cursor-grab md:active:cursor-grabbing'
             : scrollProgress >= 0.235 && scrollProgress <= 0.365
             ? 'pointer-events-auto'
             : 'pointer-events-none'

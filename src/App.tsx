@@ -48,6 +48,12 @@ export const App: React.FC = () => {
 
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const scrollyTrackRef = useRef<HTMLDivElement>(null);
+  const scrollProgressRef = useRef<number>(0);
+  const mobileStageIndexRef = useRef<number>(0);
+  const isSnapAnimatingRef = useRef<boolean>(false);
+  const snapAnimFrameRef = useRef<number | null>(null);
+  const snapCooldownUntilRef = useRef<number>(0);
+  const animateMobileSnapRef = useRef<((targetIdx: number, fromIdx?: number) => void) | null>(null);
 
   // Sync browser back/forward and hash changes
   useEffect(() => {
@@ -78,10 +84,151 @@ export const App: React.FC = () => {
   useEffect(() => {
     if (currentView !== 'home') return;
 
+    // Ordered mobile snap stops across the scrollytelling track:
+    // Each stop defines its settled progress (restP) and immediate transition entry points (downStartP / upStartP)
+    // so every swipe immediately begins transitioning to the next section without dead plateau delay.
+    const MOBILE_STAGE_STOPS = [
+      { restP: 0.00, downStartP: 0.08, upStartP: 0.00, durationMs: 420 },   // 0: Hero Section
+      { restP: 0.28, downStartP: 0.35, upStartP: 0.245, durationMs: 420 },  // 1: Feature 01 (Smart Touch Screen)
+      { restP: 0.50, downStartP: 0.57, upStartP: 0.465, durationMs: 420 },  // 2: Feature 02 (UV Sanitization)
+      { restP: 0.70, downStartP: 0.725, upStartP: 0.682, durationMs: 420 }, // 3: Feature 03 (Ergonomic Chair)
+      { restP: 0.84, downStartP: 0.875, upStartP: 0.815, durationMs: 420 }, // 4: About Us (Our Story)
+      { restP: 0.925, downStartP: 0.928, upStartP: 0.920, durationMs: 400 },// 5: Dashboard Intro (Your Dashboard Awaits)
+      { restP: 0.960, downStartP: 0.970, upStartP: 0.954, durationMs: 420 },// 6: Desktop Dashboard Mockup + Pointers
+      { restP: 0.996, downStartP: 0.996, upStartP: 0.994, durationMs: 420 },// 7: Mobile Phone Mockup + Pointers
+    ];
+
+    const findNearestStageIndex = (progress: number, scrollY: number, trackBottom: number): number => {
+      if (scrollY > trackBottom + 24) return 8;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      for (let i = 0; i < MOBILE_STAGE_STOPS.length; i++) {
+        const dist = Math.abs(progress - MOBILE_STAGE_STOPS[i].restP);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = i;
+        }
+      }
+      return bestIdx;
+    };
+
+    const animateMobileSnapToStage = (targetIdx: number, explicitFromIdx?: number) => {
+      const track = scrollyTrackRef.current;
+      if (!track) return;
+      const trackTop = track.offsetTop;
+      const trackSpan = track.offsetHeight - window.innerHeight;
+      if (trackSpan <= 0) return;
+
+      const clampedTarget = Math.max(0, Math.min(8, targetIdx));
+      const fromIdx = explicitFromIdx !== undefined ? explicitFromIdx : mobileStageIndexRef.current;
+
+      if (snapAnimFrameRef.current !== null) {
+        cancelAnimationFrame(snapAnimFrameRef.current);
+        snapAnimFrameRef.current = null;
+      }
+
+      mobileStageIndexRef.current = clampedTarget;
+      isSnapAnimatingRef.current = true;
+
+      const durationMs = clampedTarget < 8 ? MOBILE_STAGE_STOPS[clampedTarget].durationMs : 520;
+      const startTime = performance.now();
+      snapCooldownUntilRef.current = startTime + durationMs + 80;
+
+      // Case A: Transitioning from Stage 7 (0.996) down into Bottom Sections / Footer (Stage 8)
+      if (clampedTarget === 8) {
+        const startScrollY = window.scrollY;
+        const targetScrollY = trackTop + trackSpan + Math.min(window.innerHeight * 0.72, 540);
+        const stepFooter = (now: number) => {
+          const t = Math.min(1, (now - startTime) / durationMs);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          const curY = startScrollY + (targetScrollY - startScrollY) * ease;
+          scrollProgressRef.current = 1;
+          setScrollProgress(1);
+          window.scrollTo(0, curY);
+          if (t < 1) {
+            snapAnimFrameRef.current = requestAnimationFrame(stepFooter);
+          } else {
+            isSnapAnimatingRef.current = false;
+            snapAnimFrameRef.current = null;
+          }
+        };
+        snapAnimFrameRef.current = requestAnimationFrame(stepFooter);
+        return;
+      }
+
+      // Case B: Transitioning from Bottom Sections (Stage 8) back up to Stage 7 (0.996)
+      if (fromIdx === 8 && clampedTarget === 7) {
+        const startScrollY = window.scrollY;
+        const targetP = MOBILE_STAGE_STOPS[7].restP;
+        const targetScrollY = trackTop + targetP * trackSpan;
+        const stepBackFromFooter = (now: number) => {
+          const t = Math.min(1, (now - startTime) / durationMs);
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          const curY = startScrollY + (targetScrollY - startScrollY) * ease;
+          const curP = Math.min(1, Math.max(0, (curY - trackTop) / trackSpan));
+          scrollProgressRef.current = curP;
+          setScrollProgress(curP);
+          window.scrollTo(0, curY);
+          if (t < 1) {
+            snapAnimFrameRef.current = requestAnimationFrame(stepBackFromFooter);
+          } else {
+            scrollProgressRef.current = targetP;
+            setScrollProgress(targetP);
+            window.scrollTo(0, targetScrollY);
+            isSnapAnimatingRef.current = false;
+            snapAnimFrameRef.current = null;
+          }
+        };
+        snapAnimFrameRef.current = requestAnimationFrame(stepBackFromFooter);
+        return;
+      }
+
+      // Case C: Standard Section-to-Section Transition (Stages 0..7)
+      const targetP = MOBILE_STAGE_STOPS[clampedTarget].restP;
+      let startP = scrollProgressRef.current;
+
+      if (clampedTarget === fromIdx + 1 && fromIdx >= 0 && fromIdx < MOBILE_STAGE_STOPS.length) {
+        startP = Math.max(startP, MOBILE_STAGE_STOPS[fromIdx].downStartP);
+      } else if (clampedTarget === fromIdx - 1 && fromIdx >= 0 && fromIdx < MOBILE_STAGE_STOPS.length) {
+        startP = Math.min(startP, MOBILE_STAGE_STOPS[fromIdx].upStartP);
+      }
+
+      const stepStage = (now: number) => {
+        const t = Math.min(1, (now - startTime) / durationMs);
+        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const curP = startP + (targetP - startP) * ease;
+        scrollProgressRef.current = curP;
+        setScrollProgress(curP);
+        window.scrollTo(0, trackTop + curP * trackSpan);
+
+        if (t < 1) {
+          snapAnimFrameRef.current = requestAnimationFrame(stepStage);
+        } else {
+          scrollProgressRef.current = targetP;
+          setScrollProgress(targetP);
+          window.scrollTo(0, trackTop + targetP * trackSpan);
+          isSnapAnimatingRef.current = false;
+          snapAnimFrameRef.current = null;
+        }
+      };
+
+      snapAnimFrameRef.current = requestAnimationFrame(stepStage);
+    };
+
+    animateMobileSnapRef.current = animateMobileSnapToStage;
+
     let ticking = false;
+    let settleTimeoutId: number | null = null;
+
     const handleScroll = () => {
+      if (isSnapAnimatingRef.current) return;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
+          if (isSnapAnimatingRef.current) {
+            ticking = false;
+            return;
+          }
           const scrollY = window.scrollY;
           const track = scrollyTrackRef.current;
           if (track) {
@@ -89,7 +236,34 @@ export const App: React.FC = () => {
             const trackSpan = track.offsetHeight - window.innerHeight;
             if (trackSpan > 0) {
               const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
+              scrollProgressRef.current = progress;
               setScrollProgress(progress);
+
+              if (window.innerWidth < 768) {
+                const trackBottom = trackTop + trackSpan;
+                mobileStageIndexRef.current = findNearestStageIndex(progress, scrollY, trackBottom);
+
+                // Fallback settle guard: if native scrollbar drag or momentum ever leaves mobile scroll
+                // in an intermediate transition zone, snap cleanly to the nearest stage after 180ms.
+                if (settleTimeoutId !== null) window.clearTimeout(settleTimeoutId);
+                if (scrollY <= trackBottom + 10) {
+                  settleTimeoutId = window.setTimeout(() => {
+                    if (!isSnapAnimatingRef.current && window.innerWidth < 768) {
+                      const nearestIdx = findNearestStageIndex(
+                        scrollProgressRef.current,
+                        window.scrollY,
+                        trackBottom
+                      );
+                      if (
+                        nearestIdx < 8 &&
+                        Math.abs(scrollProgressRef.current - MOBILE_STAGE_STOPS[nearestIdx].restP) > 0.015
+                      ) {
+                        animateMobileSnapToStage(nearestIdx, nearestIdx);
+                      }
+                    }
+                  }, 180);
+                }
+              }
             }
           }
           ticking = false;
@@ -98,14 +272,207 @@ export const App: React.FC = () => {
       }
     };
 
+    // Helper: check if touch target is inside an element with active vertical overflow
+    const canScrollInnerContainer = (target: EventTarget | null, dy: number): boolean => {
+      let el = target as HTMLElement | null;
+      while (el && el !== document.body && el !== document.documentElement) {
+        const style = window.getComputedStyle(el);
+        if (
+          (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
+          el.scrollHeight > el.clientHeight + 8
+        ) {
+          if (dy > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 4) return true;
+          if (dy < 0 && el.scrollTop > 4) return true;
+        }
+        el = el.parentElement;
+      }
+      return false;
+    };
+
+    // Mobile Touch Step-Snapper: guarantees both short and long swipes advance strictly 1 section and pause
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let ignoreTouchGesture = false;
+    let touchGestureConsumed = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (window.innerWidth >= 768 || e.touches.length === 0) return;
+      const targetEl = e.target as HTMLElement | null;
+      if (targetEl?.closest('header') || targetEl?.closest('[role="dialog"]')) {
+        ignoreTouchGesture = true;
+        return;
+      }
+      ignoreTouchGesture = false;
+      touchGestureConsumed = false;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+
+      const track = scrollyTrackRef.current;
+      if (track && !isSnapAnimatingRef.current) {
+        const trackBottom = track.offsetTop + (track.offsetHeight - window.innerHeight);
+        mobileStageIndexRef.current = findNearestStageIndex(
+          scrollProgressRef.current,
+          window.scrollY,
+          trackBottom
+        );
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (window.innerWidth >= 768 || ignoreTouchGesture || e.touches.length === 0) return;
+      const track = scrollyTrackRef.current;
+      if (!track) return;
+      const trackTop = track.offsetTop;
+      const trackSpan = track.offsetHeight - window.innerHeight;
+      const trackBottom = trackTop + trackSpan;
+
+      const dy = touchStartY - e.touches[0].clientY; // > 0 means scrolling down, < 0 means scrolling up
+      const dx = touchStartX - e.touches[0].clientX;
+
+      // Allow free native scrolling once inside Bottom Sections / Footer
+      if (mobileStageIndexRef.current === 8 && (window.scrollY > trackBottom + 36 || dy > 0)) {
+        return;
+      }
+
+      // Allow native pull-to-refresh / overscroll at the very top of Hero
+      if (mobileStageIndexRef.current === 0 && window.scrollY <= 4 && dy < 0) {
+        return;
+      }
+
+      // Allow inner scrollable container if it has remaining scroll room
+      if (canScrollInnerContainer(e.target, dy)) {
+        return;
+      }
+
+      if (Math.abs(dy) >= Math.abs(dx) * 0.6) {
+        // Prevent uncontrolled native momentum fling from trapping in dead zones or skipping sections
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+
+        if (!touchGestureConsumed && Math.abs(dy) >= 15) {
+          const now = performance.now();
+          if (!isSnapAnimatingRef.current && now >= snapCooldownUntilRef.current) {
+            touchGestureConsumed = true;
+            const dir = dy > 0 ? 1 : -1;
+            const fromIdx = mobileStageIndexRef.current;
+            const nextIdx = Math.max(0, Math.min(8, fromIdx + dir));
+            if (nextIdx !== fromIdx) {
+              animateMobileSnapToStage(nextIdx, fromIdx);
+            }
+          }
+        }
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (
+        window.innerWidth >= 768 ||
+        ignoreTouchGesture ||
+        touchGestureConsumed ||
+        e.changedTouches.length === 0
+      ) {
+        return;
+      }
+      const track = scrollyTrackRef.current;
+      if (!track) return;
+      const trackBottom = track.offsetTop + (track.offsetHeight - window.innerHeight);
+
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      const dx = touchStartX - e.changedTouches[0].clientX;
+
+      if (mobileStageIndexRef.current === 8 && (window.scrollY > trackBottom + 36 || dy > 0)) {
+        return;
+      }
+
+      if (Math.abs(dy) >= 12 && Math.abs(dy) > Math.abs(dx)) {
+        const now = performance.now();
+        if (!isSnapAnimatingRef.current && now >= snapCooldownUntilRef.current) {
+          touchGestureConsumed = true;
+          const dir = dy > 0 ? 1 : -1;
+          const fromIdx = mobileStageIndexRef.current;
+          const nextIdx = Math.max(0, Math.min(8, fromIdx + dir));
+          if (nextIdx !== fromIdx) {
+            animateMobileSnapToStage(nextIdx, fromIdx);
+          }
+        }
+      }
+    };
+
+    // Mobile Wheel Step-Snapper (for responsive mobile emulation & narrow viewports)
+    let wheelLockUntil = 0;
+    const handleWheel = (e: WheelEvent) => {
+      if (window.innerWidth >= 768) return;
+      const targetEl = e.target as HTMLElement | null;
+      if (targetEl?.closest('header') || targetEl?.closest('[role="dialog"]')) return;
+
+      const track = scrollyTrackRef.current;
+      if (!track) return;
+      const trackBottom = track.offsetTop + (track.offsetHeight - window.innerHeight);
+      const dy = e.deltaY;
+
+      if (mobileStageIndexRef.current === 8 && (window.scrollY > trackBottom + 36 || dy > 0)) {
+        return;
+      }
+      if (mobileStageIndexRef.current === 0 && window.scrollY <= 4 && dy < 0) {
+        return;
+      }
+      if (canScrollInnerContainer(e.target, dy)) {
+        return;
+      }
+
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      if (Math.abs(dy) < 6) return;
+      const now = performance.now();
+      if (isSnapAnimatingRef.current || now < snapCooldownUntilRef.current || now < wheelLockUntil) {
+        return;
+      }
+
+      wheelLockUntil = now + 660;
+      const dir = dy > 0 ? 1 : -1;
+      const fromIdx = mobileStageIndexRef.current;
+      const nextIdx = Math.max(0, Math.min(8, fromIdx + dir));
+      if (nextIdx !== fromIdx) {
+        animateMobileSnapToStage(nextIdx, fromIdx);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: false });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      if (settleTimeoutId !== null) window.clearTimeout(settleTimeoutId);
+      if (snapAnimFrameRef.current !== null) cancelAnimationFrame(snapAnimFrameRef.current);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('wheel', handleWheel);
+    };
   }, [currentView]);
 
   const scrollToStage = (stageVal: number | 'hero' | 'screen' | 'uv' | 'comfort' | 'about' | 'dashboard') => {
     const track = scrollyTrackRef.current;
     if (track) {
+      if (window.innerWidth < 768 && animateMobileSnapRef.current) {
+        let targetIdx = 0;
+        if (stageVal === 'hero' || stageVal === 0) targetIdx = 0;
+        else if (stageVal === 'screen') targetIdx = 1;
+        else if (stageVal === 'uv') targetIdx = 2;
+        else if (stageVal === 'comfort') targetIdx = 3;
+        else if (stageVal === 'about') targetIdx = 4;
+        else if (stageVal === 'dashboard') targetIdx = 6;
+        animateMobileSnapRef.current(targetIdx, mobileStageIndexRef.current);
+        return;
+      }
+
       const trackTop = track.offsetTop;
       const trackSpan = track.offsetHeight - window.innerHeight;
       let targetProgress = 0;
@@ -240,7 +607,7 @@ export const App: React.FC = () => {
           {/* Multi-Stage Scrollytelling Track (h-[920vh]: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div ref={scrollyTrackRef} className="relative h-[920vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
-            <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
+            <div className="sticky top-0 h-screen w-full overflow-hidden bg-white max-md:touch-none">
               {/* Layer 0 (z-0): Studio Room Background */}
               <StudioRoomBackground scrollProgress={scrollProgress} />
 
