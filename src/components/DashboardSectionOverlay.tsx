@@ -233,20 +233,20 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const desktopOpacity = splitEase * (1 - phoneEase);
   const desktopBlur = phoneEase * 6;
 
-  // 4. Phone Zoom-Out & Depth Recession as Cinematic Video Portal Rises (videoScrollProgress: 0.08 -> 0.54)
-  const videoExitRaw = Math.min(1, Math.max(0, (videoScrollProgress - 0.08) / 0.46));
+  // 4. Phone Zoom-Out & Fade into Depth as Video Showcase Enters (videoScrollProgress: 0.05 -> 0.50)
+  const videoExitRaw = Math.min(1, Math.max(0, (videoScrollProgress - 0.05) / 0.45));
   const videoExitEase =
     videoExitRaw < 0.5
       ? 4 * videoExitRaw * videoExitRaw * videoExitRaw
       : 1 - Math.pow(-2 * videoExitRaw + 2, 3) / 2;
 
   // Phone slides up from the bottom edge to the center (translateY: +100vh -> 0px),
-  // and later recesses into depth as the Video Section rises
+  // and later zooms out into depth (1.00 -> 0.68) & fades out as the Video Section expands in
   const phoneTravelDistance = windowDimensions.height * (isMobile ? 0.78 : 0.92) + 80;
-  const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance - videoExitEase * 68;
+  const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance - videoExitEase * 36;
   const phoneOpacity = (phoneT <= 0.005 ? 0 : Math.min(1, phoneT / 0.28)) * (1 - videoExitEase);
-  const phoneScale = (0.94 + 0.06 * phoneEase) * (1 - 0.16 * videoExitEase);
-  const phoneBlur = videoExitEase * 7;
+  const phoneScale = (0.94 + 0.06 * phoneEase) * (1 - 0.32 * videoExitEase);
+  const phoneBlur = videoExitEase * 6;
 
   // Phone pointers activation: triggers once the phone mockup settles into the center
   const arePhonePointersActive = isMobile ? scrollProgress >= 0.970 : scrollProgress >= 0.986;
