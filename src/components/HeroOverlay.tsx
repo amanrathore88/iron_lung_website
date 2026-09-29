@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Play, Heart, BarChart3 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import BlurText from './BlurText';
 
 interface HeroOverlayProps {
@@ -67,32 +68,59 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             />
           </h1>
 
-          {/* Subtitle Paragraph: Readable, well-proportioned typography */}
-          <p className="text-[13px] xs:text-[14px] sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-[330px] md:max-w-[300px] lg:max-w-lg leading-relaxed font-normal">
+          {/* 3. Subtitle Paragraph — soft upward fade (~15px) after headline finishes */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.42,
+              delay: 0.9,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="text-[13px] xs:text-[14px] sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-[330px] md:max-w-[300px] lg:max-w-lg leading-relaxed font-normal"
+          >
             The next generation respiratory training system that helps you breathe cleaner, perform better and live healthier.
-          </p>
+          </motion.p>
 
-          {/* Action CTAs: Confident touch targets, beautifully proportioned */}
+          {/* 4. Action CTAs — staggered entrance (Discover Iron Lung first, then Watch Video) */}
           <div className="flex flex-row items-center gap-2 xs:gap-3 sm:gap-2.5 lg:gap-4 w-full sm:w-auto mt-0.5 sm:mt-1">
             {/* Primary Discover Button */}
-            <button
+            <motion.button
               onClick={onDiscover}
-              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{
+                duration: 0.38,
+                delay: 1.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
             >
               <span>Discover Iron Lung</span>
               <ArrowRight size={14} className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4" />
-            </button>
+            </motion.button>
 
             {/* Secondary Watch Video Button */}
-            <button
+            <motion.button
               onClick={onOpenVideo}
-              className="px-3.5 xs:px-4 md:px-3.5 lg:px-6 py-3 md:py-3 lg:py-4 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs xs:text-[13px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{
+                duration: 0.38,
+                delay: 1.25,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="px-3.5 xs:px-4 md:px-3.5 lg:px-6 py-3 md:py-3 lg:py-4 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs xs:text-[13px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow,border-color] duration-200 whitespace-nowrap"
             >
               <div className="w-4 h-4 sm:w-4 sm:h-4 lg:w-5 lg:h-5 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
                 <Play size={8} className="fill-white translate-x-[0.5px] lg:w-2.5 lg:h-2.5" />
               </div>
               <span>Watch Video</span>
-            </button>
+            </motion.button>
           </div>
 
         </div>
@@ -100,10 +128,20 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
         {/* Empty Spacer Column for 3D Model in center-right */}
         <div className="hidden lg:block lg:col-span-3 pointer-events-none" />
 
-        {/* Right Column: 4 Floating Value Cards & Testimonial (Desktop Only, 100% Unchanged) */}
+        {/* 5. Right Column: 3 Floating Value Cards — sequential top-to-bottom reveal (~130ms stagger, 18px slide) */}
         <div className="hidden lg:flex lg:col-span-3 flex-col items-end gap-3.5 pointer-events-auto">
           {/* Card 1: Cleaner Air */}
-          <div className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5 hover:scale-[1.02] transition-transform">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{
+              duration: 0.42,
+              delay: 1.18,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
+          >
             <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
               <svg viewBox="0 0 24 24" className="w-5 h-5 text-slate-800 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 3v9" />
@@ -122,10 +160,20 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 Every Day
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 2: Higher Performance */}
-          <div className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5 hover:scale-[1.02] transition-transform">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{
+              duration: 0.42,
+              delay: 1.31,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
+          >
             <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
               <BarChart3 size={20} className="text-slate-800" />
             </div>
@@ -137,10 +185,20 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 In Every Breath
               </span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Card 3: Healthier Lives */}
-          <div className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5 hover:scale-[1.02] transition-transform">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{
+              duration: 0.42,
+              delay: 1.44,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
+          >
             <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
               <Heart size={20} className="text-slate-800" />
             </div>
@@ -152,7 +210,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 For a Better Tomorrow
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
