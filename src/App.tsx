@@ -605,8 +605,8 @@ export const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Landing Page Bottom Sections (Partners Marquee & Cinematic Footer) */}
-          <LandingBottomSections />
+          {/* Landing Page Bottom Sections (CTA, Partners Marquee & Cinematic Footer) */}
+          <LandingBottomSections onBookDemo={() => handleNavigation('book-demo')} />
         </>
       )}
 
