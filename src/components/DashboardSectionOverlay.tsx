@@ -1092,10 +1092,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
           <div className="flex flex-col items-center text-center shrink-0 mb-2.5 px-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#FF5500]" />
+            <div className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
-                02 • MOBILE COMPANION APP
+                MOBILE COMPANION APP
               </span>
             </div>
             <h3 className="text-[25px] xs:text-[29px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
