@@ -700,7 +700,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         destUvIntensity = 0.0;
       } else {
         if (vpW < 768) {
-          if (p <= 0.73) {
+          if (p <= 0.725) {
           // Stage 3: Ergonomic Biometric Training Chair (Mobile)
           destTarget = stage3Target;
           destCamPos = stage3CamPos;
@@ -710,11 +710,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
           destUvIntensity = 0.0;
           heroSpinAngle = STAGE_3_CHAIR.baseRotY;
-        } else if (p < 0.78) {
-          // Mobile Graceful Exit (0.73 -> 0.78):
+        } else if (p < 0.795) {
+          // Mobile Graceful Exit (0.725 -> 0.795):
           // Model glides smoothly to the right edge with a gentle pull-back and concluding turn,
           // dissolving cleanly to zero opacity before the About Us editorial story appears.
-          const tExit = smoothstep(0.73, 0.78, p);
+          const tExit = smoothstep(0.725, 0.795, p);
           destTarget = stage3Target;
           destCamPos = new THREE.Vector3(
             stage3CamPos.x,
@@ -729,7 +729,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           destUvIntensity = 0.0;
           heroSpinAngle = destBaseRotY;
         } else {
-          // Mobile p >= 0.78: Model is completely hidden through About Us & Dashboard
+          // Mobile p >= 0.795: Model is completely hidden through About Us & Dashboard
           destTarget = stage3Target;
           destCamPos = stage3CamPos;
           destXOffsetRatio = -0.95;
@@ -805,11 +805,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     }
 
       // Responsive lerp speed:
-      // Mobile uses fast frame-rate-independent tracking since App.tsx already smooth-eases scrollProgress
+      // Mobile uses smooth cinematic damping (0.14 - 0.24) paired with the ~1.0s stage transition
+      // so the 3D model rotation and camera glide are clearly visible between every section.
       // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with responsive tracking (0.28) during Stage 5 sweep
       let lerpSpeed = p >= 0.88 ? 0.28 : p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
-        lerpSpeed = Math.max(0.45, Math.min(1, delta * 18));
+        lerpSpeed = Math.max(0.14, Math.min(0.24, delta * 9.5));
       } else if (vpW < 1024) {
         lerpSpeed = p >= 0.88 ? 0.26 : p >= 0.73 ? 0.18 : 0.12;
       }
@@ -855,15 +856,15 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       }
 
       // Stage 5 Model Fade:
-      // Mobile: Smoothly fade out the 3D model between 0.73 and 0.775
-      // Model is 100% gone before About Us editorial content appears at 0.78
+      // Mobile: Smoothly fade out the 3D model between 0.74 and 0.795
+      // Model is 100% gone before About Us editorial content settles
       // Desktop: Sweeps across during Stage 5 reveal (0.90 -> 0.965)
       let globalModelOpacity = 1.0;
       if (vpW < 768) {
-        if (p > 0.73 && p < 0.775) {
-          const tFade = smoothstep(0.73, 0.775, p);
+        if (p > 0.74 && p < 0.795) {
+          const tFade = smoothstep(0.74, 0.795, p);
           globalModelOpacity = 1.0 - tFade;
-        } else if (p >= 0.775) {
+        } else if (p >= 0.795) {
           globalModelOpacity = 0.0;
         }
       } else {
@@ -927,7 +928,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
       // Model Visibility & Rotation Management
       if (modelGroupRef.current) {
-        const isVisibleProgress = vpW < 768 ? p < 0.78 : p < 0.98;
+        const isVisibleProgress = vpW < 768 ? p < 0.80 : p < 0.98;
         modelGroupRef.current.visible = isVisibleProgress && globalModelOpacity > 0.001;
         if (!isInteracting) {
           if (p > 0.14) {

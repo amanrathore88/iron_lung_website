@@ -85,20 +85,20 @@ export const App: React.FC = () => {
     if (currentView !== 'home') return;
 
     // Ordered mobile snap stops strictly from Hero (Stage 0) to About Us (Stage 4).
-    // Everything below About Us (progress > 0.84: Dashboard Intro, Desktop Mockup, Phone Mockup,
+    // Everything below About Us (progress > 0.835: Dashboard Intro, Desktop Mockup, Phone Mockup,
     // Partners & Footer) uses normal native free scrolling.
     const MOBILE_STAGE_STOPS = [
-      { restP: 0.00, downStartP: 0.12, upStartP: 0.00, durationMs: 400 },  // 0: Hero Section
-      { restP: 0.28, downStartP: 0.35, upStartP: 0.245, durationMs: 400 }, // 1: Feature 01 (Smart Touch Screen)
-      { restP: 0.50, downStartP: 0.57, upStartP: 0.465, durationMs: 400 }, // 2: Feature 02 (UV Sanitization)
-      { restP: 0.70, downStartP: 0.725, upStartP: 0.682, durationMs: 400 },// 3: Feature 03 (Ergonomic Chair)
-      { restP: 0.84, downStartP: 0.84, upStartP: 0.815, durationMs: 400 }, // 4: About Us (Our Story)
+      { restP: 0.00,  downStartP: 0.125, upStartP: 0.00,  durationMs: 1050 }, // 0: Hero Section
+      { restP: 0.255, downStartP: 0.355, upStartP: 0.25,  durationMs: 1050 }, // 1: Feature 01 (Smart Touch Screen)
+      { restP: 0.475, downStartP: 0.575, upStartP: 0.47,  durationMs: 1000 }, // 2: Feature 02 (UV Sanitization)
+      { restP: 0.695, downStartP: 0.720, upStartP: 0.685, durationMs: 1000 }, // 3: Feature 03 (Ergonomic Chair)
+      { restP: 0.835, downStartP: 0.835, upStartP: 0.815, durationMs: 980 },  // 4: About Us (Our Story)
     ];
     const LAST_SNAP_STAGE = MOBILE_STAGE_STOPS.length - 1; // 4 (About Us)
     const BELOW_ABOUT_STAGE = LAST_SNAP_STAGE + 1;         // 5 (Free native scroll zone below About Us)
 
     const findNearestStageIndex = (progress: number): number => {
-      if (progress > 0.855) return BELOW_ABOUT_STAGE;
+      if (progress > 0.85) return BELOW_ABOUT_STAGE;
       let bestIdx = 0;
       let bestDist = Infinity;
       for (let i = 0; i < MOBILE_STAGE_STOPS.length; i++) {
@@ -131,7 +131,7 @@ export const App: React.FC = () => {
 
       const durationMs = MOBILE_STAGE_STOPS[clampedTarget].durationMs;
       const startTime = performance.now();
-      snapCooldownUntilRef.current = startTime + durationMs + 90;
+      snapCooldownUntilRef.current = startTime + durationMs + 60;
 
       const targetP = MOBILE_STAGE_STOPS[clampedTarget].restP;
       let startP = scrollProgressRef.current;
@@ -144,8 +144,9 @@ export const App: React.FC = () => {
 
       const stepStage = (now: number) => {
         const t = Math.min(1, (now - startTime) / durationMs);
-        // Smooth cubic ease-out: responds immediately on frame 1 and settles cleanly without bounce
-        const ease = 1 - Math.pow(1 - t, 3);
+        // Smooth sinusoidal ease-in-out: paces the mid-transition window evenly so the
+        // 3D model's rotation, zoom, and framing changes are clearly visible across the full transition
+        const ease = 0.5 - 0.5 * Math.cos(Math.PI * t);
         const curP = startP + (targetP - startP) * ease;
         scrollProgressRef.current = curP;
         setScrollProgress(curP);
@@ -198,9 +199,9 @@ export const App: React.FC = () => {
               const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
 
               if (window.innerWidth < 768) {
-                // When scrolling UP natively from below About Us (progress > 0.845) back into About Us (<= 0.845),
-                // pause cleanly at About Us (0.84) so upward scroll momentum doesn't fly past About Us into Feature 03.
-                if (lastRawProgress > 0.845 && progress <= 0.845) {
+                // When scrolling UP natively from below About Us (progress > 0.84) back into About Us (<= 0.84),
+                // pause cleanly at About Us (0.835) so upward scroll momentum doesn't fly past About Us into Feature 03.
+                if (lastRawProgress > 0.84 && progress <= 0.84) {
                   const aboutP = MOBILE_STAGE_STOPS[LAST_SNAP_STAGE].restP;
                   lastRawProgress = aboutP;
                   scrollProgressRef.current = aboutP;
@@ -279,7 +280,7 @@ export const App: React.FC = () => {
       // allow 100% free native browser scrolling.
       if (
         mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.855 ||
+        scrollProgressRef.current > 0.85 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -331,7 +332,7 @@ export const App: React.FC = () => {
 
       if (
         mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.855 ||
+        scrollProgressRef.current > 0.85 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -366,7 +367,7 @@ export const App: React.FC = () => {
       // Below About Us or scrolling DOWN from About Us: allow 100% free native scrolling
       if (
         mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.855 ||
+        scrollProgressRef.current > 0.85 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -569,7 +570,7 @@ export const App: React.FC = () => {
           {/* Multi-Stage Scrollytelling Track (h-[920vh]: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div ref={scrollyTrackRef} className="relative h-[920vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
-            <div className={`sticky top-0 h-screen w-full overflow-hidden bg-white ${scrollProgress < 0.83 ? 'max-md:touch-none' : ''}`}>
+            <div className={`sticky top-0 h-screen w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}
               <StudioRoomBackground scrollProgress={scrollProgress} />
 
