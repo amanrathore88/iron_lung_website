@@ -7,12 +7,6 @@ interface BreathingCtaSectionProps {
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-const BENEFIT_ITEMS = [
-  'TRACK PROGRESS',
-  'BUILD STRENGTH',
-  'BREATHE BETTER',
-] as const;
-
 export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
   onBookDemo,
 }) => {
@@ -32,13 +26,13 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#FDFDFD] text-black overflow-hidden py-10 sm:py-12 md:py-14 border-t border-black/[0.04]"
+      className="relative w-full bg-[#FDFDFD] text-black overflow-hidden py-12 sm:py-14 md:py-16 border-t border-black/[0.04]"
     >
       {/* Main Centered Editorial Content Container */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 md:px-16 flex flex-col items-center text-center">
         {/* 1. Primary Display Headline: Line-by-line upward reveal (+120ms for line 2, delayed "Train Better.") */}
         <motion.div style={{ y: headlineParallaxY }}>
-          <h2 className="text-[32px] xs:text-[36px] sm:text-[48px] md:text-[58px] lg:text-[64px] font-extrabold tracking-[-0.035em] leading-[1.06] text-black">
+          <h2 className="text-[36px] xs:text-[40px] sm:text-[54px] md:text-[64px] lg:text-[72px] font-extrabold tracking-[-0.035em] leading-[1.06] text-black">
             <motion.span
               initial={{ opacity: 0, y: 35 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 35 }}
@@ -94,7 +88,7 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
               duration: 0.5,
               ease: EASE_OUT_EXPO,
             }}
-            className="text-[15px] sm:text-[17.5px] md:text-[20px] text-[#1E1E1E] font-light leading-[1.45] tracking-[-0.01em] mt-4 sm:mt-5 mb-6 sm:mb-7 max-w-[520px] mx-auto"
+            className="text-[16px] sm:text-[19px] md:text-[22px] text-[#1E1E1E] font-light leading-[1.45] tracking-[-0.01em] mt-5 sm:mt-6 mb-7 sm:mb-8 max-w-[580px] mx-auto"
           >
             Get deeper insights, track your progress
             <br className="hidden xs:inline" />{' '}
@@ -122,9 +116,9 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
             <button
               type="button"
               onClick={onBookDemo}
-              className="group inline-flex items-center justify-between bg-[#F53D00] hover:bg-[#E03500] text-white rounded-full px-7 sm:px-9 py-3 sm:py-4 min-w-[210px] sm:min-w-[260px] md:min-w-[290px] transition-colors duration-200 shadow-[0_8px_22px_rgba(245,61,0,0.20)] cursor-pointer"
+              className="group inline-flex items-center justify-between bg-[#F53D00] hover:bg-[#E03500] text-white rounded-full px-8 sm:px-10 py-3.5 sm:py-4.5 min-w-[225px] sm:min-w-[280px] md:min-w-[315px] transition-colors duration-200 shadow-[0_8px_22px_rgba(245,61,0,0.20)] cursor-pointer"
             >
-              <span className="text-[16px] sm:text-[18.5px] md:text-[21px] font-medium tracking-[-0.01em] pl-1 sm:pl-2">
+              <span className="text-[17px] sm:text-[19.5px] md:text-[22px] font-medium tracking-[-0.01em] pl-1 sm:pl-2">
                 Book a Demo
               </span>
               <svg
@@ -142,72 +136,6 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
             </button>
           </motion.div>
         </motion.div>
-
-        {/* 4. Bottom 3-Item Feature Strip: Sequential reveal (small orange line first, then label text) */}
-        <div className="mt-7 sm:mt-9 flex flex-wrap items-center justify-center gap-y-2.5 gap-x-5 sm:gap-x-7 md:gap-x-9">
-          {BENEFIT_ITEMS.map((label, idx) => {
-            const lineDelay = 0.86 + idx * 0.22;
-            const textDelay = lineDelay + 0.1;
-            const dividerDelay = textDelay + 0.08;
-
-            return (
-              <React.Fragment key={label}>
-                <div className="inline-flex items-center gap-2.5 sm:gap-3">
-                  <motion.span
-                    initial={{ scaleX: 0, opacity: 0 }}
-                    animate={
-                      isInView
-                        ? { scaleX: 1, opacity: 1 }
-                        : { scaleX: 0, opacity: 0 }
-                    }
-                    transition={{
-                      scaleX: {
-                        delay: lineDelay,
-                        duration: 0.34,
-                        ease: EASE_OUT_EXPO,
-                      },
-                      opacity: { delay: lineDelay, duration: 0.12 },
-                    }}
-                    style={{ transformOrigin: 'left center' }}
-                    className="w-6 sm:w-7 h-[1.5px] bg-[#F53D00] shrink-0"
-                  />
-                  <motion.span
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={
-                      isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }
-                    }
-                    transition={{
-                      delay: textDelay,
-                      duration: 0.38,
-                      ease: EASE_OUT_EXPO,
-                    }}
-                    className="text-[10px] sm:text-[11.5px] md:text-[12px] tracking-[0.21em] text-[#1A1A1A] font-normal uppercase whitespace-nowrap"
-                  >
-                    {label}
-                  </motion.span>
-                </div>
-
-                {idx < BENEFIT_ITEMS.length - 1 && (
-                  <motion.span
-                    initial={{ opacity: 0, scaleY: 0 }}
-                    animate={
-                      isInView
-                        ? { opacity: 1, scaleY: 1 }
-                        : { opacity: 0, scaleY: 0 }
-                    }
-                    transition={{
-                      delay: dividerDelay,
-                      duration: 0.28,
-                      ease: EASE_OUT_EXPO,
-                    }}
-                    className="hidden sm:inline-block h-4 w-[1px] bg-black/30"
-                    aria-hidden="true"
-                  />
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
