@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Activity, Sliders } from 'lucide-react';
 
 interface ScrollyFeaturesOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
@@ -1008,12 +1007,26 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Activity size={14} className="text-[#FF5E1E]" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M10.8 3.6C10.8 6.4 7.8 9.2 7.8 12.0C7.8 14.8 10.8 17.6 10.8 20.4C10.8 17.6 8.9 14.8 8.9 12.0C8.9 9.2 10.8 6.4 10.8 3.6Z"
+                  fill="#0F172A"
+                  stroke="#0F172A"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="14.2" cy="5.8" r="1.15" fill="#FF5E1E" />
+                <circle cx="13.2" cy="8.9" r="1.15" fill="#FF5E1E" />
+                <circle cx="12.6" cy="12.0" r="1.15" fill="#FF5E1E" />
+                <circle cx="13.2" cy="15.1" r="1.15" fill="#FF5E1E" />
+                <circle cx="14.2" cy="18.2" r="1.15" fill="#FF5E1E" />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Thoracic Spine Alignment
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -1033,12 +1046,26 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Shield size={14} className="text-indigo-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M12 9.2V14.4M9.4 11.8H14.6"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Medical-Grade Cushioning
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -1058,12 +1085,22 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Sliders size={14} className="text-blue-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M7.2 4.5V11.1M7.2 14.9V19.5M12.0 4.5V13.3M12.0 17.1V19.5M16.8 4.5V8.3M16.8 12.1V19.5"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                />
+                <circle cx="7.2" cy="13.0" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                <circle cx="12.0" cy="15.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                <circle cx="16.8" cy="10.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Multi-Point Adjustment
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -1138,7 +1175,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
 
           {/* 3 Value Cards Stack */}
           <div className="flex flex-col gap-2 lg:gap-3 w-full max-w-[245px] lg:max-w-md mt-0.5 lg:mt-1">
-            {/* Card 1 */}
+            {/* Card 1: Thoracic Spine Alignment */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -1150,12 +1187,29 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec3Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Activity size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Curved Spine Silhouette in Dark Navy */}
+                  <path
+                    d="M10.8 3.6C10.8 6.4 7.8 9.2 7.8 12.0C7.8 14.8 10.8 17.6 10.8 20.4C10.8 17.6 8.9 14.8 8.9 12.0C8.9 9.2 10.8 6.4 10.8 3.6Z"
+                    fill="#0F172A"
+                    stroke="#0F172A"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* 5 Curved Vertebrae Dots in Brand Orange */}
+                  <circle cx="14.2" cy="5.8" r="1.15" fill="#FF5E1E" />
+                  <circle cx="13.2" cy="8.9" r="1.15" fill="#FF5E1E" />
+                  <circle cx="12.6" cy="12.0" r="1.15" fill="#FF5E1E" />
+                  <circle cx="13.2" cy="15.1" r="1.15" fill="#FF5E1E" />
+                  <circle cx="14.2" cy="18.2" r="1.15" fill="#FF5E1E" />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Thoracic Spine Alignment
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -1164,7 +1218,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 2 */}
+            {/* Card 2: Medical-Grade Cushioning */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -1176,12 +1230,29 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec3Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Shield size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Shield Outline in Dark Navy */}
+                  <path
+                    d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Center Plus Sign in Brand Orange */}
+                  <path
+                    d="M12 9.2V14.4M9.4 11.8H14.6"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Medical-Grade Cushioning
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -1190,7 +1261,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 3 */}
+            {/* Card 3: Multi-Point Adjustment */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -1202,12 +1273,25 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec3Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Sliders size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* 3 Vertical Slider Tracks in Dark Navy */}
+                  <path
+                    d="M7.2 4.5V11.1M7.2 14.9V19.5M12.0 4.5V13.3M12.0 17.1V19.5M16.8 4.5V8.3M16.8 12.1V19.5"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                  />
+                  {/* 3 Hollow Circular Slider Knobs in Brand Orange */}
+                  <circle cx="7.2" cy="13.0" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                  <circle cx="12.0" cy="15.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                  <circle cx="16.8" cy="10.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Multi-Point Adjustment
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
