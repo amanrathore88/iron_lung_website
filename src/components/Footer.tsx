@@ -400,27 +400,17 @@ export function CinematicFooter() {
             </div>
           </div>
 
-          {/* 3. Bottom Bar / Credits - Perfectly Aligned 3-Column Grid */}
+          {/* 3. Bottom Bar / Credits */}
           <div className="relative z-20 w-full border-t border-border/50 pt-5 pb-8 px-4 sm:px-6 md:px-12">
-            <div className="w-full max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1640px] 4xl:max-w-[1840px] 5xl:max-w-[2200px] mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-4 text-center md:text-left">
+            <div className="w-full max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1640px] 4xl:max-w-[1840px] 5xl:max-w-[2200px] mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-4 text-center md:text-left">
             
             {/* Copyright */}
             <div className="text-muted-foreground text-[11px] md:text-xs 2xl:text-sm font-semibold tracking-wider uppercase font-mono justify-self-center md:justify-self-start order-2 md:order-1">
               © {new Date().getFullYear()} Iron Lung. All rights reserved.
             </div>
 
-            {/* "Engineered with ❤ at IIT Kanpur" Badge */}
-            <div className="justify-self-center order-1 md:order-2">
-              <div className="footer-glass-pill px-5 2xl:px-6 py-2 2xl:py-2.5 rounded-full inline-flex items-center gap-2 border border-border/70 shadow-sm cursor-default">
-                <span className="text-muted-foreground text-[11px] 2xl:text-xs font-mono uppercase tracking-wider">Engineered with</span>
-                <span className="animate-footer-heartbeat text-sm 2xl:text-base text-[#ff6900] inline-block px-0.5">❤</span>
-                <span className="text-muted-foreground text-[11px] 2xl:text-xs font-mono uppercase tracking-wider">at</span>
-                <span className="text-foreground font-bold font-display text-xs 2xl:text-sm ml-0.5">IIT Kanpur</span>
-              </div>
-            </div>
-
             {/* Back to top */}
-            <div className="justify-self-center md:justify-self-end order-3">
+            <div className="justify-self-center md:justify-self-end order-1 md:order-2">
               <MagneticButton
                 as="button"
                 onClick={scrollToTop}
