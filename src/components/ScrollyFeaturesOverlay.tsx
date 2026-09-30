@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Sparkles, Leaf, Heart, Activity, Sliders } from 'lucide-react';
+import { Shield, Sparkles, Leaf, Activity, Sliders } from 'lucide-react';
 
 interface ScrollyFeaturesOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
@@ -198,7 +198,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
 
           {/* TABLET & DESKTOP Cards Container (hidden on mobile, rendered below on mobile) */}
           <div className="hidden md:flex flex-col gap-2 lg:gap-3 w-full max-w-[240px] lg:max-w-md mt-0.5 lg:mt-1">
-            {/* Card 1 */}
+            {/* Card 1: Guided Breathing Programs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -210,16 +210,37 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec1Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 lg:w-5 lg:h-5 text-slate-800 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3v9" />
-                  <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                  <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Left & Right Lung Lobes in Dark Navy */}
+                  <path
+                    d="M9.4 8.2C6.5 8.4 4.5 11.2 4.5 15.8C4.5 18.4 5.8 19.6 7.7 19.0C9.0 18.5 9.8 17.4 9.8 15.4V9.0C9.8 8.5 9.6 8.2 9.4 8.2Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14.6 8.2C17.5 8.4 19.5 11.2 19.5 15.8C19.5 18.4 18.2 19.6 16.3 19.0C15.0 18.5 14.2 17.4 14.2 15.4V9.0C14.2 8.5 14.4 8.2 14.6 8.2Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Center Trachea & Bronchial Branches in Brand Orange */}
+                  <path
+                    d="M12 3.8V10.6M12 10.6L8.2 13.7M12 10.6L15.8 13.7"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Guided Breathing Programs
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -228,7 +249,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 2 */}
+            {/* Card 2: Real-Time Session Feedback */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -240,12 +261,25 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec1Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Heart size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* 3 Rising Vertical Bars in Dark Navy */}
+                  <path d="M8.2 15.5V12.8" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                  <path d="M11.4 15.5V10.5" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                  <path d="M14.6 15.5V8.2" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                  {/* Sweeping Circular Gauge Arc in Brand Orange */}
+                  <path
+                    d="M12.4 4.1A8 8 0 1 1 5.4 16.5"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Real-Time Session Feedback
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -254,7 +288,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 3 */}
+            {/* Card 3: Simple & Intuitive Controls */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -266,12 +300,29 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec1Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Activity size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Orange Touch Ring around Fingertip */}
+                  <path
+                    d="M8.1 10.6A3.8 3.8 0 1 1 13.9 10.6"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                  />
+                  {/* Dark Navy Pointing Hand Silhouette */}
+                  <path
+                    d="M9.8 14.2V8.3C9.8 7.6 10.3 7.1 11.0 7.1C11.7 7.1 12.2 7.6 12.2 8.3V12.2M12.2 11.5C12.2 10.9 12.7 10.5 13.3 10.5C13.9 10.5 14.4 10.9 14.4 11.5V12.6M14.4 12.1C14.4 11.5 14.9 11.1 15.5 11.1C16.1 11.1 16.6 11.5 16.6 12.1V13.3M16.6 12.9C16.6 12.4 17.0 12.0 17.6 12.0C18.2 12.0 18.6 12.4 18.6 13.0V15.8C18.6 18.0 17.3 19.6 15.6 20.2M9.8 13.2L8.4 12.3C7.8 11.9 7.0 12.1 6.7 12.7C6.4 13.2 6.5 13.8 6.9 14.3L9.6 17.6C10.3 18.5 10.9 19.4 11.2 20.2"
+                    stroke="#0F172A"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Simple & Intuitive Controls
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -308,16 +359,34 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#FF5E1E] fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3v9" />
-                <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M9.4 8.2C6.5 8.4 4.5 11.2 4.5 15.8C4.5 18.4 5.8 19.6 7.7 19.0C9.0 18.5 9.8 17.4 9.8 15.4V9.0C9.8 8.5 9.6 8.2 9.4 8.2Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M14.6 8.2C17.5 8.4 19.5 11.2 19.5 15.8C19.5 18.4 18.2 19.6 16.3 19.0C15.0 18.5 14.2 17.4 14.2 15.4V9.0C14.2 8.5 14.4 8.2 14.6 8.2Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M12 3.8V10.6M12 10.6L8.2 13.7M12 10.6L15.8 13.7"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Guided Breathing Programs
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -337,12 +406,22 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Heart size={14} className="text-rose-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path d="M8.2 15.5V12.8" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                <path d="M11.4 15.5V10.5" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                <path d="M14.6 15.5V8.2" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
+                <path
+                  d="M12.4 4.1A8 8 0 1 1 5.4 16.5"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Real-Time Session Feedback
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -362,12 +441,26 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Activity size={14} className="text-blue-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M8.1 10.6A3.8 3.8 0 1 1 13.9 10.6"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M9.8 14.2V8.3C9.8 7.6 10.3 7.1 11.0 7.1C11.7 7.1 12.2 7.6 12.2 8.3V12.2M12.2 11.5C12.2 10.9 12.7 10.5 13.3 10.5C13.9 10.5 14.4 10.9 14.4 11.5V12.6M14.4 12.1C14.4 11.5 14.9 11.1 15.5 11.1C16.1 11.1 16.6 11.5 16.6 12.1V13.3M16.6 12.9C16.6 12.4 17.0 12.0 17.6 12.0C18.2 12.0 18.6 12.4 18.6 13.0V15.8C18.6 18.0 17.3 19.6 15.6 20.2M9.8 13.2L8.4 12.3C7.8 11.9 7.0 12.1 6.7 12.7C6.4 13.2 6.5 13.8 6.9 14.3L9.6 17.6C10.3 18.5 10.9 19.4 11.2 20.2"
+                  stroke="#0F172A"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Simple & Intuitive Controls
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
