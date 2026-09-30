@@ -1,30 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { HeroNavbar } from './components/HeroNavbar';
-import { StudioRoomBackground } from './components/StudioRoomBackground';
-import { Hero3DCanvas } from './components/Hero3DCanvas';
-import { HeroOverlay } from './components/HeroOverlay';
-import { ScrollyFeaturesOverlay } from './components/ScrollyFeaturesOverlay';
-import { DashboardSectionOverlay } from './components/DashboardSectionOverlay';
-import { AboutSectionOverlay } from './components/AboutSectionOverlay';
-import { LandingBottomSections } from './components/LandingBottomSections';
-import { TechnologyPage } from './components/TechnologyPage';
-import { HowItWorksPage } from './components/HowItWorksPage';
-import { BookDemoPage } from './components/BookDemoPage';
-import { ContactPage } from './components/ContactPage';
-import { VideoModal } from './components/VideoModal';
-import { DemoModal } from './components/DemoModal';
+import { HeroNavbar } from './components/layout/HeroNavbar';
+import { LandingBottomSections } from './components/layout/LandingBottomSections';
+import { StudioRoomBackground } from './components/sections/hero/StudioRoomBackground';
+import { Hero3DCanvas } from './components/sections/hero/Hero3DCanvas';
+import { HeroOverlay } from './components/sections/hero/HeroOverlay';
+import { ScrollyFeaturesOverlay } from './components/sections/features/ScrollyFeaturesOverlay';
+import { AboutSectionOverlay } from './components/sections/about/AboutSectionOverlay';
+import { DashboardSectionOverlay } from './components/sections/dashboard/DashboardSectionOverlay';
+import { VideoModal } from './components/modals/VideoModal';
+import { TechnologyPage } from './pages/TechnologyPage';
+import { HowItWorksPage } from './pages/HowItWorksPage';
+import { BookDemoPage } from './pages/BookDemoPage';
+import { ContactPage } from './pages/ContactPage';
 
 export type AppView = 'home' | 'technology' | 'how-it-works' | 'book-demo' | 'contact';
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
-  const [demoModalState, setDemoModalState] = useState<{
-    isOpen: boolean;
-    mode: 'demo' | 'contact';
-  }>({
-    isOpen: false,
-    mode: 'demo',
-  });
 
   const [currentView, setCurrentView] = useState<AppView>(() => {
     if (typeof window !== 'undefined') {
@@ -614,13 +606,6 @@ export const App: React.FC = () => {
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
-      />
-
-      {/* VIP Demo & Contact Modal (Available if invoked via modal) */}
-      <DemoModal
-        isOpen={demoModalState.isOpen}
-        mode={demoModalState.mode}
-        onClose={() => setDemoModalState({ isOpen: false, mode: 'demo' })}
       />
     </div>
   );
