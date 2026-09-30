@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Sparkles, Leaf, Activity, Sliders } from 'lucide-react';
+import { Shield, Activity, Sliders } from 'lucide-react';
 
 interface ScrollyFeaturesOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
@@ -592,12 +592,26 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FF5E1E]/10 flex items-center justify-center text-[#FF5E1E] shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Shield size={14} className="text-[#FF5E1E]" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M12 9.2V14.4M9.4 11.8H14.6"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Eliminates Bacteria & Viruses
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -617,12 +631,27 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Sparkles size={14} className="text-amber-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M10.2 7.4C10.5 10.9 11.9 12.3 15.4 12.6C11.9 12.9 10.5 14.3 10.2 17.8C9.9 14.3 8.5 12.9 5.0 12.6C8.5 12.3 9.9 10.9 10.2 7.4Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16.8 4.4C17.0 6.4 17.8 7.2 19.8 7.4C17.8 7.6 17.0 8.4 16.8 10.4C16.6 8.4 15.8 7.6 13.8 7.4C15.8 7.2 16.6 6.4 16.8 4.4Z"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Automatic Sanitization
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -642,12 +671,32 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0"
+              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <Leaf size={14} className="text-emerald-500" />
+              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+                <path
+                  d="M7.4 16.6C6.9 13.8 7.9 9.8 11.4 7.5C14.1 5.7 16.8 5.2 18.2 5.2C18.5 6.8 18.3 10.3 16.6 13.4C14.5 17.2 10.6 18.1 7.4 16.6Z"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M7.4 16.6C8.8 15.0 10.7 13.3 13.2 11.5"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M5.6 18.8C6.1 18.0 6.7 17.3 7.4 16.6"
+                  stroke="#0F172A"
+                  strokeWidth="1.85"
+                  strokeLinecap="round"
+                />
+              </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-slate-900 leading-tight truncate">
+              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Hygienic & Maintenance Friendly
               </span>
               <span className="text-[9.5px] text-slate-500 font-medium">
@@ -722,7 +771,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
 
           {/* 3 Value Cards Stack */}
           <div className="flex flex-col gap-2 lg:gap-3 w-full max-w-[245px] lg:max-w-md mt-0.5 lg:mt-1">
-            {/* Card 1 */}
+            {/* Card 1: Eliminates Bacteria & Viruses */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -734,12 +783,29 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec2Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Shield size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Shield Outline in Dark Navy */}
+                  <path
+                    d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Center Plus Sign in Brand Orange */}
+                  <path
+                    d="M12 9.2V14.4M9.4 11.8H14.6"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Eliminates Bacteria & Viruses
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -748,7 +814,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 2 */}
+            {/* Card 2: Automatic Sanitization */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -760,12 +826,30 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec2Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Sparkles size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Large Four-Point Sparkle in Dark Navy */}
+                  <path
+                    d="M10.2 7.4C10.5 10.9 11.9 12.3 15.4 12.6C11.9 12.9 10.5 14.3 10.2 17.8C9.9 14.3 8.5 12.9 5.0 12.6C8.5 12.3 9.9 10.9 10.2 7.4Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Small Four-Point Sparkle in Brand Orange */}
+                  <path
+                    d="M16.8 4.4C17.0 6.4 17.8 7.2 19.8 7.4C17.8 7.6 17.0 8.4 16.8 10.4C16.6 8.4 15.8 7.6 13.8 7.4C15.8 7.2 16.6 6.4 16.8 4.4Z"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Automatic Sanitization
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
@@ -774,7 +858,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </div>
             </motion.div>
 
-            {/* Card 3 */}
+            {/* Card 3: Hygienic & Maintenance Friendly */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -786,12 +870,36 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ scale: 0.85 }}
                 animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
                 transition={isSec2Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="w-7 h-7 lg:w-10 lg:h-10 rounded-lg lg:rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0"
+                className="w-8 h-8 lg:w-11 lg:h-11 rounded-lg lg:rounded-xl bg-[#FFF3EE] flex items-center justify-center shrink-0"
               >
-                <Leaf size={14} className="text-slate-800 lg:w-5 lg:h-5" />
+                <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-6 lg:h-6" fill="none">
+                  {/* Leaf Blade Outline in Dark Navy */}
+                  <path
+                    d="M7.4 16.6C6.9 13.8 7.9 9.8 11.4 7.5C14.1 5.7 16.8 5.2 18.2 5.2C18.5 6.8 18.3 10.3 16.6 13.4C14.5 17.2 10.6 18.1 7.4 16.6Z"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  {/* Inner Leaf Vein in Brand Orange */}
+                  <path
+                    d="M7.4 16.6C8.8 15.0 10.7 13.3 13.2 11.5"
+                    stroke="#FF5E1E"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                  />
+                  {/* Outer Petiole Stem in Dark Navy */}
+                  <path
+                    d="M5.6 18.8C6.1 18.0 6.7 17.3 7.4 16.6"
+                    stroke="#0F172A"
+                    strokeWidth="1.85"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </motion.div>
+              <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
               <div className="flex flex-col">
-                <span className="text-[11px] lg:text-sm font-bold text-slate-900 leading-tight">
+                <span className="text-[11px] lg:text-sm font-bold text-[#0F172A] leading-tight">
                   Hygienic & Maintenance Friendly
                 </span>
                 <span className="text-[9px] lg:text-[11px] text-slate-500 font-medium mt-0.5">
