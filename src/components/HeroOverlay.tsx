@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Play, Heart, BarChart3 } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BlurText from './BlurText';
 
@@ -142,18 +142,42 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             }}
             className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 text-slate-800 fill-none stroke-current" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3v9" />
-                <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
+            <div className="w-11 h-11 rounded-full bg-[#FFF3EE] flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+                <path
+                  d="M6.5 9.2H14.8C16.1 9.2 17.1 8.2 17.1 6.9C17.1 5.6 16.1 4.6 14.8 4.6C13.6 4.6 12.7 5.4 12.5 6.5"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M6.5 14.8H14.8C16.1 14.8 17.1 15.8 17.1 17.1C17.1 18.4 16.1 19.4 14.8 19.4C13.6 19.4 12.7 18.6 12.5 17.5"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M3.8 12H19.5"
+                  stroke="#0F172A"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M17.2 9.7L19.7 12L17.2 14.3"
+                  stroke="#0F172A"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-black tracking-wider text-slate-900 uppercase">
+              <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
                 Cleaner
               </span>
-              <span className="text-xs font-black tracking-wider text-slate-900 uppercase leading-none">
+              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
                 Air
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
@@ -174,12 +198,34 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             }}
             className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-              <BarChart3 size={20} className="text-slate-800" />
+            <div className="w-11 h-11 rounded-full bg-[#FFF3EE] flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+                <path d="M6 18.5V16.5" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                <path d="M9.8 18.5V14.2" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                <path d="M13.6 18.5V11.8" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                <path d="M17.4 18.5V8.2" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M6.2 12.6C9.8 11.6 13.2 9.1 16.2 4.8"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M13.2 4.8H16.3V7.9"
+                  stroke="#FF5E1E"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-black tracking-wider text-slate-900 uppercase leading-tight">
-                Higher Performance
+              <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
+                Higher
+              </span>
+              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
+                Performance
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
                 In Every Breath
@@ -199,12 +245,25 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
             }}
             className="w-56 p-3 rounded-2xl bg-white/85 border border-white/80 shadow-[0_8px_24px_rgba(0,0,0,0.06)] backdrop-blur-md flex items-center gap-3.5"
           >
-            <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-800 shrink-0">
-              <Heart size={20} className="text-slate-800" />
+            <div className="w-11 h-11 rounded-full bg-[#FFF3EE] flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
+                <path
+                  d="M14.2 6.4C13.2 6.4 12.2 7.0 11.5 8.1C10.5 6.6 8.6 5.9 6.9 6.6C4.8 7.4 3.9 9.9 4.7 12.3C5.8 15.3 11.5 19.2 11.5 19.2C11.5 19.2 16.3 15.9 17.9 13.0"
+                  stroke="#0F172A"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path d="M17.6 5.9V10.9" stroke="#FF5E1E" strokeWidth="1.9" strokeLinecap="round" />
+                <path d="M15.1 8.4H20.1" stroke="#FF5E1E" strokeWidth="1.9" strokeLinecap="round" />
+              </svg>
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-black tracking-wider text-slate-900 uppercase leading-tight">
-                Healthier Lives
+              <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
+                Healthier
+              </span>
+              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
+                Lives
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
                 For a Better Tomorrow
