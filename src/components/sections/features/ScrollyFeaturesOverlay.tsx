@@ -97,7 +97,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 01: Smart, Intuitive Touch Screen                */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-20 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-[60px] pb-2.5 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
         style={{
           opacity: sec1Opacity,
           transform: `translateY(${sec1TranslateY}px)`,
@@ -106,9 +106,9 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       >
         {/* On Tablet/Desktop: Combined left column with md:max-w-[240px] (tablet) or lg:max-w-xl (desktop) */}
         {/* On Mobile: Centered header at top, unified dock at bottom, center is open for 3D console */}
-        <div className="w-full flex flex-col items-center text-center md:items-start md:text-left gap-1.5 sm:gap-3 lg:gap-5 md:max-w-[240px] lg:max-w-xl pointer-events-auto">
+        <div className="w-full flex flex-col items-center text-center md:items-start md:text-left gap-1 sm:gap-3 lg:gap-5 md:max-w-[240px] lg:max-w-xl pointer-events-auto">
           {/* Mobile Centered Kicker Badge */}
-          <div className="flex md:hidden items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
+          <div className="flex md:hidden items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
             <motion.span
               initial={{ opacity: 0, y: 8 }}
               animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
@@ -164,8 +164,8 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Heading & Description */}
-          <div className="flex flex-col items-center md:items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
-            <h2 className="text-[23px] xs:text-[25px] sm:text-3xl md:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
+          <div className="flex flex-col items-center md:items-start gap-0.5 sm:gap-2 lg:gap-3 w-full max-w-md">
+            <h2 className="text-[21px] xs:text-[23px] sm:text-3xl md:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.10] lg:leading-[1.08] text-slate-950">
               <motion.span
                 initial={{ opacity: 0, y: 30 }}
                 animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -189,7 +189,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={isSec1Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[11.5px] sm:text-sm md:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal max-w-[320px] md:max-w-none mx-auto md:mx-0"
+              className="text-[11px] xs:text-[11.5px] sm:text-sm md:text-[11px] lg:text-base text-slate-600 leading-snug sm:leading-relaxed font-normal max-w-[320px] md:max-w-none mx-auto md:mx-0"
             >
               A clear and easy-to-use interface that guides you through every session with real-time feedback and personalized settings.
             </motion.p>
@@ -332,17 +332,17 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
         </div>
 
-        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Console */}
-        <div className="md:hidden flex-1 min-h-[100px] pointer-events-none" />
+        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Console without pushing dock off-screen */}
+        <div className="md:hidden flex-1 min-h-0 pointer-events-none" />
 
         {/* MOBILE Bottom Unified Feature Dock: Clean, high-contrast, premium hardware controller card */}
-        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2.5 flex flex-col gap-1.5 pointer-events-auto mb-2 xs:mb-3">
+        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2 flex flex-col gap-1 pointer-events-auto mb-1">
           {/* Header pill */}
           <div className="px-1.5 pt-0.5 pb-1 flex items-center justify-between border-b border-slate-100">
-            <span className="text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Core Capabilities
             </span>
-            <span className="text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
               3 Modes
             </span>
           </div>
@@ -352,15 +352,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec1Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M9.4 8.2C6.5 8.4 4.5 11.2 4.5 15.8C4.5 18.4 5.8 19.6 7.7 19.0C9.0 18.5 9.8 17.4 9.8 15.4V9.0C9.8 8.5 9.6 8.2 9.4 8.2Z"
                   stroke="#0F172A"
@@ -385,10 +385,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Guided Breathing Programs
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 For all fitness levels
               </span>
             </div>
@@ -399,15 +399,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec1Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path d="M8.2 15.5V12.8" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
                 <path d="M11.4 15.5V10.5" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
                 <path d="M14.6 15.5V8.2" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
@@ -420,10 +420,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Real-Time Session Feedback
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Track your breathing performance
               </span>
             </div>
@@ -434,15 +434,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec1Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec1Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec1Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M8.1 10.6A3.8 3.8 0 1 1 13.9 10.6"
                   stroke="#FF5E1E"
@@ -459,10 +459,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Simple & Intuitive Controls
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Designed for everyone
               </span>
             </div>
@@ -477,7 +477,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 02: Built-In UV Purification (Right Column)     */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-20 pb-4 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-[60px] pb-2.5 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
         style={{
           opacity: sec2Opacity,
           transform: `translateY(${sec2TranslateY}px)`,
@@ -506,9 +506,9 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         </div>
 
         {/* MOBILE Top Header: Centered kicker, heading, description */}
-        <div className="md:hidden w-full flex flex-col items-center text-center gap-1.5 pointer-events-auto">
+        <div className="md:hidden w-full flex flex-col items-center text-center gap-1 pointer-events-auto">
           {/* Mobile Centered Kicker Badge */}
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
+          <div className="flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
             <motion.span
               initial={{ opacity: 0, y: 8 }}
               animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
@@ -535,8 +535,8 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Heading & Description */}
-          <div className="flex flex-col items-center gap-1 w-full max-w-md">
-            <h2 className="text-[23px] xs:text-[25px] font-black tracking-tight leading-[1.12] text-slate-950">
+          <div className="flex flex-col items-center gap-0.5 w-full max-w-md">
+            <h2 className="text-[21px] xs:text-[23px] font-black tracking-tight leading-[1.10] text-slate-950">
               <motion.span
                 initial={{ opacity: 0, y: 30 }}
                 animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -558,24 +558,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={isSec2Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto"
+              className="text-[11px] xs:text-[11.5px] text-slate-600 leading-snug font-normal max-w-[320px] mx-auto"
             >
               Advanced UV-C sanitization technology keeps the breathing interface clean and safe for every session.
             </motion.p>
           </div>
         </div>
 
-        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D UV Handpiece */}
-        <div className="md:hidden flex-1 min-h-[100px] pointer-events-none" />
+        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D UV Handpiece without pushing dock off-screen */}
+        <div className="md:hidden flex-1 min-h-0 pointer-events-none" />
 
         {/* MOBILE Bottom Unified Feature Dock: Clean, high-contrast, premium hardware controller card */}
-        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2.5 flex flex-col gap-1.5 pointer-events-auto mb-2 xs:mb-3">
+        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2 flex flex-col gap-1 pointer-events-auto mb-1">
           {/* Header pill */}
           <div className="px-1.5 pt-0.5 pb-1 flex items-center justify-between border-b border-slate-100">
-            <span className="text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Purification Tech
             </span>
-            <span className="text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
               Medical Grade
             </span>
           </div>
@@ -585,15 +585,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec2Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
                   stroke="#0F172A"
@@ -610,10 +610,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Eliminates Bacteria & Viruses
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 For a safer experience
               </span>
             </div>
@@ -624,15 +624,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec2Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M10.2 7.4C10.5 10.9 11.9 12.3 15.4 12.6C11.9 12.9 10.5 14.3 10.2 17.8C9.9 14.3 8.5 12.9 5.0 12.6C8.5 12.3 9.9 10.9 10.2 7.4Z"
                   stroke="#0F172A"
@@ -650,10 +650,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Automatic Sanitization
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Before and after each use
               </span>
             </div>
@@ -664,15 +664,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec2Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec2Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec2Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M7.4 16.6C6.9 13.8 7.9 9.8 11.4 7.5C14.1 5.7 16.8 5.2 18.2 5.2C18.5 6.8 18.3 10.3 16.6 13.4C14.5 17.2 10.6 18.1 7.4 16.6Z"
                   stroke="#0F172A"
@@ -695,10 +695,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Hygienic & Maintenance Friendly
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Designed for long-term use
               </span>
             </div>
@@ -914,7 +914,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 03: Ergonomic Biometric Training Chair (Left Col) */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-16 pb-3 sm:pt-20 sm:pb-6 md:pt-12 lg:pt-14 md:pb-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-[60px] pb-2.5 sm:pt-20 sm:pb-6 md:pt-12 lg:pt-14 md:pb-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
         style={{
           opacity: sec3Opacity,
           transform: `translateY(${sec3TranslateY}px)`,
@@ -922,9 +922,9 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         }}
       >
         {/* MOBILE Top Header: Centered kicker, heading, description */}
-        <div className="md:hidden w-full flex flex-col items-center text-center gap-1.5 pointer-events-auto">
+        <div className="md:hidden w-full flex flex-col items-center text-center gap-1 pointer-events-auto">
           {/* Mobile Centered Kicker Badge */}
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
+          <div className="flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
             <motion.span
               initial={{ opacity: 0, y: 8 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
@@ -951,8 +951,8 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Heading & Description */}
-          <div className="flex flex-col items-center gap-1 w-full max-w-md">
-            <h2 className="text-[23px] xs:text-[25px] font-black tracking-tight leading-[1.12] text-slate-950">
+          <div className="flex flex-col items-center gap-0.5 w-full max-w-md">
+            <h2 className="text-[21px] xs:text-[23px] font-black tracking-tight leading-[1.10] text-slate-950">
               <motion.span
                 initial={{ opacity: 0, y: 30 }}
                 animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -974,24 +974,24 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={isSec3Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[11.5px] text-slate-600 leading-relaxed font-normal max-w-[320px] mx-auto"
+              className="text-[11px] xs:text-[11.5px] text-slate-600 leading-snug font-normal max-w-[320px] mx-auto"
             >
               Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
             </motion.p>
           </div>
         </div>
 
-        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Chair */}
-        <div className="md:hidden flex-1 min-h-[100px] pointer-events-none" />
+        {/* MOBILE Center Spacer: Ensures Zone 2 is open for 3D Chair without pushing dock off-screen */}
+        <div className="md:hidden flex-1 min-h-0 pointer-events-none" />
 
         {/* MOBILE Bottom Unified Feature Dock: Clean, high-contrast, premium hardware controller card */}
-        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2.5 flex flex-col gap-1.5 pointer-events-auto mb-2 xs:mb-3">
+        <div className="md:hidden w-full max-w-[345px] mx-auto rounded-2xl bg-white shadow-[0_16px_40px_rgba(0,0,0,0.14)] border border-slate-200/90 p-2 flex flex-col gap-1 pointer-events-auto mb-1">
           {/* Header pill */}
           <div className="px-1.5 pt-0.5 pb-1 flex items-center justify-between border-b border-slate-100">
-            <span className="text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Biometric Seating
             </span>
-            <span className="text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
               Posture Tuned
             </span>
           </div>
@@ -1001,15 +1001,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec3Active ? { duration: 0.48, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 0.78, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M10.8 3.6C10.8 6.4 7.8 9.2 7.8 12.0C7.8 14.8 10.8 17.6 10.8 20.4C10.8 17.6 8.9 14.8 8.9 12.0C8.9 9.2 10.8 6.4 10.8 3.6Z"
                   fill="#0F172A"
@@ -1026,10 +1026,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Thoracic Spine Alignment
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Maximizes lung capacity & airflow
               </span>
             </div>
@@ -1040,15 +1040,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec3Active ? { duration: 0.48, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 0.91, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M12 3.8L5.5 6.4V11.8C5.5 15.8 8.3 18.8 12 20.2C15.7 18.8 18.5 15.8 18.5 11.8V6.4L12 3.8Z"
                   stroke="#0F172A"
@@ -1065,10 +1065,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Medical-Grade Cushioning
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 High-density pressure-relief memory foam
               </span>
             </div>
@@ -1079,15 +1079,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={isSec3Active ? { duration: 0.48, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100/90"
+            className="flex items-center gap-2 p-1.5 rounded-xl bg-slate-50 border border-slate-100/90"
           >
             <motion.div
               initial={{ scale: 0.85 }}
               animate={isSec3Active ? { scale: 1 } : { scale: 0.85 }}
               transition={isSec3Active ? { duration: 0.45, delay: 1.04, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="w-7 h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
+              className="w-6 h-6 xs:w-7 xs:h-7 rounded-lg bg-[#FFF3EE] flex items-center justify-center shrink-0"
             >
-              <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none">
+              <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M7.2 4.5V11.1M7.2 14.9V19.5M12.0 4.5V13.3M12.0 17.1V19.5M16.8 4.5V8.3M16.8 12.1V19.5"
                   stroke="#0F172A"
@@ -1100,10 +1100,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
-              <span className="text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
+              <span className="text-[11px] xs:text-[11.5px] font-bold text-[#0F172A] leading-tight truncate">
                 Multi-Point Adjustment
               </span>
-              <span className="text-[9.5px] text-slate-500 font-medium">
+              <span className="text-[9px] xs:text-[9.5px] text-slate-500 font-medium">
                 Tailored recline & lumbar support
               </span>
             </div>

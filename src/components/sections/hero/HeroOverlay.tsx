@@ -24,7 +24,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
 
   return (
     <div
-      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-[94px] sm:pt-24 lg:pt-32 pb-3 sm:pb-8 md:transition-opacity md:duration-150 overflow-hidden pointer-events-none"
+      className="absolute inset-0 w-full h-full z-20 flex flex-col justify-between px-4 sm:px-8 lg:px-16 pt-[66px] sm:pt-24 lg:pt-32 pb-3 sm:pb-8 md:transition-opacity md:duration-150 overflow-hidden pointer-events-none"
       style={{
         opacity: heroOpacity,
         transform: `translateY(${heroTranslateY}px)`,
@@ -34,10 +34,10 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
       {/* Main Grid: Left Column Hero Content & Right Column Floating Spec Cards */}
       <div className="w-full grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-6 lg:gap-8 items-start md:items-center mt-0 mb-auto md:my-auto">
         {/* Left Column: Headline, CTAs, & Badges */}
-        <div className="w-full md:col-span-6 lg:col-span-6 md:max-w-[310px] lg:max-w-none flex flex-col items-start gap-2.5 sm:gap-3.5 lg:gap-5 pointer-events-auto">
+        <div className="w-full md:col-span-6 lg:col-span-6 md:max-w-[310px] lg:max-w-none flex flex-col items-start gap-2 sm:gap-3.5 lg:gap-5 pointer-events-auto">
 
           {/* Main Headline with BlurText Animation: Bold, prominent, properly scaled on mobile */}
-          <h1 className="text-[34px] xs:text-[38px] sm:text-4xl md:text-[44px] lg:text-[5.2rem] font-black tracking-tight leading-[1.06] lg:leading-[1.02] text-slate-950">
+          <h1 className="text-[32px] xs:text-[36px] sm:text-4xl md:text-[44px] lg:text-[5.2rem] font-black tracking-tight leading-[1.05] lg:leading-[1.02] text-slate-950">
             <BlurText
               text="Breathe"
               delay={150}
@@ -73,7 +73,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               delay: 0.9,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="text-[13px] xs:text-[14px] sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-[330px] md:max-w-[300px] lg:max-w-lg leading-relaxed font-normal"
+            className="text-[12.5px] xs:text-[13.5px] sm:text-sm md:text-[13px] lg:text-lg text-slate-600 max-w-[330px] md:max-w-[300px] lg:max-w-lg leading-snug sm:leading-relaxed font-normal"
           >
             The next generation respiratory training system that helps you breathe cleaner, perform better and live healthier.
           </motion.p>
@@ -92,7 +92,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 delay: 1.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
+              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-2.5 sm:py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
             >
               <span>Discover Iron Lung</span>
               <ArrowRight size={14} className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4" />
@@ -110,7 +110,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 delay: 1.25,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="px-3.5 xs:px-4 md:px-3.5 lg:px-6 py-3 md:py-3 lg:py-4 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs xs:text-[13px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow,border-color] duration-200 whitespace-nowrap"
+              className="px-3.5 xs:px-4 md:px-3.5 lg:px-6 py-2.5 sm:py-3 md:py-3 lg:py-4 rounded-full bg-white/90 hover:bg-white text-slate-900 text-xs xs:text-[13px] md:text-xs lg:text-sm font-semibold border border-slate-300/80 shadow-sm backdrop-blur-md flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow,border-color] duration-200 whitespace-nowrap"
             >
               <div className="w-4 h-4 sm:w-4 sm:h-4 lg:w-5 lg:h-5 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
                 <Play size={8} className="fill-white translate-x-[0.5px] lg:w-2.5 lg:h-2.5" />

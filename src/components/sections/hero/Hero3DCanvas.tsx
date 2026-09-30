@@ -201,8 +201,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     let initX = STAGE_0_HERO.xOffsetRatio;
     let initY = 0;
     if (initVpW < 768) {
+      camera.position.z = 8.05;
       initX = 0.0;
-      initY = -0.088;
+      initY = -0.092;
     } else if (initVpW < 1024) {
       initX = initIsPortrait ? -0.26 : -0.16;
       initY = initIsPortrait ? -0.02 : 0;
@@ -473,6 +474,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     let lastTime = performance.now();
     const curTarget = new THREE.Vector3().copy(STAGE_0_HERO.target);
     const curCamPos = new THREE.Vector3().copy(STAGE_0_HERO.camPos);
+    const stage0CamPos = new THREE.Vector3();
     const stage1Target = new THREE.Vector3();
     const stage1CamPos = new THREE.Vector3();
     const stage2Target = new THREE.Vector3();
@@ -533,6 +535,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       let destUvIntensity: number;
 
       // Device-calibrated Stage targets (reusing pre-allocated vectors):
+      stage0CamPos.copy(STAGE_0_HERO.camPos);
       stage1Target.copy(STAGE_1_SCREEN.target);
       stage1CamPos.copy(STAGE_1_SCREEN.camPos);
       stage2Target.copy(STAGE_2_UV.target);
@@ -557,34 +560,36 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       let s5Y = 0.0;
 
       if (vpW < 768) {
-        // Mobile camera framing
+        // Mobile camera framing (calibrated for 100dvh even when browser URL bar is visible)
+        stage0CamPos.z = 8.05;
+
         stage1Target.x = 0.0;
         stage1CamPos.x = 0.0;
-        stage1CamPos.z = 3.10; // Pull back console so both wings and buttons fit comfortably on 390px phones
+        stage1CamPos.z = 3.25; // Pull back console so both wings and buttons fit comfortably between top header & bottom dock
         stage1CamPos.y = 0.54;
 
         // Stage 2 UV Handpiece on Mobile:
-        stage2CamPos.z = 1.95;
+        stage2CamPos.z = 2.05;
         stage2CamPos.y = 0.06;
         stage2Target.y = 0.01;
 
         // Stage 3 Ergonomic Chair on Mobile:
-        stage3CamPos.z = 5.10;
+        stage3CamPos.z = 5.30;
         stage3CamPos.y = -0.32;
         stage3Target.y = -0.46;
 
         // Mobile continuous offsets (centered horizontally, balanced vertically)
         s0X = 0.0;
-        s0Y = -0.088; // Hero: elevated under CTAs
+        s0Y = -0.092; // Hero: centered cleanly below CTAs with full footrest visible above bottom edge
 
         s1X = 0.0;
-        s1Y = 0.082;  // Feature 1: screen elevated into optical center
+        s1Y = 0.065;  // Feature 1: screen centered in open middle zone
 
         s2X = -0.04;
-        s2Y = 0.055;  // Feature 2: UV handpiece centered
+        s2Y = 0.045;  // Feature 2: UV handpiece centered in open middle zone
 
         s3X = 0.0;
-        s3Y = 0.025;  // Feature 3: Ergonomic chair centered
+        s3Y = 0.020;  // Feature 3: Ergonomic chair centered in open middle zone
 
         s4X = 0.0;
         s4Y = -0.02;  // About Us: centered
@@ -646,7 +651,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       if (p <= 0.14) {
         // Stage 0: Hero Section Turntable View
         destTarget = STAGE_0_HERO.target;
-        destCamPos = STAGE_0_HERO.camPos;
+        destCamPos = stage0CamPos;
         destXOffsetRatio = s0X;
         destOffsetYRatio = s0Y;
         destBaseRotY = heroSpinAngle;
@@ -656,7 +661,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         // Transition Stage 0 -> Stage 1 (Smoothly transitions to front screen angle)
         const t = smoothstep(0.14, 0.24, p);
         destTarget = lerpTargetVec.lerpVectors(STAGE_0_HERO.target, stage1Target, t);
-        destCamPos = lerpCamPosVec.lerpVectors(STAGE_0_HERO.camPos, stage1CamPos, t);
+        destCamPos = lerpCamPosVec.lerpVectors(stage0CamPos, stage1CamPos, t);
         destXOffsetRatio = THREE.MathUtils.lerp(s0X, s1X, t);
         destOffsetYRatio = THREE.MathUtils.lerp(s0Y, s1Y, t);
         destBaseRotY = interpolateAngle(heroSpinAngle, STAGE_1_SCREEN.baseRotY, t);

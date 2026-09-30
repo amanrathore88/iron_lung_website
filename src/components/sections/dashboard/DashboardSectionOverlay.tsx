@@ -450,7 +450,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       {/* LAYER 2: DESKTOP DASHBOARD MOCKUP + ANIMATED CALLOUT POINTERS         */}
       {/* ===================================================================== */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-3 sm:px-6 md:px-10 pt-16 sm:pt-16 md:pt-20 pb-3 sm:pb-4"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 px-3 sm:px-6 md:px-10 pt-[56px] sm:pt-16 md:pt-20 pb-2 sm:pb-4"
         style={{
           opacity: desktopOpacity,
           pointerEvents: splitEase >= 0.85 && phoneT < 0.2 ? 'auto' : 'none',
@@ -460,38 +460,38 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* MOBILE PORTRAIT LAYOUT FOR DESKTOP DASHBOARD VIEW (< 768px)       */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-1"
+          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-0.5"
           style={{
             transform: `scale(${desktopScale})`,
             filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-3.5 px-2">
-            <div className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-2">
+          <div className="flex flex-col items-center text-center shrink-0 mb-2 px-2">
+            <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 DESKTOP WEB PORTAL
               </span>
             </div>
-            <h3 className="text-[26px] xs:text-[30px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
+            <h3 className="text-[23px] xs:text-[26px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
               Personalised
               <span className="block text-[#FF4800]">Command Center</span>
             </h3>
-            <p className="text-[11.5px] xs:text-[12.5px] text-[#5A6578] font-normal leading-[1.42] max-w-[300px] mt-1.5">
+            <p className="text-[11px] xs:text-[11.5px] text-[#5A6578] font-normal leading-[1.38] max-w-[300px] mt-1">
               A powerful desktop portal to track, understand and improve your respiratory performance.
             </p>
           </div>
 
           {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
-          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
             {/* Top-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
-              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <GridDashboardIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
@@ -500,7 +500,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   DASHBOARD
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
               </div>
             </motion.div>
 
@@ -509,9 +509,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
-              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <LungsHealthIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
@@ -520,13 +520,13 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   LUNG METRICS
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
               </div>
             </motion.div>
           </div>
 
           {/* Center Large Desktop Monitor + Concentric Warm Halo + Bezel/Chin Connectors */}
-          <div className="relative w-full aspect-[360/248] flex items-center justify-center my-0 shrink-0">
+          <div className="relative w-full aspect-[360/228] flex items-center justify-center my-0 shrink-0">
             {/* Concentric Soft Warm Peach Circles behind Monitor (Matches Reference) */}
             <div className="absolute w-[84%] aspect-square rounded-full bg-[#FFE6D4]/45 border border-[#FF5500]/[0.06] pointer-events-none -z-10 flex items-center justify-center">
               <div className="w-[76%] aspect-square rounded-full bg-[#FFD8BE]/40" />
@@ -659,15 +659,15 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           </div>
 
           {/* Bottom 2 Callout Cards (Track Your Lung Score & Train At Your Own Pace) */}
-          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
             {/* Bottom-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
-              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <BarChartScoreIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
@@ -676,7 +676,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   LUNG SCORE
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
               </div>
             </motion.div>
 
@@ -685,9 +685,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-3 py-2.5 xs:px-3.5 xs:py-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2.5 xs:gap-3"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
-              <div className="w-9 h-9 xs:w-10 xs:h-10 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <BarChartScoreIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
@@ -696,7 +696,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   YOUR OWN PACE
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
               </div>
             </motion.div>
           </div>
@@ -1070,7 +1070,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       {/* (Slides up from bottom as Desktop zooms out, then animates pointers)  */}
       {/* ===================================================================== */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-3 sm:px-6 md:px-10 pt-16 sm:pt-16 md:pt-20 pb-3 sm:pb-4"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-3 sm:px-6 md:px-10 pt-[56px] sm:pt-16 md:pt-20 pb-2 sm:pb-4"
         style={{
           opacity: phoneOpacity,
           pointerEvents: phoneEase >= 0.85 ? 'auto' : 'none',
@@ -1080,37 +1080,37 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* MOBILE PORTRAIT LAYOUT FOR PHONE COMPANION APP VIEW (< 768px)     */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-1"
+          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-0.5"
           style={{
             transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-2.5 px-2">
-            <div className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
+          <div className="flex flex-col items-center text-center shrink-0 mb-1.5 px-2">
+            <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 MOBILE COMPANION APP
               </span>
             </div>
-            <h3 className="text-[25px] xs:text-[29px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
+            <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
               Session Reports
               <span className="block text-[#FF4800]">On The Go</span>
             </h3>
-            <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.38] max-w-[295px] mt-1">
+            <p className="text-[10.5px] xs:text-[11.5px] text-[#5A6578] font-normal leading-[1.35] max-w-[295px] mt-0.5">
               Track your progress, analyse your sessions and stay motivated — anytime, anywhere.
             </p>
           </div>
 
           {/* Top 2 Callout Cards (Session Details & Training Performance) */}
-          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
             {/* Top-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: -12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <SessionDocIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
@@ -1119,8 +1119,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   DETAILS
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
                   View the date, time and status of your training session at a glance.
                 </p>
               </div>
@@ -1131,9 +1131,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: -12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <SolidBarChartIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
@@ -1142,8 +1142,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   PERFORMANCE
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
                   Check session duration, achieved volume and target completion live.
                 </p>
               </div>
@@ -1151,7 +1151,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           </div>
 
           {/* Center Large Phone Mockup + Concentric Warm Halo Rings + SVG Pointer Lines & Target Dots */}
-          <div className="relative w-full aspect-[360/288] flex items-center justify-center my-0 shrink-0">
+          <div className="relative w-full aspect-[360/242] flex items-center justify-center my-0 shrink-0">
             {/* Ambient Warm Theme-Orange Backlight Glow behind Phone */}
             <div
               className="absolute inset-x-[18%] inset-y-[6%] rounded-full pointer-events-none -z-10"
@@ -1336,15 +1336,15 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           </div>
 
           {/* Bottom 2 Callout Cards (Visual Breathing Feedback & Save Your Progress) */}
-          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20">
+          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
             {/* Bottom-Left Card */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <LungsHealthIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
@@ -1353,8 +1353,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   FEEDBACK
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
                   See your breathing pattern with clear visual insights and real-time feedback.
                 </p>
               </div>
@@ -1365,9 +1365,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               initial={{ opacity: 0, y: 12 }}
               animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2.5 xs:p-3 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2 xs:gap-2.5"
+              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
             >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
                 <SaveReportDownloadIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
@@ -1376,8 +1376,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <br />
                   PROGRESS
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1.5 rounded-full" />
-                <p className="text-[#334155] text-[9px] xs:text-[9.8px] leading-[1.35] font-normal">
+                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
                   All your session data is saved securely so you can track your improvement over time.
                 </p>
               </div>
