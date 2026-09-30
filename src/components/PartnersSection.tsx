@@ -13,7 +13,7 @@ const logos = [
 
 const PartnersSection = () => {
   return (
-    <section className="py-16 sm:py-20 bg-[#FDFDFD] border-t border-black/[0.04] overflow-hidden relative">
+    <section className="py-16 sm:py-20 bg-[#fdfbf8] border-t border-black/[0.04] overflow-hidden relative">
       <div className="container px-4 md:px-6 mx-auto mb-12 text-center">
         <div className="mb-4">
           <KineticText 
@@ -29,8 +29,8 @@ const PartnersSection = () => {
 
       <div className="container-fluid relative max-w-[100vw] overflow-hidden">
         {/* Gradients for smooth fade out at edges */}
-        <div className="absolute inset-y-0 left-0 w-1/6 md:w-1/4 bg-gradient-to-r from-[#FDFDFD] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-1/6 md:w-1/4 bg-gradient-to-l from-[#FDFDFD] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-1/6 md:w-1/4 bg-gradient-to-r from-[#fdfbf8] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-1/6 md:w-1/4 bg-gradient-to-l from-[#fdfbf8] to-transparent z-10 pointer-events-none"></div>
 
         <div 
           className="flex gap-8 sm:gap-14 md:gap-24 overflow-hidden py-4"

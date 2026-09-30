@@ -26,7 +26,7 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#FDFDFD] text-black overflow-hidden py-12 sm:py-14 md:py-16 border-t border-black/[0.04]"
+      className="relative w-full bg-[#fdfbf8] text-black overflow-hidden py-12 sm:py-14 md:py-16 border-t border-black/[0.04]"
     >
       {/* Main Centered Editorial Content Container */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-12 md:px-16 flex flex-col items-center text-center">
