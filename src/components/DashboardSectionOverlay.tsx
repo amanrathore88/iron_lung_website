@@ -58,7 +58,7 @@ const MOBILE_FONT: React.CSSProperties = {
 
 // Custom SVG Icons matching the reference design
 const GridDashboardIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#D94E0F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#D94E0F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
     <rect x="13.5" y="3.5" width="7" height="7" rx="3.5" />
     <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
@@ -67,7 +67,7 @@ const GridDashboardIcon: React.FC = () => (
 );
 
 const BarChartScoreIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[56%] h-[56%]" stroke="#D94E0F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#D94E0F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <rect x="4" y="13" width="3.8" height="7" rx="1" />
     <rect x="10.1" y="9" width="3.8" height="11" rx="1" />
     <rect x="16.2" y="4" width="3.8" height="16" rx="1" />
@@ -75,7 +75,7 @@ const BarChartScoreIcon: React.FC = () => (
 );
 
 const LungsHealthIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[58%] h-[58%]" stroke="#D94E0F" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[54%] h-[54%]" stroke="#D94E0F" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 3v7" />
     <path d="M12 8c-1.8 0-3.2 1.2-3.8 2.5" />
     <path d="M12 8c1.8 0 3.2 1.2 3.8 2.5" />
@@ -760,7 +760,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               d="M 328 146 L 238 146 L 205 117 L 79 117"
               fill="none"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -777,7 +777,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               d="M 306 313 L 252 313 L 238 301 L 79 301"
               fill="none"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -794,7 +794,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               d="M 682 165 L 756 165 L 804 117 L 858 117"
               fill="none"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -812,7 +812,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               x2="916"
               y2="117"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={
@@ -828,7 +828,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               d="M 736 276 L 768 276 L 807 301 L 858 301"
               fill="none"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -846,7 +846,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               x2="916"
               y2="301"
               stroke="#FF5500"
-              strokeWidth="1.8"
+              strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={
@@ -870,12 +870,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   <motion.circle
                     cx={dot.cx}
                     cy={dot.cy}
-                    r="6"
+                    r="4.8"
                     fill="none"
                     stroke="#FF5500"
-                    strokeWidth="1.5"
-                    initial={{ r: 5.5, opacity: 0.75 }}
-                    animate={{ r: 14, opacity: 0 }}
+                    strokeWidth="1.15"
+                    initial={{ r: 4.5, opacity: 0.7 }}
+                    animate={{ r: 11.5, opacity: 0 }}
                     transition={{
                       duration: 1.8,
                       repeat: Infinity,
@@ -900,8 +900,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   }}
                   style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
                 >
-                  <circle cx={dot.cx} cy={dot.cy} r="5.5" fill="#FF5500" />
-                  <circle cx={dot.cx} cy={dot.cy} r="2.1" fill="#FFFFFF" />
+                  <circle cx={dot.cx} cy={dot.cy} r="4.3" fill="#FF5500" />
+                  <circle cx={dot.cx} cy={dot.cy} r="1.7" fill="#FFFFFF" />
                 </motion.g>
               </g>
             ))}
@@ -915,8 +915,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <motion.div
             className="absolute z-20 pointer-events-none"
             style={{
-              left: '2.734%',
-              top: '15.0%',
+              left: '3.45%',
+              top: '15.8%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: -16, y: 6 }}
@@ -932,14 +932,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.22,
             }}
           >
-            <div className="flex items-center gap-[6.5%]">
-              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="flex items-center gap-[6.0%]">
+              <div className="w-[15.5%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <GridDashboardIcon />
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
                   className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
-                  style={{ fontSize: '1.38cqw' }}
+                  style={{ fontSize: '1.18cqw' }}
                 >
                   PERSONALISED
                   <br />
@@ -953,8 +953,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <motion.div
             className="absolute z-20 pointer-events-none"
             style={{
-              left: '2.734%',
-              top: '53.0%',
+              left: '3.45%',
+              top: '53.8%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: -16, y: 6 }}
@@ -970,14 +970,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.32,
             }}
           >
-            <div className="flex items-center gap-[6.5%]">
-              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="flex items-center gap-[6.0%]">
+              <div className="w-[15.5%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <BarChartScoreIcon />
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
                   className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
-                  style={{ fontSize: '1.38cqw' }}
+                  style={{ fontSize: '1.18cqw' }}
                 >
                   TRACK YOUR
                   <br />
@@ -991,8 +991,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <motion.div
             className="absolute z-20 pointer-events-none"
             style={{
-              left: '80.078%',
-              top: '15.0%',
+              left: '80.75%',
+              top: '15.8%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: 16, y: 6 }}
@@ -1008,14 +1008,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.27,
             }}
           >
-            <div className="flex items-center gap-[6.5%]">
-              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="flex items-center gap-[6.0%]">
+              <div className="w-[15.5%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <LungsHealthIcon />
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
                   className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
-                  style={{ fontSize: '1.38cqw' }}
+                  style={{ fontSize: '1.18cqw' }}
                 >
                   REAL-TIME
                   <br />
@@ -1029,8 +1029,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <motion.div
             className="absolute z-20 pointer-events-none"
             style={{
-              left: '80.078%',
-              top: '53.0%',
+              left: '80.75%',
+              top: '53.8%',
               width: '19.531%',
             }}
             initial={{ opacity: 0, x: 16, y: 6 }}
@@ -1046,14 +1046,14 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               delay: 0.37,
             }}
           >
-            <div className="flex items-center gap-[6.5%]">
-              <div className="w-[19%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
+            <div className="flex items-center gap-[6.0%]">
+              <div className="w-[15.5%] aspect-square rounded-[22%] bg-[#F7E8DE] flex items-center justify-center shrink-0 shadow-sm">
                 <BarChartScoreIcon />
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
                   className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
-                  style={{ fontSize: '1.38cqw' }}
+                  style={{ fontSize: '1.18cqw' }}
                 >
                   TRAIN AT
                   <br />
