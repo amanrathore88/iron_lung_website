@@ -567,8 +567,8 @@ export const App: React.FC = () => {
             }
           />
 
-          {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[920vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
-          <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[920vh] w-full">
+          {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
+          <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
             {/* Sticky 100vh Viewport Pin */}
             <div className={`sticky top-0 h-screen w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}

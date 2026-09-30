@@ -764,7 +764,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, STAGE_4_ABOUT.shadowOpacity, t);
           destUvIntensity = 0.0;
           heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-        } else if (p <= 0.88) {
+        } else if (p <= 0.855) {
           // Stage 4: About Us Section (100% locked in left column, full machine framed)
           destTarget = STAGE_4_ABOUT.target;
           destCamPos = STAGE_4_ABOUT.camPos;
@@ -775,10 +775,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
           destUvIntensity = 0.0;
           heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-        } else if (p < 0.93) {
+        } else if (p < 0.925) {
           // Stage 5: Cinematic Sweep & Reveal across to User Dashboard (360° rotation, growing in scale, gliding to right)
-          const t = (p - 0.88) / (0.93 - 0.88);
-          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          const t = Math.min(1, Math.max(0, (p - 0.855) / 0.070));
+          const ease = t * t * (3 - 2 * t);
 
           destTarget = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
           destCamPos = new THREE.Vector3().lerpVectors(STAGE_4_ABOUT.camPos, STAGE_5_SWEEP_END.camPos, ease);
@@ -807,12 +807,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       // Responsive lerp speed:
       // Mobile uses smooth cinematic damping (0.14 - 0.24) paired with the ~1.0s stage transition
       // so the 3D model rotation and camera glide are clearly visible between every section.
-      // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with responsive tracking (0.28) during Stage 5 sweep
-      let lerpSpeed = p >= 0.88 ? 0.28 : p >= 0.73 ? 0.16 : 0.08;
+      // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with smooth unhurried tracking (0.12) during Stage 5 sweep
+      let lerpSpeed = p >= 0.855 ? 0.12 : p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
         lerpSpeed = Math.max(0.14, Math.min(0.24, delta * 9.5));
       } else if (vpW < 1024) {
-        lerpSpeed = p >= 0.88 ? 0.26 : p >= 0.73 ? 0.18 : 0.12;
+        lerpSpeed = p >= 0.855 ? 0.12 : p >= 0.73 ? 0.18 : 0.12;
       }
 
       curTarget.lerp(destTarget, lerpSpeed);
@@ -820,7 +820,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       curXOffsetRatio += (destXOffsetRatio - curXOffsetRatio) * lerpSpeed;
       curOffsetYRatio += (destOffsetYRatio - curOffsetYRatio) * lerpSpeed;
 
-      if (p >= 0.88 && vpW >= 768) {
+      if (p >= 0.855 && vpW >= 768) {
         // Continuous directional rotation during Stage 5 sweep (no modulo wrapping)
         curBaseRotY += (destBaseRotY - curBaseRotY) * lerpSpeed;
       } else {
@@ -858,7 +858,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       // Stage 5 Model Fade:
       // Mobile: Smoothly fade out the 3D model between 0.74 and 0.795
       // Model is 100% gone before About Us editorial content settles
-      // Desktop: Sweeps across during Stage 5 reveal (0.90 -> 0.965)
+      // Desktop: Sweeps across during Stage 5 reveal (0.895 -> 0.928)
       let globalModelOpacity = 1.0;
       if (vpW < 768) {
         if (p > 0.74 && p < 0.795) {
@@ -868,10 +868,10 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           globalModelOpacity = 0.0;
         }
       } else {
-        if (p >= 0.89 && p < 0.93) {
-          const tSweepFade = smoothstep(0.89, 0.93, p);
+        if (p >= 0.895 && p < 0.928) {
+          const tSweepFade = smoothstep(0.895, 0.928, p);
           globalModelOpacity = 1.0 - tSweepFade;
-        } else if (p >= 0.93) {
+        } else if (p >= 0.928) {
           globalModelOpacity = 0.0;
         }
       }

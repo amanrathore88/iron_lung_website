@@ -68,8 +68,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
   // Pacing:
   // Starts fading in smoothly at 0.73 as the 3D model descends from Section 03
-  // 100% visible & locked between 0.80 and 0.88
-  // Between 0.88 and 0.98, fades/wipes out alongside the 3D model sweep to User Dashboard
+  // 100% visible & locked between 0.80 and 0.855
+  // Between 0.855 and 0.925, fades/wipes out smoothly alongside the slower 3D model sweep to User Dashboard
   if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.94 : 0.925)) {
     return null;
   }
@@ -91,10 +91,10 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   const contentTranslateY = (1 - contentEntryEase) * 16;
 
   // Seamless exit opacity:
-  // On desktop, exits alongside horizontal model sweep between 0.88 and 0.94
-  // On mobile (< 1024px), exits cleanly between 0.865 and 0.888 as Dashboard intro rises in
-  const exitStart = isDesktop ? 0.88 : 0.865;
-  const exitDuration = isDesktop ? 0.05 : 0.023;
+  // On desktop, exits alongside horizontal model sweep between 0.855 and 0.925
+  // On mobile (< 1024px), exits cleanly between 0.860 and 0.892 as Dashboard intro rises in
+  const exitStart = isDesktop ? 0.855 : 0.860;
+  const exitDuration = isDesktop ? 0.070 : 0.032;
   const exitProgress = Math.min(1, Math.max(0, (scrollProgress - exitStart) / exitDuration));
   const exitOpacity = scrollProgress >= exitStart ? 1 - exitProgress : 1.0;
 
@@ -102,21 +102,21 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   const currentBackdropOpacity = backdropEntryEase * (isDesktop ? exitOpacity : 1.0);
   const currentContentOpacity = contentEntryEase * exitOpacity;
 
-  // Left column accents (quotes) fade out immediately at start of sweep (0.88 - 0.905)
+  // Left column accents (quotes) fade out smoothly at start of sweep (0.855 - 0.888)
   // so they never clash or overlap with the User Dashboard cards
-  const leftAccentsOpacity = scrollProgress >= 0.88
-    ? Math.max(0, 1 - (scrollProgress - 0.88) / 0.025)
+  const leftAccentsOpacity = scrollProgress >= 0.855
+    ? Math.max(0, 1 - (scrollProgress - 0.855) / 0.033)
     : 1.0;
 
   // The overlay is interactive when fully in view
-  const isInteractive = scrollProgress >= 0.81 && scrollProgress <= (isDesktop ? 0.88 : 0.865);
+  const isInteractive = scrollProgress >= 0.81 && scrollProgress <= (isDesktop ? 0.86 : 0.860);
 
-  // Seamless Airplane-Style Wipe: As the 3D model sweeps left-to-right into User Dashboard (0.88 - 0.98),
+  // Seamless Airplane-Style Wipe: As the 3D model sweeps left-to-right into User Dashboard (0.855 - 0.925),
   // wipe out 'Our Story' in direct lockstep with the 3D model and white fade so zero ghosting or card overlap occurs (desktop only)
   let maskStyle: React.CSSProperties = {};
-  if (isDesktop && scrollProgress >= 0.88) {
-    const t = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.05));
-    const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  if (isDesktop && scrollProgress >= 0.855) {
+    const t = Math.min(1, Math.max(0, (scrollProgress - 0.855) / 0.070));
+    const ease = t * t * (3 - 2 * t);
     const modelCenterPct = 15.5 + ease * 104.5;
     const wipePct = Math.min(100, Math.max(0, modelCenterPct + 2));
     const wipeStart = Math.max(0, wipePct - 14);

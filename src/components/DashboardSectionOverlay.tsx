@@ -10,9 +10,9 @@ let hasDashboardTextAnimatedGlobal = false;
 
 const POPCORN_SPRING_TRANSITION: AnimationOptions = {
   type: 'spring',
-  stiffness: 350,
-  damping: 14,
-  mass: 1,
+  stiffness: 210,
+  damping: 18,
+  mass: 1.05,
 };
 
 interface DashboardSectionOverlayProps {
@@ -157,20 +157,16 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const isMobile = windowDimensions.width < 768;
 
   // ---------------------------------------------------------------------------
-  // 1. Physical Airplane-Style Sweep Reveal Architecture (0.88 - 0.925)
+  // 1. Physical Airplane-Style Sweep Reveal Architecture (0.855 - 0.925)
   // ---------------------------------------------------------------------------
-  const sweepT = Math.min(1, Math.max(0, (scrollProgress - 0.88) / 0.045));
-  const sweepEase =
-    sweepT < 0.5 ? 4 * sweepT * sweepT * sweepT : 1 - Math.pow(-2 * sweepT + 2, 3) / 2;
+  const sweepT = Math.min(1, Math.max(0, (scrollProgress - 0.855) / 0.070));
+  const sweepEase = sweepT * sweepT * (3 - 2 * sweepT);
   const modelCenterPct = 15.5 + sweepEase * 104.5;
   const revealPct = Math.min(116, Math.max(0, modelCenterPct + 2));
 
-  // Mobile elevation reveal (0.866 - 0.892): hands off directly from About Us with zero dead gap
-  const mobileProgress = Math.min(1, Math.max(0, (scrollProgress - 0.866) / 0.026));
-  const mobileEase =
-    mobileProgress < 0.5
-      ? 4 * mobileProgress * mobileProgress * mobileProgress
-      : 1 - Math.pow(-2 * mobileProgress + 2, 3) / 2;
+  // Mobile elevation reveal (0.860 - 0.896): hands off smoothly from About Us
+  const mobileProgress = Math.min(1, Math.max(0, (scrollProgress - 0.860) / 0.036));
+  const mobileEase = mobileProgress * mobileProgress * (3 - 2 * mobileProgress);
 
   // Mask gradient for desktop sweep
   const feather = 18;
@@ -189,15 +185,15 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // ---------------------------------------------------------------------------
   // 2. Text Popcorn Animation on 3D Model Exit & Subsequent Scroll Separation
   // ---------------------------------------------------------------------------
-  const isModelExitRight = isMobile ? scrollProgress >= 0.876 : scrollProgress >= 0.920;
+  const isModelExitRight = isMobile ? scrollProgress >= 0.882 : scrollProgress >= 0.912;
   const isTextActive = isModelExitRight;
-  const isInteractive = isMobile ? scrollProgress >= 0.876 : scrollProgress >= 0.920;
+  const isInteractive = isMobile ? scrollProgress >= 0.882 : scrollProgress >= 0.912;
 
   // Separation progress:
-  // Desktop: 0.930 -> 0.952 (100% unchanged)
-  // Mobile: 0.908 -> 0.930 (gives generous hold time on Stage 1 text before splitting)
-  const splitStart = isMobile ? 0.908 : 0.930;
-  const splitSpan = isMobile ? 0.022 : 0.022;
+  // Desktop: 0.946 -> 0.966 (gives generous hold time on 'YOUR DASHBOARD AWAITS' before splitting)
+  // Mobile: 0.916 -> 0.938 (gives generous hold time on Stage 1 text before splitting)
+  const splitStart = isMobile ? 0.916 : 0.946;
+  const splitSpan = isMobile ? 0.022 : 0.020;
   const splitT = Math.min(1, Math.max(0, (scrollProgress - splitStart) / splitSpan));
   const splitEase =
     splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
@@ -213,15 +209,15 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
   // Pointers activation: triggers once the desktop screen has zoomed into place
   // and remains attached to the desktop stage as it zooms out for the phone transition
-  const arePointersActive = isMobile ? scrollProgress >= 0.924 : scrollProgress >= 0.948;
+  const arePointersActive = isMobile ? scrollProgress >= 0.932 : scrollProgress >= 0.963;
 
   // ---------------------------------------------------------------------------
   // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition
-  // Desktop: 0.972 -> 0.994 (100% unchanged)
-  // Mobile: 0.954 -> 0.976 (leaves a generous 0.976 -> 1.000 hold window for the Phone stage)
+  // Desktop: 0.978 -> 0.996
+  // Mobile: 0.956 -> 0.978 (leaves a generous 0.978 -> 1.000 hold window for the Phone stage)
   // ---------------------------------------------------------------------------
-  const phoneStart = isMobile ? 0.954 : 0.972;
-  const phoneSpan = isMobile ? 0.022 : 0.022;
+  const phoneStart = isMobile ? 0.956 : 0.978;
+  const phoneSpan = isMobile ? 0.022 : 0.018;
   const phoneT = Math.min(1, Math.max(0, (scrollProgress - phoneStart) / phoneSpan));
   const phoneEase =
     phoneT < 0.5 ? 4 * phoneT * phoneT * phoneT : 1 - Math.pow(-2 * phoneT + 2, 3) / 2;
@@ -238,7 +234,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const phoneScale = 0.94 + 0.06 * phoneEase;
 
   // Phone pointers activation: triggers once the phone mockup settles into the center
-  const arePhonePointersActive = isMobile ? scrollProgress >= 0.970 : scrollProgress >= 0.986;
+  const arePhonePointersActive = isMobile ? scrollProgress >= 0.974 : scrollProgress >= 0.991;
 
   // Reset only if user navigates all the way back to the very top Hero section (< 0.15)
   if (scrollProgress < 0.15) {
@@ -252,7 +248,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
     }
   }, [isModelExitRight]);
 
-  if (scrollProgress < 0.86) {
+  if (scrollProgress < 0.85) {
     return null;
   }
 
@@ -345,7 +341,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   startScale={0}
                   startOpacity={0}
                   rotationRange={20}
-                  stagger={0.04}
+                  stagger={0.055}
                   transition={POPCORN_SPRING_TRANSITION}
                   charIndexOffset={0}
                   totalCharsOverall={19}
@@ -361,7 +357,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   startScale={0}
                   startOpacity={0}
                   rotationRange={20}
-                  stagger={0.04}
+                  stagger={0.055}
                   transition={POPCORN_SPRING_TRANSITION}
                   charIndexOffset={4}
                   totalCharsOverall={19}
@@ -382,7 +378,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 startScale={0}
                 startOpacity={0}
                 rotationRange={20}
-                stagger={0.04}
+                stagger={0.055}
                 transition={POPCORN_SPRING_TRANSITION}
                 charIndexOffset={0}
                 totalCharsOverall={19}
@@ -412,7 +408,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               startScale={0}
               startOpacity={0}
               rotationRange={20}
-              stagger={0.04}
+              stagger={0.055}
               transition={POPCORN_SPRING_TRANSITION}
               charIndexOffset={13}
               totalCharsOverall={19}
