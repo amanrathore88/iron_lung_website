@@ -914,7 +914,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       {/* SECTION 03: Ergonomic Biometric Training Chair (Left Col) */}
       {/* ======================================================== */}
       <div
-        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-16 pb-3 sm:pt-20 sm:pb-6 md:py-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
+        className="absolute inset-0 px-4 sm:px-8 lg:px-16 flex flex-col justify-between pt-16 pb-3 sm:pt-20 sm:pb-6 md:pt-12 lg:pt-14 md:pb-0 md:flex-row md:items-center md:justify-between md:transition-all md:duration-300 pointer-events-none"
         style={{
           opacity: sec3Opacity,
           transform: `translateY(${sec3TranslateY}px)`,
@@ -1111,7 +1111,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         </div>
 
         {/* TABLET & DESKTOP Left Column Content (hidden on mobile) */}
-        <div className="hidden md:flex w-full md:max-w-[245px] lg:max-w-xl flex-col items-start gap-2 sm:gap-3 lg:gap-5 pointer-events-auto">
+        <div className="hidden md:flex w-full md:max-w-[245px] lg:max-w-xl flex-col items-start gap-2 sm:gap-2.5 lg:gap-4 pointer-events-auto">
           {/* Section Number & Kicker */}
           <div className="flex flex-col items-start gap-0.5 sm:gap-1">
             <div className="flex items-center gap-2 sm:gap-3">
@@ -1142,13 +1142,13 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
           </div>
 
           {/* Heading & Description */}
-          <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-3 w-full max-w-md">
-            <h2 className="text-2xl sm:text-2xl lg:text-5xl xl:text-6xl font-black tracking-tight leading-[1.12] lg:leading-[1.08] text-slate-950">
+          <div className="flex flex-col items-start gap-1 sm:gap-2 lg:gap-2.5 w-full max-w-xl">
+            <h2 className="text-2xl sm:text-2xl lg:text-[44px] xl:text-[52px] font-black tracking-tight leading-[1.10] lg:leading-[1.06] text-slate-950">
               <motion.span
                 initial={{ opacity: 0, y: 30 }}
                 animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={isSec3Active ? { duration: 0.52, delay: 0.34, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="inline-block lg:block mr-[0.25em] lg:mr-0"
+                className="inline-block lg:block lg:whitespace-nowrap mr-[0.25em] lg:mr-0"
               >
                 Engineered for
               </motion.span>
@@ -1156,7 +1156,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ opacity: 0, y: 30 }}
                 animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={isSec3Active ? { duration: 0.52, delay: 0.47, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="inline-block lg:block"
+                className="inline-block lg:block lg:whitespace-nowrap"
               >
                 Optimal Posture
               </motion.span>
@@ -1167,7 +1167,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
               transition={isSec3Active ? { duration: 0.62, delay: 0.62, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[11px] sm:text-[11px] lg:text-base text-slate-600 leading-relaxed font-normal"
+              className="text-[11px] sm:text-[11px] lg:text-[15px] text-slate-600 leading-relaxed font-normal max-w-md"
             >
               Specially contoured seating engineered to open the thoracic cavity, aligning the spine for optimal lung expansion and deep diaphragm activation.
             </motion.p>
