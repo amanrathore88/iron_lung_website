@@ -253,31 +253,22 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* LEFT SUB-COLUMN: Story marker, Headline, Paragraph, Video */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-5 flex flex-col items-start justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[4.5%] xl:left-[5%] lg:w-[28%] lg:max-w-[285px] xl:max-w-[325px]">
+          <div className="w-full md:col-span-5 flex flex-col items-start justify-start z-10 lg:absolute lg:top-[86px] xl:top-[94px] lg:left-[2%] xl:left-[2.5%] lg:w-[27%] lg:max-w-[260px] xl:max-w-[285px]">
             {/* Top Group: Marker, Headline, Paragraph */}
             <div className="flex flex-col items-start w-full">
               {/* Section Chapter Marker */}
-              <div className="flex items-center gap-2.5 sm:gap-2 mb-2 sm:mb-2.5 lg:mb-3 z-20 pointer-events-none">
-                <div className="flex flex-col items-center">
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={isEntered ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
-                    className="w-2 h-2 lg:w-1.5 lg:h-1.5 rounded-full bg-[#0A1118]"
-                  />
-                  <motion.div
-                    initial={{ scaleY: 0 }}
-                    animate={isEntered ? { scaleY: 1 } : { scaleY: 0 }}
-                    transition={{ duration: 0.32, ease: [0.25, 1, 0.5, 1], delay: 0.05 }}
-                    style={{ transformOrigin: 'top' }}
-                    className="w-[1.2px] lg:w-[1px] h-3.5 lg:h-3 bg-[#0A1118]/50 lg:bg-[#0A1118]/30 origin-top"
-                  />
-                </div>
+              <div className="flex items-start gap-2.5 sm:gap-3 mb-3.5 sm:mb-4 lg:mb-5 xl:mb-6 z-20 pointer-events-none">
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={isEntered ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-[#FF5E1E] mt-[2px] shrink-0"
+                />
                 <motion.div
                   initial={{ opacity: 0, y: 7 }}
                   animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 7 }}
                   transition={{ duration: 0.35, ease: 'easeOut', delay: 0.18 }}
-                  className="flex flex-col font-manrope font-semibold lg:font-medium text-[9.5px] lg:text-[9.5px] xl:text-[10px] tracking-[0.28em] text-[#0A1118] uppercase leading-[1.25]"
+                  className="flex flex-col font-manrope font-semibold text-[9.5px] lg:text-[10px] xl:text-[11px] tracking-[0.26em] text-[#0A1118] uppercase leading-[1.35]"
                 >
                   <span>OUR</span>
                   <span>STORY</span>
@@ -294,7 +285,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.22 }}
-                    className="italic font-normal text-[40px] xs:text-[44px] sm:text-[42px] lg:text-[44px] xl:text-[52px] text-[#0A1118] leading-[0.90] lg:leading-[0.88] mb-0.5 block"
+                    className="italic font-normal text-[40px] xs:text-[44px] sm:text-[44px] lg:text-[56px] xl:text-[64px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] mb-0.5 block"
                     style={{ letterSpacing: '-0.02em' }}
                   >
                     People
@@ -305,7 +296,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.34 }}
-                    className="font-bold text-[35px] xs:text-[39px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.90] lg:leading-[0.88] tracking-[-0.025em] block"
+                    className="font-bold text-[35px] xs:text-[39px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
                   >
                     Breathe
                   </motion.span>
@@ -315,7 +306,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.46 }}
-                    className="font-bold text-[35px] xs:text-[39px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.90] lg:leading-[0.88] tracking-[-0.025em] block"
+                    className="font-bold text-[35px] xs:text-[39px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
                   >
                     Brighter
                   </motion.span>
@@ -325,14 +316,14 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.58 }}
-                    className="font-bold text-[35px] xs:text-[39px] sm:text-[34px] lg:text-[36px] xl:text-[42px] text-[#0A1118] leading-[0.90] lg:leading-[0.88] tracking-[-0.025em] inline-flex items-baseline"
+                    className="font-bold text-[35px] xs:text-[39px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#FF5E1E] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] inline-flex items-baseline"
                   >
                     Lives
                     <motion.span
                       initial={{ opacity: 0, scale: 0 }}
                       animate={isEntered ? { opacity: 1, scale: [0, 1.45, 1] } : { opacity: 0, scale: 0 }}
                       transition={{ duration: 0.45, ease: 'easeOut', delay: 0.74 }}
-                      className="text-[#FF5E1E] inline-block origin-center"
+                      className="text-[#0A1118] inline-block origin-center"
                     >
                       .
                     </motion.span>
@@ -345,29 +336,29 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 initial={{ opacity: 0, y: 14 }}
                 animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                 transition={{ duration: 0.65, ease: [0.25, 1, 0.5, 1], delay: 0.82 }}
-                className="font-manrope font-normal text-[12px] xs:text-[12.8px] sm:text-[11px] lg:text-[11.5px] xl:text-[12.5px] text-[#3B4454] lg:text-[#4A5568] leading-[1.52] lg:leading-[1.45] max-w-xl lg:max-w-[270px] xl:max-w-[310px] mt-2.5 sm:mt-3 xl:mt-3.5"
+                className="font-manrope font-normal text-[12px] xs:text-[12.8px] sm:text-[11.5px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.58] lg:leading-[1.6] max-w-xl lg:max-w-[235px] xl:max-w-[260px] mt-4 sm:mt-5 lg:mt-6 xl:mt-7"
               >
                 Iron Lung was born from a simple belief — better breathing creates a brighter, healthier, more human future. We combine science, design and technology to make respiratory wellness accessible to everyone.
               </motion.p>
             </div>
 
-            {/* Video Trigger (Anchored in bottom zone of left column) */}
-            <div className="mt-3 sm:mt-4 lg:mt-auto pt-1 sm:pt-2 z-10 pointer-events-auto">
+            {/* Video Trigger (Positioned cohesively below paragraph matching reference) */}
+            <div className="mt-5 sm:mt-6 lg:mt-7 xl:mt-8 z-10 pointer-events-auto">
               <motion.button
                 initial={{ opacity: 0, scale: 0.92, y: 8 }}
                 animate={isEntered ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 8 }}
                 transition={{ duration: 0.5, ease: 'easeOut', delay: 0.92 }}
                 onClick={onOpenVideo}
                 aria-label="Play Our Story Video"
-                className="group flex items-center gap-3 cursor-pointer focus:outline-none"
+                className="group flex items-center gap-3.5 cursor-pointer focus:outline-none"
               >
-                <div className="w-[36px] h-[36px] sm:w-[35px] sm:h-[35px] lg:w-[36px] lg:h-[36px] xl:w-[40px] xl:h-[40px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-110 group-hover:bg-[#FF5E1E] transition-all duration-300 shrink-0">
-                  <Play size={12} className="fill-white translate-x-[1px] group-hover:translate-x-[3px] text-white transition-transform duration-300" />
+                <div className="w-[38px] h-[38px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] xl:w-[46px] xl:h-[46px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-110 group-hover:bg-[#FF5E1E] transition-all duration-300 shrink-0">
+                  <Play size={13} className="fill-white translate-x-[1px] group-hover:translate-x-[3px] text-white transition-transform duration-300" />
                 </div>
-                <span className="whitespace-nowrap font-manrope font-semibold text-[10px] sm:text-[10px] lg:text-[10.5px] xl:text-[11px] uppercase tracking-[0.24em] sm:tracking-[0.18em] text-[#0A1118] group-hover:text-[#FF5E1E] transition-colors">
+                <span className="whitespace-nowrap font-manrope font-semibold text-[10px] sm:text-[10px] lg:text-[10.5px] xl:text-[11px] uppercase tracking-[0.22em] text-[#0A1118] group-hover:text-[#FF5E1E] transition-colors">
                   OUR STORY
                 </span>
-                <div className="w-10 sm:w-10 lg:w-12 xl:w-14 h-[1.5px] bg-[#0A1118]/55 lg:bg-[#0A1118]/40 transition-all duration-300 group-hover:w-14 sm:group-hover:w-16 group-hover:bg-[#FF5E1E]" />
+                <div className="w-10 sm:w-10 lg:w-12 xl:w-14 h-[1.5px] bg-[#0A1118]/30 lg:bg-[#0A1118]/25 transition-all duration-300 group-hover:w-14 sm:group-hover:w-16 group-hover:bg-[#FF5E1E]" />
               </motion.button>
             </div>
           </div>
@@ -375,7 +366,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* RIGHT SECTION: Structured 4-Row Editorial Grid            */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-3.5 sm:mt-6 md:mt-0">
+          <div className="w-full md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33.5%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-3.5 sm:mt-6 md:mt-0">
             
             {/* ROW 1: Mountain Image + Right Rail (Flexibly expands to fill upper vertical space) */}
             <div className="flex-1 min-h-[150px] xs:min-h-[164px] sm:min-h-[140px] grid grid-cols-[1fr_112px] xs:grid-cols-[1fr_118px] sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-2.5 lg:mb-2.5 xl:mb-3.5">
