@@ -14,15 +14,15 @@ const logos = [
 const PartnersSection = () => {
   return (
     <section className="py-16 sm:py-20 bg-[#fdfbf8] border-t border-black/[0.04] overflow-hidden relative">
-      <div className="container px-4 md:px-6 mx-auto mb-12 text-center">
-        <div className="mb-4">
+      <div className="w-full max-w-4xl px-4 md:px-6 mx-auto mb-12 flex flex-col items-center justify-center text-center">
+        <div className="mb-4 w-full flex items-center justify-center text-center">
           <KineticText 
             text="Our Partners & Supporters" 
             as="h2" 
-            className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground" 
+            className="text-3xl font-bold tracking-tight sm:text-4xl text-foreground justify-center text-center" 
           />
         </div>
-        <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
+        <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto text-center">
           Revolutionary smart respiration technology for healthier lungs and better breathing.
         </p>
       </div>
