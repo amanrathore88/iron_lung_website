@@ -107,32 +107,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         {/* On Tablet/Desktop: Combined left column with md:max-w-[240px] (tablet) or lg:max-w-xl (desktop) */}
         {/* On Mobile: Centered header at top, unified dock at bottom, center is open for 3D console */}
         <div className="w-full flex flex-col items-center text-center md:items-start md:text-left gap-1 sm:gap-3 lg:gap-5 md:max-w-[240px] lg:max-w-xl pointer-events-auto">
-          {/* Mobile Centered Kicker Badge */}
-          <div className="flex md:hidden items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-              transition={isSec1Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-xs font-black text-[#FF5E1E] tracking-tight"
-            >
-              01
-            </motion.span>
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={isSec1Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-              transition={isSec1Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              style={{ transformOrigin: 'left center' }}
-              className="w-1 h-1 rounded-full bg-slate-300"
-            />
-            <motion.span
-              initial={{ opacity: 0, y: 6 }}
-              animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-              transition={isSec1Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase"
-            >
-              PRODUCT INTERFACE
-            </motion.span>
-          </div>
+          {/* Mobile Centered Kicker (Theme orange, clean text without box or number) */}
+          <motion.span
+            initial={{ opacity: 0, y: 6 }}
+            animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+            transition={isSec1Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+          >
+            PRODUCT INTERFACE
+          </motion.span>
 
           {/* Tablet/Desktop Left-Aligned Kicker (100% Unchanged Design, Animated Sequence) */}
           <div className="hidden md:flex flex-col items-start gap-0.5 sm:gap-1">
@@ -507,32 +490,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
 
         {/* MOBILE Top Header: Centered kicker, heading, description */}
         <div className="md:hidden w-full flex flex-col items-center text-center gap-1 pointer-events-auto">
-          {/* Mobile Centered Kicker Badge */}
-          <div className="flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-              transition={isSec2Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-xs font-black text-[#FF5E1E] tracking-tight"
-            >
-              02
-            </motion.span>
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={isSec2Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-              transition={isSec2Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              style={{ transformOrigin: 'left center' }}
-              className="w-1 h-1 rounded-full bg-slate-300"
-            />
-            <motion.span
-              initial={{ opacity: 0, y: 6 }}
-              animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-              transition={isSec2Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase"
-            >
-              UV SANITIZATION
-            </motion.span>
-          </div>
+          {/* Mobile Centered Kicker (Theme orange, clean text without box or number) */}
+          <motion.span
+            initial={{ opacity: 0, y: 6 }}
+            animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+            transition={isSec2Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+          >
+            UV SANITIZATION
+          </motion.span>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-center gap-0.5 w-full max-w-md">
@@ -923,32 +889,15 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
       >
         {/* MOBILE Top Header: Centered kicker, heading, description */}
         <div className="md:hidden w-full flex flex-col items-center text-center gap-1 pointer-events-auto">
-          {/* Mobile Centered Kicker Badge */}
-          <div className="flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/95 border border-slate-200/90 shadow-sm backdrop-blur-md">
-            <motion.span
-              initial={{ opacity: 0, y: 8 }}
-              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-              transition={isSec3Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-xs font-black text-[#FF5E1E] tracking-tight"
-            >
-              03
-            </motion.span>
-            <motion.div
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={isSec3Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
-              transition={isSec3Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              style={{ transformOrigin: 'left center' }}
-              className="w-1 h-1 rounded-full bg-slate-300"
-            />
-            <motion.span
-              initial={{ opacity: 0, y: 6 }}
-              animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
-              transition={isSec3Active ? { duration: 0.24, delay: 0.24, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-              className="text-[9.5px] font-bold tracking-[0.22em] text-slate-500 uppercase"
-            >
-              ERGONOMIC DESIGN
-            </motion.span>
-          </div>
+          {/* Mobile Centered Kicker (Theme orange, clean text without box or number) */}
+          <motion.span
+            initial={{ opacity: 0, y: 6 }}
+            animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
+            transition={isSec3Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+          >
+            ERGONOMIC DESIGN
+          </motion.span>
 
           {/* Heading & Description */}
           <div className="flex flex-col items-center gap-0.5 w-full max-w-md">
