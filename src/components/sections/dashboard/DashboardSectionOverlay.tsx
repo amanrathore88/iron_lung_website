@@ -467,7 +467,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-1 -translate-y-4 xs:-translate-y-5 px-2">
+          <div className="flex flex-col items-center text-center shrink-0 mb-0.5 -translate-y-8 xs:-translate-y-10 sm:-translate-y-11 px-2">
             <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 DESKTOP WEB PORTAL
