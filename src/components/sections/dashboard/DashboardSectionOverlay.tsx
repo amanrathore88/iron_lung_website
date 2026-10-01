@@ -467,7 +467,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           }}
         >
           {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-2 px-2">
+          <div className="flex flex-col items-center text-center shrink-0 mb-1 -translate-y-4 xs:-translate-y-5 px-2">
             <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
               <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
                 DESKTOP WEB PORTAL
@@ -486,8 +486,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
             {/* Top-Left Card */}
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+              initial={{ opacity: 0, y: -32 }}
+              animate={arePointersActive ? { opacity: 1, y: -20 } : { opacity: 0, y: -32 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
               className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
@@ -569,9 +569,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               preserveAspectRatio="none"
               className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
             >
-              {/* 1. Top-Left Connector: from top-left sidebar (50, 55) up-left to bottom of Card 1 (36, 0) */}
+              {/* 1. Top-Left Connector: from top-left sidebar (50, 55) up-left to bottom of Card 1 (36, -20) */}
               <motion.path
-                d="M 50 55 L 36 35 L 36 0"
+                d="M 50 55 L 36 35 L 36 -20"
                 fill="none"
                 stroke="#FF4800"
                 strokeWidth="1.8"
@@ -605,9 +605,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                 transition={{ duration: 0.48, delay: 0.18, ease: 'easeOut' }}
               />
-              {/* 4. Bottom-Right Connector: from bottom-right chin (310, 194) down-right to top of Card 4 (326, 248) */}
+              {/* 4. Bottom-Right Connector: from bottom-right chin (310, 194) down-right to top of Card 4 (326, 268) */}
               <motion.path
-                d="M 310 194 L 310 208 L 326 226 L 326 248"
+                d="M 310 194 L 310 208 L 326 226 L 326 268"
                 fill="none"
                 stroke="#FF4800"
                 strokeWidth="1.8"
@@ -682,8 +682,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
             {/* Bottom-Right Card */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 32 }}
+              animate={arePointersActive ? { opacity: 1, y: 20 } : { opacity: 0, y: 32 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
               className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
             >
