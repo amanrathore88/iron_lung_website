@@ -34,11 +34,8 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
       />
 
       <main className="flex-1">
-        {/* Cinematic Video-Featured Technology Hero Section */}
-        <TechnologyHeroSection
-          onBookDemo={onBookDemo}
-          onContactUs={onContactUs}
-        />
+        {/* Full-bleed background video covering the entire hero section */}
+        <TechnologyHeroSection />
       </main>
 
       {/* Cinematic Shared Footer */}
