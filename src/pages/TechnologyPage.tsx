@@ -3,6 +3,7 @@ import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 
 import TechnologyHeroSection from "../components/sections/technology/TechnologyHeroSection";
+import TechnologySanitizationSection from "../components/sections/technology/TechnologySanitizationSection";
 
 interface TechnologyPageProps {
   onBookDemo: () => void;
@@ -36,6 +37,9 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
       <main className="flex-1">
         {/* Full-bleed background video covering the entire hero section */}
         <TechnologyHeroSection />
+
+        {/* Precision Breathing Technology: A Cleaner Session Every Time Banner */}
+        <TechnologySanitizationSection />
       </main>
 
       {/* Cinematic Shared Footer */}
