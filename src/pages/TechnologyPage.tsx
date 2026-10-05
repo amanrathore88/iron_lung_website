@@ -1,8 +1,6 @@
 import React from "react";
 import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
-import ConsoleInteractiveSection from "../components/sections/technology/ConsoleInteractiveSection";
-import HardwareSpecsMatrixSection from "../components/sections/technology/HardwareSpecsMatrixSection";
 
 interface TechnologyPageProps {
   onBookDemo: () => void;
@@ -33,13 +31,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
         activeSection="technology"
       />
 
-      <main className="flex-1 pt-20 sm:pt-24 md:pt-28">
-        {/* 1. 22-Inch Interactive Console Showcase (5 Live UI Screen Modes) */}
-        <ConsoleInteractiveSection />
-
-        {/* 2. Unified Hardware Specifications, Dimensions, Weight & Pricing Matrix */}
-        <HardwareSpecsMatrixSection onReserve={onContactUs} reserveUrl="#contact" />
-      </main>
+      <main className="flex-1" />
 
       {/* Cinematic Shared Footer */}
       <Footer />
