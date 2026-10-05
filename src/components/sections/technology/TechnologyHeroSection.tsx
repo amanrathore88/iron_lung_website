@@ -13,7 +13,7 @@ export const TechnologyHeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full h-[52vh] sm:h-[58vh] lg:h-[62vh] min-h-[350px] max-h-[580px] xl:max-h-[620px] overflow-hidden bg-black select-none">
+    <section className="relative w-full h-[82vh] sm:h-[85vh] lg:h-[88vh] min-h-[520px] max-h-[880px] overflow-hidden bg-black select-none">
       {/* Full-bleed background video covering the entire hero section */}
       <video
         ref={videoRef}
