@@ -2,6 +2,8 @@ import React from "react";
 import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 
+import TechnologyHeroSection from "../components/sections/technology/TechnologyHeroSection";
+
 interface TechnologyPageProps {
   onBookDemo: () => void;
   onContactUs: () => void;
@@ -31,7 +33,10 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
         activeSection="technology"
       />
 
-      <main className="flex-1" />
+      <main className="flex-1">
+        {/* Technology Hero Section matching reference layout with video */}
+        <TechnologyHeroSection />
+      </main>
 
       {/* Cinematic Shared Footer */}
       <Footer />
