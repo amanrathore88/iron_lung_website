@@ -27,7 +27,7 @@ export const TechnologyInteractiveAppSection: React.FC = () => {
         </motion.div>
 
         {/* ===================================================================== */}
-        {/* CENTER COMPOSITION: DESKTOP & MOBILE MOCKUPS WITH AURA GLOW           */}
+        {/* CENTER COMPOSITION: DESKTOP & MOBILE MOCKUPS (CLEAN BACKGROUND)       */}
         {/* ===================================================================== */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
@@ -36,38 +36,12 @@ export const TechnologyInteractiveAppSection: React.FC = () => {
           transition={{ duration: 0.75, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className="relative w-full max-w-[1080px] mt-10 sm:mt-14 md:mt-16 lg:mt-20 flex items-center justify-center"
         >
-          {/* Subtle warm orange aura background */}
-          <div 
-            className="absolute -inset-4 sm:-inset-8 md:-inset-12 rounded-full pointer-events-none select-none opacity-80"
-            style={{
-              background: "radial-gradient(ellipse 70% 55% at 42% 50%, rgba(255, 106, 26, 0.15) 0%, rgba(255, 140, 50, 0.05) 55%, transparent 75%)",
-            }}
-          />
-
-          {/* Subtle curved dashed accent ring */}
-          <svg
-            className="absolute inset-0 w-full h-full pointer-events-none select-none opacity-30"
-            viewBox="0 0 1000 500"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <ellipse
-              cx="450"
-              cy="250"
-              rx="420"
-              ry="210"
-              stroke="#FF6A1A"
-              strokeWidth="1.5"
-              strokeDasharray="6 8"
-            />
-          </svg>
-
-          {/* High-Resolution Dual Device Mockup (Desktop Monitor + iPhone) */}
+          {/* High-Resolution Dual Device Mockup (Desktop Monitor + iPhone on seamless transparent background) */}
           <div className="relative z-10 w-full flex items-center justify-center">
             <img
               src="/images/technology/interactive-app-mockup.png"
               alt="IronLung Interactive App for Users and Admins on Desktop and Mobile"
-              className="w-full h-auto max-w-[1000px] object-contain select-none pointer-events-none drop-shadow-[0_16px_36px_rgba(0,0,0,0.06)]"
+              className="w-full h-auto max-w-[1000px] object-contain select-none pointer-events-none"
               loading="lazy"
             />
           </div>
