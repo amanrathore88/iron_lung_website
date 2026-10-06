@@ -50,7 +50,7 @@ export const TechnologyHeroSection: React.FC = () => {
             muted={isMuted}
             playsInline
             preload="auto"
-            className="w-full h-full object-cover object-[45%_25%] md:object-[center_25%] block select-none pointer-events-none"
+            className="w-full h-full object-cover block select-none pointer-events-none"
           />
 
           {/* Discreet Audio Toggle Button */}
