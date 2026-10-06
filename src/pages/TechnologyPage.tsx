@@ -3,6 +3,7 @@ import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 
 import TechnologyHeroSection from "../components/sections/technology/TechnologyHeroSection";
+import TechnologyWhatsAppReportSection from "../components/sections/technology/TechnologyWhatsAppReportSection";
 
 interface TechnologyPageProps {
   onBookDemo: () => void;
@@ -36,6 +37,9 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
       <main className="flex-1">
         {/* Technology Hero Section matching reference layout with video */}
         <TechnologyHeroSection />
+
+        {/* WhatsApp Performance Report Section matching exact design replica */}
+        <TechnologyWhatsAppReportSection />
       </main>
 
       {/* Cinematic Shared Footer */}
