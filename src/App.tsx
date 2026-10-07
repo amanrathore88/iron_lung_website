@@ -9,11 +9,10 @@ import { AboutSectionOverlay } from './components/sections/about/AboutSectionOve
 import { DashboardSectionOverlay } from './components/sections/dashboard/DashboardSectionOverlay';
 import { VideoModal } from './components/modals/VideoModal';
 import { TechnologyPage } from './pages/TechnologyPage';
-import { HowItWorksPage } from './pages/HowItWorksPage';
 import { BookDemoPage } from './pages/BookDemoPage';
 import { ContactPage } from './pages/ContactPage';
 
-export type AppView = 'home' | 'technology' | 'how-it-works' | 'book-demo' | 'contact';
+export type AppView = 'home' | 'technology' | 'book-demo' | 'contact';
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
@@ -24,9 +23,6 @@ export const App: React.FC = () => {
       const pathname = window.location.pathname.toLowerCase();
       if (hash.includes('technology') || pathname.includes('technology')) {
         return 'technology';
-      }
-      if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
-        return 'how-it-works';
       }
       if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         return 'book-demo';
@@ -54,8 +50,6 @@ export const App: React.FC = () => {
       const pathname = window.location.pathname.toLowerCase();
       if (hash.includes('technology') || pathname.includes('technology')) {
         setCurrentView('technology');
-      } else if (hash.includes('how-it-works') || pathname.includes('how-it-works') || hash.includes('features')) {
-        setCurrentView('how-it-works');
       } else if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         setCurrentView('book-demo');
       } else if (hash.includes('contact') || pathname.includes('contact')) {
@@ -455,20 +449,11 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
+  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => {
     if (section === 'technology') {
       if (currentView !== 'technology') {
         window.history.pushState(null, '', '#technology');
         setCurrentView('technology');
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    if (section === 'how-it-works') {
-      if (currentView !== 'how-it-works') {
-        window.history.pushState(null, '', '#how-it-works');
-        setCurrentView('how-it-works');
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
@@ -519,12 +504,6 @@ export const App: React.FC = () => {
     <div className="relative bg-white text-slate-900 font-sans select-none">
       {currentView === 'technology' ? (
         <TechnologyPage
-          onBookDemo={() => handleNavigation('book-demo')}
-          onContactUs={() => handleNavigation('contact')}
-          onNavigateSection={handleNavigation}
-        />
-      ) : currentView === 'how-it-works' ? (
-        <HowItWorksPage
           onBookDemo={() => handleNavigation('book-demo')}
           onContactUs={() => handleNavigation('contact')}
           onNavigateSection={handleNavigation}

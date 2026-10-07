@@ -84,7 +84,7 @@ export const AGENDA_STAGES = [
 
 interface BookDemoPageProps {
   onContactUs: () => void;
-  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
+  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => void;
 }
 
 export const BookDemoPage: React.FC<BookDemoPageProps> = ({
@@ -180,7 +180,7 @@ export const BookDemoPage: React.FC<BookDemoPageProps> = ({
     }
   };
 
-  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
+  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => {
     if (section === 'book-demo') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {

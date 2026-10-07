@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 interface HeroNavbarProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
+  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => void;
   activeSection?: string;
 }
 
@@ -43,14 +43,6 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
             }`}
           >
             Technology
-          </button>
-          <button
-            onClick={() => onNavigateSection?.('how-it-works')}
-            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'how-it-works' ? 'text-[#FF5E1E] font-bold' : ''
-            }`}
-          >
-            How It Works
           </button>
           <button
             onClick={() => onNavigateSection?.('about')}
@@ -127,17 +119,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
             >
               Technology
             </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onNavigateSection?.('how-it-works');
-              }}
-              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'how-it-works' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              How It Works
-            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
