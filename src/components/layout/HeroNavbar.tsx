@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 interface HeroNavbarProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => void;
+  onNavigateSection?: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
   activeSection?: string;
 }
 
@@ -37,12 +37,12 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
         {/* Center Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10 text-xs lg:text-sm font-semibold text-slate-800 whitespace-nowrap shrink">
           <button
-            onClick={() => onNavigateSection?.('technology')}
+            onClick={() => onNavigateSection?.('how-it-works')}
             className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
+              activeSection === 'how-it-works' || activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
             }`}
           >
-            Technology
+            How It Works
           </button>
           <button
             onClick={() => onNavigateSection?.('about')}
@@ -111,13 +111,13 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onNavigateSection?.('technology');
+                onNavigateSection?.('how-it-works');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'how-it-works' || activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
-              Technology
+              How It Works
             </button>
 
             <button

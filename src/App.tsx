@@ -21,7 +21,12 @@ export const App: React.FC = () => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
-      if (hash.includes('technology') || pathname.includes('technology')) {
+      if (
+        hash.includes('technology') ||
+        pathname.includes('technology') ||
+        hash.includes('how-it-works') ||
+        pathname.includes('how-it-works')
+      ) {
         return 'technology';
       }
       if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
@@ -48,7 +53,12 @@ export const App: React.FC = () => {
     const handlePopState = () => {
       const hash = window.location.hash.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
-      if (hash.includes('technology') || pathname.includes('technology')) {
+      if (
+        hash.includes('technology') ||
+        pathname.includes('technology') ||
+        hash.includes('how-it-works') ||
+        pathname.includes('how-it-works')
+      ) {
         setCurrentView('technology');
       } else if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         setCurrentView('book-demo');
@@ -449,10 +459,10 @@ export const App: React.FC = () => {
     }
   };
 
-  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => {
-    if (section === 'technology') {
+  const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
+    if (section === 'technology' || section === 'how-it-works') {
       if (currentView !== 'technology') {
-        window.history.pushState(null, '', '#technology');
+        window.history.pushState(null, '', '#how-it-works');
         setCurrentView('technology');
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });

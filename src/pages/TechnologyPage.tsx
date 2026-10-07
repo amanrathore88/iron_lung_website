@@ -10,7 +10,7 @@ import TechnologyCtaSection from "../components/sections/technology/TechnologyCt
 interface TechnologyPageProps {
   onBookDemo: () => void;
   onContactUs: () => void;
-  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => void;
+  onNavigateSection: (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => void;
 }
 
 export const TechnologyPage: React.FC<TechnologyPageProps> = ({
@@ -18,8 +18,8 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
   onContactUs,
   onNavigateSection,
 }) => {
-  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'book-demo' | 'contact' | 'technology') => {
-    if (section === 'technology' || section === 'screen') {
+  const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
+    if (section === 'technology' || section === 'how-it-works' || section === 'screen') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       onNavigateSection(section);
@@ -33,7 +33,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
         onBookDemo={onBookDemo}
         onContactUs={onContactUs}
         onNavigateSection={handleNavbarNavigate}
-        activeSection="technology"
+        activeSection="how-it-works"
       />
 
       <main className="flex-1">
