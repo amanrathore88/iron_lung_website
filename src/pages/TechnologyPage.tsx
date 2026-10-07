@@ -27,7 +27,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-[#ff6900]/20 relative">
+    <div className="bg-[#fcfaf7] text-foreground min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-[#ff6900]/20 relative">
       {/* Website's Existing Brand Navigation Bar */}
       <HeroNavbar
         onBookDemo={onBookDemo}

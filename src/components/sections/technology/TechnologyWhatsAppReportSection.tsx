@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const TechnologyWhatsAppReportSection: React.FC = () => {
   return (
-    <section className="w-full bg-white text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 overflow-hidden">
+    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 overflow-hidden">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-start">
           

@@ -14,7 +14,7 @@ export const TechnologyHeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full h-[100dvh] min-h-[500px] max-h-[1080px] flex flex-col justify-between bg-white text-neutral-900 select-none overflow-hidden pt-16 sm:pt-18 md:pt-20 lg:pt-22 pb-5 sm:pb-6 md:pb-8">
+    <section className="relative w-full h-[100dvh] min-h-[500px] max-h-[1080px] flex flex-col justify-between bg-[#fcfaf7] text-neutral-900 select-none overflow-hidden pt-16 sm:pt-18 md:pt-20 lg:pt-22 pb-5 sm:pb-6 md:pb-8">
       {/* ===================================================================== */}
       {/* 1. GIGANTIC "IRON LUNG" HEADLINE (MATCHING EXACT LARGE SCALE)          */}
       {/* ===================================================================== */}

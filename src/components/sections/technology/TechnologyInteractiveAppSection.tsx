@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const TechnologyInteractiveAppSection: React.FC = () => {
   return (
-    <section className="w-full bg-white text-neutral-900 py-16 sm:py-20 md:py-24 lg:py-28 selection:bg-[#FF5500]/20 overflow-hidden relative">
+    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-16 sm:py-20 md:py-24 lg:py-28 selection:bg-[#FF5500]/20 overflow-hidden relative">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto flex flex-col items-center">
         
         {/* ===================================================================== */}
