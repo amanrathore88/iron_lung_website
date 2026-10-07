@@ -5,6 +5,7 @@ import Footer from "../components/layout/Footer";
 import TechnologyHeroSection from "../components/sections/technology/TechnologyHeroSection";
 import TechnologyWhatsAppReportSection from "../components/sections/technology/TechnologyWhatsAppReportSection";
 import TechnologyInteractiveAppSection from "../components/sections/technology/TechnologyInteractiveAppSection";
+import TechnologyCtaSection from "../components/sections/technology/TechnologyCtaSection";
 
 interface TechnologyPageProps {
   onBookDemo: () => void;
@@ -44,6 +45,12 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
 
         {/* Interactive App for Users & Admins Section matching exact design replica */}
         <TechnologyInteractiveAppSection />
+
+        {/* Ready to Begin Your Respiratory Training CTA Section */}
+        <TechnologyCtaSection
+          onBookDemo={onBookDemo}
+          onContactUs={onContactUs}
+        />
       </main>
 
       {/* Cinematic Shared Footer */}
