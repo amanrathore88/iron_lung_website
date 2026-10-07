@@ -3,6 +3,7 @@ import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 import AboutHeroSection from "../components/sections/about/AboutHeroSection";
 import AboutPillarsSection from "../components/sections/about/AboutPillarsSection";
+import AboutTeamSection from "../components/sections/about/AboutTeamSection";
 
 interface AboutPageProps {
   onBookDemo: () => void;
@@ -39,6 +40,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
 
         {/* Pillars Section: MORE OXYGEN | MORE LIFE matching reference */}
         <AboutPillarsSection />
+
+        {/* Our Team Section matching reference */}
+        <AboutTeamSection onEmailClick={() => onContactUs()} />
       </main>
 
       {/* Cinematic Shared Footer */}
