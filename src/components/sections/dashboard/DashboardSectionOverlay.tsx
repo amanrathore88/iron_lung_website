@@ -1070,7 +1070,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       {/* (Slides up from bottom as Desktop zooms out, then animates pointers)  */}
       {/* ===================================================================== */}
       <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-3 sm:px-6 md:px-10 pt-[56px] sm:pt-16 md:pt-20 pb-2 sm:pb-4"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-[15] px-3 sm:px-6 md:px-10 pt-[58px] sm:pt-16 md:pt-20 pb-2 sm:pb-4"
         style={{
           opacity: phoneOpacity,
           pointerEvents: phoneEase >= 0.85 ? 'auto' : 'none',
@@ -1078,83 +1078,77 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       >
         {/* ================================================================= */}
         {/* MOBILE PORTRAIT LAYOUT FOR PHONE COMPANION APP VIEW (< 768px)     */}
+        {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-0.5"
+          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2"
           style={{
             transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
           }}
         >
-          {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-1.5 px-2">
-            <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1">
-              <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
-                MOBILE COMPANION APP
-              </span>
+          {/* TOP SECTION: Kicker, Headline, Subtitle + Top 2 Cards (Grouped Together) */}
+          <div className="w-full flex flex-col items-center shrink-0 z-20">
+            {/* Kicker, 2-Line Headline & Subtitle */}
+            <div className="flex flex-col items-center text-center pb-2 px-2">
+              <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white border border-[#FF5500]/50 shadow-[0_2px_8px_rgba(255,85,0,0.06)] mb-1.5">
+                <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.16em] text-[#FF5500] uppercase">
+                  MOBILE COMPANION APP
+                </span>
+              </div>
+              <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.08] text-[#0A1118]">
+                Session Reports
+                <span className="block text-[#FF4800]">On The Go</span>
+              </h3>
+              <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.32] max-w-[310px] mt-1">
+                Track your progress, analyse your sessions and stay motivated — anytime, anywhere.
+              </p>
             </div>
-            <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
-              Session Reports
-              <span className="block text-[#FF4800]">On The Go</span>
-            </h3>
-            <p className="text-[10.5px] xs:text-[11.5px] text-[#5A6578] font-normal leading-[1.35] max-w-[295px] mt-0.5">
-              Track your progress, analyse your sessions and stay motivated — anytime, anywhere.
-            </p>
+
+            {/* Top 2 Callout Cards (Session Details & Training Performance) */}
+            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
+              {/* Top-Left Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <SessionDocIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    SESSION
+                    <br />
+                    DETAILS
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    View the date, time and status of your training session at a glance.
+                  </p>
+                </div>
+              </div>
+
+              {/* Top-Right Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <SolidBarChartIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    TRAINING
+                    <br />
+                    PERFORMANCE
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    Check session duration, achieved volume and target completion live.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Top 2 Callout Cards (Session Details & Training Performance) */}
-          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
-            {/* Top-Left Card */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
-            >
-              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <SessionDocIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
-                  SESSION
-                  <br />
-                  DETAILS
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
-                  View the date, time and status of your training session at a glance.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Top-Right Card */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
-            >
-              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <SolidBarChartIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
-                  TRAINING
-                  <br />
-                  PERFORMANCE
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
-                  Check session duration, achieved volume and target completion live.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Center Large Phone Mockup + Concentric Warm Halo Rings + SVG Pointer Lines & Target Dots */}
-          <div className="relative w-full aspect-[360/242] flex items-center justify-center my-0 shrink-0">
+          {/* CENTER SECTION: Prominent Phone Mockup + Concentric Halo Rings + SVG Pointer Lines & Target Dots */}
+          <div className="flex-1 w-full min-h-[220px] max-h-[420px] xs:max-h-[460px] relative flex items-center justify-center my-1 shrink min-w-0">
             {/* Ambient Warm Theme-Orange Backlight Glow behind Phone */}
             <div
-              className="absolute inset-x-[18%] inset-y-[6%] rounded-full pointer-events-none -z-10"
+              className="absolute inset-x-[16%] inset-y-[8%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
                   'radial-gradient(circle at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 54%, transparent 76%)',
@@ -1163,9 +1157,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               }}
             />
 
-            {/* Warm Elliptical Floor Shadow/Glow beneath the Phone */}
+            {/* Warm Elliptical Floor Shadow beneath Phone */}
             <div
-              className="absolute left-[26%] right-[26%] bottom-[1%] h-[5%] rounded-full pointer-events-none -z-10"
+              className="absolute left-[24%] right-[24%] bottom-[2%] h-[6%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
                   'radial-gradient(ellipse at center, rgba(235, 85, 15, 0.34) 0%, rgba(255, 105, 0, 0.12) 54%, transparent 78%)',
@@ -1174,214 +1168,165 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               }}
             />
 
-            {/* Centered Phone Mockup (Prominent & balanced on mobile) */}
-            <div
-              className="absolute z-10"
-              style={{
-                left: '25%',
-                top: '2.5%',
-                width: '50%',
-                height: '95%',
-              }}
-            >
+            {/* Centered Phone Mockup (Fills available center height) */}
+            <div className="relative z-10 h-full max-h-[96%] aspect-[9/18.8] flex items-center justify-center">
               <img
                 src="/images/dashboard/phone-mockup.png"
                 alt="Iron Lung Mobile App Session Report Mockup"
-                className="w-full h-full object-contain block select-none pointer-events-none"
-                style={{
-                  filter:
-                    'drop-shadow(0 20px 34px rgba(0, 0, 0, 0.18)) drop-shadow(0 6px 14px rgba(255, 105, 0, 0.12))',
-                }}
+                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_16px_30px_rgba(0,0,0,0.18)] drop-shadow-[0_4px_12px_rgba(255,105,0,0.12)]"
               />
             </div>
 
-            {/* SVG Concentric Warm Radar Rings behind Phone (viewBox 0 0 360 288) */}
+            {/* SVG Concentric Warm Radar Rings behind Phone (viewBox 0 0 360 280) */}
             <svg
-              viewBox="0 0 360 288"
+              viewBox="0 0 360 280"
               preserveAspectRatio="none"
               className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
             >
-              <motion.circle
+              <circle
                 cx="180"
-                cy="144"
-                r="88"
+                cy="140"
+                r="82"
                 fill="rgba(255, 206, 172, 0.28)"
                 stroke="rgba(255, 95, 20, 0.14)"
                 strokeWidth="1"
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.85, opacity: 0 }}
-                transition={{ duration: 0.55, delay: 0.02, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 144px' }}
               />
-              <motion.circle
+              <circle
                 cx="180"
-                cy="144"
-                r="116"
-                fill="rgba(255, 220, 194, 0.22)"
+                cy="140"
+                r="114"
+                fill="rgba(255, 220, 194, 0.20)"
                 stroke="rgba(255, 95, 20, 0.12)"
                 strokeWidth="1"
-                initial={{ scale: 0.85, opacity: 0 }}
-                animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.85, opacity: 0 }}
-                transition={{ duration: 0.6, delay: 0.07, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 144px' }}
               />
-              <motion.circle
+              <circle
                 cx="180"
-                cy="144"
+                cy="140"
                 r="142"
-                fill="rgba(255, 232, 214, 0.16)"
+                fill="rgba(255, 232, 214, 0.14)"
                 stroke="rgba(255, 95, 20, 0.22)"
                 strokeWidth="1.1"
                 strokeDasharray="4 5"
-                initial={{ scale: 0.88, opacity: 0 }}
-                animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0.88, opacity: 0 }}
-                transition={{ duration: 0.65, delay: 0.12, ease: 'easeOut' }}
-                style={{ transformOrigin: '180px 144px' }}
               />
             </svg>
 
-            {/* SVG Foreground Pointer Lines & Target Dots (viewBox 0 0 360 288) */}
+            {/* SVG Foreground Pointer Lines & Target Dots matching reference (viewBox 0 0 360 280) */}
             <svg
-              viewBox="0 0 360 288"
+              viewBox="0 0 360 280"
               preserveAspectRatio="none"
               className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
             >
-              {/* 1. Top-Left Connector: from left phone bezel (114, 66) up-left to bottom of Card 1 (46, 0) */}
-              <motion.path
-                d="M 114 66 L 46 32 L 46 0"
+              {/* 1. Top-Left Connector: from bottom of Card 1 (46, 0) down to (46, 32) then to dot at (90, 75) */}
+              <path
+                d="M 46 0 L 46 32 L 90 75"
                 fill="none"
                 stroke="#FF4800"
-                strokeWidth="1.8"
+                strokeWidth="1.6"
+                strokeDasharray="4 4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.06, ease: 'easeOut' }}
               />
-              {/* 2. Top-Right Connector: from right phone screen (226, 100) up-right to bottom of Card 2 (314, 0) */}
-              <motion.path
-                d="M 226 100 L 314 36 L 314 0"
+              {/* 2. Top-Right Connector: from bottom of Card 2 (314, 0) down to (314, 32) then to dot at (270, 75) */}
+              <path
+                d="M 314 0 L 314 32 L 270 75"
                 fill="none"
                 stroke="#FF4800"
-                strokeWidth="1.8"
+                strokeWidth="1.6"
+                strokeDasharray="4 4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.12, ease: 'easeOut' }}
               />
-              {/* 3. Bottom-Left Connector: from lower-left lungs card (136, 196) down-left to top of Card 3 (46, 288) */}
-              <motion.path
-                d="M 136 196 L 46 246 L 46 288"
+              {/* 3. Bottom-Left Connector: from dot at (90, 205) to (46, 248) then down to top of Card 3 (46, 280) */}
+              <path
+                d="M 90 205 L 46 248 L 46 280"
                 fill="none"
                 stroke="#FF4800"
-                strokeWidth="1.8"
+                strokeWidth="1.6"
+                strokeDasharray="4 4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.18, ease: 'easeOut' }}
               />
-              {/* 4. Bottom-Right Connector: from right phone edge (245, 182) down-right to top of Card 4 (314, 288) */}
-              <motion.path
-                d="M 245 182 L 314 238 L 314 288"
+              {/* 4. Bottom-Right Connector: from dot at (270, 205) to (314, 248) then down to top of Card 4 (314, 280) */}
+              <path
+                d="M 270 205 L 314 248 L 314 280"
                 fill="none"
                 stroke="#FF4800"
-                strokeWidth="1.8"
+                strokeWidth="1.6"
+                strokeDasharray="4 4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePhonePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.24, ease: 'easeOut' }}
               />
 
-              {/* Pulsing Target Dots on Phone Screen & Bezel */}
+              {/* Pulsing Target Dots on Phone Screen & Bezel matching reference */}
               {[
-                { cx: 114, cy: 66, delay: 0.02 },
-                { cx: 226, cy: 100, delay: 0.08 },
-                { cx: 136, cy: 196, delay: 0.14 },
-                { cx: 244, cy: 260, delay: 0.20 },
+                { cx: 90, cy: 75, delay: 0.02 },
+                { cx: 270, cy: 75, delay: 0.08 },
+                { cx: 90, cy: 205, delay: 0.14 },
+                { cx: 270, cy: 205, delay: 0.20 },
               ].map((dot, idx) => (
                 <g key={idx}>
-                  {arePhonePointersActive && (
-                    <motion.circle
-                      cx={dot.cx}
-                      cy={dot.cy}
-                      r="7"
-                      fill="none"
-                      stroke="#FF4800"
-                      strokeWidth="1.5"
-                      initial={{ r: 6.5, opacity: 0.75 }}
-                      animate={{ r: 14, opacity: 0 }}
-                      transition={{
-                        duration: 1.8,
-                        repeat: Infinity,
-                        delay: dot.delay + 0.3,
-                        ease: 'easeOut',
-                      }}
-                    />
-                  )}
-                  <motion.g
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={arePhonePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 380, damping: 16, delay: dot.delay }}
-                    style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
-                  >
-                    <circle cx={dot.cx} cy={dot.cy} r="6.8" fill="#FF4800" />
-                    <circle cx={dot.cx} cy={dot.cy} r="3.2" fill="#FFFFFF" />
-                  </motion.g>
+                  <motion.circle
+                    cx={dot.cx}
+                    cy={dot.cy}
+                    r="6.5"
+                    fill="none"
+                    stroke="#FF4800"
+                    strokeWidth="1.5"
+                    initial={{ r: 6.5, opacity: 0.75 }}
+                    animate={{ r: 13, opacity: 0 }}
+                    transition={{
+                      duration: 1.8,
+                      repeat: Infinity,
+                      delay: dot.delay + 0.3,
+                      ease: 'easeOut',
+                    }}
+                  />
+                  <g>
+                    <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
+                    <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
+                  </g>
                 </g>
               ))}
             </svg>
           </div>
 
-          {/* Bottom 2 Callout Cards (Visual Breathing Feedback & Save Your Progress) */}
-          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
+          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Grouped at Bottom) */}
+          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20 pb-0.5">
             {/* Bottom-Left Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
-            >
-              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+            <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
                 <LungsHealthIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
                   VISUAL BREATHING
                   <br />
                   FEEDBACK
                 </h4>
                 <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
+                <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
                   See your breathing pattern with clear visual insights and real-time feedback.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
             {/* Bottom-Right Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={arePhonePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white p-2 xs:p-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-start gap-2"
-            >
-              <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
+            <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
                 <SaveReportDownloadIcon />
               </div>
               <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#FF4800] font-extrabold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.01em] leading-[1.16]">
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
                   SAVE YOUR
                   <br />
                   PROGRESS
                 </h4>
                 <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#334155] text-[8.8px] xs:text-[9.5px] leading-[1.3] font-normal">
+                <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
                   All your session data is saved securely so you can track your improvement over time.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
