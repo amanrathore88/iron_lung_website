@@ -9,10 +9,11 @@ import { AboutSectionOverlay } from './components/sections/about/AboutSectionOve
 import { DashboardSectionOverlay } from './components/sections/dashboard/DashboardSectionOverlay';
 import { VideoModal } from './components/modals/VideoModal';
 import { TechnologyPage } from './pages/TechnologyPage';
+import { AboutPage } from './pages/AboutPage';
 import { BookDemoPage } from './pages/BookDemoPage';
 import { ContactPage } from './pages/ContactPage';
 
-export type AppView = 'home' | 'technology' | 'book-demo' | 'contact';
+export type AppView = 'home' | 'technology' | 'about' | 'book-demo' | 'contact';
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
@@ -28,6 +29,9 @@ export const App: React.FC = () => {
         pathname.includes('how-it-works')
       ) {
         return 'technology';
+      }
+      if (hash.includes('about') || pathname.includes('about')) {
+        return 'about';
       }
       if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         return 'book-demo';
@@ -60,6 +64,8 @@ export const App: React.FC = () => {
         pathname.includes('how-it-works')
       ) {
         setCurrentView('technology');
+      } else if (hash.includes('about') || pathname.includes('about')) {
+        setCurrentView('about');
       } else if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
         setCurrentView('book-demo');
       } else if (hash.includes('contact') || pathname.includes('contact')) {
@@ -469,6 +475,15 @@ export const App: React.FC = () => {
       return;
     }
 
+    if (section === 'about') {
+      if (currentView !== 'about') {
+        window.history.pushState(null, '', '#about');
+        setCurrentView('about');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     if (section === 'book-demo') {
       if (currentView !== 'book-demo') {
         window.history.pushState(null, '', '#book-demo');
@@ -496,7 +511,6 @@ export const App: React.FC = () => {
         else if (section === 'screen') scrollToStage('screen');
         else if (section === 'uv') scrollToStage('uv');
         else if (section === 'comfort') scrollToStage('comfort');
-        else if (section === 'about') scrollToStage('about');
         else if (section === 'dashboard') scrollToStage('dashboard');
       }, 60);
       return;
@@ -506,7 +520,6 @@ export const App: React.FC = () => {
     else if (section === 'screen') scrollToStage('screen');
     else if (section === 'uv') scrollToStage('uv');
     else if (section === 'comfort') scrollToStage('comfort');
-    else if (section === 'about') scrollToStage('about');
     else if (section === 'dashboard') scrollToStage('dashboard');
   };
 
@@ -514,6 +527,12 @@ export const App: React.FC = () => {
     <div className="relative bg-white text-slate-900 font-sans select-none">
       {currentView === 'technology' ? (
         <TechnologyPage
+          onBookDemo={() => handleNavigation('book-demo')}
+          onContactUs={() => handleNavigation('contact')}
+          onNavigateSection={handleNavigation}
+        />
+      ) : currentView === 'about' ? (
+        <AboutPage
           onBookDemo={() => handleNavigation('book-demo')}
           onContactUs={() => handleNavigation('contact')}
           onNavigateSection={handleNavigation}
