@@ -2,6 +2,7 @@ import React from "react";
 import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 import AboutHeroSection from "../components/sections/about/AboutHeroSection";
+import AboutPillarsSection from "../components/sections/about/AboutPillarsSection";
 
 interface AboutPageProps {
   onBookDemo: () => void;
@@ -35,6 +36,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       <main className="flex-1">
         {/* Dedicated About Hero Section matching reference */}
         <AboutHeroSection onExplore={() => onNavigateSection('how-it-works')} />
+
+        {/* Pillars Section: MORE OXYGEN | MORE LIFE matching reference */}
+        <AboutPillarsSection />
       </main>
 
       {/* Cinematic Shared Footer */}
