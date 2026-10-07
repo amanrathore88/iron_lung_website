@@ -182,6 +182,8 @@ export const App: React.FC = () => {
 
     let ticking = false;
     let lastRawProgress = scrollProgressRef.current;
+    let stableMobileH = typeof window !== 'undefined' ? window.innerHeight : 844;
+    let stableMobileW = typeof window !== 'undefined' ? window.innerWidth : 390;
 
     const handleScroll = () => {
       if (isSnapAnimatingRef.current) return;
@@ -196,7 +198,16 @@ export const App: React.FC = () => {
           const track = scrollyTrackRef.current;
           if (track) {
             const trackTop = track.offsetTop;
-            const trackSpan = track.offsetHeight - window.innerHeight;
+            // On mobile, keep trackSpan stable against browser address bar expand/collapse
+            if (window.innerWidth < 768) {
+              if (Math.abs(window.innerWidth - stableMobileW) > 30) {
+                stableMobileW = window.innerWidth;
+                stableMobileH = window.innerHeight;
+              }
+            } else {
+              stableMobileH = window.innerHeight;
+            }
+            const trackSpan = track.offsetHeight - stableMobileH;
             if (trackSpan > 0) {
               const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
 
@@ -569,8 +580,8 @@ export const App: React.FC = () => {
 
           {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
-            {/* Sticky 100dvh Viewport Pin (dynamically adapts to mobile browser URL bar) */}
-            <div className={`sticky top-0 h-[100dvh] w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
+            {/* Sticky 100svh Viewport Pin (stable on mobile across browser URL bar show/hide) */}
+            <div className={`sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}
               <StudioRoomBackground scrollProgress={scrollProgress} />
 

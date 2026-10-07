@@ -143,7 +143,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   });
 
   useEffect(() => {
+    let lastWidth = typeof window !== 'undefined' ? window.innerWidth : 1440;
     const handleResize = () => {
+      if (typeof window !== 'undefined' && window.innerWidth < 768 && Math.abs(window.innerWidth - lastWidth) < 20) {
+        return;
+      }
+      lastWidth = window.innerWidth;
       setWindowDimensions({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -461,9 +466,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-2 px-1 xs:px-2 relative"
+          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           style={{
-            transform: `scale(${desktopScale})`,
             filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
@@ -548,7 +552,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             />
 
             {/* Monitor Mockup Wrapper with Synchronized SVG Overlay */}
-            <div className="relative z-10 w-[92%] max-w-[360px] aspect-[360/240] flex items-center justify-center">
+            <div
+              className="relative z-10 w-[92%] max-w-[360px] aspect-[360/240] flex items-center justify-center will-change-transform"
+              style={{
+                transform: phoneEase > 0.02 ? `scale(${1 - 0.25 * phoneEase})` : undefined,
+              }}
+            >
               <img
                 src="/images/dashboard/desktop-mockup.png"
                 alt="Iron Lung User Dashboard Desktop Mockup"
