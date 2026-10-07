@@ -27,14 +27,14 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore })
               <span className="text-[#FF5500] font-medium">healthier tomorrow</span>.
             </motion.p>
 
-            {/* 2. GIANT CONDENSED 4-LINE HEADLINE (EXACT SPLIT & COLORS) */}
+            {/* 2. GIANT CONDENSED 4-LINE HEADLINE (SHIFTED DOWN & SLIGHTLY LARGER) */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="my-8 sm:my-10 lg:my-0 select-none"
+              className="mt-8 mb-6 sm:mt-10 sm:mb-8 lg:mt-12 lg:mb-8 select-none"
             >
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[76px] xl:text-[88px] 2xl:text-[98px] font-black font-sans uppercase tracking-[-0.035em] leading-[0.92]">
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[84px] xl:text-[96px] 2xl:text-[108px] font-black font-sans uppercase tracking-[-0.035em] leading-[0.91]">
                 <span className="block text-[#FF5500]">THE</span>
                 <span className="block text-[#FF5500]">POWER</span>
                 <span className="block text-[#0B0F19]">OF EVERY</span>
