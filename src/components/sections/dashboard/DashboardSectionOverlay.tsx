@@ -458,184 +458,163 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       >
         {/* ================================================================= */}
         {/* MOBILE PORTRAIT LAYOUT FOR DESKTOP DASHBOARD VIEW (< 768px)       */}
+        {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col items-center justify-center w-full max-w-[400px] h-full mx-auto will-change-transform py-0.5"
+          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-2 px-1 xs:px-2 relative"
           style={{
             transform: `scale(${desktopScale})`,
             filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
-          {/* Top Kicker, 2-Line Headline & Subtitle */}
-          <div className="flex flex-col items-center text-center shrink-0 mb-0.5 -translate-y-8 xs:-translate-y-10 sm:-translate-y-11 px-2">
-            <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white/95 border border-[#FF5500]/40 shadow-[0_2px_10px_rgba(255,85,0,0.06)] mb-1.5">
-              <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-[0.18em] text-[#FF5500] uppercase">
-                DESKTOP WEB PORTAL
-              </span>
+          {/* TOP SECTION: Kicker, Headline, Subtitle, Indicators + Top 2 Cards */}
+          <div className="w-full flex flex-col items-center shrink-0 z-20">
+            {/* Kicker, 2-Line Headline & Subtitle */}
+            <div className="flex flex-col items-center text-center pb-1.5 px-2">
+              <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white border border-[#FF5500]/50 shadow-[0_2px_8px_rgba(255,85,0,0.06)] mb-1.5">
+                <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.16em] text-[#FF5500] uppercase">
+                  DESKTOP WEB PORTAL
+                </span>
+              </div>
+              <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.08] text-[#0A1118]">
+                Personalised
+                <span className="block text-[#FF4800]">Command Center</span>
+              </h3>
+              <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.32] max-w-[310px] mt-1">
+                A powerful desktop portal to track, understand and improve your respiratory performance.
+              </p>
+              {/* Dual accent indicators matching reference */}
+              <div className="flex items-center justify-center gap-1.5 mt-2">
+                <div className="w-5 h-[2.5px] bg-[#FF4800] rounded-full" />
+                <div className="w-5 h-[2.5px] bg-[#FFD8BE] rounded-full" />
+              </div>
             </div>
-            <h3 className="text-[23px] xs:text-[26px] font-black tracking-[-0.03em] leading-[1.06] text-[#0A1118]">
-              Personalised
-              <span className="block text-[#FF4800]">Command Center</span>
-            </h3>
-            <p className="text-[11px] xs:text-[11.5px] text-[#5A6578] font-normal leading-[1.38] max-w-[300px] mt-1">
-              A powerful desktop portal to track, understand and improve your respiratory performance.
-            </p>
+
+            {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
+            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full mt-1.5">
+              {/* Top-Left Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <GridDashboardIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    PERSONALISED
+                    <br />
+                    <span className="text-[#FF4800]">DASHBOARD</span>
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    Get a complete view of your lung health and progress.
+                  </p>
+                </div>
+              </div>
+
+              {/* Top-Right Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <LungsHealthIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    REAL-TIME
+                    <br />
+                    <span className="text-[#FF4800]">LUNG METRICS</span>
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    Monitor your respiratory data instantly.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
-          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
-            {/* Top-Left Card */}
-            <motion.div
-              initial={{ opacity: 0, y: -32 }}
-              animate={arePointersActive ? { opacity: 1, y: -20 } : { opacity: 0, y: -32 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.18 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
-            >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <GridDashboardIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
-                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
-                  PERSONALISED
-                  <br />
-                  DASHBOARD
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
-              </div>
-            </motion.div>
-
-            {/* Top-Right Card */}
-            <motion.div
-              initial={{ opacity: 0, y: -12 }}
-              animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.24 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
-            >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <LungsHealthIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
-                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
-                  REAL-TIME
-                  <br />
-                  LUNG METRICS
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Center Large Desktop Monitor + Concentric Warm Halo + Bezel/Chin Connectors */}
-          <div className="relative w-full aspect-[360/228] flex items-center justify-center my-0 shrink-0">
-            {/* Concentric Soft Warm Peach Circles behind Monitor (Matches Reference) */}
-            <div className="absolute w-[84%] aspect-square rounded-full bg-[#FFE6D4]/45 border border-[#FF5500]/[0.06] pointer-events-none -z-10 flex items-center justify-center">
-              <div className="w-[76%] aspect-square rounded-full bg-[#FFD8BE]/40" />
+          {/* CENTER SECTION: Desktop Monitor + Halo + Bezel/Chin Connectors */}
+          <div className="flex-1 w-full min-h-[220px] max-h-[400px] xs:max-h-[440px] relative flex items-center justify-center my-0.5 shrink min-w-0">
+            {/* Concentric Soft Warm Peach Disk behind Monitor (Matches Reference) */}
+            <div className="absolute w-[92%] aspect-square rounded-full bg-[#FFE7D6]/50 border border-[#FF5500]/[0.08] pointer-events-none -z-10 flex items-center justify-center">
+              <div className="w-[80%] aspect-square rounded-full bg-[#FFDEC9]/40" />
             </div>
 
             {/* Ambient Warm Theme-Orange Backlight Glow behind Monitor */}
             <div
-              className="absolute inset-x-[10%] inset-y-[14%] rounded-[2rem] pointer-events-none -z-10"
+              className="absolute inset-x-[10%] inset-y-[10%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.24) 0%, rgba(255, 105, 0, 0.08) 56%, transparent 76%)',
-                filter: 'blur(24px)',
+                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.26) 0%, rgba(255, 105, 0, 0.08) 56%, transparent 74%)',
+                filter: 'blur(22px)',
               }}
             />
 
-            {/* Monitor Image (Centered in 360x248 stage) */}
-            <div
-              className="absolute z-10"
-              style={{
-                left: '9%',
-                top: '11%',
-                width: '82%',
-                height: '85%',
-              }}
-            >
+            {/* Monitor Mockup Wrapper with Synchronized SVG Overlay */}
+            <div className="relative z-10 w-[92%] max-w-[360px] aspect-[360/240] flex items-center justify-center">
               <img
                 src="/images/dashboard/desktop-mockup.png"
                 alt="Iron Lung User Dashboard Desktop Mockup"
-                className="w-full h-full object-contain block select-none pointer-events-none"
-                style={{
-                  filter:
-                    'drop-shadow(0 18px 32px rgba(0, 0, 0, 0.16)) drop-shadow(0 6px 14px rgba(255, 105, 0, 0.10))',
-                }}
-              />
-            </div>
-
-            {/* SVG Pointer Lines & Target Dots on Monitor Bezel/Chin (viewBox 0 0 360 248) */}
-            <svg
-              viewBox="0 0 360 248"
-              preserveAspectRatio="none"
-              className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
-            >
-              {/* 1. Top-Left Connector: from top-left sidebar (50, 55) up-left to bottom of Card 1 (36, -20) */}
-              <motion.path
-                d="M 50 55 L 36 35 L 36 -20"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.06, ease: 'easeOut' }}
-              />
-              {/* 2. Top-Right Connector: from right bezel (318, 62) up-right to bottom of Card 2 (330, 0) */}
-              <motion.path
-                d="M 318 62 L 330 42 L 330 0"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.12, ease: 'easeOut' }}
-              />
-              {/* 3. Bottom-Left Connector: from bottom-left chin (52, 194) down-left to top of Card 3 (36, 248) */}
-              <motion.path
-                d="M 52 194 L 52 208 L 36 226 L 36 248"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.18, ease: 'easeOut' }}
-              />
-              {/* 4. Bottom-Right Connector: from bottom-right chin (310, 194) down-right to top of Card 4 (326, 268) */}
-              <motion.path
-                d="M 310 194 L 310 208 L 326 226 L 326 268"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={arePointersActive ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-                transition={{ duration: 0.48, delay: 0.24, ease: 'easeOut' }}
+                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_16px_32px_rgba(0,0,0,0.16)] drop-shadow-[0_6px_14px_rgba(255,105,0,0.10)]"
               />
 
-              {/* Pulsing Target Circles at Monitor Bezel & Chin */}
-              {[
-                { cx: 50, cy: 55, delay: 0.02 },
-                { cx: 318, cy: 62, delay: 0.08 },
-                { cx: 52, cy: 194, delay: 0.14 },
-                { cx: 310, cy: 194, delay: 0.20 },
-              ].map((dot, idx) => (
-                <g key={idx}>
-                  {arePointersActive && (
+              {/* SVG Foreground Pointer Lines & Target Dots locked to monitor coordinates (viewBox 0 0 360 240) */}
+              <svg
+                viewBox="0 0 360 240"
+                preserveAspectRatio="none"
+                className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
+              >
+                {/* 1. Top-Left Connector: from bottom of Card 1 down to (12, 0) then to dot at (22, 18) */}
+                <path
+                  d="M 12 -28 L 12 0 L 22 18"
+                  fill="none"
+                  stroke="#FF4800"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* 2. Top-Right Connector: from bottom of Card 2 down to (348, 0) then to dot at (338, 18) */}
+                <path
+                  d="M 348 -28 L 348 0 L 338 18"
+                  fill="none"
+                  stroke="#FF4800"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* 3. Bottom-Left Connector: from dot at (22, 186) to (12, 204) then down to top of Card 3 */}
+                <path
+                  d="M 22 186 L 12 204 L 12 268"
+                  fill="none"
+                  stroke="#FF4800"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* 4. Bottom-Right Connector: from dot at (338, 186) to (348, 204) then down to top of Card 4 */}
+                <path
+                  d="M 338 186 L 348 204 L 348 268"
+                  fill="none"
+                  stroke="#FF4800"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+
+                {/* Pulsing Target Dots on Monitor Bezel Corners matching reference */}
+                {[
+                  { cx: 22, cy: 18, delay: 0.02 },
+                  { cx: 338, cy: 18, delay: 0.08 },
+                  { cx: 22, cy: 186, delay: 0.14 },
+                  { cx: 338, cy: 186, delay: 0.20 },
+                ].map((dot, idx) => (
+                  <g key={idx}>
                     <motion.circle
                       cx={dot.cx}
                       cy={dot.cy}
-                      r="7"
+                      r="6.5"
                       fill="none"
                       stroke="#FF4800"
                       strokeWidth="1.5"
                       initial={{ r: 6.5, opacity: 0.75 }}
-                      animate={{ r: 14, opacity: 0 }}
+                      animate={{ r: 13, opacity: 0 }}
                       transition={{
                         duration: 1.8,
                         repeat: Infinity,
@@ -643,62 +622,64 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                         ease: 'easeOut',
                       }}
                     />
-                  )}
-                  <motion.g
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={arePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                    transition={{ type: 'spring', stiffness: 380, damping: 16, delay: dot.delay }}
-                    style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
-                  >
-                    <circle cx={dot.cx} cy={dot.cy} r="6.8" fill="#FF4800" />
-                    <circle cx={dot.cx} cy={dot.cy} r="3.2" fill="#FFFFFF" />
-                  </motion.g>
-                </g>
-              ))}
-            </svg>
+                    <g>
+                      <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
+                      <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
+                    </g>
+                  </g>
+                ))}
+              </svg>
+            </div>
           </div>
 
-          {/* Bottom 2 Callout Cards (Track Your Lung Score & Train At Your Own Pace) */}
-          <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full shrink-0 z-20">
-            {/* Bottom-Left Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={arePointersActive ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.28 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
-            >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <BarChartScoreIcon />
+          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Grouped at Bottom) */}
+          <div className="w-full shrink-0 z-20 pb-1">
+            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
+              {/* Bottom-Left Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <BarChartScoreIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    TRACK YOUR
+                    <br />
+                    <span className="text-[#FF4800]">LUNG SCORE</span>
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    Visualize your progress and improvements over time.
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
-                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
-                  TRACK YOUR
-                  <br />
-                  LUNG SCORE
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
-              </div>
-            </motion.div>
 
-            {/* Bottom-Right Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              animate={arePointersActive ? { opacity: 1, y: 20 } : { opacity: 0, y: 32 }}
-              transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.34 }}
-              className="rounded-2xl bg-white/95 backdrop-blur-md border border-white px-2.5 py-2 xs:px-3 xs:py-2.5 shadow-[0_10px_28px_rgba(0,0,0,0.045)] flex items-center gap-2 xs:gap-2.5"
-            >
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FDF1E8] flex items-center justify-center shrink-0">
-                <BarChartScoreIcon />
+              {/* Bottom-Right Card */}
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+                  <BarChartScoreIcon />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col items-start">
+                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
+                    TRAIN AT
+                    <br />
+                    <span className="text-[#FF4800]">YOUR OWN PACE</span>
+                  </h4>
+                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
+                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
+                    Personalized workout plans for better respiratory health.
+                  </p>
+                </div>
               </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start justify-center">
-                <h4 className="text-[#FF4800] font-extrabold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2]">
-                  TRAIN AT
-                  <br />
-                  YOUR OWN PACE
-                </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1 rounded-full" />
-              </div>
-            </motion.div>
+            </div>
+          </div>
+
+          {/* Subtle Ambient Golden-Orange Flowing Waves at Bottom (Matches Reference) */}
+          <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none -z-10 overflow-hidden opacity-55">
+            <svg viewBox="0 0 458 120" preserveAspectRatio="none" className="w-full h-full">
+              <path d="M -40 70 C 80 130, 180 40, 280 100 C 370 155, 430 75, 500 90" fill="none" stroke="#FF7A30" strokeWidth="1.2" opacity="0.35" />
+              <path d="M -40 85 C 90 145, 190 55, 290 115 C 380 170, 440 90, 500 105" fill="none" stroke="#FF5500" strokeWidth="1" opacity="0.25" />
+              <path d="M -40 100 C 70 155, 170 70, 270 128 C 360 180, 420 105, 500 120" fill="none" stroke="#FFA060" strokeWidth="0.8" opacity="0.2" />
+            </svg>
           </div>
         </div>
 
