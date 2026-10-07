@@ -19,7 +19,7 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
   onNavigateSection,
 }) => {
   const handleNavbarNavigate = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
-    if (section === 'technology' || section === 'how-it-works' || section === 'screen') {
+    if (section === 'technology' || section === 'how-it-works') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       onNavigateSection(section);

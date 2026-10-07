@@ -37,9 +37,17 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
         {/* Center Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10 text-xs lg:text-sm font-semibold text-slate-800 whitespace-nowrap shrink">
           <button
+            onClick={() => onNavigateSection?.('hero')}
+            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'hero' || activeSection === 'home' ? 'text-[#FF5E1E] font-bold' : ''
+            }`}
+          >
+            Home
+          </button>
+          <button
             onClick={() => onNavigateSection?.('how-it-works')}
             className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'how-it-works' || activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-bold' : ''
+              activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#FF5E1E] font-bold' : ''
             }`}
           >
             How It Works
@@ -104,9 +112,11 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 setMobileMenuOpen(false);
                 onNavigateSection?.('hero');
               }}
-              className="text-left text-white/80 hover:text-white py-2.5 px-3 rounded-xl hover:bg-white/5 text-sm font-medium transition-colors cursor-pointer"
+              className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
+                activeSection === 'hero' || activeSection === 'home' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+              }`}
             >
-              Overview
+              Home
             </button>
             <button
               onClick={() => {
@@ -114,7 +124,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
                 onNavigateSection?.('how-it-works');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'how-it-works' || activeSection === 'technology' || activeSection === 'screen' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
               How It Works
