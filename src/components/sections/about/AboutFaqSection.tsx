@@ -47,17 +47,17 @@ export const AboutFaqSection: React.FC = () => {
           {/* ===================================================================== */}
           {/* LEFT COLUMN: FAQs HEADING & ANIMATED FAQ ACCORDION BOXES              */}
           {/* ===================================================================== */}
-          <div className="lg:col-span-6 flex flex-col justify-between h-full">
+          <div className="lg:col-span-6 flex flex-col justify-start">
             
-            {/* 1. FAQs Section Heading */}
+            {/* 1. FAQs Section Heading (Slightly larger, reduced spacing to boxes) */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="mb-6 sm:mb-8 md:mb-10"
+              className="mb-4 sm:mb-5 md:mb-6 lg:mb-7"
             >
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-black font-sans tracking-tight text-[#FF5500] select-none">
+              <h2 className="text-5xl sm:text-6xl md:text-[68px] lg:text-[76px] xl:text-[82px] font-black font-sans tracking-tight text-[#FF5500] leading-none select-none">
                 FAQs
               </h2>
             </motion.div>
