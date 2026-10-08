@@ -497,39 +497,29 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
             <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full mt-1.5">
               {/* Top-Left Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <GridDashboardIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    PERSONALISED
-                    <br />
-                    <span className="text-[#FF4800]">DASHBOARD</span>
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    Get a complete view of your lung health and progress.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                  PERSONALISED
+                  <br />
+                  <span className="text-[#FF4800]">DASHBOARD</span>
+                </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
 
               {/* Top-Right Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <LungsHealthIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    REAL-TIME
-                    <br />
-                    <span className="text-[#FF4800]">LUNG METRICS</span>
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    Monitor your respiratory data instantly.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                  REAL-TIME
+                  <br />
+                  <span className="text-[#FF4800]">LUNG METRICS</span>
+                </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </div>
           </div>
@@ -645,39 +635,29 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20 pb-1">
             <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
               {/* Bottom-Left Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    TRACK YOUR
-                    <br />
-                    <span className="text-[#FF4800]">LUNG SCORE</span>
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    Visualize your progress and improvements over time.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                  TRACK YOUR
+                  <br />
+                  <span className="text-[#FF4800]">LUNG SCORE</span>
+                </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
 
               {/* Bottom-Right Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    TRAIN AT
-                    <br />
-                    <span className="text-[#FF4800]">YOUR OWN PACE</span>
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    Personalized workout plans for better respiratory health.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                  TRAIN AT
+                  <br />
+                  <span className="text-[#FF4800]">YOUR OWN PACE</span>
+                </h4>
+                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
               </div>
             </div>
           </div>
