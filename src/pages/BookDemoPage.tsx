@@ -216,15 +216,15 @@ export const BookDemoPage: React.FC<BookDemoPageProps> = ({
           transition={{ duration: 0.45 }}
           className="text-center max-w-3xl 2xl:max-w-4xl mx-auto mb-10 sm:mb-12 2xl:mb-16"
         >
-          <div className="inline-flex items-center gap-2 py-1.5 px-3.5 sm:px-4 2xl:px-5 mb-4 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 text-[#ff6900] text-[11px] sm:text-xs 2xl:text-sm font-mono font-bold tracking-wider uppercase shadow-xs">
-            <span className="relative flex h-2 w-2">
+          <div className="inline-flex max-w-full items-center gap-1.5 xs:gap-2 py-1.5 px-3 xs:px-3.5 sm:px-4 2xl:px-5 mb-4 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 text-[#ff6900] text-[9.5px] xs:text-[11px] sm:text-xs 2xl:text-sm font-mono font-bold tracking-wider uppercase shadow-xs">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6900] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff6900]"></span>
             </span>
-            <span>DIRECT PRODUCT DEMONSTRATION · 1-ON-1 SESSIONS</span>
+            <span className="truncate xs:whitespace-normal">DIRECT PRODUCT DEMONSTRATION · 1-ON-1 SESSIONS</span>
           </div>
 
-          <div className="text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl font-black font-display tracking-tight text-foreground leading-[1.08] mb-3 sm:mb-4">
+          <div className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl font-black font-display tracking-tight text-foreground leading-[1.08] mb-3 sm:mb-4">
             <div className="flex justify-center">
               <KineticText text="See Iron Lung in action" as="h1" className="text-foreground tracking-tight" />
             </div>
@@ -710,7 +710,7 @@ export const BookDemoPage: React.FC<BookDemoPageProps> = ({
                       </div>
 
                       {/* Trust & Assurance Note */}
-                      <div className="pt-2 text-center text-[10.5px] font-mono text-muted-foreground/80 flex items-center justify-center gap-2">
+                      <div className="pt-2 text-center text-[10px] xs:text-[10.5px] font-mono text-muted-foreground/80 flex flex-wrap items-center justify-center gap-1.5 xs:gap-2">
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                         <span>Confidential Briefing · Dedicated Specialist · Instant Confirmation</span>
                       </div>

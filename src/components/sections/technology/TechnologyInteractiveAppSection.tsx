@@ -16,7 +16,7 @@ export const TechnologyInteractiveAppSection: React.FC = () => {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="text-center max-w-4xl mx-auto"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] font-black font-sans tracking-[-0.035em] leading-[1.08] select-none">
+          <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[68px] xl:text-[76px] font-black font-sans tracking-[-0.035em] leading-[1.08] select-none">
             <span className="block text-[#0F172A]">
               Interactive App for
             </span>
@@ -57,7 +57,7 @@ export const TechnologyInteractiveAppSection: React.FC = () => {
           transition={{ duration: 0.65, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 sm:mt-12 md:mt-14 lg:mt-16 text-center max-w-[840px] mx-auto px-4"
         >
-          <p className="font-sans font-normal text-[#334155] sm:text-[#475569] text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-[1.62] sm:leading-[1.68] tracking-[-0.01em] select-none">
+          <p className="font-sans font-normal text-[#334155] sm:text-[#475569] text-sm xs:text-base sm:text-lg md:text-[19px] lg:text-[20px] leading-[1.62] sm:leading-[1.68] tracking-[-0.01em] select-none">
             The interactive app makes it easy for users to follow their training and for admins to manage and monitor sessions. Users can view their training data, track progress and performance, admins can manage user profiles, and get easy access to all training information.
           </p>
         </motion.div>

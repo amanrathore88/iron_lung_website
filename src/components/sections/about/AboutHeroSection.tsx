@@ -34,7 +34,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore })
               transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="mt-8 mb-6 sm:mt-10 sm:mb-8 lg:mt-12 lg:mb-8 select-none"
             >
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[84px] xl:text-[96px] 2xl:text-[108px] font-black font-sans uppercase tracking-[-0.035em] leading-[0.91]">
+              <h1 className="text-[42px] xs:text-[50px] sm:text-7xl md:text-8xl lg:text-[84px] xl:text-[96px] 2xl:text-[108px] font-black font-sans uppercase tracking-[-0.035em] leading-[0.91]">
                 <span className="block text-[#FF5500]">THE</span>
                 <span className="block text-[#FF5500]">POWER</span>
                 <span className="block text-[#0B0F19]">OF EVERY</span>

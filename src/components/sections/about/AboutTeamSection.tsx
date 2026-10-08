@@ -41,12 +41,12 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-4 sm:space-y-5 text-neutral-900 font-bold font-sans text-sm sm:text-base md:text-[17px] tracking-wide uppercase select-none"
             >
-              <li className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-black shrink-0" />
+              <li className="flex items-start gap-2.5 sm:gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-black shrink-0 mt-1 sm:mt-1.5" />
                 <span>PRIYARANJAN TIWARI , FOUNDER</span>
               </li>
-              <li className="flex items-center gap-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-black shrink-0" />
+              <li className="flex items-start gap-2.5 sm:gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-black shrink-0 mt-1 sm:mt-1.5" />
                 <span>PARIKSHIT HOODA, CO FOUNDER</span>
               </li>
             </motion.ul>
@@ -62,7 +62,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               <a
                 href="mailto:info@ironlung.in"
                 onClick={onEmailClick}
-                className="inline-flex items-center justify-center px-10 py-3.5 bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98] select-none"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-3.5 bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98] select-none"
               >
                 <span>EMAIL ME</span>
               </a>

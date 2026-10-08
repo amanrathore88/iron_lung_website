@@ -45,12 +45,12 @@ export const AboutPillarsSection: React.FC = () => {
           className="max-w-4xl"
         >
           {/* Main Headline with Split Colors & Dual-Tone Divider Bar */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] xl:text-[64px] font-black font-sans tracking-[-0.03em] leading-none uppercase inline-flex flex-wrap items-center select-none">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[56px] xl:text-[64px] font-black font-sans tracking-[-0.03em] leading-none uppercase inline-flex flex-wrap items-center select-none">
             <span className="text-[#FF5500]">MORE OXYGEN</span>
             {/* Two-Tone Vertical Divider Accent Bar (|) */}
             <span
               aria-hidden="true"
-              className="inline-flex h-[0.82em] w-[7px] sm:w-[9px] md:w-[11px] rounded-xs overflow-hidden mx-2.5 sm:mx-3.5 md:mx-4.5 shrink-0 self-center"
+              className="inline-flex h-[0.82em] w-[6px] xs:w-[7px] sm:w-[9px] md:w-[11px] rounded-xs overflow-hidden mx-2 xs:mx-2.5 sm:mx-3.5 md:mx-4.5 shrink-0 self-center"
             >
               <span className="w-1/2 h-full bg-[#0F172A]" />
               <span className="w-1/2 h-full bg-[#FF5500]" />

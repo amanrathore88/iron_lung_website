@@ -199,15 +199,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             className="flex flex-col items-start"
           >
             {/* Live Incubation & Engineering Badge */}
-            <div className="inline-flex items-center gap-2.5 py-1.5 px-4 mb-4 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 text-[#ff6900] text-xs font-mono font-semibold tracking-wider uppercase">
-              <span className="relative flex h-2 w-2">
+            <div className="inline-flex max-w-full items-center gap-1.5 xs:gap-2.5 py-1.5 px-3 xs:px-4 mb-4 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 text-[#ff6900] text-[9.5px] xs:text-[11px] sm:text-xs font-mono font-semibold tracking-wider uppercase">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6900] opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff6900]" />
               </span>
-              Direct Engineering & Deployment Desk
+              <span className="truncate xs:whitespace-normal">Direct Engineering & Deployment Desk</span>
             </div>
 
-            <div className="text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl font-black font-display tracking-tight text-foreground leading-[1.08] mb-4">
+            <div className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl font-black font-display tracking-tight text-foreground leading-[1.08] mb-4">
               <div>
                 <KineticText text="Connect With Our" as="h1" className="text-foreground tracking-tight" />
               </div>

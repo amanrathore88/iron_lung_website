@@ -24,7 +24,7 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-[56px] lg:text-[64px] xl:text-[70px] font-black font-sans tracking-[-0.03em] select-none flex flex-col items-center gap-2 sm:gap-3 md:gap-3.5">
+          <h2 className="text-[28px] xs:text-4xl sm:text-5xl md:text-[56px] lg:text-[64px] xl:text-[70px] font-black font-sans tracking-[-0.03em] select-none flex flex-col items-center gap-2 sm:gap-3 md:gap-3.5">
             <span className="text-[#0F172A] leading-[1.12]">
               Ready to Begin
             </span>

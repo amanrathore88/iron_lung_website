@@ -38,7 +38,7 @@ export const TechnologyWhatsAppReportSection: React.FC = () => {
             className="lg:col-span-6 xl:col-span-6 flex flex-col items-end text-right pt-2 sm:pt-4 lg:pt-6 xl:pt-8"
           >
             {/* Main Headline (Exact Title Case & Color Palette) */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[72px] 2xl:text-[80px] font-black font-sans tracking-[-0.035em] leading-[1.02] text-right select-none">
+            <h2 className="text-[32px] xs:text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[72px] 2xl:text-[80px] font-black font-sans tracking-[-0.035em] leading-[1.02] text-right select-none">
               <span className="block">
                 <span className="text-black">Your </span>
                 <span className="text-[#FF5500]">Progress</span>
@@ -52,7 +52,7 @@ export const TechnologyWhatsAppReportSection: React.FC = () => {
             </h2>
 
             {/* Editorial Serif Description Paragraph */}
-            <p className="mt-6 sm:mt-8 md:mt-10 text-right font-['Times_New_Roman',_'Times',_'Cormorant_Garamond',_Georgia,_serif] text-black text-lg sm:text-xl lg:text-[22px] xl:text-[25px] leading-[1.32] sm:leading-[1.36] max-w-[480px] xl:max-w-[500px] select-none">
+            <p className="mt-5 sm:mt-8 md:mt-10 text-right font-['Times_New_Roman',_'Times',_'Cormorant_Garamond',_Georgia,_serif] text-black text-base xs:text-lg sm:text-xl lg:text-[22px] xl:text-[25px] leading-[1.32] sm:leading-[1.36] max-w-[480px] xl:max-w-[500px] select-none">
               After every training session, you’ll
               <br className="hidden sm:inline" /> automatically receive a detailed
               <br className="hidden sm:inline" /> performance report on WhatsApp - simple,

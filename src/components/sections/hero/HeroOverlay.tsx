@@ -79,7 +79,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
           </motion.p>
 
           {/* 4. Action CTAs — staggered entrance (Discover Iron Lung first, then Watch Video) */}
-          <div className="flex flex-row items-center gap-2 xs:gap-3 sm:gap-2.5 lg:gap-4 w-full sm:w-auto mt-0.5 sm:mt-1">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 xs:gap-3 sm:gap-2.5 lg:gap-4 w-full sm:w-auto mt-0.5 sm:mt-1">
             {/* Primary Discover Button */}
             <motion.button
               onClick={onDiscover}
