@@ -8,7 +8,7 @@ interface HeroNavbarProps {
   activeSection?: string;
 }
 
-export const HeroNavbar: React.FC<HeroNavbarProps> = ({
+export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
   onBookDemo,
   onContactUs,
   onNavigateSection,
@@ -175,4 +175,4 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = ({
       )}
     </header>
   );
-};
+});

@@ -15,7 +15,7 @@ interface LandingBottomSectionsProps {
  * 2. PartnersSection     - Infinite scrolling partner logos marquee
  * 3. Footer              - Cinematic GSAP animated footer with aurora glow
  */
-export const LandingBottomSections: React.FC<LandingBottomSectionsProps> = ({
+export const LandingBottomSections: React.FC<LandingBottomSectionsProps> = React.memo(({
   onBookDemo,
 }) => {
   return (
@@ -33,6 +33,6 @@ export const LandingBottomSections: React.FC<LandingBottomSectionsProps> = ({
       <Footer />
     </div>
   );
-};
+});
 
 export default LandingBottomSections;

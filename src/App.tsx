@@ -247,13 +247,12 @@ export const App: React.FC = () => {
     const canScrollInnerContainer = (target: EventTarget | null, dy: number): boolean => {
       let el = target as HTMLElement | null;
       while (el && el !== document.body && el !== document.documentElement) {
-        const style = window.getComputedStyle(el);
-        if (
-          (style.overflowY === 'auto' || style.overflowY === 'scroll') &&
-          el.scrollHeight > el.clientHeight + 8
-        ) {
-          if (dy > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 4) return true;
-          if (dy < 0 && el.scrollTop > 4) return true;
+        if (el.scrollHeight > el.clientHeight + 8) {
+          const overflowY = el.style.overflowY || window.getComputedStyle(el).overflowY;
+          if (overflowY === 'auto' || overflowY === 'scroll') {
+            if (dy > 0 && el.scrollTop + el.clientHeight < el.scrollHeight - 4) return true;
+            if (dy < 0 && el.scrollTop > 4) return true;
+          }
         }
         el = el.parentElement;
       }

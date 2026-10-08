@@ -95,6 +95,24 @@ function interpolateAngle(from: number, to: number, t: number): number {
   return from + diff * t;
 }
 
+// Adaptive Device Pixel Ratio: Cap DPR to eliminate fill-rate bottlenecks
+function getAdaptivePixelRatio(): number {
+  if (typeof window === 'undefined') return 1;
+  const rawDpr = window.devicePixelRatio || 1;
+  const isMobile = window.innerWidth < 768;
+  const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+  const isLowEnd = typeof navigator !== 'undefined' && ((navigator.hardwareConcurrency || 4) <= 4);
+
+  if (isMobile) {
+    return Math.min(rawDpr, isLowEnd ? 1.0 : 1.25);
+  } else if (isTablet) {
+    return Math.min(rawDpr, 1.35);
+  } else {
+    // Desktop: clamp to 1.5 to prevent multi-million pixel overhead on 4K/retina screens while preserving razor sharpness
+    return Math.min(rawDpr, 1.5);
+  }
+}
+
 export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const modelGroupRef = useRef<THREE.Group | null>(null);
@@ -109,8 +127,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
   // Keep a live ref to scrollProgress for the 60fps render loop
   const scrollProgressRef = useRef<number>(scrollProgress);
+  const wakeUpRenderLoopRef = useRef<(() => void) | null>(null);
+
   useEffect(() => {
     scrollProgressRef.current = scrollProgress;
+    // Wake up render loop if scrolling back into visible area
+    wakeUpRenderLoopRef.current?.();
   }, [scrollProgress]);
 
   // Interactive Button Hotspots State (Stage 1: Front Screen)
@@ -134,10 +156,17 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     left: THREE.Object3D | null;
     right: THREE.Object3D | null;
   }>({ top: null, left: null, right: null });
+
+  // Pre-calculated local centers for button meshes (avoids calculating bounding box across vertices every frame)
+  const cachedButtonCentersRef = useRef<{
+    top: THREE.Vector3 | null;
+    left: THREE.Vector3 | null;
+    right: THREE.Vector3 | null;
+  }>({ top: null, left: null, right: null });
+
   const lastButtonPosRef = useRef<Record<string, { x: number; y: number }>>({});
   const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
   const mouseVecRef = useRef<THREE.Vector2>(new THREE.Vector2());
-  const tempBoxRef = useRef<THREE.Box3>(new THREE.Box3());
   const tempCenterRef = useRef<THREE.Vector3>(new THREE.Vector3());
 
   const handleButtonClick = (btn: ButtonType) => {
@@ -153,7 +182,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     const handleWinResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    window.addEventListener('resize', handleWinResize);
+    window.addEventListener('resize', handleWinResize, { passive: true });
     return () => window.removeEventListener('resize', handleWinResize);
   }, []);
 
@@ -168,13 +197,12 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     scene.background = null;
 
     // 2. Camera Setup
-    let width = mountElem.clientWidth;
-    let height = mountElem.clientHeight;
+    let width = mountElem.clientWidth || window.innerWidth;
+    let height = mountElem.clientHeight || window.innerHeight;
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
     camera.position.copy(STAGE_0_HERO.camPos);
 
     const applyViewOffset = (w: number, h: number, xRatio: number, yRatio: number) => {
-      // Use viewport width (matching Tailwind CSS @media breakpoints) to avoid scrollbar width discrepancies
       const vpW = typeof window !== 'undefined' ? window.innerWidth : w;
       const aspect = w / h;
       camera.aspect = aspect;
@@ -186,11 +214,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else if (vpW < 1024) {
         camera.fov = isPortrait ? 42 : 40;
       } else {
-        // Desktop / Laptop: 100% UNCHANGED
         camera.fov = 40;
       }
 
-      // Smooth continuous physical offset with zero stepped jumps
       camera.setViewOffset(w, h, w * xRatio, h * yRatio, w, h);
       camera.updateProjectionMatrix();
     };
@@ -211,20 +237,22 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     applyViewOffset(width, height, initX, initY);
 
     // 3. WebGL Renderer with Tone Mapping and Alpha
+    const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
       powerPreference: 'high-performance',
+      precision: isMobileDevice ? 'mediump' : 'highp',
     });
     renderer.setSize(width, height);
-    // On mobile (< 768px), clamp pixelRatio to 1.5 to eliminate GPU fill-rate throttling and thermal lag
-    const initMaxDpr = (typeof window !== 'undefined' && window.innerWidth < 768) ? 1.5 : 2;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, initMaxDpr));
+    renderer.setPixelRatio(getAdaptivePixelRatio());
     renderer.setClearColor(0x000000, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.38;
+
+    // Optimized Shadow Map: Use PCFShadowMap on mobile for high framerate, PCFSoftShadowMap on desktop
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = isMobileDevice ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
 
     mountElem.appendChild(renderer.domElement);
 
@@ -242,8 +270,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     controls.dampingFactor = 0.06;
     controls.enableZoom = false; // Zoom explicitly disabled
     controls.enablePan = false;  // Pan explicitly disabled
-    const isMobileInit = typeof window !== 'undefined' && window.innerWidth < 768;
-    controls.enableRotate = !isMobileInit;
+    controls.enableRotate = !isMobileDevice;
     renderer.domElement.style.touchAction = 'none';
     controls.minPolarAngle = Math.PI / 2.12;
     controls.maxPolarAngle = Math.PI / 2.12;
@@ -251,7 +278,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     controlsRef.current = controls;
 
     // 5. Studio Lighting with Multi-Point Illumination & Realistic Directional Shadows
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
+    const ambientLight = new THREE.AmbientLight(0xffffff, isMobileDevice ? 2.5 : 2.2);
     scene.add(ambientLight);
 
     // Front Camera Key Light: Brightens front face, contours, and user-facing controls
@@ -263,7 +290,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     const sunLight = new THREE.DirectionalLight(0xfffbf2, 3.2);
     sunLight.position.set(4.5, 8.0, 4.0);
     sunLight.castShadow = true;
-    const sunShadowRes = (typeof window !== 'undefined' && window.innerWidth < 768) ? 512 : 1024;
+    const sunShadowRes = isMobileDevice ? 512 : 1024;
     sunLight.shadow.mapSize.width = sunShadowRes;
     sunLight.shadow.mapSize.height = sunShadowRes;
     sunLight.shadow.camera.near = 0.5;
@@ -273,7 +300,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     sunLight.shadow.camera.top = 3.5;
     sunLight.shadow.camera.bottom = -3.5;
     sunLight.shadow.bias = -0.0003;
-    sunLight.shadow.radius = 6.5; // Soft, diffuse blurred shadow edges
+    sunLight.shadow.radius = isMobileDevice ? 3.0 : 6.5;
     scene.add(sunLight);
 
     // Left Fill Light: Fills shadow side, handset, and chair frame
@@ -286,15 +313,18 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     rimLight.position.set(-2.0, 7.0, -5.0);
     scene.add(rimLight);
 
-    // Sky Fill: Soft ambient overhead radiance
-    const skyFill = new THREE.DirectionalLight(0xdbeafe, 1.4);
-    skyFill.position.set(6, 4, -2);
-    scene.add(skyFill);
+    // Desktop auxiliary fills (omitted on mobile to conserve GPU fill rate)
+    let skyFill: THREE.DirectionalLight | null = null;
+    let floorBounce: THREE.DirectionalLight | null = null;
+    if (!isMobileDevice) {
+      skyFill = new THREE.DirectionalLight(0xdbeafe, 1.4);
+      skyFill.position.set(6, 4, -2);
+      scene.add(skyFill);
 
-    // Floor Bounce: Warm underglow bounce
-    const floorBounce = new THREE.DirectionalLight(0xffedd5, 1.5);
-    floorBounce.position.set(-3, -2, 3);
-    scene.add(floorBounce);
+      floorBounce = new THREE.DirectionalLight(0xffedd5, 1.5);
+      floorBounce.position.set(-3, -2, 3);
+      scene.add(floorBounce);
+    }
 
     // Dedicated key light for front screen display in Section 01
     const screenKeyLight = new THREE.PointLight(0xffffff, 2.8, 8);
@@ -305,7 +335,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     // A. Real-time dynamic shadow mapping plane (casts actual rotating 3D shadows of the model)
     const shadowPlaneGeo = new THREE.PlaneGeometry(16, 16);
     const shadowPlaneMat = new THREE.ShadowMaterial({
-      opacity: 0.22, // Toned down for a soft, realistic studio feel
+      opacity: 0.22,
       transparent: true,
       depthWrite: false,
     });
@@ -315,7 +345,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     shadowPlaneMesh.receiveShadow = true;
     scene.add(shadowPlaneMesh);
 
-    // B. Soft, natural ambient contact occlusion disc (grounds the base center smoothly without fake static spots)
+    // B. Soft, natural ambient contact occlusion disc
     const contactCanvas = document.createElement('canvas');
     contactCanvas.width = 512;
     contactCanvas.height = 512;
@@ -337,11 +367,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       map: contactTexture,
       transparent: true,
       depthWrite: false,
-      opacity: 0.30, // Softened ambient contact
+      opacity: 0.30,
     });
     const contactMesh = new THREE.Mesh(contactGeo, contactMat);
     contactMesh.rotation.x = -Math.PI / 2;
-    contactMesh.position.set(0, -2.175, 0); // Directly at base contact level
+    contactMesh.position.set(0, -2.175, 0);
     scene.add(contactMesh);
 
     // 7. Model Group
@@ -349,121 +379,154 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     scene.add(modelGroup);
     modelGroupRef.current = modelGroup;
 
-    // 8. GLTF Model Loader
+    // 8. Responsive & Highly-Optimized GLTF Model Loader
+    // Mobile (< 768px): 2.00 MB model (1K WebP textures, 75% less GPU VRAM, instant download)
+    // Desktop / Tablet (>= 768px): 3.73 MB model (full 2K WebP textures, flawless fidelity)
+    const primaryModelUrl = isMobileDevice
+      ? '/models/Final_Model_Mobile.glb'
+      : '/models/Final_Model_Desktop.glb';
+    const fallbackModelUrl = '/models/Final_Model(2K).glb';
+
     const loader = new GLTFLoader();
-    loader.load(
-      '/models/Final_Model(2K).glb',
-      (gltf) => {
-        if (!isMounted) return;
-        const model = gltf.scene;
 
-        // Isolate the ergonomic chair meshes and non-chair components
-        const fadeMeshes: THREE.Mesh[] = [];
-        const chairMeshes: THREE.Mesh[] = [];
+    const onModelLoaded = (gltf: any) => {
+      if (!isMounted) return;
+      const model = gltf.scene;
 
-        model.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            const mesh = child as THREE.Mesh;
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
+      const fadeMeshes: THREE.Mesh[] = [];
+      const chairMeshes: THREE.Mesh[] = [];
 
-            const mat = mesh.material as THREE.MeshStandardMaterial;
-            if (mat) {
-              mat.envMapIntensity = 1.6;
-              // Soften ambient occlusion in crevices so dark recesses don't crush to pitch black
-              if (mat.aoMap) {
-                mat.aoMapIntensity = 0.60;
-              }
-              // Give materials a clean satin sheen
-              mat.roughness = Math.min(Math.max(mat.roughness ?? 0.35, 0.25), 0.82);
-              // Scale down metalness multiplier slightly so surfaces catch rich diffuse light
-              mat.metalness = Math.min(mat.metalness ?? 0.8, 0.65);
-              mat.needsUpdate = true;
+      model.traverse((child: THREE.Object3D) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+
+          const mat = mesh.material as THREE.MeshStandardMaterial;
+          if (mat) {
+            mat.envMapIntensity = 1.6;
+            if (mat.aoMap) {
+              mat.aoMapIntensity = 0.60;
             }
+            mat.roughness = Math.min(Math.max(mat.roughness ?? 0.35, 0.25), 0.82);
+            mat.metalness = Math.min(mat.metalness ?? 0.8, 0.65);
+            // Early-Z Optimization: keep materials opaque with depthWrite=true until opacity fade begins
+            mat.transparent = false;
+            mat.depthWrite = true;
+            mat.needsUpdate = true;
+          }
 
-            // Clone materials and enable transparency so opacity transitions run smoothly
-            if (mesh.material) {
-              if (Array.isArray(mesh.material)) {
-                mesh.material = mesh.material.map((m) => {
-                  const cloned = m.clone();
-                  cloned.transparent = true;
-                  return cloned;
-                });
-              } else {
-                mesh.material = (mesh.material as THREE.Material).clone();
-                (mesh.material as THREE.Material).transparent = true;
-              }
-            }
-
-            // The chair is uniquely and exclusively defined by material 'Chair_2K'
-            const matName = (mesh.material as THREE.Material)?.name || '';
-            const isChairMesh = matName === 'Chair_2K';
-
-            // Identify hardware buttons on front screen console
-            if (mesh.name.includes('Button_1')) {
-              buttonMeshesRef.current.top = mesh;
-            } else if (mesh.name.includes('Button_3')) {
-              buttonMeshesRef.current.left = mesh;
-            } else if (mesh.name.includes('Button_2')) {
-              buttonMeshesRef.current.right = mesh;
-            }
-
-            if (isChairMesh) {
-              chairMeshes.push(mesh);
+          // Clone materials so independent opacity animation works smoothly without global sharing conflicts
+          if (mesh.material) {
+            if (Array.isArray(mesh.material)) {
+              mesh.material = mesh.material.map((m) => m.clone());
             } else {
-              fadeMeshes.push(mesh);
+              mesh.material = (mesh.material as THREE.Material).clone();
             }
           }
-        });
 
-        fadeMeshesRef.current = fadeMeshes;
-        chairMeshesRef.current = chairMeshes;
-        lastNonChairOpacity = -1;
-        lastGlobalOpacity = -1;
+          // The chair is uniquely and exclusively defined by material 'Chair_2K'
+          const matName = (mesh.material as THREE.Material)?.name || '';
+          const isChairMesh = matName === 'Chair_2K';
 
-        // Auto-center model inside group
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
+          // Identify hardware buttons on front screen console & cache their local centers
+          if (mesh.name.includes('Button_1')) {
+            buttonMeshesRef.current.top = mesh;
+            mesh.geometry.computeBoundingBox();
+            if (mesh.geometry.boundingBox) {
+              const center = new THREE.Vector3();
+              mesh.geometry.boundingBox.getCenter(center);
+              cachedButtonCentersRef.current.top = center;
+            }
+          } else if (mesh.name.includes('Button_3')) {
+            buttonMeshesRef.current.left = mesh;
+            mesh.geometry.computeBoundingBox();
+            if (mesh.geometry.boundingBox) {
+              const center = new THREE.Vector3();
+              mesh.geometry.boundingBox.getCenter(center);
+              cachedButtonCentersRef.current.left = center;
+            }
+          } else if (mesh.name.includes('Button_2')) {
+            buttonMeshesRef.current.right = mesh;
+            mesh.geometry.computeBoundingBox();
+            if (mesh.geometry.boundingBox) {
+              const center = new THREE.Vector3();
+              mesh.geometry.boundingBox.getCenter(center);
+              cachedButtonCentersRef.current.right = center;
+            }
+          }
 
-        model.position.x = -center.x;
-        model.position.y = -center.y;
-        model.position.z = -center.z;
-
-        // Perfectly calibrated scale so the product fits comfortably and rotates strictly within the blue floor line
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const targetScale = maxDim > 0 ? 3.05 / maxDim : 1;
-        modelGroup.scale.set(targetScale, targetScale, targetScale);
-        modelGroup.position.set(0, -0.65, 0);
-        modelGroup.rotation.y = STAGE_0_HERO.baseRotY;
-
-        controls.target.copy(STAGE_0_HERO.target);
-        controls.update();
-
-        modelGroup.add(model);
-        setIsLoaded(true);
-      },
-      (xhr) => {
-        if (!isMounted) return;
-        if (xhr.total > 0) {
-          const percent = Math.round((xhr.loaded / xhr.total) * 100);
-          setLoadingProgress(percent);
-        } else {
-          setLoadingProgress((prev) => Math.min(prev + 5, 95));
+          if (isChairMesh) {
+            chairMeshes.push(mesh);
+          } else {
+            fadeMeshes.push(mesh);
+          }
         }
-      },
-      (error) => {
-        if (!isMounted) return;
-        console.error('Error loading 3D GLB model:', error);
-        setLoadError('Failed to load 3D model.');
-      }
-    );
+      });
+
+      fadeMeshesRef.current = fadeMeshes;
+      chairMeshesRef.current = chairMeshes;
+      lastNonChairOpacity = -1;
+      lastGlobalOpacity = -1;
+
+      // Auto-center model inside group
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+
+      model.position.x = -center.x;
+      model.position.y = -center.y;
+      model.position.z = -center.z;
+
+      // Calibrated scale so the product fits comfortably and rotates strictly within the floor line
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const targetScale = maxDim > 0 ? 3.05 / maxDim : 1;
+      modelGroup.scale.set(targetScale, targetScale, targetScale);
+      modelGroup.position.set(0, -0.65, 0);
+      modelGroup.rotation.y = STAGE_0_HERO.baseRotY;
+
+      controls.target.copy(STAGE_0_HERO.target);
+      controls.update();
+
+      modelGroup.add(model);
+      setIsLoaded(true);
+      wakeUpRenderLoop();
+    };
+
+    const loadModel = (url: string, isFallback: boolean = false) => {
+      loader.load(
+        url,
+        onModelLoaded,
+        (xhr) => {
+          if (!isMounted) return;
+          if (xhr.total > 0) {
+            const percent = Math.round((xhr.loaded / xhr.total) * 100);
+            setLoadingProgress(percent);
+          } else {
+            setLoadingProgress((prev) => Math.min(prev + 10, 95));
+          }
+        },
+        (error) => {
+          if (!isMounted) return;
+          if (!isFallback) {
+            console.warn(`Error loading optimized 3D model (${url}), falling back to standard asset:`, error);
+            loadModel(fallbackModelUrl, true);
+          } else {
+            console.error('Error loading 3D GLB model:', error);
+            setLoadError('Failed to load 3D model.');
+          }
+        }
+      );
+    };
+
+    loadModel(primaryModelUrl);
 
     // Interaction tracking
     let isInteracting = false;
     let userTurnOffset = 0;
     controls.addEventListener('start', () => {
       isInteracting = true;
+      wakeUpRenderLoop();
     });
     controls.addEventListener('end', () => {
       isInteracting = false;
@@ -493,34 +556,40 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     let lastNonChairOpacity = -1;
     let lastGlobalOpacity = -1;
     let wasHiddenLastFrame = false;
+    let isLoopRunning = false;
+    let currentPointerZone = -1;
+
+    // Checks prefers-reduced-motion to respect user accessibility preferences
+    const prefersReducedMotion = typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const animate = () => {
-      // Keep canvas and viewport dimensions 100% in sync with real DOM element on every frame
-      if (mountElem) {
-        const liveW = mountElem.clientWidth;
-        const liveH = mountElem.clientHeight;
-        if (liveW > 0 && liveH > 0 && (liveW !== width || liveH !== height)) {
-          width = liveW;
-          height = liveH;
-          camera.aspect = width / height;
-          camera.updateProjectionMatrix();
-          renderer.setSize(width, height);
-          const liveMaxDpr = (typeof window !== 'undefined' && window.innerWidth < 768) ? 1.5 : 2;
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, liveMaxDpr));
-          wasHiddenLastFrame = false;
-        }
-      }
-
       const now = performance.now();
       const delta = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 
       const p = scrollProgressRef.current;
+      const vpW = typeof window !== 'undefined' ? window.innerWidth : width;
 
-      // Full 3D product turntable rotation animation active on Hero section
+      // Dynamic DOM pointer-events management: updates directly without causing React component re-renders
+      if (mountElem) {
+        const targetZone = p <= 0.14 ? 0 : (p >= 0.235 && p <= 0.365 ? 1 : 2);
+        if (targetZone !== currentPointerZone) {
+          currentPointerZone = targetZone;
+          if (targetZone === 0) {
+            mountElem.className = 'w-full h-full relative pointer-events-none md:pointer-events-auto md:cursor-grab md:active:cursor-grabbing';
+          } else if (targetZone === 1) {
+            mountElem.className = 'w-full h-full relative pointer-events-auto';
+          } else {
+            mountElem.className = 'w-full h-full relative pointer-events-none';
+          }
+        }
+      }
+
+      // Turntable rotation animation active on Hero section
       if (p <= 0.14) {
-        if (!isInteracting) {
-          heroSpinAngle += delta * 0.26; // Continuous full 360-degree rotation animation
+        if (!isInteracting && !prefersReducedMotion) {
+          heroSpinAngle += delta * 0.26;
         }
       }
 
@@ -542,59 +611,50 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       stage2CamPos.copy(STAGE_2_UV.camPos);
       stage3Target.copy(STAGE_3_CHAIR.target);
       stage3CamPos.copy(STAGE_3_CHAIR.camPos);
-      const vpW = typeof window !== 'undefined' ? window.innerWidth : width;
       const isPortraitMode = width / height < 1.0;
 
       // Physical offsets per stage across devices (continuous interpolation with zero stepped jumps)
-      let s0X = STAGE_0_HERO.xOffsetRatio; // 0.0
+      let s0X = STAGE_0_HERO.xOffsetRatio;
       let s0Y = 0.0;
-      let s1X = STAGE_1_SCREEN.xOffsetRatio; // 0.0
+      let s1X = STAGE_1_SCREEN.xOffsetRatio;
       let s1Y = 0.0;
-      let s2X = STAGE_2_UV.xOffsetRatio; // 0.195
+      let s2X = STAGE_2_UV.xOffsetRatio;
       let s2Y = 0.0;
-      let s3X = STAGE_3_CHAIR.xOffsetRatio; // -0.19
+      let s3X = STAGE_3_CHAIR.xOffsetRatio;
       let s3Y = 0.0;
-      let s4X = STAGE_4_ABOUT.xOffsetRatio; // 0.345
+      let s4X = STAGE_4_ABOUT.xOffsetRatio;
       let s4Y = 0.0;
-      let s5X = STAGE_5_SWEEP_END.xOffsetRatio; // -0.90
+      let s5X = STAGE_5_SWEEP_END.xOffsetRatio;
       let s5Y = 0.0;
 
       if (vpW < 768) {
-        // Mobile camera framing (calibrated for 100dvh even when browser URL bar is visible)
+        // Mobile camera framing
         stage0CamPos.z = 8.05;
 
         stage1Target.x = 0.0;
         stage1CamPos.x = 0.0;
-        stage1CamPos.z = 3.25; // Pull back console so both wings and buttons fit comfortably between top header & bottom dock
+        stage1CamPos.z = 3.25;
         stage1CamPos.y = 0.54;
 
-        // Stage 2 UV Handpiece on Mobile:
         stage2CamPos.z = 2.05;
         stage2CamPos.y = 0.06;
         stage2Target.y = 0.01;
 
-        // Stage 3 Ergonomic Chair on Mobile:
         stage3CamPos.z = 5.30;
         stage3CamPos.y = -0.32;
         stage3Target.y = -0.46;
 
-        // Mobile continuous offsets (centered horizontally, balanced vertically)
         s0X = 0.0;
-        s0Y = -0.092; // Hero: centered cleanly below CTAs with full footrest visible above bottom edge
-
+        s0Y = -0.092;
         s1X = 0.0;
-        s1Y = 0.065;  // Feature 1: screen centered in open middle zone
-
+        s1Y = 0.065;
         s2X = -0.04;
-        s2Y = 0.045;  // Feature 2: UV handpiece centered in open middle zone
-
+        s2Y = 0.045;
         s3X = 0.0;
-        s3Y = 0.020;  // Feature 3: Ergonomic chair centered in open middle zone
-
+        s3Y = 0.020;
         s4X = 0.0;
-        s4Y = -0.02;  // About Us: centered
-
-        s5X = -1.25;  // Dashboard sweep: sweeps completely off-screen past right border
+        s4Y = -0.02;
+        s5X = -1.25;
         s5Y = -0.08;
       } else if (vpW < 1024) {
         // Tablet framing and offsets
@@ -612,37 +672,27 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
           s0X = -0.26;
           s0Y = -0.02;
-
           s1X = -0.19;
           s1Y = 0.0;
-
           s2X = 0.20;
           s2Y = 0.20;
-
           s3X = -0.24;
           s3Y = 0.0;
-
           s4X = 0.345 * 0.85;
           s4Y = 0.0;
-
           s5X = -0.75;
           s5Y = 0.0;
         } else {
           s0X = -0.16;
           s0Y = 0.0;
-
           s1X = -0.21;
           s1Y = 0.0;
-
           s2X = 0.195;
           s2Y = 0.0;
-
           s3X = -0.19;
           s3Y = 0.0;
-
           s4X = 0.345 * 0.90;
           s4Y = 0.0;
-
           s5X = -0.75;
           s5Y = 0.0;
         }
@@ -658,7 +708,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         destShadowOpacity = STAGE_0_HERO.shadowOpacity;
         destUvIntensity = STAGE_0_HERO.uvIntensity;
       } else if (p < 0.24) {
-        // Transition Stage 0 -> Stage 1 (Smoothly transitions to front screen angle)
+        // Transition Stage 0 -> Stage 1
         const t = smoothstep(0.14, 0.24, p);
         destTarget = lerpTargetVec.lerpVectors(STAGE_0_HERO.target, stage1Target, t);
         destCamPos = lerpCamPosVec.lerpVectors(stage0CamPos, stage1CamPos, t);
@@ -668,17 +718,17 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         destShadowOpacity = THREE.MathUtils.lerp(STAGE_0_HERO.shadowOpacity, STAGE_1_SCREEN.shadowOpacity, t);
         destUvIntensity = 0.0;
       } else if (p <= 0.36) {
-        // Stage 1: Front Touch Screen Feature View (100% locked)
+        // Stage 1: Front Touch Screen Feature View
         destTarget = stage1Target;
         destCamPos = stage1CamPos;
         destXOffsetRatio = s1X;
         destOffsetYRatio = s1Y;
-        destBaseRotY = STAGE_1_SCREEN.baseRotY; // Math.PI
+        destBaseRotY = STAGE_1_SCREEN.baseRotY;
         destShadowOpacity = STAGE_1_SCREEN.shadowOpacity;
         destUvIntensity = STAGE_1_SCREEN.uvIntensity;
         heroSpinAngle = STAGE_1_SCREEN.baseRotY;
       } else if (p < 0.46) {
-        // Transition Stage 1 -> Stage 2 (Smoothly transitions to UV nozzle angle)
+        // Transition Stage 1 -> Stage 2
         const t = smoothstep(0.36, 0.46, p);
         destTarget = lerpTargetVec.lerpVectors(stage1Target, stage2Target, t);
         destCamPos = lerpCamPosVec.lerpVectors(stage1CamPos, stage2CamPos, t);
@@ -688,17 +738,17 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         destShadowOpacity = 0.0;
         destUvIntensity = 0.0;
       } else if (p <= 0.58) {
-        // Stage 2: UV Sanitization Handpiece View (100% locked)
+        // Stage 2: UV Sanitization Handpiece View
         destTarget = stage2Target;
         destCamPos = stage2CamPos;
         destXOffsetRatio = s2X;
         destOffsetYRatio = s2Y;
-        destBaseRotY = STAGE_2_UV.baseRotY; // ~0.839
+        destBaseRotY = STAGE_2_UV.baseRotY;
         destShadowOpacity = STAGE_2_UV.shadowOpacity;
         destUvIntensity = STAGE_2_UV.uvIntensity;
         heroSpinAngle = STAGE_2_UV.baseRotY;
       } else if (p < 0.68) {
-        // Transition Stage 2 -> Stage 3 (Smoothly transitions to Ergonomic Chair view)
+        // Transition Stage 2 -> Stage 3
         const t = smoothstep(0.58, 0.68, p);
         destTarget = lerpTargetVec.lerpVectors(stage2Target, stage3Target, t);
         destCamPos = lerpCamPosVec.lerpVectors(stage2CamPos, stage3CamPos, t);
@@ -710,113 +760,98 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       } else {
         if (vpW < 768) {
           if (p <= 0.725) {
-          // Stage 3: Ergonomic Biometric Training Chair (Mobile)
-          destTarget = stage3Target;
-          destCamPos = stage3CamPos;
-          destXOffsetRatio = s3X;
-          destOffsetYRatio = s3Y;
-          destBaseRotY = STAGE_3_CHAIR.baseRotY;
-          destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
-          destUvIntensity = 0.0;
-          heroSpinAngle = STAGE_3_CHAIR.baseRotY;
-        } else if (p < 0.795) {
-          // Mobile Graceful Exit (0.725 -> 0.795):
-          // Model glides smoothly to the right edge with a gentle pull-back and concluding turn,
-          // dissolving cleanly to zero opacity before the About Us editorial story appears.
-          const tExit = smoothstep(0.725, 0.795, p);
-          destTarget = stage3Target;
-          destCamPos = lerpCamPosVec.set(
-            stage3CamPos.x,
-            stage3CamPos.y + 0.12 * tExit,
-            stage3CamPos.z + 1.10 * tExit
-          );
-          destXOffsetRatio = THREE.MathUtils.lerp(s3X, -0.95, tExit);
-          destOffsetYRatio = THREE.MathUtils.lerp(s3Y, 0.06, tExit);
-          destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_3_CHAIR.baseRotY + 0.32, tExit);
-          destBaseRotZ = 0.0;
-          destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, 0.0, tExit);
-          destUvIntensity = 0.0;
-          heroSpinAngle = destBaseRotY;
+            destTarget = stage3Target;
+            destCamPos = stage3CamPos;
+            destXOffsetRatio = s3X;
+            destOffsetYRatio = s3Y;
+            destBaseRotY = STAGE_3_CHAIR.baseRotY;
+            destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
+            destUvIntensity = 0.0;
+            heroSpinAngle = STAGE_3_CHAIR.baseRotY;
+          } else if (p < 0.795) {
+            const tExit = smoothstep(0.725, 0.795, p);
+            destTarget = stage3Target;
+            destCamPos = lerpCamPosVec.set(
+              stage3CamPos.x,
+              stage3CamPos.y + 0.12 * tExit,
+              stage3CamPos.z + 1.10 * tExit
+            );
+            destXOffsetRatio = THREE.MathUtils.lerp(s3X, -0.95, tExit);
+            destOffsetYRatio = THREE.MathUtils.lerp(s3Y, 0.06, tExit);
+            destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_3_CHAIR.baseRotY + 0.32, tExit);
+            destBaseRotZ = 0.0;
+            destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, 0.0, tExit);
+            destUvIntensity = 0.0;
+            heroSpinAngle = destBaseRotY;
+          } else {
+            destTarget = stage3Target;
+            destCamPos = stage3CamPos;
+            destXOffsetRatio = -0.95;
+            destOffsetYRatio = 0.06;
+            destBaseRotY = STAGE_3_CHAIR.baseRotY + 0.32;
+            destBaseRotZ = 0.0;
+            destShadowOpacity = 0.0;
+            destUvIntensity = 0.0;
+            heroSpinAngle = destBaseRotY;
+          }
         } else {
-          // Mobile p >= 0.795: Model is completely hidden through About Us & Dashboard
-          destTarget = stage3Target;
-          destCamPos = stage3CamPos;
-          destXOffsetRatio = -0.95;
-          destOffsetYRatio = 0.06;
-          destBaseRotY = STAGE_3_CHAIR.baseRotY + 0.32;
-          destBaseRotZ = 0.0;
-          destShadowOpacity = 0.0;
-          destUvIntensity = 0.0;
-          heroSpinAngle = destBaseRotY;
-        }
-      } else {
-        // Desktop / Laptop / Tablet: 100% UNCHANGED
-        if (p <= 0.73) {
-          // Stage 3: Ergonomic Biometric Training Chair (100% locked in right column)
-          destTarget = stage3Target;
-          destCamPos = stage3CamPos;
-          destXOffsetRatio = s3X;
-          destOffsetYRatio = s3Y;
-          destBaseRotY = STAGE_3_CHAIR.baseRotY; // -0.42 rad (~ -24°)
-          destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
-          destUvIntensity = STAGE_3_CHAIR.uvIntensity;
-          heroSpinAngle = STAGE_3_CHAIR.baseRotY;
-        } else if (p < 0.81) {
-          // Transition Stage 3 -> Stage 4 About Us (Descends downwards, pulling back and gliding into left column of Our Story)
-          const t = smoothstep(0.73, 0.81, p);
-          destTarget = lerpTargetVec.lerpVectors(stage3Target, STAGE_4_ABOUT.target, t);
-          destCamPos = lerpCamPosVec.lerpVectors(stage3CamPos, STAGE_4_ABOUT.camPos, t);
-          destXOffsetRatio = THREE.MathUtils.lerp(s3X, s4X, t);
-          destOffsetYRatio = THREE.MathUtils.lerp(s3Y, s4Y, t);
-          destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_4_ABOUT.baseRotY, t);
-          destBaseRotZ = THREE.MathUtils.lerp(0.0, STAGE_4_ABOUT.baseRotZ, t);
-          destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, STAGE_4_ABOUT.shadowOpacity, t);
-          destUvIntensity = 0.0;
-          heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-        } else if (p <= 0.855) {
-          // Stage 4: About Us Section (100% locked in left column, full machine framed)
-          destTarget = STAGE_4_ABOUT.target;
-          destCamPos = STAGE_4_ABOUT.camPos;
-          destXOffsetRatio = s4X;
-          destOffsetYRatio = s4Y;
-          destBaseRotY = STAGE_4_ABOUT.baseRotY;
-          destBaseRotZ = STAGE_4_ABOUT.baseRotZ;
-          destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
-          destUvIntensity = 0.0;
-          heroSpinAngle = STAGE_4_ABOUT.baseRotY;
-        } else if (p < 0.925) {
-          // Stage 5: Cinematic Sweep & Reveal across to User Dashboard (360° rotation, growing in scale, gliding to right)
-          const t = Math.min(1, Math.max(0, (p - 0.855) / 0.070));
-          const ease = t * t * (3 - 2 * t);
-
-          destTarget = lerpTargetVec.lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
-          destCamPos = lerpCamPosVec.lerpVectors(STAGE_4_ABOUT.camPos, STAGE_5_SWEEP_END.camPos, ease);
-          destXOffsetRatio = THREE.MathUtils.lerp(s4X, s5X, ease);
-          destOffsetYRatio = THREE.MathUtils.lerp(s4Y, s5Y, ease);
-          destBaseRotY = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotY, STAGE_5_SWEEP_END.baseRotY, ease);
-          destBaseRotZ = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotZ, 0.0, ease);
-          destShadowOpacity = THREE.MathUtils.lerp(STAGE_4_ABOUT.shadowOpacity, STAGE_5_SWEEP_END.shadowOpacity, ease);
-          destUvIntensity = 0.0;
-          heroSpinAngle = destBaseRotY;
-        } else {
-          // Culmination: Model Exited Completely Past Right Border
-          destTarget = STAGE_5_SWEEP_END.target;
-          destCamPos = STAGE_5_SWEEP_END.camPos;
-          destXOffsetRatio = s5X;
-          destOffsetYRatio = s5Y;
-          destBaseRotY = STAGE_5_SWEEP_END.baseRotY;
-          destBaseRotZ = 0.0;
-          destShadowOpacity = 0.0;
-          destUvIntensity = 0.0;
-          heroSpinAngle = STAGE_5_SWEEP_END.baseRotY;
+          if (p <= 0.73) {
+            destTarget = stage3Target;
+            destCamPos = stage3CamPos;
+            destXOffsetRatio = s3X;
+            destOffsetYRatio = s3Y;
+            destBaseRotY = STAGE_3_CHAIR.baseRotY;
+            destShadowOpacity = STAGE_3_CHAIR.shadowOpacity;
+            destUvIntensity = STAGE_3_CHAIR.uvIntensity;
+            heroSpinAngle = STAGE_3_CHAIR.baseRotY;
+          } else if (p < 0.81) {
+            const t = smoothstep(0.73, 0.81, p);
+            destTarget = lerpTargetVec.lerpVectors(stage3Target, STAGE_4_ABOUT.target, t);
+            destCamPos = lerpCamPosVec.lerpVectors(stage3CamPos, STAGE_4_ABOUT.camPos, t);
+            destXOffsetRatio = THREE.MathUtils.lerp(s3X, s4X, t);
+            destOffsetYRatio = THREE.MathUtils.lerp(s3Y, s4Y, t);
+            destBaseRotY = interpolateAngle(STAGE_3_CHAIR.baseRotY, STAGE_4_ABOUT.baseRotY, t);
+            destBaseRotZ = THREE.MathUtils.lerp(0.0, STAGE_4_ABOUT.baseRotZ, t);
+            destShadowOpacity = THREE.MathUtils.lerp(STAGE_3_CHAIR.shadowOpacity, STAGE_4_ABOUT.shadowOpacity, t);
+            destUvIntensity = 0.0;
+            heroSpinAngle = STAGE_4_ABOUT.baseRotY;
+          } else if (p <= 0.855) {
+            destTarget = STAGE_4_ABOUT.target;
+            destCamPos = STAGE_4_ABOUT.camPos;
+            destXOffsetRatio = s4X;
+            destOffsetYRatio = s4Y;
+            destBaseRotY = STAGE_4_ABOUT.baseRotY;
+            destBaseRotZ = STAGE_4_ABOUT.baseRotZ;
+            destShadowOpacity = STAGE_4_ABOUT.shadowOpacity;
+            destUvIntensity = 0.0;
+            heroSpinAngle = STAGE_4_ABOUT.baseRotY;
+          } else if (p < 0.925) {
+            const t = Math.min(1, Math.max(0, (p - 0.855) / 0.070));
+            const ease = t * t * (3 - 2 * t);
+            destTarget = lerpTargetVec.lerpVectors(STAGE_4_ABOUT.target, STAGE_5_SWEEP_END.target, ease);
+            destCamPos = lerpCamPosVec.lerpVectors(STAGE_4_ABOUT.camPos, STAGE_5_SWEEP_END.camPos, ease);
+            destXOffsetRatio = THREE.MathUtils.lerp(s4X, s5X, ease);
+            destOffsetYRatio = THREE.MathUtils.lerp(s4Y, s5Y, ease);
+            destBaseRotY = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotY, STAGE_5_SWEEP_END.baseRotY, ease);
+            destBaseRotZ = THREE.MathUtils.lerp(STAGE_4_ABOUT.baseRotZ, 0.0, ease);
+            destShadowOpacity = THREE.MathUtils.lerp(STAGE_4_ABOUT.shadowOpacity, STAGE_5_SWEEP_END.shadowOpacity, ease);
+            destUvIntensity = 0.0;
+            heroSpinAngle = destBaseRotY;
+          } else {
+            destTarget = STAGE_5_SWEEP_END.target;
+            destCamPos = STAGE_5_SWEEP_END.camPos;
+            destXOffsetRatio = s5X;
+            destOffsetYRatio = s5Y;
+            destBaseRotY = STAGE_5_SWEEP_END.baseRotY;
+            destBaseRotZ = 0.0;
+            destShadowOpacity = 0.0;
+            destUvIntensity = 0.0;
+            heroSpinAngle = STAGE_5_SWEEP_END.baseRotY;
+          }
         }
       }
-    }
 
-      // Responsive lerp speed:
-      // Mobile uses smooth cinematic damping (0.14 - 0.24) paired with the ~1.0s stage transition
-      // so the 3D model rotation and camera glide are clearly visible between every section.
-      // Desktop mousewheel keeps gentle cinematic damping (0.08 - 0.16), with smooth unhurried tracking (0.12) during Stage 5 sweep
+      // Responsive lerp speed
       let lerpSpeed = p >= 0.855 ? 0.12 : p >= 0.73 ? 0.16 : 0.08;
       if (vpW < 768) {
         lerpSpeed = Math.max(0.14, Math.min(0.24, delta * 9.5));
@@ -830,10 +865,8 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       curOffsetYRatio += (destOffsetYRatio - curOffsetYRatio) * lerpSpeed;
 
       if (p >= 0.855 && vpW >= 768) {
-        // Continuous directional rotation during Stage 5 sweep (no modulo wrapping)
         curBaseRotY += (destBaseRotY - curBaseRotY) * lerpSpeed;
       } else {
-        // Shortest-distance angular difference prevents any 360-degree rapid spin discontinuity between features
         const rotDiff = ((destBaseRotY - curBaseRotY + Math.PI) % (Math.PI * 2)) - Math.PI;
         curBaseRotY += rotDiff * lerpSpeed;
       }
@@ -841,12 +874,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       curShadowOpacity += (destShadowOpacity - curShadowOpacity) * lerpSpeed;
       curUvIntensity += (destUvIntensity - curUvIntensity) * 0.1;
 
-      // Modulate visibility and opacity of non-chair parts (screen, gun, front column)
-      // 100% visible on Hero, Stage 1 (Screen), and Stage 2 (UV Gun) (p <= 0.58)
-      // Smoothly dissolves away during transition (0.58 -> 0.66)
-      // 100% hidden in Stage 3 (Chair) so only the chair is visible (0.66 -> 0.74)
-      // Smoothly restores to 1.0 during descent into About Us (0.74 -> 0.81) on Desktop
-      // On mobile, non-chair meshes remain hidden so they never pop in while chair is exiting
+      // Modulate visibility and opacity of non-chair parts
       let nonChairOpacity = 1.0;
       if (p > 0.58 && p < 0.66) {
         const t = smoothstep(0.58, 0.66, p);
@@ -864,10 +892,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         nonChairOpacity = vpW < 768 ? 0.0 : 1.0;
       }
 
-      // Stage 5 Model Fade:
-      // Mobile: Smoothly fade out the 3D model between 0.74 and 0.795
-      // Model is 100% gone before About Us editorial content settles
-      // Desktop: Sweeps across during Stage 5 reveal (0.895 -> 0.928)
+      // Stage 5 Model Fade
       let globalModelOpacity = 1.0;
       if (vpW < 768) {
         if (p > 0.74 && p < 0.795) {
@@ -895,31 +920,40 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         lastGlobalOpacity = globalModelOpacity;
 
         const isFadeVis = effectiveNonChair > 0.005;
+        // Early-Z Optimization: enable depth testing & disable alpha blending whenever fully opaque
+        const needsFadeTransparent = effectiveNonChair < 0.995;
         for (let i = 0; i < fadeMeshesRef.current.length; i++) {
           const m = fadeMeshesRef.current[i];
           m.visible = isFadeVis;
           if (m.material) {
-            if (Array.isArray(m.material)) {
-              for (let j = 0; j < m.material.length; j++) {
-                m.material[j].opacity = effectiveNonChair;
+            const mats = Array.isArray(m.material) ? m.material : [m.material];
+            for (let j = 0; j < mats.length; j++) {
+              const mat = mats[j] as THREE.MeshStandardMaterial;
+              if (mat.transparent !== needsFadeTransparent) {
+                mat.transparent = needsFadeTransparent;
+                mat.depthWrite = !needsFadeTransparent;
+                mat.needsUpdate = true;
               }
-            } else {
-              (m.material as THREE.Material).opacity = effectiveNonChair;
+              mat.opacity = effectiveNonChair;
             }
           }
         }
 
         const isChairVis = globalModelOpacity > 0.005;
+        const needsChairTransparent = globalModelOpacity < 0.995;
         for (let i = 0; i < chairMeshesRef.current.length; i++) {
           const m = chairMeshesRef.current[i];
           m.visible = isChairVis;
           if (m.material) {
-            if (Array.isArray(m.material)) {
-              for (let j = 0; j < m.material.length; j++) {
-                m.material[j].opacity = globalModelOpacity;
+            const mats = Array.isArray(m.material) ? m.material : [m.material];
+            for (let j = 0; j < mats.length; j++) {
+              const mat = mats[j] as THREE.MeshStandardMaterial;
+              if (mat.transparent !== needsChairTransparent) {
+                mat.transparent = needsChairTransparent;
+                mat.depthWrite = !needsChairTransparent;
+                mat.needsUpdate = true;
               }
-            } else {
-              (m.material as THREE.Material).opacity = globalModelOpacity;
+              mat.opacity = globalModelOpacity;
             }
           }
         }
@@ -934,25 +968,22 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       }
 
       // Model Visibility & Rotation Management
-      let isModelCurrentlyVisible = true;
+      const isVisibleProgress = vpW < 768 ? p < 0.80 : p < 0.98;
+      const isModelCurrentlyVisible = isVisibleProgress && globalModelOpacity > 0.001;
+
       if (modelGroupRef.current) {
-        const isVisibleProgress = vpW < 768 ? p < 0.80 : p < 0.98;
-        isModelCurrentlyVisible = isVisibleProgress && globalModelOpacity > 0.001;
         modelGroupRef.current.visible = isModelCurrentlyVisible;
         if (!isInteracting) {
           if (p > 0.14) {
-            // When scrolling into feature sections, damp any leftover mouse drag offset to 0
             userTurnOffset *= 0.88;
             if (Math.abs(userTurnOffset) < 0.0001) userTurnOffset = 0;
           } else {
-            // On Hero, userTurnOffset smoothly returns to 0 as continuous rotation runs
             userTurnOffset *= 0.94;
             if (Math.abs(userTurnOffset) < 0.0001) userTurnOffset = 0;
           }
           modelGroupRef.current.rotation.y = curBaseRotY + userTurnOffset;
           modelGroupRef.current.rotation.z = curBaseRotZ;
         } else {
-          // While user is actively dragging the mouse on turntable
           userTurnOffset = modelGroupRef.current.rotation.y - curBaseRotY;
           if (p <= 0.14) {
             heroSpinAngle = modelGroupRef.current.rotation.y;
@@ -961,9 +992,17 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         }
       }
 
-      // Modulate Dynamic Shadow Opacity based on stage
-      shadowPlaneMat.opacity = isModelCurrentlyVisible ? Math.max(0, curShadowOpacity * 0.34) : 0;
-      contactMat.opacity = isModelCurrentlyVisible ? Math.max(0, curShadowOpacity * 0.45) : 0;
+      // Modulate Dynamic Shadow Opacity & automatically toggle shadow pass
+      const hasVisibleShadow = isModelCurrentlyVisible && curShadowOpacity > 0.01;
+      shadowPlaneMesh.visible = hasVisibleShadow;
+      contactMesh.visible = hasVisibleShadow;
+      sunLight.castShadow = hasVisibleShadow;
+      renderer.shadowMap.autoUpdate = hasVisibleShadow;
+
+      if (hasVisibleShadow) {
+        shadowPlaneMat.opacity = Math.max(0, curShadowOpacity * 0.34);
+        contactMat.opacity = Math.max(0, curShadowOpacity * 0.45);
+      }
 
       // Update camera and model world matrices BEFORE projecting 3D button hotspots
       controls.update();
@@ -974,7 +1013,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
       // ----------------------------------------------------
       // Button Hotspots Position Projection (Stage 1: 0.235 - 0.365)
-      // Only display when Feature 01 is completely open & stationary
+      // Highly optimized: uses cached local centers with zero vertex looping
       // ----------------------------------------------------
       const isStage1Open = p >= 0.235 && p <= 0.365;
       if (hotspotsContainerRef.current) {
@@ -984,10 +1023,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           buttonMeshesRef.current.left &&
           buttonMeshesRef.current.right
         ) {
-          const projectBtn = (obj: THREE.Object3D) => {
-            tempBoxRef.current.setFromObject(obj);
-            tempBoxRef.current.getCenter(tempCenterRef.current);
-            const proj = projVec.copy(tempCenterRef.current).project(camera);
+          const projectBtnFast = (obj: THREE.Object3D, cachedLocalCenter: THREE.Vector3 | null) => {
+            const center = cachedLocalCenter
+              ? tempCenterRef.current.copy(cachedLocalCenter).applyMatrix4(obj.matrixWorld)
+              : obj.getWorldPosition(tempCenterRef.current);
+            const proj = projVec.copy(center).project(camera);
             const screenX = (proj.x * 0.5 + 0.5) * width;
             const screenY = (-(proj.y * 0.5) + 0.5) * height;
             const visible =
@@ -1000,9 +1040,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             return { x: screenX, y: screenY, visible };
           };
 
-          const topPos = projectBtn(buttonMeshesRef.current.top);
-          const leftPos = projectBtn(buttonMeshesRef.current.left);
-          const rightPos = projectBtn(buttonMeshesRef.current.right);
+          const topPos = projectBtnFast(buttonMeshesRef.current.top, cachedButtonCentersRef.current.top);
+          const leftPos = projectBtnFast(buttonMeshesRef.current.left, cachedButtonCentersRef.current.left);
+          const rightPos = projectBtnFast(buttonMeshesRef.current.right, cachedButtonCentersRef.current.right);
 
           lastButtonPosRef.current = {
             uv: { x: topPos.x, y: topPos.y },
@@ -1039,15 +1079,33 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         setActiveButton(null);
       }
 
-      // Skip redundant WebGL draw calls once the 3D model has completely exited into Dashboard/Footer
+      // Skip redundant WebGL draw calls once the 3D model has completely exited
       if (isModelCurrentlyVisible || !wasHiddenLastFrame) {
         renderer.render(scene, camera);
         wasHiddenLastFrame = !isModelCurrentlyVisible;
       }
+
+      // Smart Render Loop Pause: when model is completely off-screen and last frame was cleared,
+      // pause requestAnimationFrame loop to eliminate 100% idle GPU and CPU usage!
+      if (!isModelCurrentlyVisible && wasHiddenLastFrame && !isInteracting) {
+        isLoopRunning = false;
+        animFrameIdRef.current = null;
+        return;
+      }
+
       animFrameIdRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    const wakeUpRenderLoop = () => {
+      if (!isLoopRunning && isMounted) {
+        isLoopRunning = true;
+        lastTime = performance.now();
+        animFrameIdRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    wakeUpRenderLoopRef.current = wakeUpRenderLoop;
+    wakeUpRenderLoop();
 
     // Raycaster click and pointermove event listeners for 3D buttons on canvas
     const handleCanvasClick = (e: MouseEvent) => {
@@ -1134,38 +1192,89 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     renderer.domElement.addEventListener('touchend', handleCanvasTouchEnd, { passive: false });
     renderer.domElement.addEventListener('pointermove', handleCanvasPointerMove);
 
-    // Resize Handler
+    // Optimized Resize & Visibility Observers
     const handleResize = () => {
       if (!mountElem) return;
-      width = mountElem.clientWidth;
-      height = mountElem.clientHeight;
+      width = mountElem.clientWidth || window.innerWidth;
+      height = mountElem.clientHeight || window.innerHeight;
 
       camera.aspect = width / height;
       applyViewOffset(width, height, curXOffsetRatio, curOffsetYRatio);
       renderer.setSize(width, height);
-      const isMobileResize = typeof window !== 'undefined' && window.innerWidth < 768;
-      controls.enableRotate = !isMobileResize;
-      renderer.domElement.style.touchAction = 'none';
-      const resizeMaxDpr = isMobileResize ? 1.5 : 2;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, resizeMaxDpr));
+      renderer.setPixelRatio(getAdaptivePixelRatio());
+
+      const isMobileNow = window.innerWidth < 768;
+      controls.enableRotate = !isMobileNow;
+      wakeUpRenderLoop();
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
+    // Page Visibility API: Stop rendering when tab is hidden, resume when tab is active
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animFrameIdRef.current) {
+          cancelAnimationFrame(animFrameIdRef.current);
+          animFrameIdRef.current = null;
+        }
+        isLoopRunning = false;
+      } else {
+        wakeUpRenderLoop();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Comprehensive Resource Disposal on Unmount
     return () => {
       isMounted = false;
+      wakeUpRenderLoopRef.current = null;
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       renderer.domElement.removeEventListener('click', handleCanvasClick);
       renderer.domElement.removeEventListener('touchstart', handleCanvasTouchStart);
       renderer.domElement.removeEventListener('touchend', handleCanvasTouchEnd);
       renderer.domElement.removeEventListener('pointermove', handleCanvasPointerMove);
+
       if (animFrameIdRef.current) {
         cancelAnimationFrame(animFrameIdRef.current);
+        animFrameIdRef.current = null;
       }
+
       controls.dispose();
       pmremGenerator.dispose();
       envTexture.dispose();
+      roomEnv.dispose();
+
+      // Traverse and thoroughly dispose of all scene geometries, materials, and textures
+      scene.traverse((obj) => {
+        if ((obj as THREE.Mesh).isMesh) {
+          const mesh = obj as THREE.Mesh;
+          if (mesh.geometry) mesh.geometry.dispose();
+          if (mesh.material) {
+            const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+            for (const mat of mats) {
+              const m = mat as THREE.MeshStandardMaterial;
+              if (m.map) m.map.dispose();
+              if (m.normalMap) m.normalMap.dispose();
+              if (m.roughnessMap) m.roughnessMap.dispose();
+              if (m.metalnessMap) m.metalnessMap.dispose();
+              if (m.aoMap) m.aoMap.dispose();
+              if (m.envMap) m.envMap.dispose();
+              m.dispose();
+            }
+          }
+        }
+      });
+
+      shadowPlaneGeo.dispose();
+      shadowPlaneMat.dispose();
+      contactGeo.dispose();
+      contactMat.dispose();
+      contactTexture.dispose();
+
       renderer.dispose();
+      renderer.forceContextLoss();
+
       if (mountElem.contains(renderer.domElement)) {
         mountElem.removeChild(renderer.domElement);
       }
@@ -1174,17 +1283,11 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
 
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-20">
-      {/* 3D WebGL Canvas Layer (passes pointer events on desktop Hero turntable and Stage 1 button clicks) */}
+      {/* 3D WebGL Canvas Layer (pointer-events managed directly on DOM ref for zero React re-render overhead) */}
       <div
         ref={mountRef}
         style={{ touchAction: 'none' }}
-        className={`w-full h-full relative ${
-          scrollProgress <= 0.14
-            ? 'pointer-events-none md:pointer-events-auto md:cursor-grab md:active:cursor-grabbing'
-            : scrollProgress >= 0.235 && scrollProgress <= 0.365
-            ? 'pointer-events-auto'
-            : 'pointer-events-none'
-        }`}
+        className="w-full h-full relative pointer-events-none"
       />
 
       {/* Interactive Hotspots for Feature 01 Buttons */}
@@ -1312,7 +1415,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
               Loading 3D Product System
             </span>
             <span className="text-[10px] font-mono text-slate-500 tracking-wider">
-              High-Precision 2K Asset
+              {isMobile ? 'High-Performance Mobile Asset' : 'High-Precision 2K Asset'}
             </span>
           </div>
         </div>

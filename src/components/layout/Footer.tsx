@@ -158,25 +158,40 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
       if (window.matchMedia("(pointer: coarse)").matches) return;
 
       const ctx = gsap.context(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-          const rect = element.getBoundingClientRect();
-          const h = rect.width / 2;
-          const w = rect.height / 2;
-          const x = e.clientX - rect.left - h;
-          const y = e.clientY - rect.top - w;
+        let isMoving = false;
+        let rafId: number | null = null;
+        let lastEvent: MouseEvent | null = null;
 
-          gsap.to(element, {
-            x: x * 0.35,
-            y: y * 0.35,
-            rotationX: -y * 0.12,
-            rotationY: x * 0.12,
-            scale: 1.04,
-            ease: "power2.out",
-            duration: 0.35,
-          });
+        const handleMouseMove = (e: MouseEvent) => {
+          lastEvent = e;
+          if (!isMoving) {
+            isMoving = true;
+            rafId = requestAnimationFrame(() => {
+              if (lastEvent && element) {
+                const rect = element.getBoundingClientRect();
+                const h = rect.width / 2;
+                const w = rect.height / 2;
+                const x = lastEvent.clientX - rect.left - h;
+                const y = lastEvent.clientY - rect.top - w;
+
+                gsap.to(element, {
+                  x: x * 0.35,
+                  y: y * 0.35,
+                  rotationX: -y * 0.12,
+                  rotationY: x * 0.12,
+                  scale: 1.04,
+                  ease: "power2.out",
+                  duration: 0.35,
+                });
+              }
+              isMoving = false;
+            });
+          }
         };
 
         const handleMouseLeave = () => {
+          if (rafId) cancelAnimationFrame(rafId);
+          isMoving = false;
           gsap.to(element, {
             x: 0,
             y: 0,
@@ -188,10 +203,11 @@ const MagneticButton = React.forwardRef<HTMLElement, MagneticButtonProps>(
           });
         };
 
-        element.addEventListener("mousemove", handleMouseMove);
+        element.addEventListener("mousemove", handleMouseMove, { passive: true });
         element.addEventListener("mouseleave", handleMouseLeave);
 
         return () => {
+          if (rafId) cancelAnimationFrame(rafId);
           element.removeEventListener("mousemove", handleMouseMove);
           element.removeEventListener("mouseleave", handleMouseLeave);
         };

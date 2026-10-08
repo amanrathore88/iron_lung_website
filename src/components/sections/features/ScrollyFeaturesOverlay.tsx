@@ -35,6 +35,10 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
   const sec3TranslateY = (1 - Math.min(1, Math.max(0, (scrollProgress - 0.60) / 0.08))) * 32;
   const isSec3Active = scrollProgress >= 0.62 && scrollProgress <= 0.75;
 
+  if (scrollProgress < 0.12 || scrollProgress > 0.78) {
+    return null;
+  }
+
   return (
     <div className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-hidden">
       {/* ======================================================== */}
