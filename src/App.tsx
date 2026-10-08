@@ -86,21 +86,23 @@ export const App: React.FC = () => {
   useEffect(() => {
     if (currentView !== 'home') return;
 
-    // Ordered mobile snap stops strictly from Hero (Stage 0) to About Us (Stage 4).
-    // Everything below About Us (progress > 0.835: Dashboard Intro, Desktop Mockup, Phone Mockup,
-    // Partners & Footer) uses normal native free scrolling.
+    // Ordered mobile snap stops from Hero (Stage 0) up to Desktop Web Portal (Stage 6).
+    // Swiping from "Your Dashboard Awaits" stops firmly at "Desktop Web Portal".
+    // Below "Desktop Web Portal" (Stage 6), normal native free scrolling resumes for subsequent sections.
     const MOBILE_STAGE_STOPS = [
       { restP: 0.00,  downStartP: 0.125, upStartP: 0.00,  durationMs: 1050 }, // 0: Hero Section
       { restP: 0.255, downStartP: 0.355, upStartP: 0.25,  durationMs: 1050 }, // 1: Feature 01 (Smart Touch Screen)
       { restP: 0.475, downStartP: 0.575, upStartP: 0.47,  durationMs: 1000 }, // 2: Feature 02 (UV Sanitization)
       { restP: 0.695, downStartP: 0.720, upStartP: 0.685, durationMs: 1000 }, // 3: Feature 03 (Ergonomic Chair)
       { restP: 0.835, downStartP: 0.835, upStartP: 0.815, durationMs: 980 },  // 4: About Us (Our Story)
+      { restP: 0.890, downStartP: 0.890, upStartP: 0.865, durationMs: 920 },  // 5: Your Dashboard Awaits
+      { restP: 0.948, downStartP: 0.945, upStartP: 0.925, durationMs: 960 },  // 6: Desktop Web Portal
     ];
-    const LAST_SNAP_STAGE = MOBILE_STAGE_STOPS.length - 1; // 4 (About Us)
-    const BELOW_ABOUT_STAGE = LAST_SNAP_STAGE + 1;         // 5 (Free native scroll zone below About Us)
+    const LAST_SNAP_STAGE = MOBILE_STAGE_STOPS.length - 1; // 6 (Desktop Web Portal)
+    const BELOW_LAST_STAGE = LAST_SNAP_STAGE + 1;          // 7 (Free native scroll zone below Desktop Web Portal)
 
     const findNearestStageIndex = (progress: number): number => {
-      if (progress > 0.85) return BELOW_ABOUT_STAGE;
+      if (progress > 0.96) return BELOW_LAST_STAGE;
       let bestIdx = 0;
       let bestDist = Infinity;
       for (let i = 0; i < MOBILE_STAGE_STOPS.length; i++) {
@@ -212,17 +214,17 @@ export const App: React.FC = () => {
               const progress = Math.min(1, Math.max(0, (scrollY - trackTop) / trackSpan));
 
               if (window.innerWidth < 768) {
-                // When scrolling UP natively from below About Us (progress > 0.84) back into About Us (<= 0.84),
-                // pause cleanly at About Us (0.835) so upward scroll momentum doesn't fly past About Us into Feature 03.
-                if (lastRawProgress > 0.84 && progress <= 0.84) {
-                  const aboutP = MOBILE_STAGE_STOPS[LAST_SNAP_STAGE].restP;
-                  lastRawProgress = aboutP;
-                  scrollProgressRef.current = aboutP;
-                  setScrollProgress(aboutP);
+                // When scrolling UP natively from below Desktop Web Portal (progress > 0.955) back into Desktop Web Portal (<= 0.955),
+                // pause cleanly at Desktop Web Portal (0.948) so upward scroll momentum doesn't fly past into earlier sections.
+                if (lastRawProgress > 0.955 && progress <= 0.955) {
+                  const desktopP = MOBILE_STAGE_STOPS[LAST_SNAP_STAGE].restP;
+                  lastRawProgress = desktopP;
+                  scrollProgressRef.current = desktopP;
+                  setScrollProgress(desktopP);
                   mobileStageIndexRef.current = LAST_SNAP_STAGE;
                   snapCooldownUntilRef.current = performance.now() + 380;
                   window.scrollTo({
-                    top: trackTop + aboutP * trackSpan,
+                    top: trackTop + desktopP * trackSpan,
                     behavior: 'instant' as ScrollBehavior,
                   });
                   ticking = false;
@@ -230,6 +232,21 @@ export const App: React.FC = () => {
                 }
 
                 mobileStageIndexRef.current = findNearestStageIndex(progress);
+              } else {
+                // On desktop, catch quick scrolls from "Your Dashboard Awaits" (<= 0.932)
+                // so they stop firmly at "Desktop Web Portal" (0.950) instead of sliding past it!
+                if (lastRawProgress <= 0.932 && progress > 0.952) {
+                  const targetP = 0.950;
+                  lastRawProgress = targetP;
+                  scrollProgressRef.current = targetP;
+                  setScrollProgress(targetP);
+                  window.scrollTo({
+                    top: trackTop + targetP * trackSpan,
+                    behavior: 'instant' as ScrollBehavior,
+                  });
+                  ticking = false;
+                  return;
+                }
               }
 
               lastRawProgress = progress;
@@ -288,11 +305,11 @@ export const App: React.FC = () => {
       const dy = touchStartY - e.touches[0].clientY; // > 0 means scrolling down, < 0 means scrolling up
       const dx = touchStartX - e.touches[0].clientX;
 
-      // Below About Us (stage 5) or scrolling DOWN from About Us (stage 4 + dy > 0):
+      // Below Desktop Web Portal (stage 7) or scrolling DOWN from Desktop Web Portal (stage 6 + dy > 0):
       // allow 100% free native browser scrolling.
       if (
-        mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.85 ||
+        mobileStageIndexRef.current === BELOW_LAST_STAGE ||
+        scrollProgressRef.current > 0.955 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -343,8 +360,8 @@ export const App: React.FC = () => {
       const dx = touchStartX - e.changedTouches[0].clientX;
 
       if (
-        mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.85 ||
+        mobileStageIndexRef.current === BELOW_LAST_STAGE ||
+        scrollProgressRef.current > 0.955 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -376,10 +393,10 @@ export const App: React.FC = () => {
 
       const dy = e.deltaY;
 
-      // Below About Us or scrolling DOWN from About Us: allow 100% free native scrolling
+      // Below Desktop Web Portal or scrolling DOWN from Desktop Web Portal: allow 100% free native scrolling
       if (
-        mobileStageIndexRef.current === BELOW_ABOUT_STAGE ||
-        scrollProgressRef.current > 0.85 ||
+        mobileStageIndexRef.current === BELOW_LAST_STAGE ||
+        scrollProgressRef.current > 0.955 ||
         (mobileStageIndexRef.current === LAST_SNAP_STAGE && dy > 0)
       ) {
         return;
@@ -440,14 +457,15 @@ export const App: React.FC = () => {
       const trackTop = track.offsetTop;
       const trackSpan = track.offsetHeight - window.innerHeight;
 
-      if (window.innerWidth < 768 && animateMobileSnapRef.current && stageVal !== 'dashboard' && typeof stageVal !== 'number') {
+      if (window.innerWidth < 768 && animateMobileSnapRef.current && typeof stageVal !== 'number') {
         let targetIdx = 0;
         if (stageVal === 'hero') targetIdx = 0;
         else if (stageVal === 'screen') targetIdx = 1;
         else if (stageVal === 'uv') targetIdx = 2;
         else if (stageVal === 'comfort') targetIdx = 3;
         else if (stageVal === 'about') targetIdx = 4;
-        animateMobileSnapRef.current(targetIdx, Math.min(4, mobileStageIndexRef.current));
+        else if (stageVal === 'dashboard') targetIdx = 6;
+        animateMobileSnapRef.current(targetIdx, Math.min(6, mobileStageIndexRef.current));
         return;
       }
 
@@ -465,7 +483,7 @@ export const App: React.FC = () => {
       } else if (stageVal === 'about') {
         targetProgress = 0.84;
       } else if (stageVal === 'dashboard') {
-        targetProgress = 0.96;
+        targetProgress = 0.950;
       }
 
       window.scrollTo({
@@ -565,7 +583,7 @@ export const App: React.FC = () => {
             onContactUs={() => handleNavigation('contact')}
             onNavigateSection={handleNavigation}
             activeSection={
-              scrollProgress > 0.90
+              scrollProgress > 0.88
                 ? 'dashboard'
                 : scrollProgress > 0.78
                 ? 'about'
@@ -580,7 +598,7 @@ export const App: React.FC = () => {
           {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
             {/* Sticky 100svh Viewport Pin (stable on mobile across browser URL bar show/hide) */}
-            <div className={`sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden bg-white ${scrollProgress < 0.825 ? 'max-md:touch-none' : ''}`}>
+            <div className={`sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden bg-white ${scrollProgress < 0.945 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}
               <StudioRoomBackground scrollProgress={scrollProgress} />
 

@@ -169,9 +169,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const modelCenterPct = 15.5 + sweepEase * 104.5;
   const revealPct = Math.min(116, Math.max(0, modelCenterPct + 2));
 
-  // Mobile elevation reveal (0.860 - 0.896): hands off smoothly from About Us
-  const mobileProgress = Math.min(1, Math.max(0, (scrollProgress - 0.860) / 0.036));
-  const mobileEase = mobileProgress * mobileProgress * (3 - 2 * mobileProgress);
+  // Mobile elevation reveal (0.850 - 0.885): hands off smoothly from About Us
+  const mobileProgress = Math.min(1, Math.max(0, (scrollProgress - 0.850) / 0.035));
+  const mobileEase = 0.5 - 0.5 * Math.cos(Math.PI * mobileProgress);
 
   // Mask gradient for desktop sweep
   const feather = 18;
@@ -190,56 +190,55 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   // ---------------------------------------------------------------------------
   // 2. Text Popcorn Animation on 3D Model Exit & Subsequent Scroll Separation
   // ---------------------------------------------------------------------------
-  const isModelExitRight = isMobile ? scrollProgress >= 0.882 : scrollProgress >= 0.912;
+  const isModelExitRight = isMobile ? scrollProgress >= 0.875 : scrollProgress >= 0.912;
   const isTextActive = isModelExitRight;
-  const isInteractive = isMobile ? scrollProgress >= 0.882 : scrollProgress >= 0.912;
+  const isInteractive = isMobile ? scrollProgress >= 0.875 : scrollProgress >= 0.912;
 
   // Separation progress:
-  // Desktop: 0.946 -> 0.966 (gives generous hold time on 'YOUR DASHBOARD AWAITS' before splitting)
-  // Mobile: 0.916 -> 0.938 (gives generous hold time on Stage 1 text before splitting)
-  const splitStart = isMobile ? 0.916 : 0.946;
-  const splitSpan = isMobile ? 0.022 : 0.020;
+  // Desktop: 0.928 -> 0.948 (smooth separation to reveal Desktop Web Portal)
+  // Mobile: 0.908 -> 0.938 (hands off from Stage 5 to Stage 6)
+  const splitStart = isMobile ? 0.908 : 0.928;
+  const splitSpan = isMobile ? 0.030 : 0.020;
   const splitT = Math.min(1, Math.max(0, (scrollProgress - splitStart) / splitSpan));
+  // Smooth sinusoidal ease: zero jerk at beginning and end, silky smooth motion
   const splitEase =
-    splitT < 0.5 ? 4 * splitT * splitT * splitT : 1 - Math.pow(-2 * splitT + 2, 3) / 2;
+    splitT <= 0 ? 0 : splitT >= 1 ? 1 : 0.5 - 0.5 * Math.cos(Math.PI * splitT);
 
   // Distance required to guarantee complete off-screen exit beyond viewport edges
   const exitTravelDistance = windowDimensions.height * 0.52 + 180;
   const topExitOffset = splitEase * exitTravelDistance;
   const bottomExitOffset = splitEase * exitTravelDistance;
-  const textOpacity = splitEase < 0.75 ? 1 : Math.max(0, 1 - (splitEase - 0.75) / 0.25);
+  const textOpacity = splitEase < 0.70 ? 1 : Math.max(0, 1 - (splitEase - 0.70) / 0.30);
 
-  // Desktop zoom-in scale: zooms in from 0.76 (or 0.84 on mobile) up to 1.00
-  const baseDesktopScale = (isMobile ? 0.84 : 0.76) + (isMobile ? 0.16 : 0.24) * splitEase;
+  // Desktop zoom-in scale: zooms in from 0.82 (or 0.90 on mobile) up to 1.00
+  const baseDesktopScale = (isMobile ? 0.90 : 0.82) + (isMobile ? 0.10 : 0.18) * splitEase;
 
-  // Pointers activation: triggers once the desktop screen has zoomed into place
-  // and remains attached to the desktop stage as it zooms out for the phone transition
-  const arePointersActive = isMobile ? scrollProgress >= 0.932 : scrollProgress >= 0.963;
+  // Pointers activation: triggers once the desktop screen has settled into place
+  const arePointersActive = isMobile ? scrollProgress >= 0.938 : scrollProgress >= 0.946;
 
   // ---------------------------------------------------------------------------
   // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition
-  // Desktop: 0.978 -> 0.996
-  // Mobile: 0.956 -> 0.978 (leaves a generous 0.978 -> 1.000 hold window for the Phone stage)
+  // Desktop: 0.970 -> 0.988
+  // Mobile: 0.960 -> 0.984 (firm rest window from 0.938 to 0.960 for Desktop Web Portal)
   // ---------------------------------------------------------------------------
-  const phoneStart = isMobile ? 0.956 : 0.978;
-  const phoneSpan = isMobile ? 0.022 : 0.018;
+  const phoneStart = isMobile ? 0.960 : 0.970;
+  const phoneSpan = isMobile ? 0.024 : 0.018;
   const phoneT = Math.min(1, Math.max(0, (scrollProgress - phoneStart) / phoneSpan));
   const phoneEase =
-    phoneT < 0.5 ? 4 * phoneT * phoneT * phoneT : 1 - Math.pow(-2 * phoneT + 2, 3) / 2;
+    phoneT <= 0 ? 0 : phoneT >= 1 ? 1 : 0.5 - 0.5 * Math.cos(Math.PI * phoneT);
 
-  // Desktop zooms out (1.00 -> 0.64), blurs into depth, and fades out (1.0 -> 0.0)
-  const desktopScale = baseDesktopScale * (1 - 0.36 * phoneEase);
+  // Desktop scales subtly (1.00 -> 0.86 on desktop, 1.00 -> 0.93 on mobile) and fades out smoothly (1.0 -> 0.0)
+  const desktopScale = baseDesktopScale * (1 - (isMobile ? 0.07 : 0.14) * phoneEase);
   const desktopOpacity = splitEase * (1 - phoneEase);
-  const desktopBlur = phoneEase * 6;
 
-  // Phone slides up from the bottom edge to the center (translateY: +100vh -> 0px)
-  const phoneTravelDistance = windowDimensions.height * (isMobile ? 0.78 : 0.92) + 80;
+  // Phone slides up from the bottom edge to the center (translateY: +travel -> 0px)
+  const phoneTravelDistance = windowDimensions.height * (isMobile ? 0.74 : 0.84) + 60;
   const phoneTranslateY = (1 - phoneEase) * phoneTravelDistance;
-  const phoneOpacity = phoneT <= 0.005 ? 0 : Math.min(1, phoneT / 0.28);
-  const phoneScale = 0.94 + 0.06 * phoneEase;
+  const phoneOpacity = phoneEase;
+  const phoneScale = 0.95 + 0.05 * phoneEase;
 
   // Phone pointers activation: triggers once the phone mockup settles into the center
-  const arePhonePointersActive = isMobile ? scrollProgress >= 0.974 : scrollProgress >= 0.991;
+  const arePhonePointersActive = isMobile ? scrollProgress >= 0.980 : scrollProgress >= 0.985;
 
   // Reset only if user navigates all the way back to the very top Hero section (< 0.15)
   if (scrollProgress < 0.15) {
@@ -253,7 +252,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
     }
   }, [isModelExitRight]);
 
-  if (scrollProgress < 0.85) {
+  if (scrollProgress < 0.84) {
     return null;
   }
 
@@ -319,7 +318,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
         {/* Top Split Group: Kicker (Mobile) + "YOUR DASHBOARD" -> moves up and out of view */}
         <div
-          className="w-full flex flex-col items-center justify-center transition-transform duration-75 will-change-transform"
+          className="w-full flex flex-col items-center justify-center will-change-transform"
           style={{
             transform: `translateY(-${topExitOffset}px)`,
             opacity: textOpacity,
@@ -399,7 +398,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
         {/* Bottom Split Group: "AWAITS" + Subtitle & Device Pills (Mobile) -> moves down and out of view */}
         <div
-          className="w-full flex flex-col items-center justify-center transition-transform duration-75 will-change-transform mt-1 sm:mt-4 md:mt-6"
+          className="w-full flex flex-col items-center justify-center will-change-transform mt-1 sm:mt-4 md:mt-6"
           style={{
             transform: `translateY(${bottomExitOffset}px)`,
             opacity: textOpacity,
@@ -467,9 +466,6 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* ================================================================= */}
         <div
           className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
-          style={{
-            filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
-          }}
         >
           {/* TOP SECTION: Kicker, Headline, Subtitle, Indicators + Top 2 Cards */}
           <div className="w-full flex flex-col items-center shrink-0 z-20">
@@ -605,22 +601,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   { cx: 338, cy: 186, delay: 0.20 },
                 ].map((dot, idx) => (
                   <g key={idx}>
-                    <motion.circle
-                      cx={dot.cx}
-                      cy={dot.cy}
-                      r="6.5"
-                      fill="none"
-                      stroke="#FF4800"
-                      strokeWidth="1.5"
-                      initial={{ r: 6.5, opacity: 0.75 }}
-                      animate={{ r: 13, opacity: 0 }}
-                      transition={{
-                        duration: 1.8,
-                        repeat: Infinity,
-                        delay: dot.delay + 0.3,
-                        ease: 'easeOut',
-                      }}
-                    />
+                    <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="none" stroke="#FF4800" strokeWidth="1.5" opacity="0.75">
+                      <animate attributeName="r" values="6.5; 13; 13" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.75; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                    </circle>
                     <g>
                       <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
                       <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
@@ -682,7 +666,6 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             aspectRatio: '1024 / 484',
             containerType: 'inline-size',
             transform: `scale(${desktopScale})`,
-            filter: desktopBlur > 0.1 ? `blur(${desktopBlur.toFixed(2)}px)` : undefined,
           }}
         >
           {/* Ambient Warm Theme-Orange Backlight Glow behind Monitor */}
@@ -837,22 +820,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               <g key={idx}>
                 {/* Radiating Sonar Pulse Ring */}
                 {arePointersActive && (
-                  <motion.circle
-                    cx={dot.cx}
-                    cy={dot.cy}
-                    r="4.8"
-                    fill="none"
-                    stroke="#FF5500"
-                    strokeWidth="1.15"
-                    initial={{ r: 4.5, opacity: 0.7 }}
-                    animate={{ r: 11.5, opacity: 0 }}
-                    transition={{
-                      duration: 1.8,
-                      repeat: Infinity,
-                      delay: dot.delay + 0.3,
-                      ease: 'easeOut',
-                    }}
-                  />
+                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#FF5500" strokeWidth="1.15" opacity="0.7">
+                    <animate attributeName="r" values="4.5; 11.5; 11.5" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.7; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                  </circle>
                 )}
                 {/* Outer Orange Ring + White Core */}
                 <motion.g
@@ -1235,22 +1206,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 { cx: 270, cy: 205, delay: 0.20 },
               ].map((dot, idx) => (
                 <g key={idx}>
-                  <motion.circle
-                    cx={dot.cx}
-                    cy={dot.cy}
-                    r="6.5"
-                    fill="none"
-                    stroke="#FF4800"
-                    strokeWidth="1.5"
-                    initial={{ r: 6.5, opacity: 0.75 }}
-                    animate={{ r: 13, opacity: 0 }}
-                    transition={{
-                      duration: 1.8,
-                      repeat: Infinity,
-                      delay: dot.delay + 0.3,
-                      ease: 'easeOut',
-                    }}
-                  />
+                  <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="none" stroke="#FF4800" strokeWidth="1.5" opacity="0.75">
+                    <animate attributeName="r" values="6.5; 13; 13" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.75; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                  </circle>
                   <g>
                     <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
                     <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
@@ -1560,22 +1519,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               <g key={idx}>
                 {/* Radiating Sonar Pulse Ring */}
                 {arePhonePointersActive && (
-                  <motion.circle
-                    cx={dot.cx}
-                    cy={dot.cy}
-                    r="4.8"
-                    fill="none"
-                    stroke="#FF5500"
-                    strokeWidth="1.15"
-                    initial={{ r: 4.5, opacity: 0.7 }}
-                    animate={{ r: 11.5, opacity: 0 }}
-                    transition={{
-                      duration: 1.8,
-                      repeat: Infinity,
-                      delay: dot.delay + 0.3,
-                      ease: 'easeOut',
-                    }}
-                  />
+                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#FF5500" strokeWidth="1.15" opacity="0.7">
+                    <animate attributeName="r" values="4.5; 11.5; 11.5" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.7; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
+                  </circle>
                 )}
                 {/* Soft White Outer Halo + Orange Ring + White Core */}
                 <motion.g

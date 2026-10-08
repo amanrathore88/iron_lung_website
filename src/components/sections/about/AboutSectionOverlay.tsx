@@ -70,7 +70,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
   // Starts fading in smoothly at 0.73 as the 3D model descends from Section 03
   // 100% visible & locked between 0.80 and 0.855
   // Between 0.855 and 0.925, fades/wipes out smoothly alongside the slower 3D model sweep to User Dashboard
-  if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.94 : 0.925)) {
+  if (scrollProgress < 0.73 || scrollProgress >= (isDesktop ? 0.94 : 0.885)) {
     return null;
   }
 
@@ -92,9 +92,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
 
   // Seamless exit opacity:
   // On desktop, exits alongside horizontal model sweep between 0.855 and 0.925
-  // On mobile (< 1024px), exits cleanly between 0.860 and 0.892 as Dashboard intro rises in
-  const exitStart = isDesktop ? 0.855 : 0.860;
-  const exitDuration = isDesktop ? 0.070 : 0.032;
+  // On mobile (< 1024px), exits cleanly between 0.845 and 0.880 as Dashboard intro rises in
+  const exitStart = isDesktop ? 0.855 : 0.845;
+  const exitDuration = isDesktop ? 0.070 : 0.035;
   const exitProgress = Math.min(1, Math.max(0, (scrollProgress - exitStart) / exitDuration));
   const exitOpacity = scrollProgress >= exitStart ? 1 - exitProgress : 1.0;
 
