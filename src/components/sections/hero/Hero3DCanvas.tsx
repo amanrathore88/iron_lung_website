@@ -95,22 +95,13 @@ function interpolateAngle(from: number, to: number, t: number): number {
   return from + diff * t;
 }
 
-// Adaptive Device Pixel Ratio: Cap DPR to eliminate fill-rate bottlenecks
+// Adaptive Device Pixel Ratio: Cap DPR to 2.0x to eliminate blurriness while maintaining silky 60fps performance
 function getAdaptivePixelRatio(): number {
   if (typeof window === 'undefined') return 1;
   const rawDpr = window.devicePixelRatio || 1;
-  const isMobile = window.innerWidth < 768;
-  const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
-  const isLowEnd = typeof navigator !== 'undefined' && ((navigator.hardwareConcurrency || 4) <= 4);
-
-  if (isMobile) {
-    return Math.min(rawDpr, isLowEnd ? 1.0 : 1.25);
-  } else if (isTablet) {
-    return Math.min(rawDpr, 1.35);
-  } else {
-    // Desktop: clamp to 1.5 to prevent multi-million pixel overhead on 4K/retina screens while preserving razor sharpness
-    return Math.min(rawDpr, 1.5);
-  }
+  // Modern phones and retina displays: 2.0x DPR provides razor-sharp pixel density on all mobile retina/OLED screens,
+  // completely eliminating mobile blurriness while capping GPU fill-rate sensibly.
+  return Math.min(Math.max(rawDpr, 1), 2.0);
 }
 
 export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) => {
@@ -242,17 +233,22 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       antialias: true,
       alpha: true,
       powerPreference: 'high-performance',
-      precision: isMobileDevice ? 'mediump' : 'highp',
+      precision: 'highp',
     });
     renderer.setSize(width, height);
     renderer.setPixelRatio(getAdaptivePixelRatio());
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.38;
 
-    // Optimized Shadow Map: Use PCFShadowMap on mobile for high framerate, PCFSoftShadowMap on desktop
+    // Optimized Shadow Map: PCFSoftShadowMap for smooth contact shadows
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = isMobileDevice ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+    renderer.domElement.style.display = 'block';
 
     mountElem.appendChild(renderer.domElement);
 
@@ -392,11 +388,35 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       const fadeMeshes: THREE.Mesh[] = [];
       const chairMeshes: THREE.Mesh[] = [];
 
+      const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
+      const textureAnisotropy = Math.min(maxAnisotropy, 8);
+
+      const enhanceTexture = (tex: THREE.Texture | null, isColorMap: boolean = false) => {
+        if (!tex) return;
+        tex.anisotropy = textureAnisotropy;
+        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.generateMipmaps = true;
+        if (isColorMap) {
+          tex.colorSpace = THREE.SRGBColorSpace;
+        }
+        tex.needsUpdate = true;
+      };
+
       model.traverse((child: THREE.Object3D) => {
         if ((child as THREE.Mesh).isMesh) {
           const mesh = child as THREE.Mesh;
           mesh.castShadow = true;
           mesh.receiveShadow = true;
+
+          // Clone materials so independent opacity animation works smoothly without global sharing conflicts
+          if (mesh.material) {
+            if (Array.isArray(mesh.material)) {
+              mesh.material = mesh.material.map((m) => m.clone());
+            } else {
+              mesh.material = (mesh.material as THREE.Material).clone();
+            }
+          }
 
           const mat = mesh.material as THREE.MeshStandardMaterial;
           if (mat) {
@@ -409,16 +429,15 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             // Early-Z Optimization: keep materials opaque with depthWrite=true until opacity fade begins
             mat.transparent = false;
             mat.depthWrite = true;
-            mat.needsUpdate = true;
-          }
 
-          // Clone materials so independent opacity animation works smoothly without global sharing conflicts
-          if (mesh.material) {
-            if (Array.isArray(mesh.material)) {
-              mesh.material = mesh.material.map((m) => m.clone());
-            } else {
-              mesh.material = (mesh.material as THREE.Material).clone();
-            }
+            // Maximum clarity texture filtering & anisotropic sampling
+            enhanceTexture(mat.map, true);
+            enhanceTexture(mat.normalMap);
+            enhanceTexture(mat.roughnessMap);
+            enhanceTexture(mat.metalnessMap);
+            enhanceTexture(mat.aoMap);
+
+            mat.needsUpdate = true;
           }
 
           // The chair is uniquely defined by material 'Chair_1K' or 'Chair_2K'
