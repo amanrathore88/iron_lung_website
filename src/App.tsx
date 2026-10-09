@@ -12,11 +12,14 @@ import { TechnologyPage } from './pages/TechnologyPage';
 import { AboutPage } from './pages/AboutPage';
 import { BookDemoPage } from './pages/BookDemoPage';
 import { ContactPage } from './pages/ContactPage';
+import { LoadingScreen } from './components/ui/LoadingScreen';
 
 export type AppView = 'home' | 'technology' | 'about' | 'book-demo' | 'contact';
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
+  const [is3DModelLoaded, setIs3DModelLoaded] = useState<boolean>(false);
+  const [isAppReady, setIsAppReady] = useState<boolean>(false);
 
   const [currentView, setCurrentView] = useState<AppView>(() => {
     if (typeof window !== 'undefined') {
@@ -553,6 +556,14 @@ export const App: React.FC = () => {
 
   return (
     <div className="relative bg-white text-slate-900 font-sans select-none">
+      {/* Brand-Aligned Cinematic Loading Page (Max 2-3s preloader for 3D model) */}
+      {!isAppReady && currentView === 'home' && (
+        <LoadingScreen
+          isModelLoaded={is3DModelLoaded}
+          onComplete={() => setIsAppReady(true)}
+        />
+      )}
+
       {currentView === 'technology' ? (
         <TechnologyPage
           onBookDemo={() => handleNavigation('book-demo')}
@@ -577,23 +588,25 @@ export const App: React.FC = () => {
         />
       ) : (
         <>
-          {/* Fixed Top Brand Navigation */}
-          <HeroNavbar
-            onBookDemo={() => handleNavigation('book-demo')}
-            onContactUs={() => handleNavigation('contact')}
-            onNavigateSection={handleNavigation}
-            activeSection={
-              scrollProgress > 0.88
-                ? 'dashboard'
-                : scrollProgress > 0.78
-                ? 'about'
-                : scrollProgress > 0.60
-                ? 'comfort'
-                : scrollProgress > 0.18
-                ? 'screen'
-                : 'hero'
-            }
-          />
+          {/* Fixed Top Brand Navigation (Renders once loading finishes) */}
+          {isAppReady && (
+            <HeroNavbar
+              onBookDemo={() => handleNavigation('book-demo')}
+              onContactUs={() => handleNavigation('contact')}
+              onNavigateSection={handleNavigation}
+              activeSection={
+                scrollProgress > 0.88
+                  ? 'dashboard'
+                  : scrollProgress > 0.78
+                  ? 'about'
+                  : scrollProgress > 0.60
+                  ? 'comfort'
+                  : scrollProgress > 0.18
+                  ? 'screen'
+                  : 'hero'
+              }
+            />
+          )}
 
           {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
@@ -614,22 +627,29 @@ export const App: React.FC = () => {
               />
 
               {/* Layer 3 (z-[20]): Real-time WebGL 3D Interactive Model Canvas (Transparent canvas, 3D model sweeps over layers) */}
-              <Hero3DCanvas scrollProgress={scrollProgress} />
-
-              {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls) */}
-              <HeroOverlay
-                onDiscover={() => scrollToStage('screen')}
-                onOpenVideo={() => setIsVideoModalOpen(true)}
+              <Hero3DCanvas
                 scrollProgress={scrollProgress}
+                onModelLoaded={() => setIs3DModelLoaded(true)}
               />
+
+              {/* Layer 4 (z-[30]): Hero Section Overlay (Stage 0: Fades out as user scrolls; kicks off once loader disappears) */}
+              {isAppReady && (
+                <HeroOverlay
+                  onDiscover={() => scrollToStage('screen')}
+                  onOpenVideo={() => setIsVideoModalOpen(true)}
+                  scrollProgress={scrollProgress}
+                />
+              )}
 
               {/* Layer 4 (z-[30]): Scrollytelling Feature Overlays (Stage 1: Touch Screen, Stage 2: UV Sanitization, Stage 3: Ergonomic Chair) */}
-              <ScrollyFeaturesOverlay
-                scrollProgress={scrollProgress}
-                onExploreScreen={() => scrollToStage('screen')}
-                onExploreUV={() => scrollToStage('uv')}
-                onExploreChair={() => scrollToStage('comfort')}
-              />
+              {isAppReady && (
+                <ScrollyFeaturesOverlay
+                  scrollProgress={scrollProgress}
+                  onExploreScreen={() => scrollToStage('screen')}
+                  onExploreUV={() => scrollToStage('uv')}
+                  onExploreChair={() => scrollToStage('comfort')}
+                />
+              )}
             </div>
           </div>
 

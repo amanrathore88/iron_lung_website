@@ -7,6 +7,8 @@ import { ConsoleButtonInfoCard, ButtonType } from './ConsoleButtonInfoCard';
 
 interface Hero3DCanvasProps {
   scrollProgress: number; // 0.0 to 1.0
+  onModelLoaded?: () => void;
+  onLoadingProgress?: (progress: number) => void;
 }
 
 // Stage keyframes for Scrollytelling transitions
@@ -104,7 +106,11 @@ function getAdaptivePixelRatio(): number {
   return Math.min(Math.max(rawDpr, 1), 2.0);
 }
 
-export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) => {
+export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({
+  scrollProgress,
+  onModelLoaded: externalOnModelLoaded,
+  onLoadingProgress: externalOnLoadingProgress,
+}) => {
   const mountRef = useRef<HTMLDivElement | null>(null);
   const modelGroupRef = useRef<THREE.Group | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
@@ -112,8 +118,6 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
   const fadeMeshesRef = useRef<THREE.Mesh[]>([]);
   const chairMeshesRef = useRef<THREE.Mesh[]>([]);
 
-  const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   // Keep a live ref to scrollProgress for the 60fps render loop
@@ -504,7 +508,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
       controls.update();
 
       modelGroup.add(model);
-      setIsLoaded(true);
+      externalOnModelLoaded?.();
       wakeUpRenderLoop();
     };
 
@@ -516,9 +520,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
           if (!isMounted) return;
           if (xhr.total > 0) {
             const percent = Math.round((xhr.loaded / xhr.total) * 100);
-            setLoadingProgress(percent);
-          } else {
-            setLoadingProgress((prev) => Math.min(prev + 10, 95));
+            externalOnLoadingProgress?.(percent);
           }
         },
         (error) => {
@@ -1413,28 +1415,7 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
         isMobile={isMobile}
       />
 
-      {/* Loading HUD */}
-      {!isLoaded && !loadError && (
-        <div className="absolute inset-0 z-30 bg-white/80 backdrop-blur-md flex flex-col items-center justify-center gap-5">
-          <div className="relative w-20 h-20 flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full border-2 border-slate-200" />
-            <div className="absolute inset-0 rounded-full border-2 border-[#FF5E1E] border-t-transparent animate-spin" />
-            <div className="absolute inset-2 rounded-full border-2 border-slate-100" />
-            <div className="absolute inset-2 rounded-full border-2 border-[#FF5E1E]/50 border-b-transparent animate-spin [animation-duration:1.5s]" />
-            <span className="text-xs font-mono text-slate-900 font-bold">
-              {loadingProgress}%
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-xs font-mono tracking-widest text-slate-900 font-bold uppercase">
-              Loading 3D Product System
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 tracking-wider">
-              {isMobile ? 'High-Performance Mobile Asset' : 'High-Precision 2K Asset'}
-            </span>
-          </div>
-        </div>
-      )}
+
 
       {/* Error Fallback */}
       {loadError && (
