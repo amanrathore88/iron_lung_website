@@ -379,13 +379,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
     scene.add(modelGroup);
     modelGroupRef.current = modelGroup;
 
-    // 8. Responsive & Highly-Optimized GLTF Model Loader
-    // Mobile (< 768px): 2.00 MB model (1K WebP textures, 75% less GPU VRAM, instant download)
-    // Desktop / Tablet (>= 768px): 3.73 MB model (full 2K WebP textures, flawless fidelity)
-    const primaryModelUrl = isMobileDevice
-      ? '/models/Final_Model_Mobile.glb'
-      : '/models/Final_Model_Desktop.glb';
-    const fallbackModelUrl = '/models/Final_Model(2K).glb';
+    // 8. 3D GLTF Model Loader (1K Model)
+    const primaryModelUrl = '/models/Final_Model(1K).glb';
+    const fallbackModelUrl = '/models/Final_Model(1K).glb';
 
     const loader = new GLTFLoader();
 
@@ -425,9 +421,9 @@ export const Hero3DCanvas: React.FC<Hero3DCanvasProps> = ({ scrollProgress }) =>
             }
           }
 
-          // The chair is uniquely and exclusively defined by material 'Chair_2K'
+          // The chair is uniquely defined by material 'Chair_1K' or 'Chair_2K'
           const matName = (mesh.material as THREE.Material)?.name || '';
-          const isChairMesh = matName === 'Chair_2K';
+          const isChairMesh = matName === 'Chair_1K' || matName === 'Chair_2K' || matName.toLowerCase().includes('chair');
 
           // Identify hardware buttons on front screen console & cache their local centers
           if (mesh.name.includes('Button_1')) {
