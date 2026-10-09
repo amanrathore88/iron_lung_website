@@ -496,6 +496,20 @@ export const App: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    (window as any).scrollToStage = scrollToStage;
+    (window as any).snapToStage = (idx: number) => {
+      if (animateMobileSnapRef.current) {
+        animateMobileSnapRef.current(idx, mobileStageIndexRef.current);
+      }
+    };
+    (window as any).__getScrollProgress = () => scrollProgressRef.current;
+    (window as any).__setScrollProgress = (p: number) => {
+      setScrollProgress(p);
+      scrollProgressRef.current = p;
+    };
+  }, []);
+
   const handleNavigation = (section: 'hero' | 'screen' | 'uv' | 'comfort' | 'dashboard' | 'about' | 'how-it-works' | 'book-demo' | 'contact' | 'technology') => {
     if (section === 'technology' || section === 'how-it-works') {
       if (currentView !== 'technology') {
@@ -609,7 +623,7 @@ export const App: React.FC = () => {
           )}
 
           {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
-          <div ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
+          <div id="scrolly-track" ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
             {/* Sticky 100svh Viewport Pin (stable on mobile across browser URL bar show/hide) */}
             <div className={`sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden bg-white ${scrollProgress < 0.945 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}

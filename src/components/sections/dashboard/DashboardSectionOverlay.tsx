@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { PopcornText } from '../../ui/PopcornText';
 import type { AnimationOptions } from 'framer-motion';
@@ -160,6 +160,182 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
   const isDesktop = windowDimensions.width >= 1024;
   const isMobile = windowDimensions.width < 768;
+
+  // ---------------------------------------------------------------------------
+  // Mobile Web Portal Dynamic Alignment (Calculates exact pixel connections)
+  // ---------------------------------------------------------------------------
+  const mobileContainerRef = useRef<HTMLDivElement>(null);
+  const card1Ref = useRef<HTMLDivElement>(null);
+  const card2Ref = useRef<HTMLDivElement>(null);
+  const card3Ref = useRef<HTMLDivElement>(null);
+  const card4Ref = useRef<HTMLDivElement>(null);
+  const monitorImgRef = useRef<HTMLImageElement>(null);
+
+  const [mobileCoords, setMobileCoords] = useState<{
+    card1: { x: number; y: number };
+    card2: { x: number; y: number };
+    card3: { x: number; y: number };
+    card4: { x: number; y: number };
+    dot1: { x: number; y: number };
+    dot2: { x: number; y: number };
+    dot3: { x: number; y: number };
+    dot4: { x: number; y: number };
+    mTop: number;
+    mBottom: number;
+  } | null>(null);
+
+  const updateMobileCoords = useCallback(() => {
+    if (
+      !mobileContainerRef.current ||
+      !card1Ref.current ||
+      !card2Ref.current ||
+      !card3Ref.current ||
+      !card4Ref.current ||
+      !monitorImgRef.current
+    ) {
+      return;
+    }
+
+    const cRect = mobileContainerRef.current.getBoundingClientRect();
+    const c1 = card1Ref.current.getBoundingClientRect();
+    const c2 = card2Ref.current.getBoundingClientRect();
+    const c3 = card3Ref.current.getBoundingClientRect();
+    const c4 = card4Ref.current.getBoundingClientRect();
+    const m = monitorImgRef.current.getBoundingClientRect();
+
+    if (cRect.width === 0 || m.width === 0) return;
+
+    // Card 1 & Card 2: bottom center
+    const card1 = {
+      x: c1.left - cRect.left + c1.width * 0.5,
+      y: c1.bottom - cRect.top,
+    };
+    const card2 = {
+      x: c2.left - cRect.left + c2.width * 0.5,
+      y: c2.bottom - cRect.top,
+    };
+
+    // Card 3 & Card 4: top center
+    const card3 = {
+      x: c3.left - cRect.left + c3.width * 0.5,
+      y: c3.top - cRect.top,
+    };
+    const card4 = {
+      x: c4.left - cRect.left + c4.width * 0.5,
+      y: c4.top - cRect.top,
+    };
+
+    // Monitor bounds
+    const mLeft = m.left - cRect.left;
+    const mTop = m.top - cRect.top;
+    const mBottom = m.bottom - cRect.top;
+    const mW = m.width;
+    const mH = m.height;
+
+    // 4 Target dots matching exact desktop positions on the dashboard mockup
+    // 1. Personalised Dashboard (Focus Plan card)
+    const dot1 = {
+      x: mLeft + mW * 0.1682,
+      y: mTop + mH * 0.2402,
+    };
+    // 2. Real-Time Lung Metrics (21% Capacity Gauge)
+    const dot2 = {
+      x: mLeft + mW * 0.8230,
+      y: mTop + mH * 0.2865,
+    };
+    // 3. Track Your Lung Score (27% Score Chart)
+    const dot3 = {
+      x: mLeft + mW * 0.1275,
+      y: mTop + mH * 0.6470,
+    };
+    // 4. Train At Your Own Pace (Easy Efficiency)
+    const dot4 = {
+      x: mLeft + mW * 0.9228,
+      y: mTop + mH * 0.5569,
+    };
+
+    setMobileCoords((prev) => {
+      if (
+        prev &&
+        Math.abs(prev.card1.x - card1.x) < 0.5 &&
+        Math.abs(prev.card1.y - card1.y) < 0.5 &&
+        Math.abs(prev.dot1.x - dot1.x) < 0.5 &&
+        Math.abs(prev.dot1.y - dot1.y) < 0.5 &&
+        Math.abs(prev.card3.x - card3.x) < 0.5 &&
+        Math.abs(prev.card3.y - card3.y) < 0.5 &&
+        Math.abs(prev.dot3.x - dot3.x) < 0.5 &&
+        Math.abs(prev.dot3.y - dot3.y) < 0.5
+      ) {
+        return prev;
+      }
+      return {
+        card1,
+        card2,
+        card3,
+        card4,
+        dot1,
+        dot2,
+        dot3,
+        dot4,
+        mTop,
+        mBottom,
+      };
+    });
+  }, []);
+
+  const getTopConnectorPath = useCallback(
+    (card: { x: number; y: number }, dot: { x: number; y: number }, mTop: number) => {
+      const dx = dot.x - card.x;
+      const absDx = Math.abs(dx);
+      const gap = mTop - card.y;
+      let y1 = card.y + Math.max(8, gap * 0.35);
+      let y2 = y1 + absDx;
+      if (y2 > dot.y - 12) {
+        y2 = Math.min(dot.y - 12, mTop + 8);
+        y1 = Math.max(card.y + 6, y2 - absDx);
+      }
+      return `M ${card.x.toFixed(1)} ${card.y.toFixed(1)} L ${card.x.toFixed(1)} ${y1.toFixed(1)} L ${dot.x.toFixed(1)} ${y2.toFixed(1)} L ${dot.x.toFixed(1)} ${dot.y.toFixed(1)}`;
+    },
+    []
+  );
+
+  const getBottomConnectorPath = useCallback(
+    (dot: { x: number; y: number }, card: { x: number; y: number }, mBottom: number) => {
+      const dx = card.x - dot.x;
+      const absDx = Math.abs(dx);
+      const gap = card.y - mBottom;
+      let y1 = mBottom + Math.max(8, gap * 0.35);
+      let y2 = y1 + absDx;
+      if (y2 > card.y - 8) {
+        y2 = card.y - 8;
+        y1 = Math.max(dot.y + 12, y2 - absDx);
+      }
+      return `M ${dot.x.toFixed(1)} ${dot.y.toFixed(1)} L ${dot.x.toFixed(1)} ${y1.toFixed(1)} L ${card.x.toFixed(1)} ${y2.toFixed(1)} L ${card.x.toFixed(1)} ${card.y.toFixed(1)}`;
+    },
+    []
+  );
+
+  useEffect(() => {
+    updateMobileCoords();
+    const handleResize = () => updateMobileCoords();
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(() => {
+        updateMobileCoords();
+      });
+      if (mobileContainerRef.current) observer.observe(mobileContainerRef.current);
+      if (monitorImgRef.current) observer.observe(monitorImgRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+      if (observer) observer.disconnect();
+    };
+  }, [updateMobileCoords]);
 
   // ---------------------------------------------------------------------------
   // 1. Physical Airplane-Style Sweep Reveal Architecture (0.855 - 0.925)
@@ -465,6 +641,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
         {/* ================================================================= */}
         <div
+          ref={mobileContainerRef}
           className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
         >
           {/* TOP SECTION: Kicker, Headline, Subtitle, Indicators + Top 2 Cards */}
@@ -493,7 +670,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
             <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full mt-1.5">
               {/* Top-Left Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+              <div
+                ref={card1Ref}
+                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
+              >
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <GridDashboardIcon />
                 </div>
@@ -506,7 +686,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
 
               {/* Top-Right Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+              <div
+                ref={card2Ref}
+                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
+              >
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <LungsHealthIcon />
                 </div>
@@ -520,7 +703,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             </div>
           </div>
 
-          {/* CENTER SECTION: Desktop Monitor + Halo + Bezel/Chin Connectors */}
+          {/* CENTER SECTION: Desktop Monitor + Halo */}
           <div className="flex-1 w-full min-h-[220px] max-h-[400px] xs:max-h-[440px] relative flex items-center justify-center my-0.5 shrink min-w-0">
             {/* Concentric Soft Warm Peach Disk behind Monitor (Matches Reference) */}
             <div className="absolute w-[92%] aspect-square rounded-full bg-[#FFE7D6]/50 border border-[#FF5500]/[0.08] pointer-events-none -z-10 flex items-center justify-center">
@@ -537,7 +720,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               }}
             />
 
-            {/* Monitor Mockup Wrapper with Synchronized SVG Overlay */}
+            {/* Monitor Mockup Wrapper */}
             <div
               className="relative z-10 w-[92%] max-w-[360px] aspect-[360/240] flex items-center justify-center will-change-transform"
               style={{
@@ -545,73 +728,12 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               }}
             >
               <img
+                ref={monitorImgRef}
+                onLoad={updateMobileCoords}
                 src="/images/dashboard/desktop-mockup.png"
                 alt="Iron Lung User Dashboard Desktop Mockup"
                 className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_16px_32px_rgba(0,0,0,0.16)] drop-shadow-[0_6px_14px_rgba(255,105,0,0.10)]"
               />
-
-              {/* SVG Foreground Pointer Lines & Target Dots locked to monitor coordinates (viewBox 0 0 360 240) */}
-              <svg
-                viewBox="0 0 360 240"
-                preserveAspectRatio="none"
-                className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
-              >
-                {/* 1. Top-Left Connector: from bottom of Card 1 down to (12, 0) then to dot at (22, 18) */}
-                <path
-                  d="M 12 -28 L 12 0 L 22 18"
-                  fill="none"
-                  stroke="#FF4800"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* 2. Top-Right Connector: from bottom of Card 2 down to (348, 0) then to dot at (338, 18) */}
-                <path
-                  d="M 348 -28 L 348 0 L 338 18"
-                  fill="none"
-                  stroke="#FF4800"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* 3. Bottom-Left Connector: from dot at (22, 186) to (12, 204) then down to top of Card 3 */}
-                <path
-                  d="M 22 186 L 12 204 L 12 268"
-                  fill="none"
-                  stroke="#FF4800"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* 4. Bottom-Right Connector: from dot at (338, 186) to (348, 204) then down to top of Card 4 */}
-                <path
-                  d="M 338 186 L 348 204 L 348 268"
-                  fill="none"
-                  stroke="#FF4800"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-
-                {/* Pulsing Target Dots on Monitor Bezel Corners matching reference */}
-                {[
-                  { cx: 22, cy: 18, delay: 0.02 },
-                  { cx: 338, cy: 18, delay: 0.08 },
-                  { cx: 22, cy: 186, delay: 0.14 },
-                  { cx: 338, cy: 186, delay: 0.20 },
-                ].map((dot, idx) => (
-                  <g key={idx}>
-                    <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="none" stroke="#FF4800" strokeWidth="1.5" opacity="0.75">
-                      <animate attributeName="r" values="6.5; 13; 13" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.75; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
-                    </circle>
-                    <g>
-                      <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
-                      <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
-                    </g>
-                  </g>
-                ))}
-              </svg>
             </div>
           </div>
 
@@ -619,7 +741,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20 pb-1">
             <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
               {/* Bottom-Left Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+              <div
+                ref={card3Ref}
+                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
+              >
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
@@ -632,7 +757,10 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
 
               {/* Bottom-Right Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center">
+              <div
+                ref={card4Ref}
+                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
+              >
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
@@ -645,6 +773,153 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
             </div>
           </div>
+
+          {/* Dynamic SVG Pointer Lines & Pulsing Target Dots (Guaranteed physical connection & accurate widget targets) */}
+          {mobileCoords && (
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible"
+              style={{
+                width: '100%',
+                height: '100%',
+              }}
+            >
+              {/* 1. Top-Left: Card 1 (Personalised Dashboard) -> Dot 1 (Focus Plan) */}
+              <motion.path
+                d={getTopConnectorPath(mobileCoords.card1, mobileCoords.dot1, mobileCoords.mTop)}
+                fill="none"
+                stroke="#FF4800"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={
+                  arePointersActive
+                    ? { pathLength: 1, opacity: 1 }
+                    : { pathLength: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
+              />
+
+              {/* 2. Top-Right: Card 2 (Real-Time Lung Metrics) -> Dot 2 (21% Capacity Gauge) */}
+              <motion.path
+                d={getTopConnectorPath(mobileCoords.card2, mobileCoords.dot2, mobileCoords.mTop)}
+                fill="none"
+                stroke="#FF4800"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={
+                  arePointersActive
+                    ? { pathLength: 1, opacity: 1 }
+                    : { pathLength: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.55, delay: 0.14, ease: 'easeOut' }}
+              />
+
+              {/* 3. Bottom-Left: Dot 3 (27% Score Chart) -> Card 3 (Track Your Lung Score) */}
+              <motion.path
+                d={getBottomConnectorPath(mobileCoords.dot3, mobileCoords.card3, mobileCoords.mBottom)}
+                fill="none"
+                stroke="#FF4800"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={
+                  arePointersActive
+                    ? { pathLength: 1, opacity: 1 }
+                    : { pathLength: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.55, delay: 0.20, ease: 'easeOut' }}
+              />
+
+              {/* 4. Bottom-Right: Dot 4 (Easy Efficiency) -> Card 4 (Train At Your Own Pace) */}
+              <motion.path
+                d={getBottomConnectorPath(mobileCoords.dot4, mobileCoords.card4, mobileCoords.mBottom)}
+                fill="none"
+                stroke="#FF4800"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={
+                  arePointersActive
+                    ? { pathLength: 1, opacity: 1 }
+                    : { pathLength: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.55, delay: 0.26, ease: 'easeOut' }}
+              />
+
+              {/* Card Contact Anchor Dots (Grounded at card edges) */}
+              {[
+                { ...mobileCoords.card1, delay: 0.08 },
+                { ...mobileCoords.card2, delay: 0.14 },
+                { ...mobileCoords.card3, delay: 0.20 },
+                { ...mobileCoords.card4, delay: 0.26 },
+              ].map((term, idx) => (
+                <motion.circle
+                  key={`card-term-${idx}`}
+                  cx={term.x}
+                  cy={term.y}
+                  r="3.2"
+                  fill="#FF4800"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={arePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                  transition={{ duration: 0.25, delay: term.delay + 0.1 }}
+                  style={{ transformOrigin: `${term.x}px ${term.y}px` }}
+                />
+              ))}
+
+              {/* Pulsing Target Dots on Monitor Dashboard Widgets matching Desktop */}
+              {[
+                { ...mobileCoords.dot1, delay: 0.02 },
+                { ...mobileCoords.dot2, delay: 0.08 },
+                { ...mobileCoords.dot3, delay: 0.14 },
+                { ...mobileCoords.dot4, delay: 0.20 },
+              ].map((dot, idx) => (
+                <g key={`widget-dot-${idx}`}>
+                  {arePointersActive && (
+                    <circle
+                      cx={dot.x}
+                      cy={dot.y}
+                      r="6.5"
+                      fill="none"
+                      stroke="#FF4800"
+                      strokeWidth="1.5"
+                      opacity="0.75"
+                    >
+                      <animate
+                        attributeName="r"
+                        values="6.5; 13; 13"
+                        keyTimes="0; 0.7; 1"
+                        dur="1.8s"
+                        begin={`${dot.delay + 0.3}s`}
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="opacity"
+                        values="0.75; 0; 0"
+                        keyTimes="0; 0.7; 1"
+                        dur="1.8s"
+                        begin={`${dot.delay + 0.3}s`}
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+                  )}
+                  <motion.g
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={arePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, delay: dot.delay + 0.25 }}
+                    style={{ transformOrigin: `${dot.x}px ${dot.y}px` }}
+                  >
+                    <circle cx={dot.x} cy={dot.y} r="5.5" fill="#FF4800" />
+                    <circle cx={dot.x} cy={dot.y} r="2.2" fill="#FFFFFF" />
+                  </motion.g>
+                </g>
+              ))}
+            </svg>
+          )}
 
           {/* Subtle Ambient Golden-Orange Flowing Waves at Bottom (Matches Reference) */}
           <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none -z-10 overflow-hidden opacity-55">
