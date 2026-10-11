@@ -232,32 +232,33 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       {/* 3. Main About Editorial Canvas                           */}
       {/* Mobile/Tablet: Full-width fluid container with scroll    */}
       {/* Desktop: Pinned to left: 36.3vw matching reference       */}
-      {/* ======================================================== */}
       <div
-        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-y-auto lg:overflow-visible"
+        className="absolute top-0 bottom-0 left-0 lg:left-[36.3vw] right-0 overflow-visible"
         style={{
           opacity: currentContentOpacity,
           pointerEvents: isInteractive ? 'auto' : 'none',
           transform: `translateY(${contentTranslateY}px)`,
         }}
       >
-        {/* Mobile Decorative Warm Peach Overlapping Circles (Top-Right behind Headline & Copy) */}
-        <div className="md:hidden absolute top-[72px] right-[-24px] w-[240px] h-[240px] rounded-full border border-[#FF5E1E]/[0.11] bg-[#FF5E1E]/[0.025] pointer-events-none z-0 flex items-center justify-center">
-          <div className="w-[186px] h-[186px] rounded-full bg-[#FF5E1E]/[0.05]" />
+        {/* Mobile Decorative Warm Peach Overlapping Circles (contained locally to prevent horizontal overflow) */}
+        <div className="md:hidden absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-[72px] right-[-24px] w-[240px] h-[240px] rounded-full border border-[#FF5E1E]/[0.11] bg-[#FF5E1E]/[0.025] flex items-center justify-center">
+            <div className="w-[186px] h-[186px] rounded-full bg-[#FF5E1E]/[0.05]" />
+          </div>
+          <div className="absolute top-[96px] right-[38px] w-[175px] h-[175px] rounded-full bg-[#FF5E1E]/[0.035]" />
         </div>
-        <div className="md:hidden absolute top-[96px] right-[38px] w-[175px] h-[175px] rounded-full bg-[#FF5E1E]/[0.035] pointer-events-none z-0" />
 
         {/* Responsive Content Wrapper: Single-column on mobile, 2-column grid on tablet, absolute canvas on desktop */}
-        <div className="relative w-full min-h-full flex flex-col md:grid md:grid-cols-12 md:gap-8 lg:block lg:gap-0 pt-[58px] sm:pt-24 lg:pt-0 px-5 sm:px-8 lg:px-0 pb-3 sm:pb-12 lg:pb-0 pointer-events-auto">
+        <div className="relative w-full max-w-full min-h-full flex flex-col md:grid md:grid-cols-12 md:gap-8 lg:block lg:gap-0 pt-[52px] xs:pt-[58px] sm:pt-24 lg:pt-0 px-4 xs:px-5 sm:px-8 lg:px-0 pb-2 xs:pb-3 sm:pb-12 lg:pb-0 pointer-events-auto box-border">
           
           {/* ======================================================== */}
           {/* LEFT SUB-COLUMN: Story marker, Headline, Paragraph, Video */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-5 flex flex-col items-start justify-start z-10 lg:absolute lg:top-[86px] xl:top-[94px] lg:left-[2%] xl:left-[2.5%] lg:w-[27%] lg:max-w-[260px] xl:max-w-[285px]">
+          <div className="w-full max-w-full min-w-0 md:col-span-5 flex flex-col items-start justify-start z-10 lg:absolute lg:top-[86px] xl:top-[94px] lg:left-[2%] xl:left-[2.5%] lg:w-[27%] lg:max-w-[260px] xl:max-w-[285px]">
             {/* Top Group: Marker, Headline, Paragraph */}
-            <div className="flex flex-col items-start w-full">
+            <div className="flex flex-col items-start w-full min-w-0">
               {/* Section Chapter Marker */}
-              <div className="flex items-start gap-2.5 sm:gap-3 mb-2 sm:mb-4 lg:mb-5 xl:mb-6 z-20 pointer-events-none">
+              <div className="flex items-start gap-2 sm:gap-3 mb-1.5 xs:mb-2 sm:mb-4 lg:mb-5 xl:mb-6 z-20 pointer-events-none">
                 <motion.div
                   initial={{ scale: 0, opacity: 0 }}
                   animate={isEntered ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
@@ -285,7 +286,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.22 }}
-                    className="italic font-normal text-[33px] xs:text-[36px] sm:text-[44px] lg:text-[56px] xl:text-[64px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] mb-0.5 block"
+                    className="italic font-normal text-[30px] xs:text-[36px] sm:text-[44px] lg:text-[56px] xl:text-[64px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] mb-0.5 block"
                     style={{ letterSpacing: '-0.02em' }}
                   >
                     People
@@ -296,7 +297,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.34 }}
-                    className="font-bold text-[29px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
+                    className="font-bold text-[26px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
                   >
                     Breathe
                   </motion.span>
@@ -306,7 +307,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.46 }}
-                    className="font-bold text-[29px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
+                    className="font-bold text-[26px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#0A1118] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] block"
                   >
                     Brighter
                   </motion.span>
@@ -316,7 +317,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.58 }}
-                    className="font-bold text-[29px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#FF5E1E] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] inline-flex items-baseline"
+                    className="font-bold text-[26px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#FF5E1E] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] inline-flex items-baseline"
                   >
                     Lives
                     <motion.span
@@ -336,14 +337,14 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 initial={{ opacity: 0, y: 14 }}
                 animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
                 transition={{ duration: 0.65, ease: [0.25, 1, 0.5, 1], delay: 0.82 }}
-                className="font-manrope font-normal text-[11.5px] xs:text-[12px] sm:text-[11.5px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.48] sm:leading-[1.58] lg:leading-[1.6] max-w-xl lg:max-w-[235px] xl:max-w-[260px] mt-2.5 sm:mt-5 lg:mt-6 xl:mt-7"
+                className="font-manrope font-normal text-[11px] xs:text-[12px] sm:text-[11.5px] lg:text-[11.5px] xl:text-[12.5px] text-[#4A5568] leading-[1.42] xs:leading-[1.48] sm:leading-[1.58] lg:leading-[1.6] max-w-xl lg:max-w-[235px] xl:max-w-[260px] mt-2 xs:mt-2.5 sm:mt-5 lg:mt-6 xl:mt-7"
               >
                 Iron Lung was born from a simple belief — better breathing creates a brighter, healthier, more human future. We combine science, design and technology to make respiratory wellness accessible to everyone.
               </motion.p>
             </div>
 
             {/* Video Trigger (Positioned cohesively below paragraph matching reference) */}
-            <div className="mt-3 sm:mt-6 lg:mt-7 xl:mt-8 z-10 pointer-events-auto">
+            <div className="mt-2.5 xs:mt-3 sm:mt-6 lg:mt-7 xl:mt-8 z-10 pointer-events-auto">
               <motion.button
                 initial={{ opacity: 0, scale: 0.92, y: 8 }}
                 animate={isEntered ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.92, y: 8 }}
@@ -366,12 +367,12 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           {/* ======================================================== */}
           {/* RIGHT SECTION: Structured 4-Row Editorial Grid            */}
           {/* ======================================================== */}
-          <div className="w-full md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33.5%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-2.5 sm:mt-6 md:mt-0">
+          <div className="w-full max-w-full min-w-0 md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33.5%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-2 xs:mt-2.5 sm:mt-6 md:mt-0">
             
-            {/* ROW 1: Mountain Image + Right Rail (Flexibly expands to fill upper vertical space) */}
-            <div className="flex-1 min-h-[120px] xs:min-h-[132px] sm:min-h-[140px] grid grid-cols-[1fr_112px] xs:grid-cols-[1fr_118px] sm:grid-cols-[1fr_auto] gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-2 lg:mb-2.5 xl:mb-3.5">
+            {/* ROW 1: Mountain Image + Right Rail (Compact on mobile, flexibly expands on desktop) */}
+            <div className="min-h-[105px] xs:min-h-[120px] sm:min-h-[136px] md:flex-1 md:min-h-0 grid grid-cols-[1fr_102px] xs:grid-cols-[1fr_118px] sm:grid-cols-[1fr_auto] gap-2.5 xs:gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-1.5 xs:mb-2 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
               {/* Upper Mountain Landscape Image */}
-              <div className="relative w-full h-full min-h-[120px] xs:min-h-[132px] sm:min-h-[140px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+              <div className="relative w-full min-w-0 h-full min-h-[105px] xs:min-h-[120px] sm:min-h-[136px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <motion.div
                   initial={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}
                   animate={
@@ -408,7 +409,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
 
               {/* Right Rail: Healthier People + Inspired by Nature */}
-              <div className="w-[112px] xs:w-[118px] sm:w-[110px] lg:w-[125px] xl:w-[140px] flex flex-col items-start justify-between self-stretch py-0.5 sm:py-0 gap-1 sm:gap-0">
+              <div className="w-[102px] xs:w-[118px] sm:w-[110px] lg:w-[125px] xl:w-[140px] min-w-0 max-w-full flex flex-col items-start justify-between self-stretch py-0.5 sm:py-0 gap-1 sm:gap-0">
                 {/* Top: "Healthier People, Brighter Tomorrows" */}
                 <div className="flex flex-col items-start gap-0.5 xl:gap-1">
                   <motion.span
@@ -449,13 +450,11 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                   transition={{ duration: 0.5, ease: 'easeOut', delay: 0.95 }}
                   className="flex flex-col items-start mt-auto"
                 >
-                  <div className="sm:hidden font-manrope font-normal text-[7.5px] xs:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-[1.48]">
-                    INSPIRED BY <br />
-                    NATURE. BUILT <br />
-                    BY PEOPLE. <br />
+                  <div className="sm:hidden font-manrope font-normal text-[7px] xs:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-[1.32]">
+                    INSPIRED BY NATURE. <br />
+                    BUILT BY PEOPLE. <br />
                     DRIVEN BY A <br />
-                    HEALTHIER <br />
-                    TOMORROW.
+                    HEALTHIER TOMORROW.
                   </div>
                   <div className="hidden sm:block font-manrope font-normal text-[6.5px] sm:text-[7.5px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.14em] sm:tracking-[0.16em] text-slate-500 uppercase leading-[1.45] sm:leading-[1.55]">
                     INSPIRED BY NATURE. <br />
@@ -470,9 +469,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               </div>
             </div>
 
-            {/* ROW 2: Face Image — full width (Flexibly fills middle vertical space) */}
-            <div className="flex-[0.78] min-h-[86px] xs:min-h-[94px] sm:min-h-[110px] relative mb-2 lg:mb-2.5 xl:mb-3.5">
-              <div className="relative w-full h-full min-h-[86px] xs:min-h-[94px] sm:min-h-[110px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+            {/* ROW 2: Face Image — full width (Compact on mobile, flexibly fills middle space on desktop) */}
+            <div className="h-[68px] xs:h-[80px] sm:h-[98px] md:flex-[0.78] md:min-h-0 relative mb-1.5 xs:mb-2 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
+              <div className="relative w-full min-w-0 max-w-full h-full min-h-[68px] xs:min-h-[80px] sm:min-h-[98px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <motion.div
                   initial={{ clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)' }}
                   animate={
@@ -529,87 +528,87 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 3: Stats with Times New Roman + Animated Lung Seal (Lung Seal on sm+ so mobile 4-col stats breathe cleanly) */}
-            <div className="shrink-0 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto py-0.5 sm:py-1">
+            <div className="shrink-0 w-full min-w-0 max-w-full grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-1.5 xs:gap-2 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto py-0.5 sm:py-1">
               
               {/* 4 Key Metrics */}
-              <div className="flex items-center justify-between w-full py-0.5">
+              <div className="flex items-center justify-between w-full min-w-0 py-0.5">
                 {/* Stat 1: 10K+ */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                   transition={{ duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 0.65 }}
-                  className="flex flex-col text-left"
+                  className="flex flex-col text-left min-w-0 shrink"
                 >
                   <span
-                    className="font-bold text-[20px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     <StatCounter target={10} suffix="K+" isTriggered={isEntered} delayMs={650} durationMs={450} />
                   </span>
-                  <span className="font-manrope font-medium text-[6px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.35] mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.09em] xs:tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.3] xs:leading-[1.35] mt-0.5 xs:mt-1">
                     PEOPLE <br />
                     BREATHING BETTER
                   </span>
                 </motion.div>
 
-                <div className="w-[1px] h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
+                <div className="w-[1px] h-6 xs:h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-0.5 xs:mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
 
                 {/* Stat 2: 5+ */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                   transition={{ duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 0.77 }}
-                  className="flex flex-col text-center sm:text-left"
+                  className="flex flex-col text-center sm:text-left min-w-0 shrink"
                 >
                   <span
-                    className="font-bold text-[20px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     <StatCounter target={5} suffix="+" isTriggered={isEntered} delayMs={770} durationMs={400} />
                   </span>
-                  <span className="font-manrope font-medium text-[6px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.35] mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.09em] xs:tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.3] xs:leading-[1.35] mt-0.5 xs:mt-1">
                     YEARS OF <br />
                     INNOVATION
                   </span>
                 </motion.div>
 
-                <div className="w-[1px] h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
+                <div className="w-[1px] h-6 xs:h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-0.5 xs:mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
 
                 {/* Stat 3: 20+ */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                   transition={{ duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 0.89 }}
-                  className="flex flex-col text-center sm:text-left"
+                  className="flex flex-col text-center sm:text-left min-w-0 shrink"
                 >
                   <span
-                    className="font-bold text-[20px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     <StatCounter target={20} suffix="+" isTriggered={isEntered} delayMs={890} durationMs={450} />
                   </span>
-                  <span className="font-manrope font-medium text-[6px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.35] mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.09em] xs:tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.3] xs:leading-[1.35] mt-0.5 xs:mt-1">
                     COUNTRIES <br />
                     AND GROWING
                   </span>
                 </motion.div>
 
-                <div className="w-[1px] h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
+                <div className="w-[1px] h-6 xs:h-7 sm:h-5 lg:h-6 xl:h-7 bg-slate-300/80 mx-0.5 xs:mx-1 sm:mx-1.5 lg:mx-2 shrink-0" />
 
                 {/* Stat 4: 100% */}
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}
                   animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
                   transition={{ duration: 0.45, ease: [0.215, 0.61, 0.355, 1], delay: 1.01 }}
-                  className="flex flex-col text-center sm:text-left"
+                  className="flex flex-col text-center sm:text-left min-w-0 shrink"
                 >
                   <span
-                    className="font-bold text-[20px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
+                    className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
                     style={{ fontFamily: "'Times New Roman', Times, serif" }}
                   >
                     <StatCounter target={100} suffix="%" isTriggered={isEntered} delayMs={1010} durationMs={500} />
                   </span>
-                  <span className="font-manrope font-medium text-[6px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.35] mt-1">
+                  <span className="font-manrope font-medium text-[5.5px] xs:text-[6.5px] sm:text-[6.5px] lg:text-[7px] xl:text-[8px] tracking-[0.09em] xs:tracking-[0.11em] sm:tracking-[0.14em] text-slate-500 uppercase leading-[1.3] xs:leading-[1.35] mt-0.5 xs:mt-1">
                     COMMITTED TO <br />
                     A HEALTHIER YOU
                   </span>
@@ -652,10 +651,10 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* Mobile Subtle Horizontal Rule separating Stats from Our Purpose */}
-            <div className="sm:hidden w-full h-[1px] bg-slate-300/60 my-2" />
+            <div className="sm:hidden w-full h-[1px] bg-slate-300/60 my-1 xs:my-2" />
 
             {/* ROW 4: Bottom Purpose Editorial Rule (Anchored at the bottom baseline, aligned with 01 / 04) */}
-            <div className="shrink-0 flex items-center gap-2.5 sm:gap-4 pt-1 sm:pt-1.5 lg:pt-2 pointer-events-none z-10 w-full">
+            <div className="shrink-0 flex items-center gap-2 xs:gap-2.5 sm:gap-4 pt-0.5 xs:pt-1 sm:pt-1.5 lg:pt-2 pointer-events-none z-10 w-full min-w-0 max-w-full">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={isEntered ? { opacity: 1 } : { opacity: 0 }}
