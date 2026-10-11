@@ -19,6 +19,8 @@ interface DashboardSectionOverlayProps {
   scrollProgress: number; // 0.0 to 1.0
   onExploreDashboard?: () => void;
   onOpenVideo?: () => void;
+  onNavigateToPortal?: () => void;
+  onNavigateToCompanion?: () => void;
 }
 
 const TOP_WORDS = [
@@ -136,6 +138,8 @@ const SaveReportDownloadIcon: React.FC = () => (
 
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
+  onNavigateToPortal,
+  onNavigateToCompanion,
 }) => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 1440,
@@ -372,9 +376,9 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
   // Separation progress:
   // Desktop: 0.928 -> 0.948 (smooth separation to reveal Desktop Web Portal)
-  // Mobile: 0.908 -> 0.938 (hands off from Stage 5 to Stage 6)
-  const splitStart = isMobile ? 0.908 : 0.928;
-  const splitSpan = isMobile ? 0.030 : 0.020;
+  // Mobile: 0.926 -> 0.952 (extended reading dwell zone 0.890 -> 0.926, split starts at 0.926 with span 0.026)
+  const splitStart = isMobile ? 0.926 : 0.928;
+  const splitSpan = isMobile ? 0.026 : 0.020;
   const splitT = Math.min(1, Math.max(0, (scrollProgress - splitStart) / splitSpan));
   // Smooth sinusoidal ease: zero jerk at beginning and end, silky smooth motion
   const splitEase =
@@ -390,7 +394,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const baseDesktopScale = (isMobile ? 0.90 : 0.82) + (isMobile ? 0.10 : 0.18) * splitEase;
 
   // Pointers activation: triggers once the desktop screen has settled into place
-  const arePointersActive = isMobile ? scrollProgress >= 0.938 : scrollProgress >= 0.946;
+  const arePointersActive = isMobile ? scrollProgress >= 0.948 : scrollProgress >= 0.946;
 
   // ---------------------------------------------------------------------------
   // 3. Desktop Zoom-Out Fade & Phone Slide-Up Transition
@@ -405,7 +409,11 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
 
   // Desktop scales subtly (1.00 -> 0.86 on desktop, 1.00 -> 0.93 on mobile) and fades out smoothly (1.0 -> 0.0)
   const desktopScale = baseDesktopScale * (1 - (isMobile ? 0.07 : 0.14) * phoneEase);
-  const desktopOpacity = splitEase * (1 - phoneEase);
+  // Delay desktop portal entrance on mobile until dashboard text has started clearing center (splitEase >= 0.35)
+  const desktopFadeIn = isMobile
+    ? (splitEase < 0.35 ? 0 : (splitEase - 0.35) / 0.65)
+    : splitEase;
+  const desktopOpacity = desktopFadeIn * (1 - phoneEase);
 
   // Phone slides up from the bottom edge to the center (translateY: +travel -> 0px)
   const phoneTravelDistance = windowDimensions.height * (isMobile ? 0.74 : 0.84) + 60;
@@ -607,18 +615,46 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 Real-time respiratory telemetry, guided session feedback, and clinical progress tracking across all your devices.
               </p>
               <div className="mt-4 flex items-center justify-center gap-2">
-                <div className="px-3 py-1.5 rounded-xl bg-white/85 border border-slate-200/90 shadow-sm flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigateToPortal) {
+                      onNavigateToPortal();
+                    } else {
+                      const track = document.getElementById('scrolly-track');
+                      const trackTop = track ? track.offsetTop : 0;
+                      const trackSpan = track ? track.offsetHeight - window.innerHeight : document.body.scrollHeight - window.innerHeight;
+                      window.scrollTo({ top: trackTop + 0.950 * trackSpan, behavior: 'smooth' });
+                    }
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white border border-slate-200/90 shadow-sm flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+                  aria-label="Navigate to Web Command Center"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
                   <span className="text-[9.5px] font-bold tracking-[0.08em] text-slate-800 uppercase">
                     Web Command Center
                   </span>
-                </div>
-                <div className="px-3 py-1.5 rounded-xl bg-white/85 border border-slate-200/90 shadow-sm flex items-center gap-1.5">
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onNavigateToCompanion) {
+                      onNavigateToCompanion();
+                    } else {
+                      const track = document.getElementById('scrolly-track');
+                      const trackTop = track ? track.offsetTop : 0;
+                      const trackSpan = track ? track.offsetHeight - window.innerHeight : document.body.scrollHeight - window.innerHeight;
+                      window.scrollTo({ top: trackTop + 0.985 * trackSpan, behavior: 'smooth' });
+                    }
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white border border-slate-200/90 shadow-sm flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+                  aria-label="Navigate to Mobile Companion App"
+                >
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
                   <span className="text-[9.5px] font-bold tracking-[0.08em] text-slate-800 uppercase">
                     Mobile Companion
                   </span>
-                </div>
+                </button>
               </div>
               <div className="w-[1px] h-8 bg-gradient-to-t from-transparent to-[#FF5500]/40 mt-3" />
             </div>
