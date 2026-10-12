@@ -672,8 +672,8 @@ export const App: React.FC = () => {
 
           {/* Multi-Stage Scrollytelling Track (h-[1080vh] on mobile, h-[1040vh] on desktop: 3D model flight, feature scrollytelling, About Us, Desktop & Phone Dashboard) */}
           <div id="scrolly-track" ref={scrollyTrackRef} className="relative h-[1080vh] md:h-[1040vh] w-full">
-            {/* Sticky 100svh Viewport Pin (stable on mobile across browser URL bar show/hide) */}
-            <div className={`sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden bg-white ${scrollProgress < 0.875 ? 'max-md:touch-none' : ''}`}>
+            {/* Sticky 100dvh Viewport Pin (dynamically adapts to mobile browser URL bar show/hide during scrolling) */}
+            <div className={`sticky top-0 h-screen h-[100dvh] min-h-screen min-h-[100dvh] w-full overflow-hidden ${scrollProgress > 0.78 ? 'bg-[#FAF7F2]' : 'bg-white'} ${scrollProgress < 0.875 ? 'max-md:touch-none' : ''}`}>
               {/* Layer 0 (z-0): Studio Room Background */}
               <StudioRoomBackground scrollProgress={scrollProgress} />
 
