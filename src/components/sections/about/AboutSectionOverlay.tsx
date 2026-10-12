@@ -249,7 +249,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
         </div>
 
         {/* Responsive Content Wrapper: Single-column on mobile, 2-column grid on tablet, absolute canvas on desktop */}
-        <div className="relative w-full max-w-full h-full min-h-full flex flex-col justify-between md:grid md:grid-cols-12 md:gap-8 lg:block lg:gap-0 pt-[52px] xs:pt-[56px] sm:pt-24 lg:pt-0 px-4 xs:px-5 sm:px-8 lg:px-0 pb-3 xs:pb-4 sm:pb-12 lg:pb-0 pointer-events-auto box-border">
+        <div className="relative w-full max-w-full h-full min-h-full flex flex-col justify-between md:grid md:grid-cols-12 md:gap-8 lg:block lg:gap-0 pt-[52px] xs:pt-[56px] sm:pt-24 lg:pt-0 px-4 xs:px-5 sm:px-8 lg:px-0 pb-2 xs:pb-3 sm:pb-12 lg:pb-0 pointer-events-auto box-border">
           
           {/* ======================================================== */}
           {/* LEFT SUB-COLUMN: Story marker, Headline, Paragraph, Video */}
@@ -370,9 +370,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           <div className="w-full max-w-full min-w-0 flex-1 min-h-0 md:col-span-7 flex flex-col justify-between z-10 lg:absolute lg:top-[76px] xl:top-[82px] lg:bottom-8 sm:lg:bottom-10 lg:left-[34%] xl:left-[33.5%] lg:right-[3.5%] lg:w-auto lg:max-w-[640px] xl:max-w-[700px] mt-2 xs:mt-2.5 sm:mt-6 md:mt-0">
             
             {/* ROW 1: Mountain Image + Right Rail (Compact on mobile, flexibly expands on desktop) */}
-            <div className="flex-[1.15] min-h-[110px] xs:min-h-[125px] sm:min-h-[136px] md:flex-1 md:min-h-0 grid grid-cols-[1fr_102px] xs:grid-cols-[1fr_118px] sm:grid-cols-[1fr_auto] gap-2.5 xs:gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-2 xs:mb-2.5 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
+            <div className="flex-[1.1] min-h-[95px] xs:min-h-[105px] sm:min-h-[136px] md:flex-1 md:min-h-0 grid grid-cols-[1fr_102px] xs:grid-cols-[1fr_118px] sm:grid-cols-[1fr_auto] gap-2.5 xs:gap-3 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-stretch mb-1.5 xs:mb-2 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
               {/* Upper Mountain Landscape Image */}
-              <div className="relative w-full min-w-0 h-full min-h-[110px] xs:min-h-[125px] sm:min-h-[136px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+              <div className="relative w-full min-w-0 h-full min-h-[95px] xs:min-h-[105px] sm:min-h-[136px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <motion.div
                   initial={{ clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' }}
                   animate={
@@ -470,8 +470,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
             </div>
 
             {/* ROW 2: Face Image — full width (Flexibly expands on mobile to fill vertical space, fills middle space on desktop) */}
-            <div className="flex-1 min-h-[80px] xs:min-h-[90px] sm:h-[98px] md:flex-[0.78] md:min-h-0 relative mb-2 xs:mb-2.5 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
-              <div className="relative w-full min-w-0 max-w-full h-full min-h-[80px] xs:min-h-[90px] sm:min-h-[98px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
+            <div className="flex-1 min-h-[64px] xs:min-h-[72px] sm:h-[98px] md:flex-[0.78] md:min-h-0 relative mb-1.5 xs:mb-2 lg:mb-2.5 xl:mb-3.5 w-full min-w-0 max-w-full">
+              <div className="relative w-full min-w-0 max-w-full h-full min-h-[64px] xs:min-h-[72px] sm:min-h-[98px] rounded-[6px] sm:rounded-[4px] overflow-hidden shadow-sm border border-slate-200/50 bg-[#EFECE6] group select-none">
                 <motion.div
                   initial={{ clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)' }}
                   animate={
