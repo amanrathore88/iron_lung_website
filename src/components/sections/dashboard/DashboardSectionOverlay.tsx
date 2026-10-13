@@ -297,42 +297,42 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <div
               className="will-change-transform"
               style={{
-                transform: `translateY(-${splitEase * (windowDimensions.height * 0.45 + 100)}px)`,
+                transform: `translateY(-${splitEase * (windowDimensions.height * 0.45 + 140)}px)`,
               }}
             >
               <h2
                 style={{
                   fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
                   fontWeight: 800,
-                  fontSize: 'clamp(38px, 10.5vw, 54px)',
-                  lineHeight: '1.08',
-                  letterSpacing: '-0.03em',
+                  fontSize: 'clamp(50px, 13.8vw, 76px)',
+                  lineHeight: '1.02',
+                  letterSpacing: '-0.035em',
                   textAlign: 'center',
                 }}
               >
-                <span className="text-[#FF6900]">YOUR </span>
-                <span className="text-[#0A1118]">DASHBOARD</span>
+                <span className="text-[#FF6900] block">YOUR</span>
+                <span className="text-[#0A1118] block mt-0.5 xs:mt-1">DASHBOARD</span>
               </h2>
             </div>
 
             {/* Bottom Line: "AWAITS" -> downward drift on exit */}
             <div
-              className="will-change-transform mt-2 xs:mt-3"
+              className="will-change-transform mt-0.5 xs:mt-1"
               style={{
-                transform: `translateY(${splitEase * (windowDimensions.height * 0.45 + 100)}px)`,
+                transform: `translateY(${splitEase * (windowDimensions.height * 0.45 + 140)}px)`,
               }}
             >
               <h2
                 style={{
                   fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
                   fontWeight: 800,
-                  fontSize: 'clamp(38px, 10.5vw, 54px)',
-                  lineHeight: '1.08',
-                  letterSpacing: '-0.03em',
+                  fontSize: 'clamp(50px, 13.8vw, 76px)',
+                  lineHeight: '1.02',
+                  letterSpacing: '-0.035em',
                   textAlign: 'center',
                 }}
               >
-                <span className="text-[#FF6900]">AWAITS</span>
+                <span className="text-[#FF6900] block">AWAITS</span>
               </h2>
             </div>
           </div>
