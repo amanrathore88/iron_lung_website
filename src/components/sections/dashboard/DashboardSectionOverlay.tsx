@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PopcornText } from '../../ui/PopcornText';
 import type { AnimationOptions } from 'framer-motion';
@@ -28,14 +28,6 @@ const TOP_WORDS = [
   { text: 'DASHBOARD', color: '#000000' },
 ];
 
-const MOBILE_ROW1_WORDS = [
-  { text: 'YOUR', color: '#ff6900' },
-];
-
-const MOBILE_ROW2_WORDS = [
-  { text: 'DASHBOARD', color: '#0A1118' },
-];
-
 const BOTTOM_WORDS = [
   { text: 'AWAITS', color: '#ff6900' },
 ];
@@ -45,15 +37,6 @@ const DESKTOP_FONT: React.CSSProperties = {
   fontWeight: 800,
   fontSize: 'clamp(48px, 7.5vw, 108px)',
   lineHeight: '1.12em',
-  letterSpacing: '-0.03em',
-  textAlign: 'center',
-};
-
-const MOBILE_FONT: React.CSSProperties = {
-  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
-  fontWeight: 800,
-  fontSize: 'clamp(40px, 11vw, 54px)',
-  lineHeight: '1.06em',
   letterSpacing: '-0.03em',
   textAlign: 'center',
 };
@@ -116,16 +99,6 @@ const PdfReportIcon: React.FC = () => (
   </svg>
 );
 
-const SessionDocIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#FF5500" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
-    <path d="M14 3v4.8h4.8" />
-    <line x1="8" y1="11" x2="14.5" y2="11" />
-    <line x1="8" y1="14" x2="15.5" y2="14" />
-    <line x1="8" y1="17" x2="13" y2="17" />
-  </svg>
-);
-
 const SaveReportDownloadIcon: React.FC = () => (
   <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#FF5500" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
     <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
@@ -135,11 +108,8 @@ const SaveReportDownloadIcon: React.FC = () => (
   </svg>
 );
 
-
 export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = ({
   scrollProgress,
-  onNavigateToPortal,
-  onNavigateToCompanion,
 }) => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 1440,
@@ -165,181 +135,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
   const isDesktop = windowDimensions.width >= 1024;
   const isMobile = windowDimensions.width < 768;
 
-  // ---------------------------------------------------------------------------
-  // Mobile Web Portal Dynamic Alignment (Calculates exact pixel connections)
-  // ---------------------------------------------------------------------------
-  const mobileContainerRef = useRef<HTMLDivElement>(null);
-  const card1Ref = useRef<HTMLDivElement>(null);
-  const card2Ref = useRef<HTMLDivElement>(null);
-  const card3Ref = useRef<HTMLDivElement>(null);
-  const card4Ref = useRef<HTMLDivElement>(null);
-  const monitorImgRef = useRef<HTMLImageElement>(null);
 
-  const [mobileCoords, setMobileCoords] = useState<{
-    card1: { x: number; y: number };
-    card2: { x: number; y: number };
-    card3: { x: number; y: number };
-    card4: { x: number; y: number };
-    dot1: { x: number; y: number };
-    dot2: { x: number; y: number };
-    dot3: { x: number; y: number };
-    dot4: { x: number; y: number };
-    mTop: number;
-    mBottom: number;
-  } | null>(null);
-
-  const updateMobileCoords = useCallback(() => {
-    if (
-      !mobileContainerRef.current ||
-      !card1Ref.current ||
-      !card2Ref.current ||
-      !card3Ref.current ||
-      !card4Ref.current ||
-      !monitorImgRef.current
-    ) {
-      return;
-    }
-
-    const cRect = mobileContainerRef.current.getBoundingClientRect();
-    const c1 = card1Ref.current.getBoundingClientRect();
-    const c2 = card2Ref.current.getBoundingClientRect();
-    const c3 = card3Ref.current.getBoundingClientRect();
-    const c4 = card4Ref.current.getBoundingClientRect();
-    const m = monitorImgRef.current.getBoundingClientRect();
-
-    if (cRect.width === 0 || m.width === 0) return;
-
-    // Card 1 & Card 2: bottom center
-    const card1 = {
-      x: c1.left - cRect.left + c1.width * 0.5,
-      y: c1.bottom - cRect.top,
-    };
-    const card2 = {
-      x: c2.left - cRect.left + c2.width * 0.5,
-      y: c2.bottom - cRect.top,
-    };
-
-    // Card 3 & Card 4: top center
-    const card3 = {
-      x: c3.left - cRect.left + c3.width * 0.5,
-      y: c3.top - cRect.top,
-    };
-    const card4 = {
-      x: c4.left - cRect.left + c4.width * 0.5,
-      y: c4.top - cRect.top,
-    };
-
-    // Monitor bounds
-    const mLeft = m.left - cRect.left;
-    const mTop = m.top - cRect.top;
-    const mBottom = m.bottom - cRect.top;
-    const mW = m.width;
-    const mH = m.height;
-
-    // 4 Target dots matching exact desktop positions on the dashboard mockup
-    // 1. Personalised Dashboard (Focus Plan card)
-    const dot1 = {
-      x: mLeft + mW * 0.1682,
-      y: mTop + mH * 0.2402,
-    };
-    // 2. Real-Time Lung Metrics (21% Capacity Gauge)
-    const dot2 = {
-      x: mLeft + mW * 0.8230,
-      y: mTop + mH * 0.2865,
-    };
-    // 3. Track Your Lung Score (27% Score Chart)
-    const dot3 = {
-      x: mLeft + mW * 0.1275,
-      y: mTop + mH * 0.6470,
-    };
-    // 4. Train At Your Own Pace (Easy Efficiency)
-    const dot4 = {
-      x: mLeft + mW * 0.9228,
-      y: mTop + mH * 0.5569,
-    };
-
-    setMobileCoords((prev) => {
-      if (
-        prev &&
-        Math.abs(prev.card1.x - card1.x) < 0.5 &&
-        Math.abs(prev.card1.y - card1.y) < 0.5 &&
-        Math.abs(prev.dot1.x - dot1.x) < 0.5 &&
-        Math.abs(prev.dot1.y - dot1.y) < 0.5 &&
-        Math.abs(prev.card3.x - card3.x) < 0.5 &&
-        Math.abs(prev.card3.y - card3.y) < 0.5 &&
-        Math.abs(prev.dot3.x - dot3.x) < 0.5 &&
-        Math.abs(prev.dot3.y - dot3.y) < 0.5
-      ) {
-        return prev;
-      }
-      return {
-        card1,
-        card2,
-        card3,
-        card4,
-        dot1,
-        dot2,
-        dot3,
-        dot4,
-        mTop,
-        mBottom,
-      };
-    });
-  }, []);
-
-  const getTopConnectorPath = useCallback(
-    (card: { x: number; y: number }, dot: { x: number; y: number }, mTop: number) => {
-      const dx = dot.x - card.x;
-      const absDx = Math.abs(dx);
-      const gap = mTop - card.y;
-      let y1 = card.y + Math.max(8, gap * 0.35);
-      let y2 = y1 + absDx;
-      if (y2 > dot.y - 12) {
-        y2 = Math.min(dot.y - 12, mTop + 8);
-        y1 = Math.max(card.y + 6, y2 - absDx);
-      }
-      return `M ${card.x.toFixed(1)} ${card.y.toFixed(1)} L ${card.x.toFixed(1)} ${y1.toFixed(1)} L ${dot.x.toFixed(1)} ${y2.toFixed(1)} L ${dot.x.toFixed(1)} ${dot.y.toFixed(1)}`;
-    },
-    []
-  );
-
-  const getBottomConnectorPath = useCallback(
-    (dot: { x: number; y: number }, card: { x: number; y: number }, mBottom: number) => {
-      const dx = card.x - dot.x;
-      const absDx = Math.abs(dx);
-      const gap = card.y - mBottom;
-      let y1 = mBottom + Math.max(8, gap * 0.35);
-      let y2 = y1 + absDx;
-      if (y2 > card.y - 8) {
-        y2 = card.y - 8;
-        y1 = Math.max(dot.y + 12, y2 - absDx);
-      }
-      return `M ${dot.x.toFixed(1)} ${dot.y.toFixed(1)} L ${dot.x.toFixed(1)} ${y1.toFixed(1)} L ${card.x.toFixed(1)} ${y2.toFixed(1)} L ${card.x.toFixed(1)} ${card.y.toFixed(1)}`;
-    },
-    []
-  );
-
-  useEffect(() => {
-    updateMobileCoords();
-    const handleResize = () => updateMobileCoords();
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-
-    let observer: ResizeObserver | null = null;
-    if (typeof ResizeObserver !== 'undefined') {
-      observer = new ResizeObserver(() => {
-        updateMobileCoords();
-      });
-      if (mobileContainerRef.current) observer.observe(mobileContainerRef.current);
-      if (monitorImgRef.current) observer.observe(monitorImgRef.current);
-    }
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-      if (observer) observer.disconnect();
-    };
-  }, [updateMobileCoords]);
 
   // ---------------------------------------------------------------------------
   // 1. Physical Airplane-Style Sweep Reveal Architecture (0.855 - 0.925)
@@ -481,50 +277,82 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
         className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-20 px-4 sm:px-8"
         style={{
           display:
-            textOpacity > 0.005 && isModelExitRight
+            (isMobile ? (splitEase < 0.35 && textOpacity > 0.005) : (textOpacity > 0.005)) && isModelExitRight
               ? 'flex'
               : 'none',
         }}
       >
-        {/* Mobile Background Decorative Concentric Rings & Warm Glow */}
-        {isMobile && (
+        {isMobile ? (
+          /* ================================================================= */
+          /* MOBILE VIEW (< 768px): Clean, bold brand typography & lightweight GPU fade */
+          /* ================================================================= */
           <div
-            className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10"
-            style={{ opacity: textOpacity }}
+            className="w-full flex flex-col items-center justify-center text-center px-4 will-change-transform select-none"
+            style={{
+              opacity: textOpacity * Math.max(0, 1 - splitEase * 2.8),
+              transform: `translateY(${(1 - mobileEase) * 16}px)`,
+            }}
           >
-            <div className="w-[310px] h-[310px] rounded-full border border-[#FF5500]/[0.10] flex items-center justify-center">
-              <div className="w-[220px] h-[220px] rounded-full border border-dashed border-[#FF5500]/[0.16] flex items-center justify-center">
-                <div className="w-[140px] h-[140px] rounded-full bg-[#FF5500]/[0.06] blur-2xl" />
-              </div>
+            {/* Top Line: "YOUR DASHBOARD" -> upward drift on exit */}
+            <div
+              className="will-change-transform"
+              style={{
+                transform: `translateY(-${splitEase * (windowDimensions.height * 0.45 + 100)}px)`,
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+                  fontWeight: 800,
+                  fontSize: 'clamp(38px, 10.5vw, 54px)',
+                  lineHeight: '1.08',
+                  letterSpacing: '-0.03em',
+                  textAlign: 'center',
+                }}
+              >
+                <span className="text-[#FF6900]">YOUR </span>
+                <span className="text-[#0A1118]">DASHBOARD</span>
+              </h2>
+            </div>
+
+            {/* Bottom Line: "AWAITS" -> downward drift on exit */}
+            <div
+              className="will-change-transform mt-2 xs:mt-3"
+              style={{
+                transform: `translateY(${splitEase * (windowDimensions.height * 0.45 + 100)}px)`,
+              }}
+            >
+              <h2
+                style={{
+                  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+                  fontWeight: 800,
+                  fontSize: 'clamp(38px, 10.5vw, 54px)',
+                  lineHeight: '1.08',
+                  letterSpacing: '-0.03em',
+                  textAlign: 'center',
+                }}
+              >
+                <span className="text-[#FF6900]">AWAITS</span>
+              </h2>
             </div>
           </div>
-        )}
-
-        {/* Top Split Group: Kicker (Mobile) + "YOUR DASHBOARD" -> moves up and out of view */}
-        <div
-          className="w-full flex flex-col items-center justify-center will-change-transform"
-          style={{
-            transform: `translateY(-${topExitOffset}px)`,
-            opacity: textOpacity,
-          }}
-        >
-          {isMobile && (
-            <div className="flex flex-col items-center mb-4">
-              <div className="w-[1px] h-8 bg-gradient-to-b from-transparent to-[#FF5500]/40 mb-2.5" />
-              <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/90 border border-[#FF5500]/20 shadow-[0_4px_16px_rgba(255,85,0,0.08)] backdrop-blur-sm">
-                <span className="text-[9.5px] font-extrabold tracking-[0.22em] text-[#0A1118] uppercase">
-                  CONNECTED ECOSYSTEM
-                </span>
-              </div>
-            </div>
-          )}
-
-          {isMobile ? (
-            <div className="w-full flex flex-col items-center justify-center gap-1">
-              <div className="w-full flex items-center justify-center">
+        ) : (
+          /* ================================================================= */
+          /* DESKTOP VIEW (>= 768px): 100% UNCHANGED ORIGINAL POPCORN TEXT     */
+          /* ================================================================= */
+          <>
+            {/* Top Split Group: "YOUR DASHBOARD" -> moves up and out of view */}
+            <div
+              className="w-full flex flex-col items-center justify-center will-change-transform"
+              style={{
+                transform: `translateY(-${topExitOffset}px)`,
+                opacity: textOpacity,
+              }}
+            >
+              <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
                 <PopcornText
-                  wordsConfig={MOBILE_ROW1_WORDS}
-                  font={MOBILE_FONT}
+                  wordsConfig={TOP_WORDS}
+                  font={DESKTOP_FONT}
                   startY={30}
                   startScale={0}
                   startOpacity={0}
@@ -535,19 +363,32 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   totalCharsOverall={19}
                   isActive={isTextActive}
                   hasAppearedAlready={hasDashboardTextAnimatedGlobal}
+                  onAnimationComplete={() => {
+                    hasDashboardTextAnimatedGlobal = true;
+                  }}
                 />
               </div>
-              <div className="w-full flex items-center justify-center">
+            </div>
+
+            {/* Bottom Split Group: "AWAITS" -> moves down and out of view */}
+            <div
+              className="w-full flex flex-col items-center justify-center will-change-transform mt-1 sm:mt-4 md:mt-6"
+              style={{
+                transform: `translateY(${bottomExitOffset}px)`,
+                opacity: textOpacity,
+              }}
+            >
+              <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
                 <PopcornText
-                  wordsConfig={MOBILE_ROW2_WORDS}
-                  font={MOBILE_FONT}
+                  wordsConfig={BOTTOM_WORDS}
+                  font={DESKTOP_FONT}
                   startY={30}
                   startScale={0}
                   startOpacity={0}
                   rotationRange={20}
                   stagger={0.055}
                   transition={POPCORN_SPRING_TRANSITION}
-                  charIndexOffset={4}
+                  charIndexOffset={13}
                   totalCharsOverall={19}
                   isActive={isTextActive}
                   hasAppearedAlready={hasDashboardTextAnimatedGlobal}
@@ -557,109 +398,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                 />
               </div>
             </div>
-          ) : (
-            <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
-              <PopcornText
-                wordsConfig={TOP_WORDS}
-                font={DESKTOP_FONT}
-                startY={30}
-                startScale={0}
-                startOpacity={0}
-                rotationRange={20}
-                stagger={0.055}
-                transition={POPCORN_SPRING_TRANSITION}
-                charIndexOffset={0}
-                totalCharsOverall={19}
-                isActive={isTextActive}
-                hasAppearedAlready={hasDashboardTextAnimatedGlobal}
-                onAnimationComplete={() => {
-                  hasDashboardTextAnimatedGlobal = true;
-                }}
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Bottom Split Group: "AWAITS" + Subtitle & Device Pills (Mobile) -> moves down and out of view */}
-        <div
-          className="w-full flex flex-col items-center justify-center will-change-transform mt-1 sm:mt-4 md:mt-6"
-          style={{
-            transform: `translateY(${bottomExitOffset}px)`,
-            opacity: textOpacity,
-          }}
-        >
-          <div className="w-full max-w-6xl mx-auto flex items-center justify-center">
-            <PopcornText
-              wordsConfig={BOTTOM_WORDS}
-              font={isMobile ? MOBILE_FONT : DESKTOP_FONT}
-              startY={30}
-              startScale={0}
-              startOpacity={0}
-              rotationRange={20}
-              stagger={0.055}
-              transition={POPCORN_SPRING_TRANSITION}
-              charIndexOffset={13}
-              totalCharsOverall={19}
-              isActive={isTextActive}
-              hasAppearedAlready={hasDashboardTextAnimatedGlobal}
-              onAnimationComplete={() => {
-                hasDashboardTextAnimatedGlobal = true;
-              }}
-            />
-          </div>
-
-          {isMobile && (
-            <div className="flex flex-col items-center mt-4 px-2">
-              <div className="w-10 h-[2px] bg-[#FF5500] rounded-full mb-3.5" />
-              <p className="text-[12.5px] text-slate-600 leading-[1.55] max-w-[295px] text-center font-medium">
-                Real-time respiratory telemetry, guided session feedback, and clinical progress tracking across all your devices.
-              </p>
-              <div className="mt-4 flex items-center justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (onNavigateToPortal) {
-                      onNavigateToPortal();
-                    } else {
-                      const track = document.getElementById('scrolly-track');
-                      const trackTop = track ? track.offsetTop : 0;
-                      const trackSpan = track ? track.offsetHeight - window.innerHeight : document.body.scrollHeight - window.innerHeight;
-                      window.scrollTo({ top: trackTop + 0.950 * trackSpan, behavior: 'smooth' });
-                    }
-                  }}
-                  className="px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white border border-slate-200/90 shadow-sm flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
-                  aria-label="Navigate to Web Command Center"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
-                  <span className="text-[9.5px] font-bold tracking-[0.08em] text-slate-800 uppercase">
-                    Web Command Center
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (onNavigateToCompanion) {
-                      onNavigateToCompanion();
-                    } else {
-                      const track = document.getElementById('scrolly-track');
-                      const trackTop = track ? track.offsetTop : 0;
-                      const trackSpan = track ? track.offsetHeight - window.innerHeight : document.body.scrollHeight - window.innerHeight;
-                      window.scrollTo({ top: trackTop + 0.985 * trackSpan, behavior: 'smooth' });
-                    }
-                  }}
-                  className="px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white border border-slate-200/90 shadow-sm flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
-                  aria-label="Navigate to Mobile Companion App"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
-                  <span className="text-[9.5px] font-bold tracking-[0.08em] text-slate-800 uppercase">
-                    Mobile Companion
-                  </span>
-                </button>
-              </div>
-              <div className="w-[1px] h-8 bg-gradient-to-t from-transparent to-[#FF5500]/40 mt-3" />
-            </div>
-          )}
-        </div>
+          </>
+        )}
       </div>
 
       {/* ===================================================================== */}
@@ -674,296 +414,92 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       >
         {/* ================================================================= */}
         {/* MOBILE PORTRAIT LAYOUT FOR DESKTOP DASHBOARD VIEW (< 768px)       */}
-        {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
+        {/* REDESIGNED MATCHING REFERENCE DESIGN WITH LIGHTWEIGHT ANIMATION   */}
         {/* ================================================================= */}
         <div
-          ref={mobileContainerRef}
-          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+          className="flex md:hidden flex-col justify-between items-center w-full max-w-[420px] h-full mx-auto will-change-transform pt-1 pb-3 px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
         >
-          {/* TOP SECTION: Kicker, Headline, Subtitle, Indicators + Top 2 Cards */}
-          <div className="w-full flex flex-col items-center shrink-0 z-20">
-            {/* Kicker, 2-Line Headline & Subtitle */}
-            <div className="flex flex-col items-center text-center pb-1.5 px-2">
-              <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white border border-[#FF5500]/50 shadow-[0_2px_8px_rgba(255,85,0,0.06)] mb-1.5">
-                <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.16em] text-[#FF5500] uppercase">
-                  DESKTOP WEB PORTAL
-                </span>
-              </div>
-              <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.08] text-[#0A1118]">
-                Personalised
-                <span className="block text-[#FF4800]">Command Center</span>
-              </h3>
-              <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.32] max-w-[310px] mt-1">
-                A powerful desktop portal to track, understand and improve your respiratory performance.
-              </p>
-              {/* Dual accent indicators matching reference */}
-              <div className="flex items-center justify-center gap-1.5 mt-2">
-                <div className="w-5 h-[2.5px] bg-[#FF4800] rounded-full" />
-                <div className="w-5 h-[2.5px] bg-[#FFD8BE] rounded-full" />
-              </div>
-            </div>
-
-            {/* Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
-            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full mt-1.5">
-              {/* Top-Left Card */}
-              <div
-                ref={card1Ref}
-                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
-              >
+          {/* TOP SECTION: Top 2 Callout Cards (Personalised Dashboard & Real-Time Lung Metrics) */}
+          <div className="w-full shrink-0 z-20">
+            <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
+              {/* Card 1: PERSONALISED DASHBOARD */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <GridDashboardIcon />
                 </div>
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   PERSONALISED
                   <br />
-                  <span className="text-[#FF4800]">DASHBOARD</span>
+                  <span className="text-[#FF5500]">DASHBOARD</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
               </div>
 
-              {/* Top-Right Card */}
-              <div
-                ref={card2Ref}
-                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
-              >
+              {/* Card 2: REAL-TIME LUNG HEALTH METRICS */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <LungsHealthIcon />
                 </div>
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   REAL-TIME
                   <br />
-                  <span className="text-[#FF4800]">LUNG METRICS</span>
+                  <span className="text-[#FF5500]">LUNG HEALTH METRICS</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
               </div>
             </div>
           </div>
 
-          {/* CENTER SECTION: Desktop Monitor + Halo */}
-          <div className="flex-1 w-full min-h-[220px] max-h-[400px] xs:max-h-[440px] relative flex items-center justify-center my-0.5 shrink min-w-0">
-            {/* Concentric Soft Warm Peach Disk behind Monitor (Matches Reference) */}
-            <div className="absolute w-[92%] aspect-square rounded-full bg-[#FFE7D6]/50 border border-[#FF5500]/[0.08] pointer-events-none -z-10 flex items-center justify-center">
-              <div className="w-[80%] aspect-square rounded-full bg-[#FFDEC9]/40" />
-            </div>
-
-            {/* Ambient Warm Theme-Orange Backlight Glow behind Monitor */}
+          {/* CENTER SECTION: Desktop Monitor Mockup */}
+          <div className="flex-1 w-full min-h-[190px] max-h-[380px] relative flex items-center justify-center my-auto shrink min-w-0">
+            {/* Soft Warm Radial Backdrop (NO GPU blur filter) */}
             <div
-              className="absolute inset-x-[10%] inset-y-[10%] rounded-full pointer-events-none -z-10"
+              className="absolute inset-x-[6%] inset-y-[6%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.26) 0%, rgba(255, 105, 0, 0.08) 56%, transparent 74%)',
-                filter: 'blur(22px)',
+                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.18) 0%, rgba(255, 105, 0, 0.05) 52%, transparent 72%)',
               }}
             />
 
             {/* Monitor Mockup Wrapper */}
-            <div
-              className="relative z-10 w-[92%] max-w-[360px] aspect-[360/240] flex items-center justify-center will-change-transform"
-              style={{
-                transform: phoneEase > 0.02 ? `scale(${1 - 0.25 * phoneEase})` : undefined,
-              }}
-            >
+            <div className="relative z-10 w-[94%] max-w-[350px] aspect-[360/240] flex items-center justify-center">
               <img
-                ref={monitorImgRef}
-                onLoad={updateMobileCoords}
                 src="/images/dashboard/desktop-mockup.png"
                 alt="Iron Lung User Dashboard Desktop Mockup"
-                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_16px_32px_rgba(0,0,0,0.16)] drop-shadow-[0_6px_14px_rgba(255,105,0,0.10)]"
+                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.14)] drop-shadow-[0_4px_12px_rgba(255,105,0,0.08)]"
               />
             </div>
           </div>
 
-          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Grouped at Bottom) */}
+          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Track Your Lung Score & Train At Your Own Pace) */}
           <div className="w-full shrink-0 z-20 pb-1">
-            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
-              {/* Bottom-Left Card */}
-              <div
-                ref={card3Ref}
-                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
-              >
+            <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
+              {/* Card 3: TRACK YOUR LUNG SCORE */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   TRACK YOUR
                   <br />
-                  <span className="text-[#FF4800]">LUNG SCORE</span>
+                  <span className="text-[#FF5500]">LUNG SCORE</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
               </div>
 
-              {/* Bottom-Right Card */}
-              <div
-                ref={card4Ref}
-                className="rounded-2xl bg-white backdrop-blur-md border border-white/80 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center text-center"
-              >
+              {/* Card 4: TRAIN AT YOUR OWN PACE */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.2] text-center">
+                <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   TRAIN AT
                   <br />
-                  <span className="text-[#FF4800]">YOUR OWN PACE</span>
+                  <span className="text-[#FF5500]">YOUR OWN PACE</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
               </div>
             </div>
-          </div>
-
-          {/* Dynamic SVG Pointer Lines & Pulsing Target Dots (Guaranteed physical connection & accurate widget targets) */}
-          {mobileCoords && (
-            <svg
-              className="absolute inset-0 w-full h-full pointer-events-none z-30 overflow-visible"
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-            >
-              {/* 1. Top-Left: Card 1 (Personalised Dashboard) -> Dot 1 (Focus Plan) */}
-              <motion.path
-                d={getTopConnectorPath(mobileCoords.card1, mobileCoords.dot1, mobileCoords.mTop)}
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={
-                  arePointersActive
-                    ? { pathLength: 1, opacity: 1 }
-                    : { pathLength: 0, opacity: 0 }
-                }
-                transition={{ duration: 0.55, delay: 0.08, ease: 'easeOut' }}
-              />
-
-              {/* 2. Top-Right: Card 2 (Real-Time Lung Metrics) -> Dot 2 (21% Capacity Gauge) */}
-              <motion.path
-                d={getTopConnectorPath(mobileCoords.card2, mobileCoords.dot2, mobileCoords.mTop)}
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={
-                  arePointersActive
-                    ? { pathLength: 1, opacity: 1 }
-                    : { pathLength: 0, opacity: 0 }
-                }
-                transition={{ duration: 0.55, delay: 0.14, ease: 'easeOut' }}
-              />
-
-              {/* 3. Bottom-Left: Dot 3 (27% Score Chart) -> Card 3 (Track Your Lung Score) */}
-              <motion.path
-                d={getBottomConnectorPath(mobileCoords.dot3, mobileCoords.card3, mobileCoords.mBottom)}
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={
-                  arePointersActive
-                    ? { pathLength: 1, opacity: 1 }
-                    : { pathLength: 0, opacity: 0 }
-                }
-                transition={{ duration: 0.55, delay: 0.20, ease: 'easeOut' }}
-              />
-
-              {/* 4. Bottom-Right: Dot 4 (Easy Efficiency) -> Card 4 (Train At Your Own Pace) */}
-              <motion.path
-                d={getBottomConnectorPath(mobileCoords.dot4, mobileCoords.card4, mobileCoords.mBottom)}
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={
-                  arePointersActive
-                    ? { pathLength: 1, opacity: 1 }
-                    : { pathLength: 0, opacity: 0 }
-                }
-                transition={{ duration: 0.55, delay: 0.26, ease: 'easeOut' }}
-              />
-
-              {/* Card Contact Anchor Dots (Grounded at card edges) */}
-              {[
-                { ...mobileCoords.card1, delay: 0.08 },
-                { ...mobileCoords.card2, delay: 0.14 },
-                { ...mobileCoords.card3, delay: 0.20 },
-                { ...mobileCoords.card4, delay: 0.26 },
-              ].map((term, idx) => (
-                <motion.circle
-                  key={`card-term-${idx}`}
-                  cx={term.x}
-                  cy={term.y}
-                  r="3.2"
-                  fill="#FF4800"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={arePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, delay: term.delay + 0.1 }}
-                  style={{ transformOrigin: `${term.x}px ${term.y}px` }}
-                />
-              ))}
-
-              {/* Pulsing Target Dots on Monitor Dashboard Widgets matching Desktop */}
-              {[
-                { ...mobileCoords.dot1, delay: 0.02 },
-                { ...mobileCoords.dot2, delay: 0.08 },
-                { ...mobileCoords.dot3, delay: 0.14 },
-                { ...mobileCoords.dot4, delay: 0.20 },
-              ].map((dot, idx) => (
-                <g key={`widget-dot-${idx}`}>
-                  {arePointersActive && (
-                    <circle
-                      cx={dot.x}
-                      cy={dot.y}
-                      r="6.5"
-                      fill="none"
-                      stroke="#FF4800"
-                      strokeWidth="1.5"
-                      opacity="0.75"
-                    >
-                      <animate
-                        attributeName="r"
-                        values="6.5; 13; 13"
-                        keyTimes="0; 0.7; 1"
-                        dur="1.8s"
-                        begin={`${dot.delay + 0.3}s`}
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        values="0.75; 0; 0"
-                        keyTimes="0; 0.7; 1"
-                        dur="1.8s"
-                        begin={`${dot.delay + 0.3}s`}
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-                  )}
-                  <motion.g
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={arePointersActive ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, delay: dot.delay + 0.25 }}
-                    style={{ transformOrigin: `${dot.x}px ${dot.y}px` }}
-                  >
-                    <circle cx={dot.x} cy={dot.y} r="5.5" fill="#FF4800" />
-                    <circle cx={dot.x} cy={dot.y} r="2.2" fill="#FFFFFF" />
-                  </motion.g>
-                </g>
-              ))}
-            </svg>
-          )}
-
-          {/* Subtle Ambient Golden-Orange Flowing Waves at Bottom (Matches Reference) */}
-          <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none -z-10 overflow-hidden opacity-55">
-            <svg viewBox="0 0 458 120" preserveAspectRatio="none" className="w-full h-full">
-              <path d="M -40 70 C 80 130, 180 40, 280 100 C 370 155, 430 75, 500 90" fill="none" stroke="#FF7A30" strokeWidth="1.2" opacity="0.35" />
-              <path d="M -40 85 C 90 145, 190 55, 290 115 C 380 170, 440 90, 500 105" fill="none" stroke="#FF5500" strokeWidth="1" opacity="0.25" />
-              <path d="M -40 100 C 70 155, 170 70, 270 128 C 360 180, 420 105, 500 120" fill="none" stroke="#FFA060" strokeWidth="0.8" opacity="0.2" />
-            </svg>
           </div>
         </div>
 
@@ -1330,240 +866,101 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
       >
         {/* ================================================================= */}
         {/* MOBILE PORTRAIT LAYOUT FOR PHONE COMPANION APP VIEW (< 768px)     */}
-        {/* REDESIGNED MATCHING REFERENCE DESIGN (FULL HEIGHT, BALANCED PADDING) */}
+        {/* REDESIGNED MATCHING REFERENCE DESIGN WITH LIGHTWEIGHT ANIMATION   */}
         {/* ================================================================= */}
         <div
-          className="flex md:hidden flex-col justify-between items-center w-full max-w-[430px] h-full mx-auto will-change-transform pt-1 pb-3 px-1 xs:px-2"
+          className="flex md:hidden flex-col justify-between items-center w-full max-w-[420px] h-full mx-auto will-change-transform pt-1 pb-3 px-2 relative pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           style={{
-            transform: `translateY(${phoneTranslateY}px) scale(${phoneScale})`,
+            transform: `translateY(${(1 - phoneEase) * 20}px)`,
           }}
         >
-          {/* TOP SECTION: Kicker, Headline, Subtitle + Top 2 Cards (Grouped Together) */}
-          <div className="w-full flex flex-col items-center shrink-0 z-20">
-            {/* Kicker, 2-Line Headline & Subtitle */}
-            <div className="flex flex-col items-center text-center pb-2 px-2">
-              <div className="inline-flex items-center justify-center px-3.5 py-0.5 rounded-full bg-white border border-[#FF5500]/50 shadow-[0_2px_8px_rgba(255,85,0,0.06)] mb-1.5">
-                <span className="text-[9.5px] xs:text-[10px] font-bold tracking-[0.16em] text-[#FF5500] uppercase">
-                  MOBILE COMPANION APP
-                </span>
-              </div>
-              <h3 className="text-[22px] xs:text-[25px] font-black tracking-[-0.03em] leading-[1.08] text-[#0A1118]">
-                Session Reports
-                <span className="block text-[#FF4800]">On The Go</span>
-              </h3>
-              <p className="text-[11px] xs:text-[12px] text-[#5A6578] font-normal leading-[1.32] max-w-[310px] mt-1">
-                Track your progress, analyse your sessions and stay motivated — anytime, anywhere.
-              </p>
-            </div>
-
-            {/* Top 2 Callout Cards (Session Details & Training Performance) */}
-            <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full">
-              {/* Top-Left Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
-                  <SessionDocIcon />
+          {/* TOP SECTION: Top 2 Callout Cards (Session Details & Training Performance) */}
+          <div className="w-full shrink-0 z-20">
+            <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
+              {/* Card 1: SESSION DETAILS */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
+                  <CalendarSessionIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    SESSION
-                    <br />
-                    DETAILS
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    View the date, time and status of your training session at a glance.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
+                  SESSION DETAILS
+                </h4>
+                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
+                  View the date, time and status of your training session at a glance.
+                </p>
               </div>
 
-              {/* Top-Right Card */}
-              <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-                <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
+              {/* Card 2: TRAINING PERFORMANCE */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <SolidBarChartIcon />
                 </div>
-                <div className="flex-1 min-w-0 flex flex-col items-start">
-                  <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                    TRAINING
-                    <br />
-                    PERFORMANCE
-                  </h4>
-                  <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                  <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                    Check session duration, achieved volume and target completion live.
-                  </p>
-                </div>
+                <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
+                  TRAINING PERFORMANCE
+                </h4>
+                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
+                  Check your session duration, achieved volume and target completion in real time.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* CENTER SECTION: Prominent Phone Mockup + Concentric Halo Rings + SVG Pointer Lines & Target Dots */}
-          <div className="flex-1 w-full min-h-[220px] max-h-[420px] xs:max-h-[460px] relative flex items-center justify-center my-1 shrink min-w-0">
-            {/* Ambient Warm Theme-Orange Backlight Glow behind Phone */}
+          {/* CENTER SECTION: Phone Mockup */}
+          <div className="flex-1 w-full min-h-[190px] max-h-[340px] relative flex items-center justify-center my-auto shrink min-w-0">
+            {/* Ambient Warm Radial Aura (NO GPU blur filter) */}
             <div
-              className="absolute inset-x-[16%] inset-y-[8%] rounded-full pointer-events-none -z-10"
+              className="absolute inset-x-[14%] inset-y-[10%] rounded-full pointer-events-none -z-10"
               style={{
                 background:
-                  'radial-gradient(circle at center, rgba(255, 105, 0, 0.28) 0%, rgba(255, 105, 0, 0.10) 54%, transparent 76%)',
-                filter: 'blur(24px)',
-                opacity: phoneEase,
+                  'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.22) 0%, rgba(255, 105, 0, 0.06) 52%, transparent 72%)',
               }}
             />
 
-            {/* Warm Elliptical Floor Shadow beneath Phone */}
-            <div
-              className="absolute left-[24%] right-[24%] bottom-[2%] h-[6%] rounded-full pointer-events-none -z-10"
-              style={{
-                background:
-                  'radial-gradient(ellipse at center, rgba(235, 85, 15, 0.34) 0%, rgba(255, 105, 0, 0.12) 54%, transparent 78%)',
-                filter: 'blur(8px)',
-                opacity: phoneEase,
-              }}
-            />
+            {/* Decorative Subtle Concentric Ring */}
+            <div className="absolute w-[220px] h-[220px] rounded-full border border-[#FF5500]/15 pointer-events-none -z-10 flex items-center justify-center">
+              <div className="w-[170px] h-[170px] rounded-full border border-dashed border-[#FF5500]/10" />
+            </div>
 
-            {/* Centered Phone Mockup (Fills available center height) */}
+            {/* Centered Phone Mockup */}
             <div className="relative z-10 h-full max-h-[96%] aspect-[9/18.8] flex items-center justify-center">
               <img
                 src="/images/dashboard/phone-mockup.png"
                 alt="Iron Lung Mobile App Session Report Mockup"
-                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_16px_30px_rgba(0,0,0,0.18)] drop-shadow-[0_4px_12px_rgba(255,105,0,0.12)]"
+                className="w-full h-full object-contain block select-none pointer-events-none drop-shadow-[0_14px_28px_rgba(0,0,0,0.16)] drop-shadow-[0_4px_12px_rgba(255,105,0,0.10)]"
               />
             </div>
-
-            {/* SVG Concentric Warm Radar Rings behind Phone (viewBox 0 0 360 280) */}
-            <svg
-              viewBox="0 0 360 280"
-              preserveAspectRatio="none"
-              className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
-            >
-              <circle
-                cx="180"
-                cy="140"
-                r="82"
-                fill="rgba(255, 206, 172, 0.28)"
-                stroke="rgba(255, 95, 20, 0.14)"
-                strokeWidth="1"
-              />
-              <circle
-                cx="180"
-                cy="140"
-                r="114"
-                fill="rgba(255, 220, 194, 0.20)"
-                stroke="rgba(255, 95, 20, 0.12)"
-                strokeWidth="1"
-              />
-              <circle
-                cx="180"
-                cy="140"
-                r="142"
-                fill="rgba(255, 232, 214, 0.14)"
-                stroke="rgba(255, 95, 20, 0.22)"
-                strokeWidth="1.1"
-                strokeDasharray="4 5"
-              />
-            </svg>
-
-            {/* SVG Foreground Pointer Lines & Target Dots matching reference (viewBox 0 0 360 280) */}
-            <svg
-              viewBox="0 0 360 280"
-              preserveAspectRatio="none"
-              className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
-            >
-              {/* 1. Top-Left Connector: from bottom of Card 1 (46, 0) down to (46, 32) then to dot at (90, 75) */}
-              <path
-                d="M 46 0 L 46 32 L 90 75"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.6"
-                strokeDasharray="4 4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* 2. Top-Right Connector: from bottom of Card 2 (314, 0) down to (314, 32) then to dot at (270, 75) */}
-              <path
-                d="M 314 0 L 314 32 L 270 75"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.6"
-                strokeDasharray="4 4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* 3. Bottom-Left Connector: from dot at (90, 205) to (46, 248) then down to top of Card 3 (46, 280) */}
-              <path
-                d="M 90 205 L 46 248 L 46 280"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.6"
-                strokeDasharray="4 4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {/* 4. Bottom-Right Connector: from dot at (270, 205) to (314, 248) then down to top of Card 4 (314, 280) */}
-              <path
-                d="M 270 205 L 314 248 L 314 280"
-                fill="none"
-                stroke="#FF4800"
-                strokeWidth="1.6"
-                strokeDasharray="4 4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-
-              {/* Pulsing Target Dots on Phone Screen & Bezel matching reference */}
-              {[
-                { cx: 90, cy: 75, delay: 0.02 },
-                { cx: 270, cy: 75, delay: 0.08 },
-                { cx: 90, cy: 205, delay: 0.14 },
-                { cx: 270, cy: 205, delay: 0.20 },
-              ].map((dot, idx) => (
-                <g key={idx}>
-                  <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="none" stroke="#FF4800" strokeWidth="1.5" opacity="0.75">
-                    <animate attributeName="r" values="6.5; 13; 13" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.75; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
-                  </circle>
-                  <g>
-                    <circle cx={dot.cx} cy={dot.cy} r="6.5" fill="#FF4800" />
-                    <circle cx={dot.cx} cy={dot.cy} r="2.8" fill="#FFFFFF" />
-                  </g>
-                </g>
-              ))}
-            </svg>
           </div>
 
-          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Grouped at Bottom) */}
-          <div className="grid grid-cols-2 gap-2.5 xs:gap-3 w-full shrink-0 z-20 pb-0.5">
-            {/* Bottom-Left Card */}
-            <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
-                <LungsHealthIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                  VISUAL BREATHING
-                  <br />
-                  FEEDBACK
+          {/* BOTTOM SECTION: Bottom 2 Callout Cards (Visual Breathing Feedback & Save Your Progress) */}
+          <div className="w-full shrink-0 z-20 pb-1">
+            <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
+              {/* Card 3: VISUAL BREATHING FEEDBACK */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
+                  <LungsHealthIcon />
+                </div>
+                <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
+                  VISUAL BREATHING FEEDBACK
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                  See your breathing pattern with clear visual insights and real-time feedback.
+                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
+                  See your lung capacity visualised and follow guided inhale and exhale sessions.
                 </p>
               </div>
-            </div>
 
-            {/* Bottom-Right Card */}
-            <div className="rounded-2xl bg-white backdrop-blur-md border border-white/80 p-2.5 xs:p-3 shadow-[0_6px_20px_rgba(0,0,0,0.05)] flex items-start gap-2 xs:gap-2.5">
-              <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0">
-                <SaveReportDownloadIcon />
-              </div>
-              <div className="flex-1 min-w-0 flex flex-col items-start">
-                <h4 className="text-[#0A1118] font-black text-[10px] xs:text-[11px] uppercase tracking-[0.01em] leading-[1.16]">
-                  SAVE YOUR
-                  <br />
-                  PROGRESS
+              {/* Card 4: SAVE YOUR PROGRESS */}
+              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+                <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
+                  <SaveReportDownloadIcon />
+                </div>
+                <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
+                  SAVE YOUR PROGRESS
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF4800] my-1 rounded-full" />
-                <p className="text-[#4B5563] text-[9px] xs:text-[10px] leading-[1.32] font-normal">
-                  All your session data is saved securely so you can track your improvement over time.
+                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
+                  Download detailed session reports to track your improvement over time.
                 </p>
               </div>
             </div>
