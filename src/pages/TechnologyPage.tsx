@@ -3,6 +3,7 @@ import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
 
 import TechnologyHeroSection from "../components/sections/technology/TechnologyHeroSection";
+import TechnologyTrainBreathSection from "../components/sections/technology/TechnologyTrainBreathSection";
 import TechnologyWhatsAppReportSection from "../components/sections/technology/TechnologyWhatsAppReportSection";
 import TechnologyInteractiveAppSection from "../components/sections/technology/TechnologyInteractiveAppSection";
 import TechnologyCtaSection from "../components/sections/technology/TechnologyCtaSection";
@@ -39,6 +40,9 @@ export const TechnologyPage: React.FC<TechnologyPageProps> = ({
       <main className="flex-1">
         {/* Technology Hero Section matching reference layout with video */}
         <TechnologyHeroSection />
+
+        {/* Train Every Breath Section with interactive frame animation */}
+        <TechnologyTrainBreathSection />
 
         {/* WhatsApp Performance Report Section matching exact design replica */}
         <TechnologyWhatsAppReportSection />

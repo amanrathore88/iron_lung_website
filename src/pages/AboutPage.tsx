@@ -1,9 +1,11 @@
 import React from "react";
 import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
-import AboutHeroSection from "../components/sections/about/AboutHeroSection";
-import AboutPillarsSection from "../components/sections/about/AboutPillarsSection";
-import AboutTeamSection from "../components/sections/about/AboutTeamSection";
+import AboutHero from "../components/sections/about/AboutHero";
+import AboutWhoWeAre from "../components/sections/about/AboutWhoWeAre";
+import AboutFounders from "../components/sections/about/AboutFounders";
+import AboutMentors from "../components/sections/about/AboutMentors";
+import AboutCoreValues from "../components/sections/about/AboutCoreValues";
 import AboutFaqSection from "../components/sections/about/AboutFaqSection";
 
 interface AboutPageProps {
@@ -36,20 +38,26 @@ export const AboutPage: React.FC<AboutPageProps> = ({
       />
 
       <main className="flex-1">
-        {/* Dedicated About Hero Section matching reference */}
-        <AboutHeroSection onExplore={() => onNavigateSection('how-it-works')} />
+        {/* 1. Hero 3D Product Carousel */}
+        <AboutHero />
 
-        {/* Pillars Section: MORE OXYGEN | MORE LIFE matching reference */}
-        <AboutPillarsSection />
+        {/* 2. Who We Are & Innovation Stats */}
+        <AboutWhoWeAre />
 
-        {/* Our Team Section matching reference */}
-        <AboutTeamSection onEmailClick={() => onContactUs()} />
+        {/* 3. Leadership & Founders */}
+        <AboutFounders />
 
-        {/* FAQs Section with animated boxes and athlete visual */}
+        {/* 4. Mentors & Advisory Board */}
+        <AboutMentors />
+
+        {/* 5. Core Values */}
+        <AboutCoreValues />
+
+        {/* 6. Retained FAQs Section from existing website */}
         <AboutFaqSection />
       </main>
 
-      {/* Cinematic Shared Footer */}
+      {/* Retained Cinematic Shared Footer from existing website */}
       <Footer />
     </div>
   );
