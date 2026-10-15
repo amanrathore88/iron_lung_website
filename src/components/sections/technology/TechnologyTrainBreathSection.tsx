@@ -9,6 +9,9 @@ interface AccordionPoint {
   targetFrame: number;
   frameIndex: number;
   poster: string;
+  mobileImage: string;
+  mobilePng: string;
+  frameLabel: string;
 }
 
 const POINTS: AccordionPoint[] = [
@@ -20,6 +23,9 @@ const POINTS: AccordionPoint[] = [
     targetFrame: 325,
     frameIndex: 31,
     poster: "/images/technology/sequence/seq_031.webp",
+    mobileImage: "/images/technology/points/point_0325.webp",
+    mobilePng: "/images/technology/points/point_0325.png",
+    frameLabel: "0325",
   },
   {
     id: 2,
@@ -29,6 +35,9 @@ const POINTS: AccordionPoint[] = [
     targetFrame: 350,
     frameIndex: 56,
     poster: "/images/technology/sequence/seq_056.webp",
+    mobileImage: "/images/technology/points/point_0350.webp",
+    mobilePng: "/images/technology/points/point_0350.png",
+    frameLabel: "0350",
   },
   {
     id: 3,
@@ -38,6 +47,9 @@ const POINTS: AccordionPoint[] = [
     targetFrame: 602,
     frameIndex: 89,
     poster: "/images/technology/sequence/seq_089.webp",
+    mobileImage: "/images/technology/points/point_0602.webp",
+    mobilePng: "/images/technology/points/point_0602.png",
+    frameLabel: "0602",
   },
   {
     id: 4,
@@ -47,6 +59,9 @@ const POINTS: AccordionPoint[] = [
     targetFrame: 820,
     frameIndex: 120,
     poster: "/images/technology/sequence/seq_120.webp",
+    mobileImage: "/images/technology/points/point_0820.webp",
+    mobilePng: "/images/technology/points/point_0820.png",
+    frameLabel: "0820",
   },
 ];
 
@@ -250,18 +265,36 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                         </span>
                       </button>
 
-                      {/* Expandable Description */}
+                      {/* Expandable Description & Mobile Framed Preview Image */}
                       <AnimatePresence initial={false}>
                         {isActive && (
                           <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
                             className="overflow-hidden"
                           >
                             <div className="px-5 sm:px-6 pb-5 pt-0 text-xs sm:text-sm text-neutral-600 font-normal leading-relaxed">
-                              {point.description}
+                              <p>{point.description}</p>
+
+                              {/* Mobile-Only Framed Preview Image for this point */}
+                              <div className="block lg:hidden mt-3.5">
+                                <div className="relative w-full rounded-2xl overflow-hidden bg-white border border-neutral-200/90 shadow-[0_6px_22px_rgba(0,0,0,0.06)] p-2 sm:p-2.5">
+                                  {/* Matting area with subtle warm backdrop */}
+                                  <div className="relative w-full aspect-[16/10] xs:aspect-[16/9] rounded-xl bg-gradient-to-b from-[#FAF7F2] to-[#F3EDE7] flex items-center justify-center overflow-hidden border border-neutral-200/50">
+                                    <picture>
+                                      <source srcSet={point.mobileImage} type="image/webp" />
+                                      <img
+                                        src={point.mobilePng}
+                                        alt={`IRONLUNG ${point.title} (Frame ${point.frameLabel})`}
+                                        className="w-full h-full object-contain p-2 select-none"
+                                        loading="eager"
+                                      />
+                                    </picture>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </motion.div>
                         )}
@@ -279,9 +312,9 @@ export const TechnologyTrainBreathSection: React.FC = () => {
 
           {/* =============================================================== */}
           {/* RIGHT SIDE / CANVAS 3D MACHINE FRAME ANIMATION CONTAINER         */}
-          {/* Shifted slightly to the right with soft faded top/bottom/left     */}
+          {/* Desktop-only: preserved exactly as it is without alteration      */}
           {/* =============================================================== */}
-          <div className="relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[58%] xl:w-[62%] h-[320px] xs:h-[380px] sm:h-[460px] lg:h-full min-h-[300px] sm:min-h-[420px] lg:min-h-0 mt-4 sm:mt-6 lg:mt-0 flex items-center justify-center lg:justify-end pointer-events-none z-10 lg:translate-x-5 xl:translate-x-9 2xl:translate-x-12">
+          <div className="hidden lg:flex lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[58%] xl:w-[62%] h-full min-h-0 flex items-center justify-end pointer-events-none z-10 lg:translate-x-5 xl:translate-x-9 2xl:translate-x-12">
             
             {/* Outer Wrapper: Vertical Mask for seamless top and bottom fade (removes render cutoff lines) */}
             <div
