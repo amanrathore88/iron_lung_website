@@ -8,13 +8,13 @@ import { ScrollyFeaturesOverlay } from './components/sections/features/ScrollyFe
 import { AboutSectionOverlay } from './components/sections/about/AboutSectionOverlay';
 import { DashboardSectionOverlay } from './components/sections/dashboard/DashboardSectionOverlay';
 import { VideoModal } from './components/modals/VideoModal';
+import { BookDemoModal } from './components/modals/BookDemoModal';
 import { TechnologyPage } from './pages/TechnologyPage';
 import { AboutPage } from './pages/AboutPage';
-import { BookDemoPage } from './pages/BookDemoPage';
 import { ContactPage } from './pages/ContactPage';
 import { LoadingScreen } from './components/ui/LoadingScreen';
 
-export type AppView = 'home' | 'technology' | 'about' | 'book-demo' | 'contact';
+export type AppView = 'home' | 'technology' | 'about' | 'contact';
 
 // Ordered mobile snap stops from Hero (Stage 0) up to Mobile Companion (Stage 7).
 // Swiping smoothly steps through all stages while keeping the browser address bar fixed in place.
@@ -34,6 +34,14 @@ const BELOW_LAST_STAGE = LAST_SNAP_STAGE + 1;          // 8 (Free native scroll 
 
 export const App: React.FC = () => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
+  const [isBookDemoModalOpen, setIsBookDemoModalOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash.toLowerCase();
+      const pathname = window.location.pathname.toLowerCase();
+      return hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo');
+    }
+    return false;
+  });
   const [is3DModelLoaded, setIs3DModelLoaded] = useState<boolean>(false);
   const [isAppReady, setIsAppReady] = useState<boolean>(false);
 
@@ -51,9 +59,6 @@ export const App: React.FC = () => {
       }
       if (hash.includes('about') || pathname.includes('about')) {
         return 'about';
-      }
-      if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
-        return 'book-demo';
       }
       if (hash.includes('contact') || pathname.includes('contact')) {
         return 'contact';
@@ -85,12 +90,16 @@ export const App: React.FC = () => {
         setCurrentView('technology');
       } else if (hash.includes('about') || pathname.includes('about')) {
         setCurrentView('about');
-      } else if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
-        setCurrentView('book-demo');
       } else if (hash.includes('contact') || pathname.includes('contact')) {
         setCurrentView('contact');
       } else {
         setCurrentView('home');
+      }
+
+      if (hash.includes('book-demo') || hash.includes('demo') || pathname.includes('book-demo') || pathname.includes('demo')) {
+        setIsBookDemoModalOpen(true);
+      } else {
+        setIsBookDemoModalOpen(false);
       }
     };
 
@@ -672,11 +681,7 @@ export const App: React.FC = () => {
     }
 
     if (section === 'book-demo') {
-      if (currentView !== 'book-demo') {
-        window.history.pushState(null, '', '#book-demo');
-        setCurrentView('book-demo');
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsBookDemoModalOpen(true);
       return;
     }
 
@@ -722,24 +727,19 @@ export const App: React.FC = () => {
 
       {currentView === 'technology' ? (
         <TechnologyPage
-          onBookDemo={() => handleNavigation('book-demo')}
+          onBookDemo={() => setIsBookDemoModalOpen(true)}
           onContactUs={() => handleNavigation('contact')}
           onNavigateSection={handleNavigation}
         />
       ) : currentView === 'about' ? (
         <AboutPage
-          onBookDemo={() => handleNavigation('book-demo')}
-          onContactUs={() => handleNavigation('contact')}
-          onNavigateSection={handleNavigation}
-        />
-      ) : currentView === 'book-demo' ? (
-        <BookDemoPage
+          onBookDemo={() => setIsBookDemoModalOpen(true)}
           onContactUs={() => handleNavigation('contact')}
           onNavigateSection={handleNavigation}
         />
       ) : currentView === 'contact' ? (
         <ContactPage
-          onBookDemo={() => handleNavigation('book-demo')}
+          onBookDemo={() => setIsBookDemoModalOpen(true)}
           onNavigateSection={handleNavigation}
         />
       ) : (
@@ -820,6 +820,17 @@ export const App: React.FC = () => {
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
+      />
+
+      {/* Book a Free Demo Modal (Exact Uploaded Design Replica) */}
+      <BookDemoModal
+        isOpen={isBookDemoModalOpen}
+        onClose={() => {
+          setIsBookDemoModalOpen(false);
+          if (window.location.hash.includes('book-demo') || window.location.hash.includes('demo')) {
+            window.history.replaceState(null, '', window.location.pathname);
+          }
+        }}
       />
     </div>
   );
