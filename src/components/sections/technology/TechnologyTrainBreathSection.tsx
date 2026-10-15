@@ -54,9 +54,9 @@ const TOTAL_FRAMES = 121;
 const DEFAULT_POSTER = "/images/technology/sequence/seq_000.webp";
 
 export const TechnologyTrainBreathSection: React.FC = () => {
-  // Start with Point 1 active as shown in the design reference, defaulting to frame 0001 (index 0) on arrival
-  const [activePointId, setActivePointId] = useState<number | null>(1);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // All accordion points start closed on arrival so the section showcases the full machine (Frame 0001)
+  const [activePointId, setActivePointId] = useState<number | null>(null);
+  const [canvasReady, setCanvasReady] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const currentFrameRef = useRef<number>(0);
@@ -64,7 +64,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
   const animFrameIdRef = useRef<number | null>(null);
   const imagesCacheRef = useRef<HTMLImageElement[]>([]);
 
-  // Draw a specific frame index onto the canvas
+  // Draw a specific frame index onto the canvas with zero-latency pre-decoded images
   const renderFrame = useCallback((frameIdx: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -72,13 +72,13 @@ export const TechnologyTrainBreathSection: React.FC = () => {
     if (!ctx) return;
 
     const img = imagesCacheRef.current[frameIdx];
-    if (img && img.complete && img.naturalWidth > 0) {
+    if (img && img.naturalWidth > 0) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
   }, []);
 
-  // Smooth ease-in-out cinematic animation loop between frame indices
+  // Rock-steady cinematic frame player: avoids velocity spikes, stutters, and frame drops
   const animateToFrame = useCallback(
     (targetIdx: number) => {
       targetFrameRef.current = targetIdx;
@@ -97,27 +97,42 @@ export const TechnologyTrainBreathSection: React.FC = () => {
       }
 
       const totalDelta = targetFrame - startFrame;
-      const frameDistance = Math.abs(totalDelta);
+      const totalFrames = Math.abs(totalDelta);
+      const direction = Math.sign(totalDelta);
 
-      // Slower, graceful cinematic pacing (~1.8s to 2.4s) so the camera rotation & zoom can be savored
-      const durationMs = Math.max(1800, Math.min(2500, 1300 + frameDistance * 14));
-      const startTime = performance.now();
+      // Pacing:
+      // Adjacent points (<= 35 frames delta, ~25-33 frames): steady 44ms per frame (~23fps)
+      // Provides deliberate, calm, and graceful camera moves (~1.1s to 1.5s).
+      // Long distance transitions (> 35 frames, e.g. 89 frames from UV to Card Insert):
+      // Paced steadily over ~2.4s without artificial velocity spikes or stutters.
+      const frameIntervalMs =
+        totalFrames <= 35
+          ? 44
+          : Math.max(25, Math.floor(2400 / totalFrames));
+
+      let lastTime = performance.now();
+      let accumulator = 0;
+      let current = startFrame;
 
       const step = (now: number) => {
-        const elapsed = now - startTime;
-        const progress = Math.min(1, elapsed / durationMs);
+        const delta = now - lastTime;
+        lastTime = now;
+        accumulator += delta;
 
-        // Sinusoidal ease-in-out: zero jerk at endpoints, natural acceleration & gentle deceleration
-        const eased = 0.5 * (1 - Math.cos(Math.PI * progress));
+        let frameChanged = false;
 
-        const nextFrame = Math.round(startFrame + totalDelta * eased);
-
-        if (nextFrame !== currentFrameRef.current) {
-          currentFrameRef.current = nextFrame;
-          renderFrame(nextFrame);
+        while (accumulator >= frameIntervalMs && current !== targetFrame) {
+          current += direction;
+          accumulator -= frameIntervalMs;
+          frameChanged = true;
         }
 
-        if (progress < 1) {
+        if (frameChanged) {
+          currentFrameRef.current = current;
+          renderFrame(current);
+        }
+
+        if (current !== targetFrame) {
           animFrameIdRef.current = requestAnimationFrame(step);
         } else {
           currentFrameRef.current = targetFrame;
@@ -131,41 +146,45 @@ export const TechnologyTrainBreathSection: React.FC = () => {
     [renderFrame]
   );
 
-  // Handle clicking an accordion item
+  // Toggleable accordion interaction:
+  // - Clicking any closed point expands it and animates camera to that point's frame
+  // - Clicking an already-open point collapses it and smoothly returns camera to Frame 0001 (Overview)
   const handlePointClick = (point: AccordionPoint) => {
-    setActivePointId(point.id);
-    animateToFrame(point.frameIndex);
+    if (activePointId === point.id) {
+      setActivePointId(null);
+      animateToFrame(0);
+    } else {
+      setActivePointId(point.id);
+      animateToFrame(point.frameIndex);
+    }
   };
 
-  // Preload frames progressively
+  // Preload and off-thread decode all 121 frames once on mount
   useEffect(() => {
     const images: HTMLImageElement[] = [];
     imagesCacheRef.current = images;
 
-    // First preload keyframes immediately
-    const keyIndices = [0, 31, 56, 89, 120];
-    let loadedKeyCount = 0;
-
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = `/images/technology/sequence/seq_${String(i).padStart(3, "0")}.webp`;
+      if (typeof img.decode === "function") {
+        img.decode().catch(() => {});
+      }
       images[i] = img;
 
-      if (keyIndices.includes(i)) {
+      if (i === 0) {
         img.onload = () => {
-          loadedKeyCount++;
-          if (loadedKeyCount >= 2 && !isLoaded) {
-            setIsLoaded(true);
-            renderFrame(currentFrameRef.current);
-          }
+          setCanvasReady(true);
+          renderFrame(0);
         };
       }
     }
 
-    // Initial draw once canvas is mounted
+    // Safety fallback draw after mounting
     const timer = setTimeout(() => {
+      setCanvasReady(true);
       renderFrame(0);
-    }, 100);
+    }, 120);
 
     return () => {
       clearTimeout(timer);
@@ -173,7 +192,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
         cancelAnimationFrame(animFrameIdRef.current);
       }
     };
-  }, [renderFrame, isLoaded]);
+  }, [renderFrame]);
 
   return (
     <section className="w-full bg-[#fcfaf7] py-6 sm:py-10 md:py-14 selection:bg-[#fb4403]/20 overflow-hidden">
@@ -206,8 +225,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                     <div
                       key={point.id}
                       id={`accordion-point-${point.id}`}
-                      onClick={() => handlePointClick(point)}
-                      className={`w-full bg-[#fcfaf7] rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer shadow-xs border ${
+                      className={`w-full bg-[#fcfaf7] rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs border ${
                         isActive
                           ? "border-neutral-300 shadow-xs"
                           : "border-neutral-200/70 hover:border-neutral-300 hover:shadow-xs"
@@ -216,8 +234,9 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                       {/* Header Row */}
                       <button
                         type="button"
+                        onClick={() => handlePointClick(point)}
                         aria-expanded={isActive}
-                        className="w-full flex items-center justify-between px-5 sm:px-6 py-4 sm:py-4.5 text-left focus:outline-none"
+                        className="w-full flex items-center justify-between px-5 sm:px-6 py-4 sm:py-4.5 text-left focus:outline-none cursor-pointer group"
                       >
                         <span className="text-base sm:text-lg font-bold text-black tracking-tight">
                           {point.title}
@@ -297,7 +316,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                   src={DEFAULT_POSTER}
                   alt="IRONLUNG Train Every Breath Machine"
                   className={`absolute inset-0 w-full h-full object-contain scale-[1.04] sm:scale-105 lg:scale-[1.12] xl:scale-[1.16] origin-center lg:origin-right pointer-events-none transition-opacity duration-300 ${
-                    isLoaded ? "opacity-0" : "opacity-100"
+                    canvasReady ? "opacity-0" : "opacity-100"
                   }`}
                 />
               </div>
