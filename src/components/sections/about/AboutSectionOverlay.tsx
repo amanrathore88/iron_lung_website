@@ -186,25 +186,9 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       {/* ======================================================== */}
       {/* 2. Left Column Accents (Surrounding the 3D Model) - Desktop only */}
       {/* ======================================================== */}
-      {/* Top Left Quote Block (Left Margin) */}
-      <div
-        className="hidden lg:flex absolute top-24 sm:top-28 left-6 sm:left-10 lg:left-14 flex-col items-start gap-1 pointer-events-none transition-all duration-200"
-        style={{
-          opacity: currentContentOpacity * leftAccentsOpacity,
-          transform: `translateY(${contentTranslateY}px)`,
-        }}
-      >
-        <span className="text-sm font-serif text-slate-400 font-bold leading-none">“</span>
-        <div className="flex flex-col text-[9px] sm:text-[10px] font-manrope font-medium tracking-[0.25em] text-slate-600 uppercase leading-relaxed mt-0.5">
-          <span>HUMAN</span>
-          <span>CENTRED</span>
-          <span>RESPIRATORY</span>
-          <span>WELLNESS</span>
-        </div>
-        <div className="w-5 h-[1.5px] bg-[#FF5E1E] mt-2 rounded-full" />
-      </div>
 
-      {/* Bottom Left Index & Quote Block (Left Margin) */}
+
+      {/* Bottom Left Index (Left Margin) */}
       <div
         className="hidden lg:flex absolute bottom-8 sm:bottom-10 left-6 sm:left-10 lg:left-14 flex-col items-start gap-1 pointer-events-none transition-all duration-200"
         style={{
@@ -212,13 +196,6 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
           transform: `translateY(${contentTranslateY}px)`,
         }}
       >
-        <div className="flex flex-col text-[9px] sm:text-[10px] font-manrope font-medium tracking-[0.25em] text-slate-500 uppercase leading-relaxed">
-          <span>SCIENCE</span>
-          <span>DESIGN</span>
-          <span>A BRIGHTER</span>
-          <span>TOMORROW</span>
-        </div>
-        <div className="w-5 h-[1.5px] bg-[#FF5E1E] my-2 rounded-full" />
         <span className="text-xs sm:text-sm font-manrope font-medium tracking-widest text-slate-900">
           01 <span className="text-slate-400 font-normal">/</span> 04
         </span>
@@ -408,8 +385,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 </motion.div>
               </div>
 
-              {/* Right Rail: Healthier People + Inspired by Nature */}
-              <div className="w-[102px] xs:w-[118px] sm:w-[110px] lg:w-[125px] xl:w-[140px] min-w-0 max-w-full flex flex-col items-start justify-between self-stretch py-0.5 sm:py-0 gap-1 sm:gap-0">
+              {/* Right Rail: Healthier People */}
+              <div className="w-[102px] xs:w-[118px] sm:w-[110px] lg:w-[125px] xl:w-[140px] min-w-0 max-w-full flex flex-col items-start justify-start self-stretch py-0.5 sm:py-0 gap-1 sm:gap-0">
                 {/* Top: "Healthier People, Brighter Tomorrows" */}
                 <div className="flex flex-col items-start gap-0.5 xl:gap-1">
                   <motion.span
@@ -442,30 +419,6 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     className="w-5 sm:w-5 h-[2px] sm:h-[1.5px] bg-[#FF5E1E] mt-1 sm:mt-1 rounded-full origin-left"
                   />
                 </div>
-
-                {/* Bottom: "Inspired by Nature, Built by People..." */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-                  transition={{ duration: 0.5, ease: 'easeOut', delay: 0.95 }}
-                  className="flex flex-col items-start mt-auto"
-                >
-                  <div className="sm:hidden font-manrope font-normal text-[7px] xs:text-[8px] tracking-[0.14em] text-slate-500 uppercase leading-[1.32]">
-                    INSPIRED BY NATURE. <br />
-                    BUILT BY PEOPLE. <br />
-                    DRIVEN BY A <br />
-                    HEALTHIER TOMORROW.
-                  </div>
-                  <div className="hidden sm:block font-manrope font-normal text-[6.5px] sm:text-[7.5px] lg:text-[7.5px] xl:text-[8.5px] tracking-[0.14em] sm:tracking-[0.16em] text-slate-500 uppercase leading-[1.45] sm:leading-[1.55]">
-                    INSPIRED BY NATURE. <br />
-                    BUILT BY PEOPLE. <br />
-                    DRIVEN BY A HEALTHIER <br />
-                    TOMORROW.
-                  </div>
-                  <span className="font-manrope font-bold sm:font-medium text-[8.5px] xs:text-[9px] sm:text-[8.5px] lg:text-[8.5px] xl:text-[9.5px] tracking-widest text-[#0A1118] sm:text-slate-800 mt-1">
-                    01 <span className="text-slate-400 sm:text-slate-800">―</span>
-                  </span>
-                </motion.div>
               </div>
             </div>
 
@@ -527,8 +480,8 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               />
             </div>
 
-            {/* ROW 3: Stats with Times New Roman + Animated Lung Seal (Lung Seal on sm+ so mobile 4-col stats breathe cleanly) */}
-            <div className="shrink-0 w-full min-w-0 max-w-full grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-1.5 xs:gap-2 sm:gap-x-4 lg:gap-x-5 xl:gap-x-6 items-center pointer-events-auto py-0.5 sm:py-1">
+            {/* ROW 3: Stats */}
+            <div className="shrink-0 w-full min-w-0 max-w-full flex items-center pointer-events-auto py-0.5 sm:py-1">
               
               {/* 4 Key Metrics */}
               <div className="flex items-center justify-between w-full min-w-0 py-0.5">
@@ -614,40 +567,6 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                   </span>
                 </motion.div>
               </div>
-
-              {/* Lung Seal (Tablet & Desktop) */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={isEntered ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.9 }}
-                className="hidden sm:flex w-auto sm:w-[110px] lg:w-[125px] xl:w-[140px] items-center justify-center shrink-0 mt-0.5 sm:mt-0"
-              >
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-[50px] lg:h-[50px] xl:w-[62px] xl:h-[62px] flex items-center justify-center">
-                  <svg viewBox="0 0 100 100" className="w-full h-full animate-[spin_28s_linear_infinite]">
-                    <defs>
-                      <path
-                        id="sealCirclePath"
-                        d="M 50, 50 m -36, 0 a 36,36 0 1,1 72,0 a 36,36 0 1,1 -72,0"
-                      />
-                    </defs>
-                    <text className="font-manrope text-[7px] font-medium uppercase tracking-[0.24em] fill-[#FF5E1E]">
-                      <textPath href="#sealCirclePath" startOffset="0%">
-                        • SAME BREATH • A BRIGHTER TOMORROW •
-                      </textPath>
-                    </text>
-                  </svg>
-                  {/* Center Animated Orange Lung Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center text-[#FF5E1E] pointer-events-none">
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[18px] lg:h-[18px] xl:w-5 xl:h-5 fill-none stroke-[#FF5E1E] animate-pulse" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 3v9" />
-                      <path d="M9 7l-3 3" />
-                      <path d="M15 7l3 3" />
-                      <path d="M7 10c-2.5 0-4 2-4 5.5s2 4.5 4 3.5c1.2-.5 1.7-1.5 1.7-3.2V10z" />
-                      <path d="M17 10c2.5 0 4 2 4 5.5s-2 4.5-4 3.5c-1.2-.5-1.7-1.5-1.7-3.2V10z" />
-                    </svg>
-                  </div>
-                </div>
-              </motion.div>
             </div>
 
             {/* Mobile Subtle Horizontal Rule separating Stats from Our Purpose */}
