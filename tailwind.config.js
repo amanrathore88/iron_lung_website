@@ -73,7 +73,7 @@ export default {
         space: ['"Swis721 BlkCn BT"', 'sans-serif'],
         grotesk: ['"Swis721 BlkCn BT"', 'sans-serif'],
         display: ['"Swis721 BlkCn BT"', 'sans-serif'],
-        mono: ['"Swis721 BlkCn BT"', 'JetBrains Mono', 'monospace'],
+        mono: ['"Swis721 BlkCn BT"', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
         body: ['"Swis721 BlkCn BT"', 'sans-serif'],
         serif: ['"Swis721 BlkCn BT"', 'Georgia', 'serif'],
         swis: ['"Swis721 BlkCn BT"', 'sans-serif'],

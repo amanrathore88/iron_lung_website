@@ -159,13 +159,7 @@ export function validateOrganization(org: string): ValidationResult {
 /**
  * Validates Requirement message
  */
-export function validateMessage(msg: string): ValidationResult {
-  const trimmed = msg.trim();
-  if (!trimmed) {
-    return { isValid: false, message: 'Message / Project brief is required' };
-  }
-  if (trimmed.length < 5) {
-    return { isValid: false, message: 'Please provide at least a brief sentence (min 5 chars)' };
-  }
+export function validateMessage(_msg?: string): ValidationResult {
+  // Optional field
   return { isValid: true, message: '' };
 }

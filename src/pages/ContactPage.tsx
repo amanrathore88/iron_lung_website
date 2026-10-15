@@ -4,8 +4,6 @@ import {
   Building2, 
   Mail, 
   Phone, 
-  MapPin, 
-  Clock, 
   Send, 
   CheckCircle2, 
   AlertCircle,
@@ -15,7 +13,6 @@ import {
   Cpu, 
   FileText, 
   ShieldCheck, 
-  ArrowRight, 
   Activity, 
   Compass, 
   Radio, 
@@ -25,13 +22,11 @@ import {
 } from "lucide-react";
 import { HeroNavbar } from "../components/layout/HeroNavbar";
 import Footer from "../components/layout/Footer";
-import { KineticText } from "../components/ui/kinetic-text";
 import { 
   validateIndianMobile, 
   validateEmail, 
   validateName, 
   validateOrganization, 
-  validateMessage, 
   normalizeIndianMobile 
 } from "../lib/validators";
 
@@ -78,14 +73,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({
   const orgValidation = useMemo(() => validateOrganization(organization), [organization]);
   const emailValidation = useMemo(() => validateEmail(email), [email]);
   const phoneValidation = useMemo(() => validateIndianMobile(phone), [phone]);
-  const msgValidation = useMemo(() => validateMessage(message), [message]);
 
   const isFormValid =
     nameValidation.isValid &&
     orgValidation.isValid &&
     emailValidation.isValid &&
-    phoneValidation.isValid &&
-    msgValidation.isValid;
+    phoneValidation.isValid;
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFieldTouched("phone");
@@ -189,52 +182,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({
       <main className="relative z-10 flex-1 pt-24 sm:pt-28 md:pt-36 pb-16 sm:pb-20 px-3.5 sm:px-6 lg:px-10 max-w-7xl 2xl:max-w-[1400px] 3xl:max-w-[1640px] 4xl:max-w-[1840px] 5xl:max-w-[2200px] mx-auto w-full">
         
         {/* ========================================================= */}
-        {/* 1. TOP HEADER & ENGINEERING STATUS BANNER                 */}
+        {/* 1. TOP HEADER                                             */}
         {/* ========================================================= */}
-        <div className="mb-10 sm:mb-14 2xl:mb-16">
+        <div className="mb-8 sm:mb-12">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col items-start"
           >
-            {/* Live Incubation & Engineering Badge */}
-            <div className="inline-flex max-w-full items-center gap-1.5 xs:gap-2.5 py-1.5 px-3 xs:px-4 mb-4 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 text-[#ff6900] text-[9.5px] xs:text-[11px] sm:text-xs font-mono font-semibold tracking-wider uppercase">
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff6900] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff6900]" />
-              </span>
-              <span className="truncate xs:whitespace-normal">Direct Engineering & Deployment Desk</span>
-            </div>
-
-            <div className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl 2xl:text-7xl 3xl:text-8xl font-black font-display tracking-tight text-foreground leading-[1.08] mb-4">
-              <div>
-                <KineticText text="Connect With Our" as="h1" className="text-foreground tracking-tight" />
-              </div>
-              <div>
-                <KineticText text="Hardware Architects" as="span" className="text-[#ff6900] tracking-tight" />
-              </div>
-            </div>
-
-            <p className="text-muted-foreground text-sm sm:text-base 2xl:text-lg leading-relaxed max-w-2xl 2xl:max-w-3xl font-body">
-              Whether deploying high-volume respiration pods in sports academies or configuring custom smart card telemetry, our IIT Kanpur engineering team is ready to assist.
-            </p>
-
-            {/* Quick Technical Assurance Tags */}
-            <div className="mt-5 flex flex-wrap gap-2 sm:gap-3">
-              <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-xl bg-card border border-border/90 text-xs font-medium text-foreground shadow-xs">
-                <MapPin className="w-3.5 h-3.5 text-[#ff6900]" />
-                <span>SIIC Incubated, IIT Kanpur</span>
-              </div>
-              <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-xl bg-card border border-border/90 text-xs font-medium text-foreground shadow-xs">
-                <Clock className="w-3.5 h-3.5 text-emerald-500" />
-                <span>Priority Response &lt; 2 Hours</span>
-              </div>
-              <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-xl bg-card border border-border/90 text-xs font-medium text-foreground shadow-xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#ff6900]" />
-                <span>Complimentary On-Site Calibration</span>
-              </div>
-            </div>
+            <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-sans tracking-tight text-foreground leading-tight select-none">
+              Contact Us
+            </h1>
           </motion.div>
         </div>
 
@@ -248,7 +206,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             
             {/* Category Selector Dock */}
             <div className="p-3.5 sm:p-5 rounded-2xl bg-card/90 backdrop-blur-xl border border-border shadow-soft-depth">
-              <div className="text-xs font-mono uppercase tracking-widest text-muted-foreground font-semibold mb-3 flex items-center gap-2">
+              <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold mb-3 flex items-center gap-2">
                 <Layers className="w-3.5 h-3.5 text-[#ff6900]" />
                 <span>Select Inquiry Nature</span>
               </div>
@@ -278,10 +236,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             {/* Form Card */}
             <div className="p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl bg-card/95 backdrop-blur-xl border border-border shadow-xl relative overflow-hidden">
               <div className="mb-5 sm:mb-6 border-b border-border/60 pb-3 sm:pb-4">
-                <h2 className="text-xl sm:text-2xl font-bold font-display text-foreground tracking-tight">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
                   Direct Dispatch Terminal
                 </h2>
-                <p className="text-xs sm:text-sm text-muted-foreground font-body mt-1">
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                   Submitted briefs are routed directly to our hardware deployment engineers.
                 </p>
               </div>
@@ -300,14 +258,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     </div>
 
                     <div>
-                      <span className="font-mono text-xs text-[#ff6900] font-bold tracking-widest uppercase px-3 py-1 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 inline-block mb-2">
+                      <span className="text-xs text-[#ff6900] font-bold tracking-wider uppercase px-3 py-1 rounded-full bg-[#ff6900]/10 border border-[#ff6900]/25 inline-block mb-2">
                         {refId}
                       </span>
-                      <h3 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                      <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
                         Inquiry Received & Routed
                       </h3>
-                      <p className="text-sm text-muted-foreground max-w-md mx-auto mt-2 leading-relaxed font-body">
-                        Thank you, <span className="text-foreground font-semibold">{fullName}</span>. An Iron Lung systems engineer will follow up at <span className="text-[#ff6900] font-mono font-medium">{email}</span> (or via <span className="font-mono text-foreground font-semibold">+91 {phone}</span>) within 2 hours.
+                      <p className="text-sm text-muted-foreground max-w-md mx-auto mt-2 leading-relaxed">
+                        Thank you, <span className="text-foreground font-semibold">{fullName}</span>. An Iron Lung systems engineer will follow up at <span className="text-[#ff6900] font-medium">{email}</span> (or via <span className="text-foreground font-semibold">+91 {phone}</span>) within 2 hours.
                       </p>
                     </div>
 
@@ -335,7 +293,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           setPhone("");
                           setMessage("");
                         }}
-                        className="px-5 py-3 bg-secondary text-foreground text-xs font-mono uppercase rounded-xl border border-border hover:bg-muted transition-colors cursor-pointer"
+                        className="px-5 py-3 bg-secondary text-foreground text-xs font-semibold uppercase rounded-xl border border-border hover:bg-muted transition-colors cursor-pointer"
                       >
                         Submit Another Brief
                       </button>
@@ -381,7 +339,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           )}
                         </div>
                         {(touched.fullName || formAttempted) && !nameValidation.isValid && (
-                          <div className="text-rose-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-rose-500 text-[11px] flex items-center gap-1 mt-1">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                             <span>{nameValidation.message}</span>
                           </div>
@@ -422,7 +380,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           )}
                         </div>
                         {(touched.organization || formAttempted) && !orgValidation.isValid && (
-                          <div className="text-rose-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-rose-500 text-[11px] flex items-center gap-1 mt-1">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                             <span>{orgValidation.message}</span>
                           </div>
@@ -467,13 +425,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           )}
                         </div>
                         {(touched.email || formAttempted) && !emailValidation.isValid && (
-                          <div className="text-rose-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-rose-500 text-[11px] flex items-center gap-1 mt-1">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                             <span>{emailValidation.message}</span>
                           </div>
                         )}
                         {email.trim() && emailValidation.isValid && (
-                          <div className="text-emerald-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-emerald-500 text-[11px] flex items-center gap-1 mt-1">
                             <CheckCircle2 className="w-3 h-3 shrink-0" />
                             <span>Valid email domain verified</span>
                           </div>
@@ -488,14 +446,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                             <span>Mobile (India)</span>
                             <span className="text-[#ff6900]">*</span>
                           </span>
-                          <span className="text-[10px] font-mono text-muted-foreground">
+                          <span className="text-[10px] text-muted-foreground font-medium">
                             {phone.length}/10
                           </span>
                         </label>
                         <div className="relative flex items-center">
                           {/* Professional +91 prefix badge */}
-                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-mono font-semibold text-muted-foreground border-r border-border/60 pr-2.5 mr-2">
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-muted text-foreground mr-1.5 border border-border/80">IN</span>
+                          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-semibold text-muted-foreground border-r border-border/60 pr-2.5 mr-2">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-muted text-foreground mr-1.5 border border-border/80">IN</span>
                             <span>+91</span>
                           </div>
                           <input
@@ -505,7 +463,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                             maxLength={10}
                             onChange={handlePhoneChange}
                             onBlur={() => setFieldTouched("phone")}
-                            className={`w-full pl-[82px] pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm font-mono outline-none transition-all shadow-inner ${
+                            className={`w-full pl-[82px] pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all shadow-inner ${
                               (touched.phone || formAttempted) && !phoneValidation.isValid
                                 ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                                 : phone.length === 10 && phoneValidation.isValid
@@ -520,13 +478,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           )}
                         </div>
                         {(touched.phone || formAttempted) && !phoneValidation.isValid && (
-                          <div className="text-rose-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-rose-500 text-[11px] flex items-center gap-1 mt-1">
                             <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                             <span>{phoneValidation.message}</span>
                           </div>
                         )}
                         {phone.length === 10 && phoneValidation.isValid && (
-                          <div className="text-emerald-500 text-[11px] font-mono flex items-center gap-1 mt-1">
+                          <div className="text-emerald-500 text-[11px] flex items-center gap-1 mt-1">
                             <CheckCircle2 className="w-3 h-3 shrink-0" />
                             <span>Valid 10-digit Indian number (starts with {phone[0]})</span>
                           </div>
@@ -535,15 +493,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
                     </div>
 
-                    {/* Message / Specifications */}
+                    {/* Message / Specifications (Optional) */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-foreground flex items-center justify-between">
                         <span className="flex items-center gap-1.5">
                           <FileText className="w-3.5 h-3.5 text-[#ff6900]" />
                           <span>Project Requirements & Hardware Needs</span>
-                          <span className="text-[#ff6900]">*</span>
                         </span>
-                        <span className="text-[10px] font-mono text-muted-foreground">Detailed Brief</span>
+                        <span className="text-[10px] text-muted-foreground font-medium">(Optional)</span>
                       </label>
                       <textarea
                         rows={4}
@@ -554,20 +511,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           setFieldTouched("message");
                         }}
                         onBlur={() => setFieldTouched("message")}
-                        className={`w-full px-4 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all resize-none shadow-inner ${
-                          (touched.message || formAttempted) && !msgValidation.isValid
-                            ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
-                            : message.trim() && msgValidation.isValid
-                            ? "border-emerald-500/80 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
-                            : "border-border/90 focus:border-[#ff6900] focus:ring-2 focus:ring-[#ff6900]/15"
-                        }`}
+                        className="w-full px-4 py-3 rounded-xl bg-background border border-border/90 focus:border-[#ff6900] focus:ring-2 focus:ring-[#ff6900]/15 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all resize-none shadow-inner"
                       />
-                      {(touched.message || formAttempted) && !msgValidation.isValid && (
-                        <div className="text-rose-500 text-[11px] font-mono flex items-center gap-1 mt-1">
-                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                          <span>{msgValidation.message}</span>
-                        </div>
-                      )}
                     </div>
 
                     {/* WhatsApp Fast Update Checkbox */}
@@ -577,7 +522,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       }`}>
                         {whatsappUpdates && <Check className="w-3 h-3" />}
                       </div>
-                      <span className="text-xs text-muted-foreground font-body">
+                      <span className="text-xs text-muted-foreground">
                         Receive instant status confirmation via WhatsApp
                       </span>
                     </div>
@@ -587,7 +532,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                       <motion.div
                         initial={{ opacity: 0, y: -6 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-400 text-xs font-mono flex items-center gap-2"
+                        className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/25 text-rose-400 text-xs flex items-center gap-2"
                       >
                         <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
                         <span>Please correct the highlighted errors above before dispatching your inquiry.</span>
@@ -601,7 +546,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         whileTap={{ scale: 0.98 }}
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-mono font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg shadow-[#ff6900]/25 transition-all cursor-pointer disabled:opacity-70"
+                        className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg shadow-[#ff6900]/25 transition-all cursor-pointer disabled:opacity-70"
                       >
                         {isSubmitting ? (
                           <span>TRANSMITTING...</span>
@@ -613,7 +558,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         )}
                       </motion.button>
 
-                      <span className="text-[11px] font-mono text-muted-foreground flex items-center gap-1.5">
+                      <span className="text-[11px] text-muted-foreground flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
                         <span>Confidential Enterprise Routing</span>
                       </span>
@@ -623,34 +568,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Instant WhatsApp Alternative Strip */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-emerald-500/[0.06] border border-emerald-500/25 flex flex-col sm:flex-row items-center justify-between gap-3.5">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 flex items-center justify-center shrink-0">
-                  <MessageCircle className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs sm:text-sm font-bold font-display text-foreground">
-                    Need Immediate System Sizing?
-                  </div>
-                  <div className="text-[11px] text-muted-foreground font-body">
-                    Connect instantly with an engineer on our verified WhatsApp hotline.
-                  </div>
-                </div>
-              </div>
-
-              <a
-                href={whatsappDirectUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-mono font-semibold uppercase tracking-wider rounded-xl inline-flex items-center justify-center gap-2 transition-all shrink-0 shadow-sm cursor-pointer"
-              >
-                <span>Chat Now</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
-
           </div>
 
           {/* RIGHT COLUMN: HARDWARE HEADQUARTERS & TECHNICAL HUB (5 Cols) */}
@@ -665,15 +582,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({
               {/* Lab Status Header */}
               <div className="flex items-center justify-between border-b border-border/60 pb-4">
                 <div>
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-[#ff6900] font-bold">
+                  <div className="text-[10px] uppercase tracking-wider text-[#ff6900] font-bold">
                     HARDWARE HEADQUARTERS
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground tracking-tight mt-0.5">
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight mt-0.5">
                     IIT Kanpur Campus
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 text-[10px] font-mono font-semibold">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-600 text-[10px] font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   LAB ACTIVE
                 </div>
@@ -682,7 +599,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
               {/* Coordinates & Location Card */}
               <div className="p-4 rounded-2xl bg-background border border-border/80 shadow-xs space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold flex items-center gap-1.5">
                     <Compass className="w-3 h-3 text-[#ff6900]" />
                     Facility Coordinates
                   </span>
@@ -702,10 +619,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <p className="text-xs sm:text-sm font-semibold text-foreground leading-snug">
                   401H DJAC, IIT Kanpur
                 </p>
-                <p className="text-xs text-muted-foreground font-body">
+                <p className="text-xs text-muted-foreground">
                   Startup Incubation and Innovation Centre (SIIC), Uttar Pradesh 208016, India
                 </p>
-                <div className="text-[10px] font-mono text-muted-foreground/80 pt-1">
+                <div className="text-[10px] text-muted-foreground/80 pt-1">
                   GPS: 26.5123° N, 80.2329° E
                 </div>
               </div>
@@ -716,12 +633,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 {/* Email Hotline */}
                 <div className="p-3.5 rounded-2xl bg-background border border-border/80 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
+                    <div className="text-[9px] uppercase tracking-wider text-muted-foreground font-bold">
                       OFFICIAL DESK
                     </div>
                     <a
                       href="mailto:info@ironlung.in"
-                      className="text-xs sm:text-sm font-bold font-mono text-foreground hover:text-[#ff6900] transition-colors flex items-center gap-1.5 mt-0.5"
+                      className="text-xs sm:text-sm font-bold text-foreground hover:text-[#ff6900] transition-colors flex items-center gap-1.5 mt-0.5"
                     >
                       <Mail className="w-3.5 h-3.5 text-[#ff6900]" />
                       <span>info@ironlung.in</span>
@@ -744,12 +661,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 {/* WhatsApp & Phone Hotline */}
                 <div className="p-3.5 rounded-2xl bg-background border border-border/80 flex items-center justify-between shadow-xs">
                   <div>
-                    <div className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
+                    <div className="text-[9px] uppercase tracking-wider text-muted-foreground font-bold">
                       PRIORITY DIRECT LINE
                     </div>
                     <a
                       href="tel:+918853667396"
-                      className="text-xs sm:text-sm font-bold font-mono text-foreground hover:text-[#ff6900] transition-colors flex items-center gap-1.5 mt-0.5"
+                      className="text-xs sm:text-sm font-bold text-foreground hover:text-[#ff6900] transition-colors flex items-center gap-1.5 mt-0.5"
                     >
                       <Phone className="w-3.5 h-3.5 text-[#ff6900]" />
                       <span>+91 8853667396</span>
@@ -774,28 +691,28 @@ export const ContactPage: React.FC<ContactPageProps> = ({
               {/* Operating Hours & Best Window */}
               <div className="p-3.5 rounded-2xl bg-background border border-border/80 shadow-xs space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground font-bold">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
                     OPERATIONAL WINDOW
                   </span>
-                  <span className="text-[10px] font-mono text-[#ff6900] font-semibold">
+                  <span className="text-[10px] text-[#ff6900] font-semibold">
                     Mon – Sat
                   </span>
                 </div>
                 <div className="text-xs sm:text-sm font-bold text-foreground">
                   09:00 AM – 06:00 PM IST
                 </div>
-                <p className="text-[11px] text-muted-foreground font-body">
+                <p className="text-[11px] text-muted-foreground">
                   For hardware testing inspections or lab visits, prior appointment required.
                 </p>
               </div>
 
               {/* Institutional Deployment Guarantee */}
               <div className="p-4 rounded-2xl bg-[#ff6900]/[0.06] border border-[#ff6900]/25 space-y-2">
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#ff6900] uppercase tracking-wider">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#ff6900] uppercase tracking-wider">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Deployment SLA Guarantee</span>
                 </div>
-                <p className="text-xs text-foreground/80 leading-relaxed font-body">
+                <p className="text-xs text-foreground/80 leading-relaxed">
                   Every institutional installation includes complete sensor calibration, staff orientation, and continuous cloud telemetry support.
                 </p>
               </div>

@@ -61,7 +61,7 @@
   --steel: 40 10% 80%;
   --iron-orange: #ff6900;
   --font-display: 'Swis721 BlkCn BT', sans-serif;
-  --font-mono: 'Swis721 BlkCn BT', monospace;
+  --font-mono: 'Swis721 BlkCn BT', sans-serif;
   --font-body: 'Swis721 BlkCn BT', sans-serif;
 }
 
