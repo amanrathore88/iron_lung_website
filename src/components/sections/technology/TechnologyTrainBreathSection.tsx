@@ -179,9 +179,9 @@ export const TechnologyTrainBreathSection: React.FC = () => {
     <section className="w-full bg-[#fcfaf7] py-6 sm:py-10 md:py-14 selection:bg-[#fb4403]/20 overflow-hidden">
       <div className="w-[94%] sm:w-[95%] lg:w-[96%] max-w-[1440px] mx-auto">
         {/* ================================================================= */}
-        {/* ROUNDED CARD CONTAINER (Exact match to reference mockup)          */}
+        {/* ROUNDED CARD CONTAINER (White card on #fcfaf7 page background)    */}
         {/* ================================================================= */}
-        <div className="w-full bg-[#d9d9d9] rounded-[28px] sm:rounded-[36px] md:rounded-[44px] lg:rounded-[48px] p-6 sm:p-8 md:p-12 lg:p-14 xl:p-16 shadow-sm border border-neutral-300/40 relative overflow-hidden min-h-[540px] lg:min-h-[640px] xl:min-h-[680px] flex flex-col justify-center">
+        <div className="w-full bg-white rounded-[28px] sm:rounded-[36px] md:rounded-[44px] lg:rounded-[48px] p-6 sm:p-8 md:p-12 lg:p-14 xl:p-16 shadow-sm border border-neutral-200/70 relative overflow-hidden min-h-[540px] lg:min-h-[640px] xl:min-h-[680px] flex flex-col justify-center">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full z-20 relative">
             
@@ -207,10 +207,10 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                       key={point.id}
                       id={`accordion-point-${point.id}`}
                       onClick={() => handlePointClick(point)}
-                      className={`w-full bg-white rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer shadow-xs border ${
+                      className={`w-full bg-[#fcfaf7] rounded-xl sm:rounded-2xl transition-all duration-300 cursor-pointer shadow-xs border ${
                         isActive
-                          ? "border-black/10 shadow-sm"
-                          : "border-black/5 hover:border-black/15 hover:shadow-xs"
+                          ? "border-neutral-300 shadow-xs"
+                          : "border-neutral-200/70 hover:border-neutral-300 hover:shadow-xs"
                       }`}
                     >
                       {/* Header Row */}
