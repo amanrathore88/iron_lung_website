@@ -22,9 +22,9 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto px-4"
         >
-          <h2 className="text-[28px] xs:text-4xl sm:text-5xl md:text-[56px] lg:text-[64px] xl:text-[70px] font-black font-sans tracking-[-0.03em] select-none flex flex-col items-center gap-2 sm:gap-3 md:gap-3.5">
+          <h2 className="text-[26px] xs:text-3xl sm:text-5xl md:text-[56px] lg:text-[64px] xl:text-[70px] font-black font-sans tracking-[-0.03em] select-none flex flex-col items-center gap-1.5 sm:gap-3 md:gap-3.5 text-center">
             <span className="text-[#0F172A] leading-[1.12]">
               Ready to Begin
             </span>
@@ -42,7 +42,7 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 sm:mt-6 max-w-[620px] text-center font-sans text-neutral-600 sm:text-neutral-700 text-base sm:text-lg md:text-[18.5px] leading-relaxed tracking-[-0.01em] select-none px-4"
+          className="mt-4 sm:mt-6 max-w-[620px] text-center font-sans text-neutral-600 sm:text-neutral-700 text-sm xs:text-base sm:text-lg md:text-[18.5px] leading-relaxed tracking-[-0.01em] select-none px-4"
         >
           Discover how IRONLUNG can elevate your performance and bring respiratory training to your fitness or wellness center.
         </motion.p>

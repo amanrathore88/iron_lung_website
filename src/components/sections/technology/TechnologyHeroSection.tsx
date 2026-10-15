@@ -14,7 +14,7 @@ export const TechnologyHeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full h-[72vh] min-h-[440px] sm:h-[80vh] md:h-[100dvh] md:min-h-[520px] md:max-h-[1080px] flex flex-col justify-between bg-[#fcfaf7] text-neutral-900 select-none overflow-hidden pt-18 sm:pt-20 md:pt-22 pb-4 sm:pb-6 md:pb-8">
+    <section className="relative w-full h-[68vh] min-h-[380px] sm:h-[78vh] sm:min-h-[460px] md:h-[100dvh] md:min-h-[520px] md:max-h-[1080px] flex flex-col justify-between bg-[#fcfaf7] text-neutral-900 select-none overflow-hidden pt-20 sm:pt-22 md:pt-24 pb-4 sm:pb-6 md:pb-8">
       {/* ===================================================================== */}
       {/* EXTENDED ROUNDED VIDEO CARD (FULL HERO VIEWPORT MATCHING RED BOX)    */}
       {/* ===================================================================== */}

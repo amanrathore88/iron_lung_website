@@ -200,24 +200,24 @@ export const TechnologyTrainBreathSection: React.FC = () => {
         {/* ================================================================= */}
         {/* ROUNDED CARD CONTAINER (White card on #fcfaf7 page background)    */}
         {/* ================================================================= */}
-        <div className="w-full bg-white rounded-[28px] sm:rounded-[36px] md:rounded-[44px] lg:rounded-[48px] p-6 sm:p-8 md:p-12 lg:p-14 xl:p-16 shadow-sm border border-neutral-200/70 relative overflow-hidden min-h-[540px] lg:min-h-[640px] xl:min-h-[680px] flex flex-col justify-center">
+        <div className="w-full bg-white rounded-[24px] xs:rounded-[28px] sm:rounded-[36px] md:rounded-[44px] lg:rounded-[48px] p-5 xs:p-6 sm:p-8 md:p-12 lg:p-14 xl:p-16 shadow-sm border border-neutral-200/70 relative overflow-hidden min-h-0 lg:min-h-[640px] xl:min-h-[680px] flex flex-col justify-center">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full z-20 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full z-20 relative">
             
             {/* =============================================================== */}
             {/* LEFT COLUMN: TITLE & ACCORDION OF 4 POINTS                      */}
             {/* =============================================================== */}
             <div className="lg:col-span-5 flex flex-col justify-center select-none">
               {/* Headline */}
-              <div className="mb-6 sm:mb-8 md:mb-10">
-                <h2 className="text-4xl xs:text-5xl sm:text-6xl lg:text-[54px] xl:text-[62px] font-black tracking-[-0.035em] leading-[0.98]">
+              <div className="mb-5 sm:mb-8 md:mb-10">
+                <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[62px] font-black tracking-[-0.035em] leading-[0.98]">
                   <span className="block text-black">Train every</span>
                   <span className="block text-[#fb4403] mt-1 sm:mt-1.5">breath</span>
                 </h2>
               </div>
 
               {/* Accordion List */}
-              <div className="flex flex-col space-y-3 sm:space-y-3.5 w-full max-w-[440px]">
+              <div className="flex flex-col space-y-2.5 sm:space-y-3.5 w-full max-w-full lg:max-w-[440px]">
                 {POINTS.map((point) => {
                   const isActive = activePointId === point.id;
 
@@ -281,16 +281,16 @@ export const TechnologyTrainBreathSection: React.FC = () => {
           {/* RIGHT SIDE / CANVAS 3D MACHINE FRAME ANIMATION CONTAINER         */}
           {/* Shifted slightly to the right with soft faded top/bottom/left     */}
           {/* =============================================================== */}
-          <div className="relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[58%] xl:w-[62%] h-full min-h-[360px] sm:min-h-[460px] lg:min-h-0 flex items-center justify-center lg:justify-end pointer-events-none z-10 lg:translate-x-5 xl:translate-x-9 2xl:translate-x-12">
+          <div className="relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 w-full lg:w-[58%] xl:w-[62%] h-[320px] xs:h-[380px] sm:h-[460px] lg:h-full min-h-[300px] sm:min-h-[420px] lg:min-h-0 mt-4 sm:mt-6 lg:mt-0 flex items-center justify-center lg:justify-end pointer-events-none z-10 lg:translate-x-5 xl:translate-x-9 2xl:translate-x-12">
             
             {/* Outer Wrapper: Vertical Mask for seamless top and bottom fade (removes render cutoff lines) */}
             <div
               className="w-full h-full flex items-center justify-center lg:justify-end"
               style={{
                 WebkitMaskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
+                  "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
                 maskImage:
-                  "linear-gradient(to bottom, transparent 0%, black 22%, black 78%, transparent 100%)",
+                  "linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%)",
               }}
             >
               {/* Inner Wrapper: Horizontal Mask for smooth fade towards accordion text column */}
@@ -308,14 +308,14 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                   ref={canvasRef}
                   width={1280}
                   height={720}
-                  className="w-full h-full max-h-[580px] sm:max-h-[660px] lg:max-h-[740px] xl:max-h-[800px] object-contain scale-[1.04] sm:scale-105 lg:scale-[1.12] xl:scale-[1.16] origin-center lg:origin-right select-none block"
+                  className="w-full h-full max-h-[460px] sm:max-h-[580px] lg:max-h-[740px] xl:max-h-[800px] object-contain scale-100 sm:scale-105 lg:scale-[1.12] xl:scale-[1.16] origin-center lg:origin-right select-none block"
                 />
 
                 {/* Static Initial Fallback Image (Shows instantly before canvas draws) */}
                 <img
                   src={DEFAULT_POSTER}
                   alt="IRONLUNG Train Every Breath Machine"
-                  className={`absolute inset-0 w-full h-full object-contain scale-[1.04] sm:scale-105 lg:scale-[1.12] xl:scale-[1.16] origin-center lg:origin-right pointer-events-none transition-opacity duration-300 ${
+                  className={`absolute inset-0 w-full h-full object-contain scale-100 sm:scale-105 lg:scale-[1.12] xl:scale-[1.16] origin-center lg:origin-right pointer-events-none transition-opacity duration-300 ${
                     canvasReady ? "opacity-0" : "opacity-100"
                   }`}
                 />
