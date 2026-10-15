@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Swis721 BlkCn BT';
+  src: local('Swis721 BlkCn BT'),
+       local('Swiss 721 Black Condensed'),
+       local('Swiss721BT-BlackCondensed'),
+       url('/fonts/Swis721_BlkCn_BT.woff2') format('woff2'),
+       url('/fonts/Swis721_BlkCn_BT.woff') format('woff'),
+       url('/fonts/Swis721_BlkCn_BT.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Swis721 BlkCn BT';
+  src: local('Swis721 BlkCn BT Italic'),
+       local('Swiss 721 Black Condensed Italic'),
+       local('Swiss721BT-BlackCondensedItalic'),
+       url('/fonts/Swis721_BlkCn_BT_Italic.woff2') format('woff2'),
+       url('/fonts/Swis721_BlkCn_BT_Italic.woff') format('woff'),
+       url('/fonts/Swis721_BlkCn_BT_Italic.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* Offwhite base palette */
   --background: 40 18% 97%; /* #F8F7F4 premium offwhite */
@@ -34,12 +60,15 @@
   /* Custom tokens */
   --steel: 40 10% 80%;
   --iron-orange: #ff6900;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-body: 'Geist', sans-serif;
+  --font-display: 'Swis721 BlkCn BT', sans-serif;
+  --font-mono: 'Swis721 BlkCn BT', monospace;
+  --font-body: 'Swis721 BlkCn BT', sans-serif;
 }
 
 @layer base {
+  html, body, button, input, select, textarea {
+    font-family: 'Swis721 BlkCn BT', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
   body {
     background-color: #01090F;
     color: #F8FAFC;

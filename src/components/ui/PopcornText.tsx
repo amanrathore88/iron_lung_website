@@ -44,7 +44,7 @@ export type PopcornTextProps = {
 };
 
 const defaultFont: FontStyle = {
-  fontFamily: "Inter",
+  fontFamily: "'Swis721 BlkCn BT', sans-serif",
   fontWeight: 700,
   fontSize: 120,
   lineHeight: "1.5em",

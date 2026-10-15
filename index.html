@@ -8,17 +8,42 @@
     <meta name="description" content="Cleaner Air. Stronger You. Breathe Better, Live Better with IronLung's revolutionary medical-grade smart respiration system." />
     <link rel="preload" href="/models/Final_Model_Desktop.glb" as="fetch" crossorigin="anonymous" media="(min-width: 768px)">
     <link rel="preload" href="/models/Final_Model_Mobile.glb" as="fetch" crossorigin="anonymous" media="(max-width: 767px)">
+    <link rel="preload" href="/fonts/Swis721_BlkCn_BT.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      @font-face {
+        font-family: 'Swis721 BlkCn BT';
+        src: local('Swis721 BlkCn BT'),
+             local('Swiss 721 Black Condensed'),
+             local('Swiss721BT-BlackCondensed'),
+             url('/fonts/Swis721_BlkCn_BT.woff2') format('woff2'),
+             url('/fonts/Swis721_BlkCn_BT.woff') format('woff'),
+             url('/fonts/Swis721_BlkCn_BT.ttf') format('truetype');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Swis721 BlkCn BT';
+        src: local('Swis721 BlkCn BT Italic'),
+             local('Swiss 721 Black Condensed Italic'),
+             local('Swiss721BT-BlackCondensedItalic'),
+             url('/fonts/Swis721_BlkCn_BT_Italic.woff2') format('woff2'),
+             url('/fonts/Swis721_BlkCn_BT_Italic.woff') format('woff'),
+             url('/fonts/Swis721_BlkCn_BT_Italic.ttf') format('truetype');
+        font-weight: 100 900;
+        font-style: italic;
+        font-display: swap;
+      }
       body {
         background-color: #FFFFFF;
         color: #0F172A;
         margin: 0;
         padding: 0;
         overflow-x: hidden;
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-family: 'Swis721 BlkCn BT', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }

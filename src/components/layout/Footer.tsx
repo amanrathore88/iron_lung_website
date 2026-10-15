@@ -17,7 +17,7 @@ if (typeof window !== "undefined") {
 // -------------------------------------------------------------------------
 const STYLES = `
 .cinematic-footer-wrapper {
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-family: 'Swis721 BlkCn BT', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   
   --pill-bg-1: rgba(30, 30, 34, 0.04);

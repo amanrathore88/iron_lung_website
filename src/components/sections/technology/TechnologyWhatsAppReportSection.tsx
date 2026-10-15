@@ -52,8 +52,8 @@ export const TechnologyWhatsAppReportSection: React.FC = () => {
               </span>
             </h2>
 
-            {/* Editorial Serif Description Paragraph */}
-            <p className="mt-5 sm:mt-8 md:mt-10 text-right font-['Times_New_Roman',_'Times',_'Cormorant_Garamond',_Georgia,_serif] text-black text-base xs:text-lg sm:text-xl lg:text-[22px] xl:text-[25px] leading-[1.32] sm:leading-[1.36] max-w-[480px] xl:max-w-[500px] select-none">
+            {/* Editorial Description Paragraph */}
+            <p className="mt-5 sm:mt-8 md:mt-10 text-right font-sans text-black text-base xs:text-lg sm:text-xl lg:text-[22px] xl:text-[25px] leading-[1.32] sm:leading-[1.36] max-w-[480px] xl:max-w-[500px] select-none">
               After every training session, you’ll
               <br className="hidden sm:inline" /> automatically receive a detailed
               <br className="hidden sm:inline" /> performance report on WhatsApp - simple,

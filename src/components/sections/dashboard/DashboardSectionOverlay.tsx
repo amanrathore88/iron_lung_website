@@ -33,7 +33,7 @@ const BOTTOM_WORDS = [
 ];
 
 const DESKTOP_FONT: React.CSSProperties = {
-  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+  fontFamily: "'Swis721 BlkCn BT', sans-serif",
   fontWeight: 800,
   fontSize: 'clamp(48px, 7.5vw, 108px)',
   lineHeight: '1.12em',
@@ -302,7 +302,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             >
               <h2
                 style={{
-                  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+                  fontFamily: "'Swis721 BlkCn BT', sans-serif",
                   fontWeight: 800,
                   fontSize: 'clamp(50px, 13.8vw, 76px)',
                   lineHeight: '1.02',
@@ -324,7 +324,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             >
               <h2
                 style={{
-                  fontFamily: "'Space Grotesk', 'Inter', -apple-system, sans-serif",
+                  fontFamily: "'Swis721 BlkCn BT', sans-serif",
                   fontWeight: 800,
                   fontSize: 'clamp(50px, 13.8vw, 76px)',
                   lineHeight: '1.02',
