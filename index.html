@@ -9,10 +9,25 @@
     <link rel="preload" href="/models/Final_Model_Desktop.glb" as="fetch" crossorigin="anonymous" media="(min-width: 768px)">
     <link rel="preload" href="/models/Final_Model_Mobile.glb" as="fetch" crossorigin="anonymous" media="(max-width: 767px)">
     <link rel="preload" href="/fonts/Swis721_BlkCn_BT.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/Swis721_Cn_BT_Roman.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Geist:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      /* Swis721 Condensed Roman (Regular/Normal, weights 100-600) */
+      @font-face {
+        font-family: 'Swis721 BlkCn BT';
+        src: local('Swis721 Cn BT Roman'),
+             local('Swiss 721 Condensed Roman'),
+             local('Swiss721BT-CondensedRoman'),
+             url('/fonts/Swis721_Cn_BT_Roman.woff2') format('woff2'),
+             url('/fonts/Swis721_Cn_BT_Roman.woff') format('woff'),
+             url('/fonts/Swis721_Cn_BT_Roman.ttf') format('truetype');
+        font-weight: 100 600;
+        font-style: normal;
+        font-display: swap;
+      }
+      /* Swis721 Black Condensed (Bold/Black, weights 700-900) */
       @font-face {
         font-family: 'Swis721 BlkCn BT';
         src: local('Swis721 BlkCn BT'),
@@ -21,10 +36,11 @@
              url('/fonts/Swis721_BlkCn_BT.woff2') format('woff2'),
              url('/fonts/Swis721_BlkCn_BT.woff') format('woff'),
              url('/fonts/Swis721_BlkCn_BT.ttf') format('truetype');
-        font-weight: 100 900;
+        font-weight: 700 900;
         font-style: normal;
         font-display: swap;
       }
+      /* Swis721 Black Condensed Italic */
       @font-face {
         font-family: 'Swis721 BlkCn BT';
         src: local('Swis721 BlkCn BT Italic'),
@@ -33,7 +49,7 @@
              url('/fonts/Swis721_BlkCn_BT_Italic.woff2') format('woff2'),
              url('/fonts/Swis721_BlkCn_BT_Italic.woff') format('woff'),
              url('/fonts/Swis721_BlkCn_BT_Italic.ttf') format('truetype');
-        font-weight: 100 900;
+        font-weight: 700 900;
         font-style: italic;
         font-display: swap;
       }
@@ -46,6 +62,13 @@
         font-family: 'Swis721 BlkCn BT', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+      }
+      input, select, textarea {
+        font-weight: 400;
+      }
+      ::placeholder, input::placeholder, textarea::placeholder {
+        font-weight: 400 !important;
+        opacity: 0.65;
       }
       ::selection {
         background-color: #FF5E1E;

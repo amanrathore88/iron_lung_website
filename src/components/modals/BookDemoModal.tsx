@@ -201,7 +201,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                   <div>
                     <label
                       htmlFor="demo-fullname"
-                      className="block text-[11px] font-bold text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
+                      className="block text-[11px] font-medium text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
                     >
                       FULL NAME
                     </label>
@@ -214,7 +214,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         autoComplete="name"
-                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none font-medium"
+                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] placeholder:font-normal focus:outline-none font-normal"
                       />
                     </div>
                   </div>
@@ -223,7 +223,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                   <div>
                     <label
                       htmlFor="demo-phone"
-                      className="block text-[11px] font-bold text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
+                      className="block text-[11px] font-medium text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
                     >
                       PHONE NUMBER
                     </label>
@@ -236,7 +236,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         autoComplete="tel"
-                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none font-medium"
+                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] placeholder:font-normal focus:outline-none font-normal"
                       />
                     </div>
                   </div>
@@ -245,7 +245,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                   <div>
                     <label
                       htmlFor="demo-email"
-                      className="block text-[11px] font-bold text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
+                      className="block text-[11px] font-medium text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
                     >
                       EMAIL ADDRESS
                     </label>
@@ -258,7 +258,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                         value={emailAddress}
                         onChange={(e) => setEmailAddress(e.target.value)}
                         autoComplete="email"
-                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] focus:outline-none font-medium"
+                        className="w-full bg-transparent text-sm text-[#0F172A] placeholder-[#94A3B8] placeholder:font-normal focus:outline-none font-normal"
                       />
                     </div>
                   </div>
@@ -267,7 +267,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                   <div className="relative" ref={dropdownRef}>
                     <label
                       id="preferred-time-label"
-                      className="block text-[11px] font-bold text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
+                      className="block text-[11px] font-medium text-[#64748B] tracking-wider uppercase mb-1.5 select-none"
                     >
                       PREFERRED TIME
                     </label>
@@ -280,7 +280,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                     >
                       <div className="flex items-center min-w-0 pr-2">
                         <Calendar className="w-4.5 h-4.5 text-[#94A3B8] shrink-0 mr-3" />
-                        <span className="text-sm text-[#0F172A] font-medium truncate">
+                        <span className="text-sm text-[#0F172A] font-normal truncate">
                           {preferredTime}
                         </span>
                       </div>

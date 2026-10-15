@@ -324,7 +324,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                               setFieldTouched("fullName");
                             }}
                             onBlur={() => setFieldTouched("fullName")}
-                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all shadow-inner ${
+                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 placeholder:font-normal text-sm font-normal outline-none transition-all shadow-inner ${
                               (touched.fullName || formAttempted) && !nameValidation.isValid
                                 ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                                 : fullName.trim() && nameValidation.isValid
@@ -365,7 +365,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                               setFieldTouched("organization");
                             }}
                             onBlur={() => setFieldTouched("organization")}
-                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all shadow-inner ${
+                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 placeholder:font-normal text-sm font-normal outline-none transition-all shadow-inner ${
                               (touched.organization || formAttempted) && !orgValidation.isValid
                                 ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                                 : organization.trim() && orgValidation.isValid
@@ -410,7 +410,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                               setFieldTouched("email");
                             }}
                             onBlur={() => setFieldTouched("email")}
-                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all shadow-inner ${
+                            className={`w-full px-4 pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 placeholder:font-normal text-sm font-normal outline-none transition-all shadow-inner ${
                               (touched.email || formAttempted) && !emailValidation.isValid
                                 ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                                 : email.trim() && emailValidation.isValid
@@ -453,7 +453,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                         <div className="relative flex items-center">
                           {/* Professional +91 prefix badge */}
                           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-semibold text-muted-foreground border-r border-border/60 pr-2.5 mr-2">
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-muted text-foreground mr-1.5 border border-border/80">IN</span>
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-muted text-foreground mr-1.5 border border-border/80">IN</span>
                             <span>+91</span>
                           </div>
                           <input
@@ -463,7 +463,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                             maxLength={10}
                             onChange={handlePhoneChange}
                             onBlur={() => setFieldTouched("phone")}
-                            className={`w-full pl-[82px] pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all shadow-inner ${
+                            className={`w-full pl-[82px] pr-10 py-3 rounded-xl bg-background border text-foreground placeholder:text-muted-foreground/50 placeholder:font-normal text-sm font-normal outline-none transition-all shadow-inner ${
                               (touched.phone || formAttempted) && !phoneValidation.isValid
                                 ? "border-rose-500/80 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20"
                                 : phone.length === 10 && phoneValidation.isValid
@@ -511,7 +511,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                           setFieldTouched("message");
                         }}
                         onBlur={() => setFieldTouched("message")}
-                        className="w-full px-4 py-3 rounded-xl bg-background border border-border/90 focus:border-[#ff6900] focus:ring-2 focus:ring-[#ff6900]/15 text-foreground placeholder:text-muted-foreground/50 text-sm outline-none transition-all resize-none shadow-inner"
+                        className="w-full px-4 py-3 rounded-xl bg-background border border-border/90 focus:border-[#ff6900] focus:ring-2 focus:ring-[#ff6900]/15 text-foreground placeholder:text-muted-foreground/50 placeholder:font-normal text-sm font-normal outline-none transition-all resize-none shadow-inner"
                       />
                     </div>
 

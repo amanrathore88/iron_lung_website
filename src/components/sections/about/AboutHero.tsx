@@ -60,7 +60,7 @@ export const AboutHero: React.FC = () => {
         </div>
       </div>
 
-      <p className="mt-10 sm:mt-12 text-base sm:text-xl text-gray-600 font-semibold max-w-4xl mx-auto px-4 leading-relaxed">
+      <p className="mt-10 sm:mt-12 text-base sm:text-xl text-neutral-600 font-normal max-w-4xl mx-auto px-4 leading-relaxed">
         At IRONLUNG, we believe better breathing leads to better performance. Our respiratory muscle training technology helps you train your breathing muscles with controlled resistance, so you can build breathing strength, improve endurance, and push your limits.
       </p>
     </div>

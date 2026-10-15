@@ -253,7 +253,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                         aria-expanded={isActive}
                         className="w-full flex items-center justify-between px-5 sm:px-6 py-4 sm:py-4.5 text-left focus:outline-none cursor-pointer group"
                       >
-                        <span className="text-base sm:text-lg font-bold text-black tracking-tight">
+                        <span className="text-base sm:text-lg font-medium text-neutral-800 tracking-tight">
                           {point.title}
                         </span>
                         <span className="flex-shrink-0 ml-4 transition-transform duration-300">

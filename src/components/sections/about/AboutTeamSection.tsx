@@ -39,7 +39,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-4 sm:space-y-5 text-neutral-900 font-bold font-sans text-sm sm:text-base md:text-[17px] tracking-wide uppercase select-none"
+              className="space-y-4 sm:space-y-5 text-neutral-900 font-medium font-sans text-sm sm:text-base md:text-[17px] tracking-wide uppercase select-none"
             >
               <li className="flex items-start gap-2.5 sm:gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-black shrink-0 mt-1 sm:mt-1.5" />

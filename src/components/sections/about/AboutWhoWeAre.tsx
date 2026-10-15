@@ -38,7 +38,7 @@ interface StatProps {
 
 const Stat: React.FC<StatProps> = ({ value, label }) => (
   <div className="flex flex-col">
-    <span className="text-base sm:text-lg md:text-xl font-black tracking-tight text-orange-600 uppercase leading-snug">
+    <span className="text-base sm:text-lg md:text-xl font-bold tracking-tight text-orange-600 uppercase leading-snug">
       {value}
     </span>
     <span className="text-xs md:text-sm text-neutral-500 font-medium mt-1">{label}</span>
