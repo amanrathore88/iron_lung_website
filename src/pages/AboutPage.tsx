@@ -42,7 +42,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({
         <AboutHero />
 
         {/* 2. Who We Are & Innovation Stats */}
-        <AboutWhoWeAre />
+        <AboutWhoWeAre onContactUs={onContactUs} />
 
         {/* 3. Leadership & Founders */}
         <AboutFounders />

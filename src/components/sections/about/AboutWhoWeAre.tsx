@@ -1,10 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+interface AboutWhoWeAreProps {
+  onContactUs?: () => void;
+}
+
 const ABOUT_DATA = {
-  title: 'Who We Are',
-  heading: 'We’re Medantrik Medtech — a deep-tech health startup incubated at IIT Kanpur',
-  content: "We’re Medantrik Medtech. The team previously developed India's first Oxygen Purity Meter during the COVID-19 crisis and contributed to drafting its BIS standard — a major milestone in national medical innovation.",
+  title: 'WHO WE ARE',
+  heading: 'We’re IRONLUNG — Building Stronger Breathing for Better Performance',
+  content: 'At IRONLUNG, we believe breathing is a trainable part of performance. We’re focused on helping athletes and fitness enthusiasts strengthen their breathing muscles through structured respiratory muscle training and controlled resistance — bringing breathing training into everyday fitness.',
 };
 
 const AnimatedBg: React.FC = () => (
@@ -34,14 +38,14 @@ interface StatProps {
 
 const Stat: React.FC<StatProps> = ({ value, label }) => (
   <div className="flex flex-col">
-    <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-orange-600">
+    <span className="text-base sm:text-lg md:text-xl font-black tracking-tight text-orange-600 uppercase leading-snug">
       {value}
     </span>
-    <span className="text-xs md:text-sm text-neutral-500">{label}</span>
+    <span className="text-xs md:text-sm text-neutral-500 font-medium mt-1">{label}</span>
   </div>
 );
 
-export const AboutWhoWeAre: React.FC = () => {
+export const AboutWhoWeAre: React.FC<AboutWhoWeAreProps> = ({ onContactUs }) => {
   return (
     <section className="relative isolate bg-white">
       <AnimatedBg />
@@ -74,25 +78,24 @@ export const AboutWhoWeAre: React.FC = () => {
               {ABOUT_DATA.content}
             </p>
 
-            <div className="mt-8 grid grid-cols-3 gap-6 md:gap-10">
-              <Stat value="IITK" label="Incubation" />
-              <Stat value="> 10K" label="Devices Deployed*" />
-              <Stat value="BIS" label="Standards Input" />
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+              <Stat value="TRAIN YOUR BREATHING" label="Our Approach" />
+              <Stat value="BUILT FOR PERFORMANCE" label="Our Mission" />
+              <Stat value="BREATHING STRENGTH" label="Our Focus" />
             </div>
-            <p className="mt-2 text-xs text-neutral-400">*Sample placeholder — update with real numbers.</p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
-                href="#founders"
-                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-orange-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
+                href="#contact"
+                onClick={(e) => {
+                  if (onContactUs) {
+                    e.preventDefault();
+                    onContactUs();
+                  }
+                }}
+                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-orange-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 cursor-pointer"
               >
-                Meet the Team
-              </a>
-              <a
-                href="#standards"
-                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-white px-5 py-2.5 text-sm font-semibold text-orange-700 shadow-sm transition hover:bg-orange-50 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2"
-              >
-                BIS Contribution
+                Contact Us
               </a>
             </div>
           </motion.div>

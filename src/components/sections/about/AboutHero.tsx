@@ -59,9 +59,7 @@ export const AboutHero: React.FC = () => {
       </div>
 
       <p className="mt-10 sm:mt-12 text-base sm:text-xl text-gray-600 font-semibold max-w-4xl mx-auto px-4 leading-relaxed">
-        We help healthcare professionals and patients breathe easier through intelligent, data-driven innovation. 
-        Medantrik integrates AI-powered diagnostics and personalized respiratory solutions to simplify complex challenges in lung health. 
-        Our technology empowers medical experts to make faster, more accurate decisions—so every patient can breathe freely and live without limitations.
+        At IRONLUNG, we believe better breathing leads to better performance. Our respiratory muscle training technology helps you train your breathing muscles with controlled resistance, so you can build breathing strength, improve endurance, and push your limits.
       </p>
     </div>
   );
