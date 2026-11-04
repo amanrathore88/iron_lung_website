@@ -155,7 +155,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
             <div className="mt-7 sm:mt-8 flex items-center justify-center">
               <span
                 className="font-black text-2xl xs:text-3xl sm:text-4xl text-[#0A1118] tracking-tight tabular-nums select-none"
-                style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 {progress}
                 <span className="text-[#ff6900] font-black ml-0.5">%</span>

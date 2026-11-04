@@ -256,7 +256,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
               {/* Primary Editorial Headline Stack */}
               <h2
                 className="flex flex-col items-start tracking-tight text-[#0A1118] select-none"
-                style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 <div className="overflow-hidden">
                   <motion.span
@@ -494,7 +494,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 >
                   <span
                     className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
-                    style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <StatCounter target={10} suffix="K+" isTriggered={isEntered} delayMs={650} durationMs={450} />
                   </span>
@@ -515,7 +515,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 >
                   <span
                     className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
-                    style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <StatCounter target={5} suffix="+" isTriggered={isEntered} delayMs={770} durationMs={400} />
                   </span>
@@ -536,7 +536,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 >
                   <span
                     className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
-                    style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <StatCounter target={20} suffix="+" isTriggered={isEntered} delayMs={890} durationMs={450} />
                   </span>
@@ -557,7 +557,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 >
                   <span
                     className="font-bold text-[18px] xs:text-[22px] sm:text-[19px] lg:text-[21px] xl:text-[26px] text-[#0A1118] tracking-tight leading-none"
-                    style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     <StatCounter target={100} suffix="%" isTriggered={isEntered} delayMs={1010} durationMs={500} />
                   </span>
