@@ -7,7 +7,7 @@ interface AboutHeroSectionProps {
 
 export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore }) => {
   return (
-    <section className="w-full bg-white text-neutral-900 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-14 sm:pb-18 md:pb-20 lg:pb-24 selection:bg-[#FF5500]/20 overflow-hidden">
+    <section className="w-full bg-white text-neutral-900 pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-14 sm:pb-18 md:pb-20 lg:pb-24 selection:bg-[#ff6900]/20 overflow-hidden">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-14 items-stretch">
           
@@ -24,7 +24,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore })
               className="text-base sm:text-lg md:text-[19px] lg:text-[20px] font-sans font-normal text-neutral-900 leading-snug tracking-[-0.015em] max-w-[460px] select-none"
             >
               Every deeper breath fuels more energy, better endurance and a{" "}
-              <span className="text-[#FF5500] font-medium">healthier tomorrow</span>.
+              <span className="text-[#ff6900] font-medium">healthier tomorrow</span>.
             </motion.p>
 
             {/* 2. GIANT CONDENSED 4-LINE HEADLINE (SHIFTED DOWN & SLIGHTLY LARGER) */}
@@ -35,8 +35,8 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore })
               className="mt-8 mb-6 sm:mt-10 sm:mb-8 lg:mt-12 lg:mb-8 select-none"
             >
               <h1 className="text-[42px] xs:text-[50px] sm:text-7xl md:text-8xl lg:text-[84px] xl:text-[96px] 2xl:text-[108px] font-black font-sans uppercase tracking-[-0.035em] leading-[0.91]">
-                <span className="block text-[#FF5500]">THE</span>
-                <span className="block text-[#FF5500]">POWER</span>
+                <span className="block text-[#ff6900]">THE</span>
+                <span className="block text-[#ff6900]">POWER</span>
                 <span className="block text-[#0B0F19]">OF EVERY</span>
                 <span className="block text-[#0B0F19]">BREATH</span>
               </h1>
@@ -52,7 +52,7 @@ export const AboutHeroSection: React.FC<AboutHeroSectionProps> = ({ onExplore })
               <button
                 onClick={onExplore}
                 type="button"
-                className="w-full sm:w-auto px-10 py-3.5 sm:py-4 rounded-full bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold text-xs sm:text-sm tracking-[0.14em] uppercase shadow-lg shadow-[#FF5500]/25 hover:shadow-xl hover:shadow-[#FF5500]/35 active:scale-[0.98] transition-all duration-300 flex items-center justify-center cursor-pointer"
+                className="w-full sm:w-auto px-10 py-3.5 sm:py-4 rounded-full bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-bold text-xs sm:text-sm tracking-[0.14em] uppercase shadow-lg shadow-[#ff6900]/25 hover:shadow-xl hover:shadow-[#ff6900]/35 active:scale-[0.98] transition-all duration-300 flex items-center justify-center cursor-pointer"
               >
                 <span>EXPLORE</span>
               </button>

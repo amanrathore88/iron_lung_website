@@ -54,7 +54,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         <path
           d="M 50% 12% C 50% 22%, 58% 28%, 68% 30%"
           fill="none"
-          stroke="#FF5E1E"
+          stroke="#ff6900"
           strokeWidth="1.75"
           strokeLinecap="round"
           strokeDasharray="1000"
@@ -73,7 +73,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         <path
           d="M 70% 55% C 62% 64%, 48% 66%, 42% 75%"
           fill="none"
-          stroke="#FF5E1E"
+          stroke="#ff6900"
           strokeWidth="1.75"
           strokeLinecap="round"
           className="opacity-80"
@@ -90,7 +90,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
         <path
           d="M 42% 72% C 52% 78%, 62% 76%, 68% 84%"
           fill="none"
-          stroke="#FF5E1E"
+          stroke="#ff6900"
           strokeWidth="1.75"
           strokeLinecap="round"
           className="opacity-80"
@@ -116,7 +116,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 6 }}
             animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
             transition={isSec1Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#ff6900] uppercase"
           >
             PRODUCT INTERFACE
           </motion.span>
@@ -128,7 +128,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={isSec1Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={isSec1Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight"
+                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#ff6900] tracking-tight"
               >
                 01
               </motion.span>
@@ -137,7 +137,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 animate={isSec1Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
                 transition={isSec1Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
                 style={{ transformOrigin: 'left center' }}
-                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full"
+                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#ff6900] rounded-full"
               />
             </div>
             <motion.span
@@ -217,7 +217,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Center Trachea & Bronchial Branches in Brand Orange */}
                   <path
                     d="M12 3.8V10.6M12 10.6L8.2 13.7M12 10.6L15.8 13.7"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.85"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -257,7 +257,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Sweeping Circular Gauge Arc in Brand Orange */}
                   <path
                     d="M12.4 4.1A8 8 0 1 1 5.4 16.5"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.75"
                     strokeLinecap="round"
                   />
@@ -292,7 +292,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Orange Touch Ring around Fingertip */}
                   <path
                     d="M8.1 10.6A3.8 3.8 0 1 1 13.9 10.6"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.75"
                     strokeLinecap="round"
                   />
@@ -329,7 +329,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Core Capabilities
             </span>
-            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#ff6900] tracking-wider uppercase">
               3 Modes
             </span>
           </div>
@@ -364,7 +364,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 />
                 <path
                   d="M12 3.8V10.6M12 10.6L8.2 13.7M12 10.6L15.8 13.7"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.85"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -400,7 +400,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 <path d="M14.6 15.5V8.2" stroke="#0F172A" strokeWidth="1.95" strokeLinecap="round" />
                 <path
                   d="M12.4 4.1A8 8 0 1 1 5.4 16.5"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.75"
                   strokeLinecap="round"
                 />
@@ -432,7 +432,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
               <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 xs:w-4 xs:h-4" fill="none">
                 <path
                   d="M8.1 10.6A3.8 3.8 0 1 1 13.9 10.6"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.75"
                   strokeLinecap="round"
                 />
@@ -480,7 +480,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             transition={isSec2Active ? { duration: 0.5, delay: 0.95, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
             className="flex items-start gap-3 pointer-events-auto"
           >
-            <div className="w-[3px] h-10 bg-[#FF5E1E] rounded-full shrink-0 shadow-sm" />
+            <div className="w-[3px] h-10 bg-[#ff6900] rounded-full shrink-0 shadow-sm" />
             <div className="flex flex-col">
               <span className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase">
                 Cleaner Air
@@ -499,7 +499,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 6 }}
             animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
             transition={isSec2Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#ff6900] uppercase"
           >
             UV SANITIZATION
           </motion.span>
@@ -545,7 +545,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Purification Tech
             </span>
-            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#ff6900] tracking-wider uppercase">
               Medical Grade
             </span>
           </div>
@@ -573,7 +573,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 />
                 <path
                   d="M12 9.2V14.4M9.4 11.8H14.6"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.85"
                   strokeLinecap="round"
                 />
@@ -612,7 +612,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 />
                 <path
                   d="M16.8 4.4C17.0 6.4 17.8 7.2 19.8 7.4C17.8 7.6 17.0 8.4 16.8 10.4C16.6 8.4 15.8 7.6 13.8 7.4C15.8 7.2 16.6 6.4 16.8 4.4Z"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.75"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -652,7 +652,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 />
                 <path
                   d="M7.4 16.6C8.8 15.0 10.7 13.3 13.2 11.5"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.85"
                   strokeLinecap="round"
                 />
@@ -684,7 +684,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={isSec2Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={isSec2Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight"
+                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#ff6900] tracking-tight"
               >
                 02
               </motion.span>
@@ -693,7 +693,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 animate={isSec2Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
                 transition={isSec2Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
                 style={{ transformOrigin: 'left center' }}
-                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full"
+                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#ff6900] rounded-full"
               />
             </div>
             <motion.span
@@ -766,7 +766,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Center Plus Sign in Brand Orange */}
                   <path
                     d="M12 9.2V14.4M9.4 11.8H14.6"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.85"
                     strokeLinecap="round"
                   />
@@ -809,7 +809,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Small Four-Point Sparkle in Brand Orange */}
                   <path
                     d="M16.8 4.4C17.0 6.4 17.8 7.2 19.8 7.4C17.8 7.6 17.0 8.4 16.8 10.4C16.6 8.4 15.8 7.6 13.8 7.4C15.8 7.2 16.6 6.4 16.8 4.4Z"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.75"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -853,7 +853,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Inner Leaf Vein in Brand Orange */}
                   <path
                     d="M7.4 16.6C8.8 15.0 10.7 13.3 13.2 11.5"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.85"
                     strokeLinecap="round"
                   />
@@ -898,7 +898,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             initial={{ opacity: 0, y: 6 }}
             animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 6 }}
             transition={isSec3Active ? { duration: 0.24, delay: 0.15, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#FF5E1E] uppercase"
+            className="md:hidden text-[10px] xs:text-[10.5px] font-bold tracking-[0.22em] text-[#ff6900] uppercase"
           >
             ERGONOMIC DESIGN
           </motion.span>
@@ -944,7 +944,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             <span className="text-[9px] xs:text-[9.5px] font-extrabold tracking-widest text-slate-400 uppercase">
               Biometric Seating
             </span>
-            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#FF5E1E] tracking-wider uppercase">
+            <span className="text-[9px] xs:text-[9.5px] font-bold text-[#ff6900] tracking-wider uppercase">
               Posture Tuned
             </span>
           </div>
@@ -971,11 +971,11 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <circle cx="14.2" cy="5.8" r="1.15" fill="#FF5E1E" />
-                <circle cx="13.2" cy="8.9" r="1.15" fill="#FF5E1E" />
-                <circle cx="12.6" cy="12.0" r="1.15" fill="#FF5E1E" />
-                <circle cx="13.2" cy="15.1" r="1.15" fill="#FF5E1E" />
-                <circle cx="14.2" cy="18.2" r="1.15" fill="#FF5E1E" />
+                <circle cx="14.2" cy="5.8" r="1.15" fill="#ff6900" />
+                <circle cx="13.2" cy="8.9" r="1.15" fill="#ff6900" />
+                <circle cx="12.6" cy="12.0" r="1.15" fill="#ff6900" />
+                <circle cx="13.2" cy="15.1" r="1.15" fill="#ff6900" />
+                <circle cx="14.2" cy="18.2" r="1.15" fill="#ff6900" />
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
@@ -1011,7 +1011,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 />
                 <path
                   d="M12 9.2V14.4M9.4 11.8H14.6"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.85"
                   strokeLinecap="round"
                 />
@@ -1047,9 +1047,9 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   strokeWidth="1.85"
                   strokeLinecap="round"
                 />
-                <circle cx="7.2" cy="13.0" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
-                <circle cx="12.0" cy="15.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
-                <circle cx="16.8" cy="10.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                <circle cx="7.2" cy="13.0" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
+                <circle cx="12.0" cy="15.2" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
+                <circle cx="16.8" cy="10.2" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
               </svg>
             </motion.div>
             <div className="flex flex-col min-w-0">
@@ -1072,7 +1072,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={isSec3Active ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                 transition={isSec3Active ? { duration: 0.25, delay: 0.0, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
-                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#FF5E1E] tracking-tight"
+                className="text-xl sm:text-2xl lg:text-3xl font-black text-[#ff6900] tracking-tight"
               >
                 03
               </motion.span>
@@ -1081,7 +1081,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                 animate={isSec3Active ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
                 transition={isSec3Active ? { duration: 0.25, delay: 0.12, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
                 style={{ transformOrigin: 'left center' }}
-                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#FF5E1E] rounded-full"
+                className="w-5 sm:w-7 lg:w-8 h-[2px] bg-[#ff6900] rounded-full"
               />
             </div>
             <motion.span
@@ -1153,11 +1153,11 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                     strokeLinejoin="round"
                   />
                   {/* 5 Curved Vertebrae Dots in Brand Orange */}
-                  <circle cx="14.2" cy="5.8" r="1.15" fill="#FF5E1E" />
-                  <circle cx="13.2" cy="8.9" r="1.15" fill="#FF5E1E" />
-                  <circle cx="12.6" cy="12.0" r="1.15" fill="#FF5E1E" />
-                  <circle cx="13.2" cy="15.1" r="1.15" fill="#FF5E1E" />
-                  <circle cx="14.2" cy="18.2" r="1.15" fill="#FF5E1E" />
+                  <circle cx="14.2" cy="5.8" r="1.15" fill="#ff6900" />
+                  <circle cx="13.2" cy="8.9" r="1.15" fill="#ff6900" />
+                  <circle cx="12.6" cy="12.0" r="1.15" fill="#ff6900" />
+                  <circle cx="13.2" cy="15.1" r="1.15" fill="#ff6900" />
+                  <circle cx="14.2" cy="18.2" r="1.15" fill="#ff6900" />
                 </svg>
               </motion.div>
               <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
@@ -1197,7 +1197,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                   {/* Center Plus Sign in Brand Orange */}
                   <path
                     d="M12 9.2V14.4M9.4 11.8H14.6"
-                    stroke="#FF5E1E"
+                    stroke="#ff6900"
                     strokeWidth="1.85"
                     strokeLinecap="round"
                   />
@@ -1237,9 +1237,9 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
                     strokeLinecap="round"
                   />
                   {/* 3 Hollow Circular Slider Knobs in Brand Orange */}
-                  <circle cx="7.2" cy="13.0" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
-                  <circle cx="12.0" cy="15.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
-                  <circle cx="16.8" cy="10.2" r="1.9" stroke="#FF5E1E" strokeWidth="1.85" />
+                  <circle cx="7.2" cy="13.0" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
+                  <circle cx="12.0" cy="15.2" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
+                  <circle cx="16.8" cy="10.2" r="1.9" stroke="#ff6900" strokeWidth="1.85" />
                 </svg>
               </motion.div>
               <div className="h-6 lg:h-8 w-[1px] bg-slate-200/80 shrink-0" />
@@ -1264,7 +1264,7 @@ export const ScrollyFeaturesOverlay: React.FC<ScrollyFeaturesOverlayProps> = ({
             transition={isSec3Active ? { duration: 0.5, delay: 0.95, ease: [0.22, 1, 0.36, 1] } : { duration: 0.15 }}
             className="flex items-start gap-3 pointer-events-auto"
           >
-            <div className="w-[3px] h-10 bg-[#FF5E1E] rounded-full shrink-0 shadow-sm" />
+            <div className="w-[3px] h-10 bg-[#ff6900] rounded-full shrink-0 shadow-sm" />
             <div className="flex flex-col">
               <span className="text-xs sm:text-sm font-black tracking-wider text-slate-900 uppercase">
                 Active Recovery

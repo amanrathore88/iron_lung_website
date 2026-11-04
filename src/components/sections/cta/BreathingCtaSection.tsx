@@ -70,7 +70,7 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
                   duration: 0.64,
                   ease: EASE_OUT_EXPO,
                 }}
-                className="inline-block text-[#F53D00]"
+                className="inline-block text-[#ff6900]"
               >
                 Train Better.
               </motion.span>
@@ -116,7 +116,7 @@ export const BreathingCtaSection: React.FC<BreathingCtaSectionProps> = ({
             <button
               type="button"
               onClick={onBookDemo}
-              className="group inline-flex items-center justify-between bg-[#F53D00] hover:bg-[#E03500] text-white rounded-full px-8 sm:px-10 py-3.5 sm:py-4.5 min-w-[225px] sm:min-w-[280px] md:min-w-[315px] transition-colors duration-200 shadow-[0_8px_22px_rgba(245,61,0,0.20)] cursor-pointer"
+              className="group inline-flex items-center justify-between bg-[#ff6900] hover:bg-[#ff7a1a] text-white rounded-full px-8 sm:px-10 py-3.5 sm:py-4.5 min-w-[225px] sm:min-w-[280px] md:min-w-[315px] transition-colors duration-200 shadow-[0_8px_22px_rgba(255,105,0,0.25)] cursor-pointer"
             >
               <span className="text-[17px] sm:text-[19.5px] md:text-[22px] font-medium tracking-[-0.01em] pl-1 sm:pl-2">
                 Book a Demo

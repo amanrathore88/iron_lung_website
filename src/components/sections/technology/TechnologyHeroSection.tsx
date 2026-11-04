@@ -50,7 +50,7 @@ export const TechnologyHeroSection: React.FC = () => {
             {isMuted ? (
               <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white/80 group-hover:text-white" />
             ) : (
-              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#FF5500] animate-pulse" />
+              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#ff6900] animate-pulse" />
             )}
           </button>
         </div>

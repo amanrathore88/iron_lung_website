@@ -80,7 +80,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
             className="absolute inset-0 pointer-events-none"
             style={{
               backgroundImage:
-                'radial-gradient(ellipse at 50% 50%, rgba(251, 68, 3, 0.05) 0%, rgba(250, 247, 242, 0) 70%)',
+                'radial-gradient(ellipse at 50% 50%, rgba(255, 105, 0, 0.05) 0%, rgba(250, 247, 242, 0) 70%)',
             }}
           />
 
@@ -101,11 +101,11 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
-                className="absolute inset-0 rounded-full bg-[#FB4403]/10 blur-xl pointer-events-none"
+                className="absolute inset-0 rounded-full bg-[#ff6900]/10 blur-xl pointer-events-none"
               />
 
               {/* Main White Disc Container with Premium Shadow */}
-              <div className="absolute inset-1.5 xs:inset-2 sm:inset-2.5 rounded-full bg-white shadow-[0_20px_50px_rgba(251,68,3,0.08),0_6px_20px_rgba(0,0,0,0.04)] border border-neutral-200/70 flex items-center justify-center overflow-hidden">
+              <div className="absolute inset-1.5 xs:inset-2 sm:inset-2.5 rounded-full bg-white shadow-[0_20px_50px_rgba(255,105,0,0.08),0_6px_20px_rgba(0,0,0,0.04)] border border-neutral-200/70 flex items-center justify-center overflow-hidden">
                 {/* Company Logo */}
                 <motion.img
                   src="/images/ironlung-logo.png"
@@ -138,7 +138,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
                   cy={center}
                   r={radius}
                   fill="none"
-                  stroke="#FB4403"
+                  stroke="#ff6900"
                   strokeWidth={strokeWidth + 0.5}
                   strokeDasharray={circumference}
                   strokeDashoffset={strokeDashoffset}
@@ -158,7 +158,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({
                 style={{ fontFamily: "'Swis721 BlkCn BT', sans-serif" }}
               >
                 {progress}
-                <span className="text-[#FB4403] font-black ml-0.5">%</span>
+                <span className="text-[#ff6900] font-black ml-0.5">%</span>
               </span>
             </div>
 

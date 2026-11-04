@@ -31,7 +31,7 @@ const PILLARS: PillarItem[] = [
 
 export const AboutPillarsSection: React.FC = () => {
   return (
-    <section className="w-full bg-white text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 overflow-hidden">
+    <section className="w-full bg-white text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#ff6900]/20 overflow-hidden">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto">
         
         {/* ===================================================================== */}
@@ -46,14 +46,14 @@ export const AboutPillarsSection: React.FC = () => {
         >
           {/* Main Headline with Split Colors & Dual-Tone Divider Bar */}
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[56px] xl:text-[64px] font-black font-sans tracking-[-0.03em] leading-none uppercase inline-flex flex-wrap items-center select-none">
-            <span className="text-[#FF5500]">MORE OXYGEN</span>
+            <span className="text-[#ff6900]">MORE OXYGEN</span>
             {/* Two-Tone Vertical Divider Accent Bar (|) */}
             <span
               aria-hidden="true"
               className="inline-flex h-[0.82em] w-[6px] xs:w-[7px] sm:w-[9px] md:w-[11px] rounded-xs overflow-hidden mx-2 xs:mx-2.5 sm:mx-3.5 md:mx-4.5 shrink-0 self-center"
             >
               <span className="w-1/2 h-full bg-[#0F172A]" />
-              <span className="w-1/2 h-full bg-[#FF5500]" />
+              <span className="w-1/2 h-full bg-[#ff6900]" />
             </span>
             <span className="text-[#0F172A]">MORE LIFE</span>
           </h2>
@@ -79,7 +79,7 @@ export const AboutPillarsSection: React.FC = () => {
                 delay: index * 0.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group relative bg-[#FFF3E6] rounded-[22px] sm:rounded-[26px] lg:rounded-[30px] p-6 sm:p-7 md:p-8 lg:p-9 flex flex-col justify-between min-h-[290px] sm:min-h-[310px] md:min-h-[330px] border border-[#FFE7CF]/80 shadow-sm hover:shadow-xl hover:shadow-[#FF5500]/5 hover:-translate-y-1 transition-all duration-300 select-none"
+              className="group relative bg-[#FFF3E6] rounded-[22px] sm:rounded-[26px] lg:rounded-[30px] p-6 sm:p-7 md:p-8 lg:p-9 flex flex-col justify-between min-h-[290px] sm:min-h-[310px] md:min-h-[330px] border border-[#FFE7CF]/80 shadow-sm hover:shadow-xl hover:shadow-[#ff6900]/5 hover:-translate-y-1 transition-all duration-300 select-none"
             >
               {/* Card Top: High-Res Line Art Icon */}
               <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] flex items-center justify-start">
@@ -93,7 +93,7 @@ export const AboutPillarsSection: React.FC = () => {
 
               {/* Card Bottom: Orange Uppercase Title & Description */}
               <div className="mt-8 sm:mt-10 md:mt-12">
-                <h3 className="text-xl sm:text-2xl md:text-[25px] font-bold font-sans uppercase tracking-[-0.01em] text-[#FF5500]">
+                <h3 className="text-xl sm:text-2xl md:text-[25px] font-bold font-sans uppercase tracking-[-0.01em] text-[#ff6900]">
                   {pillar.title}
                 </h3>
                 <p className="mt-2.5 sm:mt-3 text-neutral-900 font-sans text-sm sm:text-base md:text-[17px] leading-snug sm:leading-relaxed font-normal">

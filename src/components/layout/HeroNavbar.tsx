@@ -38,24 +38,24 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
         <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10 text-xs lg:text-sm font-semibold text-slate-800 whitespace-nowrap shrink">
           <button
             onClick={() => onNavigateSection?.('hero')}
-            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'hero' || activeSection === 'home' ? 'text-[#FF5E1E] font-bold' : ''
+            className={`hover:text-[#ff6900] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'hero' || activeSection === 'home' ? 'text-[#ff6900] font-bold' : ''
             }`}
           >
             Home
           </button>
           <button
             onClick={() => onNavigateSection?.('how-it-works')}
-            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#FF5E1E] font-bold' : ''
+            className={`hover:text-[#ff6900] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#ff6900] font-bold' : ''
             }`}
           >
             How It Works
           </button>
           <button
             onClick={() => onNavigateSection?.('about')}
-            className={`hover:text-[#FF5E1E] transition-colors duration-200 tracking-wide cursor-pointer ${
-              activeSection === 'about' ? 'text-[#FF5E1E] font-bold' : ''
+            className={`hover:text-[#ff6900] transition-colors duration-200 tracking-wide cursor-pointer ${
+              activeSection === 'about' ? 'text-[#ff6900] font-bold' : ''
             }`}
           >
             About
@@ -68,7 +68,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
             onClick={onBookDemo}
             className={`hidden sm:inline-flex px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap cursor-pointer ${
               activeSection === 'book-demo'
-                ? 'text-[#FF5E1E] border-2 border-[#FF5E1E] bg-[#FF5E1E]/10 font-bold shadow-sm'
+                ? 'text-[#ff6900] border-2 border-[#ff6900] bg-[#ff6900]/10 font-bold shadow-sm'
                 : 'text-slate-800 border border-slate-300 bg-white/95 hover:bg-white hover:border-slate-400 shadow-sm'
             }`}
           >
@@ -78,8 +78,8 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
             onClick={onContactUs}
             className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold text-white transition-all duration-200 whitespace-nowrap cursor-pointer ${
               activeSection === 'contact'
-                ? 'bg-[#E04B10] shadow-[0_0_20px_rgba(255,94,30,0.6)] ring-2 ring-orange-300 font-bold scale-[1.02]'
-                : 'bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_4px_16px_rgba(255,94,30,0.35)] hover:shadow-[0_6px_20px_rgba(255,94,30,0.5)] hover:scale-[1.02] active:scale-[0.98]'
+                ? 'bg-[#ff6900] shadow-[0_0_20px_rgba(255,105,0,0.6)] ring-2 ring-[#ff6900]/40 font-bold scale-[1.02]'
+                : 'bg-[#ff6900] hover:bg-[#ff7a1a] shadow-[0_4px_16px_rgba(255,105,0,0.35)] hover:shadow-[0_6px_20px_rgba(255,105,0,0.5)] hover:scale-[1.02] active:scale-[0.98]'
             }`}
           >
             Contact Us
@@ -113,7 +113,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
                 onNavigateSection?.('hero');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'hero' || activeSection === 'home' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'hero' || activeSection === 'home' ? 'text-[#ff6900] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
               Home
@@ -124,7 +124,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
                 onNavigateSection?.('how-it-works');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'how-it-works' || activeSection === 'technology' ? 'text-[#ff6900] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
               How It Works
@@ -136,7 +136,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
                 onNavigateSection?.('about');
               }}
               className={`text-left py-2.5 px-3 rounded-xl text-sm font-medium transition-colors cursor-pointer ${
-                activeSection === 'about' ? 'text-[#FF5E1E] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
+                activeSection === 'about' ? 'text-[#ff6900] font-semibold bg-white/10' : 'text-white/80 hover:text-white hover:bg-white/5'
               }`}
             >
               About
@@ -150,7 +150,7 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
                 }}
                 className={`w-full py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                   activeSection === 'book-demo'
-                    ? 'text-[#FF5E1E] border border-[#FF5E1E] bg-[#FF5E1E]/15 font-bold shadow-sm'
+                    ? 'text-[#ff6900] border border-[#ff6900] bg-[#ff6900]/15 font-bold shadow-sm'
                     : 'text-white/90 border border-white/20 bg-white/5 hover:bg-white/10 active:scale-[0.98]'
                 }`}
               >
@@ -163,8 +163,8 @@ export const HeroNavbar: React.FC<HeroNavbarProps> = React.memo(({
                 }}
                 className={`w-full py-3 rounded-xl text-sm font-semibold text-white transition-all cursor-pointer ${
                   activeSection === 'contact'
-                    ? 'bg-[#E04B10] shadow-[0_0_25px_rgba(255,94,30,0.7)] ring-2 ring-orange-400 font-bold'
-                    : 'bg-[#FF5E1E] hover:bg-[#FF7033] shadow-[0_0_20px_rgba(255,94,30,0.4)] active:scale-[0.98]'
+                    ? 'bg-[#ff6900] shadow-[0_0_25px_rgba(255,105,0,0.7)] ring-2 ring-[#ff6900]/40 font-bold'
+                    : 'bg-[#ff6900] hover:bg-[#ff7a1a] shadow-[0_0_20px_rgba(255,105,0,0.4)] active:scale-[0.98]'
                 }`}
               >
                 Contact Us

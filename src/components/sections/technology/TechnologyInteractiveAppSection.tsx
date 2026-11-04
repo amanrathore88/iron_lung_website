@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const TechnologyInteractiveAppSection: React.FC = () => {
   return (
-    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-14 sm:py-18 md:py-22 lg:py-26 selection:bg-[#FF5500]/20 overflow-hidden relative">
+    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-14 sm:py-18 md:py-22 lg:py-26 selection:bg-[#ff6900]/20 overflow-hidden relative">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto flex flex-col items-center">
         
         {/* ===================================================================== */}
@@ -20,7 +20,7 @@ export const TechnologyInteractiveAppSection: React.FC = () => {
             <span className="block text-[#0F172A]">
               Interactive App for
             </span>
-            <span className="block text-[#FF5500] mt-1 sm:mt-2">
+            <span className="block text-[#ff6900] mt-1 sm:mt-2">
               Users & Admins.
             </span>
           </h2>

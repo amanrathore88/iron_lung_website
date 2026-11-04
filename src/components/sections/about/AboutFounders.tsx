@@ -61,7 +61,7 @@ const SocialBadge: React.FC<SocialBadgeProps> = ({ href, label, Icon, delay = 0 
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.6 }}
     transition={{ duration: 0.4, delay }}
-    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-300/30 ring-1 ring-orange-300/40 bg-gradient-to-br from-orange-500 via-orange-500 to-amber-400 hover:shadow-orange-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 active:translate-y-px"
+    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white shadow-lg shadow-[#ff6900]/25 ring-1 ring-[#ff6900]/30 bg-[#ff6900] hover:bg-[#ff7a1a] hover:shadow-[#ff6900]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6900] active:translate-y-px"
     whileHover={{ scale: 1.04 }}
     whileTap={{ scale: 0.98 }}
   >
@@ -128,8 +128,8 @@ const FounderCard: React.FC<FounderCardProps> = ({ founder, delay = 0 }) => {
 
         <div className="w-full sm:w-3/5 space-y-3" style={{ transform: 'translateZ(40px)' }}>
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-            <p className="text-xs font-semibold text-orange-700">Meet our founders</p>
+            <span className="inline-flex h-2 w-2 rounded-full bg-[#ff6900] animate-pulse" />
+            <p className="text-xs font-semibold text-[#ff6900]">Meet our founders</p>
           </div>
           <h3 className="text-2xl md:text-3xl font-black tracking-tight text-neutral-900">
             {founder.name}
@@ -162,8 +162,8 @@ export const AboutFounders: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-medium text-orange-700 shadow-sm">
-            <span className="inline-block h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-medium text-[#ff6900] shadow-sm">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#ff6900] animate-pulse" />
             Our Leadership
           </div>
           <h2 className="text-3xl md:text-[48px] font-semibold leading-tight text-neutral-900 mt-3">

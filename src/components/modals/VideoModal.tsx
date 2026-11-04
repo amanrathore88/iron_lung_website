@@ -71,7 +71,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose }) => {
         {/* Top Modal Header */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 bg-[#061422]/80 backdrop-blur-md">
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 pr-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#FF5E1E] shadow-[0_0_8px_rgba(255,94,30,0.8)] shrink-0" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#ff6900] shadow-[0_0_8px_rgba(255,105,0,0.8)] shrink-0" />
             <span className="text-[10px] sm:text-xs font-mono tracking-widest text-white/90 uppercase font-semibold truncate">
               IronLung — Cinematic Engineering Reveal
             </span>
@@ -112,7 +112,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose }) => {
             {/* Progress Track */}
             <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden cursor-pointer">
               <div
-                className="h-full bg-[#FF5E1E] transition-all duration-100"
+                className="h-full bg-[#ff6900] transition-all duration-100"
                 style={{ width: `${progress}%` }}
               />
             </div>

@@ -131,7 +131,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-[460px] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_25px_70px_rgba(0,0,0,0.18)] border border-slate-100 z-10 my-auto selection:bg-[#FF5500]/20"
+            className="relative w-full max-w-[460px] bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 shadow-[0_25px_70px_rgba(0,0,0,0.18)] border border-slate-100 z-10 my-auto selection:bg-[#ff6900]/20"
           >
             {/* Circular Close Button at top right */}
             <button
@@ -205,7 +205,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                     >
                       FULL NAME
                     </label>
-                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#FF5500] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#FF5500]/15 transition-all">
+                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#ff6900] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#ff6900]/15 transition-all">
                       <User className="w-4.5 h-4.5 text-[#94A3B8] shrink-0 mr-3" />
                       <input
                         id="demo-fullname"
@@ -227,7 +227,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                     >
                       PHONE NUMBER
                     </label>
-                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#FF5500] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#FF5500]/15 transition-all">
+                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#ff6900] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#ff6900]/15 transition-all">
                       <Phone className="w-4.5 h-4.5 text-[#94A3B8] shrink-0 mr-3" />
                       <input
                         id="demo-phone"
@@ -249,7 +249,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                     >
                       EMAIL ADDRESS
                     </label>
-                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#FF5500] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#FF5500]/15 transition-all">
+                    <div className="flex items-center rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 focus-within:border-[#ff6900] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#ff6900]/15 transition-all">
                       <Mail className="w-4.5 h-4.5 text-[#94A3B8] shrink-0 mr-3" />
                       <input
                         id="demo-email"
@@ -276,7 +276,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                       aria-labelledby="preferred-time-label"
                       aria-expanded={isDropdownOpen}
                       onClick={() => setIsDropdownOpen((prev) => !prev)}
-                      className="w-full flex items-center justify-between rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 hover:bg-slate-100/70 focus:border-[#FF5500] focus:bg-white focus:ring-2 focus:ring-[#FF5500]/15 transition-all cursor-pointer text-left"
+                      className="w-full flex items-center justify-between rounded-xl sm:rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] px-3.5 py-3 hover:bg-slate-100/70 focus:border-[#ff6900] focus:bg-white focus:ring-2 focus:ring-[#ff6900]/15 transition-all cursor-pointer text-left"
                     >
                       <div className="flex items-center min-w-0 pr-2">
                         <Calendar className="w-4.5 h-4.5 text-[#94A3B8] shrink-0 mr-3" />
@@ -286,7 +286,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                       </div>
                       <ChevronDown
                         className={`w-4.5 h-4.5 text-[#64748B] shrink-0 transition-transform duration-200 ${
-                          isDropdownOpen ? 'rotate-180 text-[#FF5500]' : ''
+                          isDropdownOpen ? 'rotate-180 text-[#ff6900]' : ''
                         }`}
                       />
                     </button>
@@ -311,13 +311,13 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                               }}
                               className={`w-full px-4 py-2.5 text-left text-xs sm:text-sm font-medium transition-colors cursor-pointer flex items-center justify-between ${
                                 preferredTime === time
-                                  ? 'bg-[#FF5500]/10 text-[#FF5500] font-semibold'
+                                  ? 'bg-[#ff6900]/10 text-[#ff6900] font-semibold'
                                   : 'text-slate-700 hover:bg-slate-50'
                               }`}
                             >
                               <span>{time}</span>
                               {preferredTime === time && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#FF5500]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#ff6900]" />
                               )}
                             </button>
                           ))}
@@ -337,7 +337,7 @@ export const BookDemoModal: React.FC<BookDemoModalProps> = ({ isOpen, onClose })
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full mt-6 sm:mt-7 py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold text-base sm:text-[17px] tracking-normal shadow-lg shadow-[#FF5500]/25 hover:shadow-xl hover:shadow-[#FF5500]/35 active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full mt-6 sm:mt-7 py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-bold text-base sm:text-[17px] tracking-normal shadow-lg shadow-[#ff6900]/25 hover:shadow-xl hover:shadow-[#ff6900]/35 active:scale-[0.99] transition-all duration-200 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <span className="inline-flex items-center gap-2">

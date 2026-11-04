@@ -40,7 +40,7 @@ export const AboutFaqSection: React.FC = () => {
   };
 
   return (
-    <section className="w-full bg-white text-neutral-900 py-14 sm:py-18 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 overflow-hidden">
+    <section className="w-full bg-white text-neutral-900 py-14 sm:py-18 md:py-20 lg:py-24 selection:bg-[#ff6900]/20 overflow-hidden">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-14 items-center">
           
@@ -57,7 +57,7 @@ export const AboutFaqSection: React.FC = () => {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="mb-4 sm:mb-5 md:mb-6 lg:mb-7"
             >
-              <h2 className="text-5xl sm:text-6xl md:text-[68px] lg:text-[76px] xl:text-[82px] font-black font-sans tracking-tight text-[#FF5500] leading-none select-none">
+              <h2 className="text-5xl sm:text-6xl md:text-[68px] lg:text-[76px] xl:text-[82px] font-black font-sans tracking-tight text-[#ff6900] leading-none select-none">
                 FAQs
               </h2>
             </motion.div>
@@ -89,7 +89,7 @@ export const AboutFaqSection: React.FC = () => {
                     role="button"
                     tabIndex={0}
                     aria-expanded={isOpen}
-                    className={`group w-full bg-[#FFF3E6] hover:bg-[#FFEBD6] transition-colors duration-200 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-6.5 cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,85,0,0.08)] select-none border border-transparent hover:border-[#FF5500]/20 active:scale-[0.995]`}
+                    className={`group w-full bg-[#FFF3E6] hover:bg-[#FFEBD6] transition-colors duration-200 rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-6.5 cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,105,0,0.08)] select-none border border-transparent hover:border-[#ff6900]/20 active:scale-[0.995]`}
                   >
                     {/* Header Row: Question and Animated Chevron Indicator */}
                     <div className="flex items-center justify-between gap-4">
@@ -99,7 +99,7 @@ export const AboutFaqSection: React.FC = () => {
                       <motion.div
                         animate={{ rotate: isOpen ? 180 : 0 }}
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="shrink-0 text-neutral-500 group-hover:text-[#FF5500] transition-colors"
+                        className="shrink-0 text-neutral-500 group-hover:text-[#ff6900] transition-colors"
                       >
                         <ChevronDown className="w-5 h-5 sm:w-5.5 sm:h-5.5" />
                       </motion.div>

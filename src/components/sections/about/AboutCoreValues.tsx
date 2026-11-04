@@ -110,8 +110,8 @@ const ValueCard: React.FC<ValueCardProps> = ({ v, idx }) => {
         </p>
 
         <div className="mt-5 flex justify-center" style={{ transform: 'translateZ(45px)' }}>
-          <span className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-orange-800 bg-orange-50 ring-1 ring-orange-200/70 shadow-sm">
-            <span className="inline-block h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold text-[#ff6900] bg-orange-50 ring-1 ring-orange-200/70 shadow-sm">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#ff6900] animate-pulse" />
             Core value
           </span>
         </div>
@@ -124,7 +124,7 @@ export const AboutCoreValues: React.FC = () => {
   return (
     <section className="bg-[#fdfbfa] py-16 relative overflow-hidden">
       <div className="relative z-10 container mx-auto px-6 md:px-24">
-        <p className="text-sm md:text-base text-center text-orange-600 font-semibold mb-2 tracking-wide uppercase">
+        <p className="text-sm md:text-base text-center text-[#ff6900] font-semibold mb-2 tracking-wide uppercase">
           OUR VALUES
         </p>
         <h2 className="text-3xl md:text-[48px] font-semibold leading-tight text-neutral-900 text-center mb-12">

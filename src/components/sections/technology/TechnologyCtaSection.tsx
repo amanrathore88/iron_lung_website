@@ -11,7 +11,7 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
   onContactUs,
 }) => {
   return (
-    <section className="w-full bg-white text-neutral-900 py-14 sm:py-16 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 relative">
+    <section className="w-full bg-white text-neutral-900 py-14 sm:py-16 md:py-20 lg:py-24 selection:bg-[#ff6900]/20 relative">
       <div className="w-[92%] sm:w-[94%] max-w-[1100px] mx-auto flex flex-col items-center text-center">
         
         {/* ===================================================================== */}
@@ -28,7 +28,7 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
             <span className="text-[#0F172A] leading-[1.12]">
               Ready to Begin
             </span>
-            <span className="text-[#FF5500] leading-[1.12]">
+            <span className="text-[#ff6900] leading-[1.12]">
               Your Respiratory Training?
             </span>
           </h2>
@@ -61,7 +61,7 @@ export const TechnologyCtaSection: React.FC<TechnologyCtaSectionProps> = ({
           <button
             onClick={onBookDemo}
             type="button"
-            className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-[#FF5500] hover:bg-[#E04B00] text-white font-semibold text-base sm:text-[16px] tracking-[-0.01em] shadow-md shadow-[#FF5500]/25 hover:shadow-lg hover:shadow-[#FF5500]/35 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-semibold text-base sm:text-[16px] tracking-[-0.01em] shadow-md shadow-[#ff6900]/25 hover:shadow-lg hover:shadow-[#ff6900]/35 active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 group cursor-pointer"
           >
             <span>Book a Demo</span>
             <svg

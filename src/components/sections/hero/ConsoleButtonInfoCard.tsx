@@ -54,11 +54,11 @@ export const BUTTON_INFO_MAP: Record<ButtonType, ButtonData> = {
     title: 'Stop & Reset',
     description:
       'Instantly halts all airflow and recalibrates to zero.',
-    accentColor: '#F53D00',
-    glowColor: 'rgba(245, 61, 0, 0.25)',
-    badgeText: 'text-[#F53D00]',
+    accentColor: '#ff6900',
+    glowColor: 'rgba(255, 105, 0, 0.25)',
+    badgeText: 'text-[#ff6900]',
     iconBg: 'bg-[#FFF3EE]',
-    iconText: 'text-[#F53D00]',
+    iconText: 'text-[#ff6900]',
   },
 };
 
@@ -87,7 +87,7 @@ export const ConsoleButtonInfoCard: React.FC<ConsoleButtonInfoCardProps> = ({
       case 'start':
         return <Play className="w-5 h-5 text-emerald-600 fill-emerald-600" />;
       case 'reset':
-        return <RotateCcw className="w-5 h-5 text-[#F53D00]" strokeWidth={2} />;
+        return <RotateCcw className="w-5 h-5 text-[#ff6900]" strokeWidth={2} />;
     }
   };
 

@@ -43,7 +43,7 @@ const DESKTOP_FONT: React.CSSProperties = {
 
 // Custom SVG Icons matching the reference design
 const GridDashboardIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#D94E0F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#ff6900" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
     <rect x="13.5" y="3.5" width="7" height="7" rx="3.5" />
     <rect x="3.5" y="13.5" width="7" height="7" rx="1.5" />
@@ -52,7 +52,7 @@ const GridDashboardIcon: React.FC = () => (
 );
 
 const BarChartScoreIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#D94E0F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#ff6900" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <rect x="4" y="13" width="3.8" height="7" rx="1" />
     <rect x="10.1" y="9" width="3.8" height="11" rx="1" />
     <rect x="16.2" y="4" width="3.8" height="16" rx="1" />
@@ -60,7 +60,7 @@ const BarChartScoreIcon: React.FC = () => (
 );
 
 const LungsHealthIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[54%] h-[54%]" stroke="#D94E0F" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[54%] h-[54%]" stroke="#ff6900" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 3v7" />
     <path d="M12 8c-1.8 0-3.2 1.2-3.8 2.5" />
     <path d="M12 8c1.8 0 3.2 1.2 3.8 2.5" />
@@ -70,19 +70,19 @@ const LungsHealthIcon: React.FC = () => (
 );
 
 const CalendarSessionIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#FF5500" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#ff6900" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
     <line x1="8" y1="2.8" x2="8" y2="6.8" />
     <line x1="16" y1="2.8" x2="16" y2="6.8" />
     <line x1="3.5" y1="9.5" x2="20.5" y2="9.5" />
-    <circle cx="12.5" cy="13.5" r="1.1" fill="#FF5500" stroke="none" />
-    <circle cx="16.2" cy="13.5" r="1.1" fill="#FF5500" stroke="none" />
-    <rect x="6.8" y="15.6" width="4.5" height="2" rx="0.8" fill="#FF5500" stroke="none" />
+    <circle cx="12.5" cy="13.5" r="1.1" fill="#ff6900" stroke="none" />
+    <circle cx="16.2" cy="13.5" r="1.1" fill="#ff6900" stroke="none" />
+    <rect x="6.8" y="15.6" width="4.5" height="2" rx="0.8" fill="#ff6900" stroke="none" />
   </svg>
 );
 
 const SolidBarChartIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="#FF5500" className="w-[52%] h-[52%]">
+  <svg viewBox="0 0 24 24" fill="#ff6900" className="w-[52%] h-[52%]">
     <rect x="4" y="13" width="3.8" height="7" rx="1.2" />
     <rect x="10.1" y="9" width="3.8" height="11" rx="1.2" />
     <rect x="16.2" y="4" width="3.8" height="16" rx="1.2" />
@@ -90,7 +90,7 @@ const SolidBarChartIcon: React.FC = () => (
 );
 
 const PdfReportIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#FF5500" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#ff6900" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
     <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
     <path d="M14 3v4.8h4.8" />
     <path d="M11.5 10.5v4.2" />
@@ -100,7 +100,7 @@ const PdfReportIcon: React.FC = () => (
 );
 
 const SaveReportDownloadIcon: React.FC = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#FF5500" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+  <svg viewBox="0 0 24 24" fill="none" className="w-[52%] h-[52%]" stroke="#ff6900" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
     <path d="M6.5 3h7.8L19 7.7V19a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
     <path d="M14 3v4.8h4.8" />
     <path d="M12 10.5v6" />
@@ -423,29 +423,29 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20">
             <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
               {/* Card 1: PERSONALISED DASHBOARD */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <GridDashboardIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   PERSONALISED
                   <br />
-                  <span className="text-[#FF5500]">DASHBOARD</span>
+                  <span className="text-[#ff6900]">DASHBOARD</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#ff6900] mt-1.5 rounded-full" />
               </div>
 
               {/* Card 2: REAL-TIME LUNG HEALTH METRICS */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <LungsHealthIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   REAL-TIME
                   <br />
-                  <span className="text-[#FF5500]">LUNG HEALTH METRICS</span>
+                  <span className="text-[#ff6900]">LUNG HEALTH METRICS</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#ff6900] mt-1.5 rounded-full" />
               </div>
             </div>
           </div>
@@ -475,29 +475,29 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20 pb-1">
             <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
               {/* Card 3: TRACK YOUR LUNG SCORE */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   TRACK YOUR
                   <br />
-                  <span className="text-[#FF5500]">LUNG SCORE</span>
+                  <span className="text-[#ff6900]">LUNG SCORE</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#ff6900] mt-1.5 rounded-full" />
               </div>
 
               {/* Card 4: TRAIN AT YOUR OWN PACE */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 py-2.5 px-2 xs:py-3 xs:px-2.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center text-center">
                 <div className="w-8 h-8 xs:w-9 xs:h-9 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <BarChartScoreIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[10px] xs:text-[11px] uppercase tracking-[0.02em] leading-[1.2] text-center">
                   TRAIN AT
                   <br />
-                  <span className="text-[#FF5500]">YOUR OWN PACE</span>
+                  <span className="text-[#ff6900]">YOUR OWN PACE</span>
                 </h4>
-                <div className="w-5 h-[2px] bg-[#FF5500] mt-1.5 rounded-full" />
+                <div className="w-5 h-[2px] bg-[#ff6900] mt-1.5 rounded-full" />
               </div>
             </div>
           </div>
@@ -559,7 +559,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 328 146 L 238 146 L 205 117 L 79 117"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -576,7 +576,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 306 313 L 252 313 L 238 301 L 79 301"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -593,7 +593,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 682 165 L 756 165 L 804 117 L 858 117"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -611,7 +611,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="117"
               x2="916"
               y2="117"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -627,7 +627,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 736 276 L 768 276 L 807 301 L 858 301"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -645,7 +645,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="301"
               x2="916"
               y2="301"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -667,7 +667,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               <g key={idx}>
                 {/* Radiating Sonar Pulse Ring */}
                 {arePointersActive && (
-                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#FF5500" strokeWidth="1.15" opacity="0.7">
+                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#ff6900" strokeWidth="1.15" opacity="0.7">
                     <animate attributeName="r" values="4.5; 11.5; 11.5" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
                     <animate attributeName="opacity" values="0.7; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
                   </circle>
@@ -688,7 +688,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   }}
                   style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
                 >
-                  <circle cx={dot.cx} cy={dot.cy} r="4.3" fill="#FF5500" />
+                  <circle cx={dot.cx} cy={dot.cy} r="4.3" fill="#ff6900" />
                   <circle cx={dot.cx} cy={dot.cy} r="1.7" fill="#FFFFFF" />
                 </motion.g>
               </g>
@@ -726,7 +726,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   PERSONALISED
@@ -764,7 +764,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   TRACK YOUR
@@ -802,7 +802,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   REAL-TIME
@@ -840,7 +840,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0 flex items-center">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.18] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   TRAIN AT
@@ -878,28 +878,28 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20">
             <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
               {/* Card 1: SESSION DETAILS */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
                 <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <CalendarSessionIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
                   SESSION DETAILS
                 </h4>
-                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <div className="w-4 h-[2px] bg-[#ff6900] my-1 rounded-full" />
                 <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
                   View the date, time and status of your training session at a glance.
                 </p>
               </div>
 
               {/* Card 2: TRAINING PERFORMANCE */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
                 <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <SolidBarChartIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
                   TRAINING PERFORMANCE
                 </h4>
-                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <div className="w-4 h-[2px] bg-[#ff6900] my-1 rounded-full" />
                 <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
                   Check your session duration, achieved volume and target completion in real time.
                 </p>
@@ -919,8 +919,8 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             />
 
             {/* Decorative Subtle Concentric Ring */}
-            <div className="absolute w-[220px] h-[220px] rounded-full border border-[#FF5500]/15 pointer-events-none -z-10 flex items-center justify-center">
-              <div className="w-[170px] h-[170px] rounded-full border border-dashed border-[#FF5500]/10" />
+            <div className="absolute w-[220px] h-[220px] rounded-full border border-[#ff6900]/15 pointer-events-none -z-10 flex items-center justify-center">
+              <div className="w-[170px] h-[170px] rounded-full border border-dashed border-[#ff6900]/10" />
             </div>
 
             {/* Centered Phone Mockup */}
@@ -937,28 +937,28 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
           <div className="w-full shrink-0 z-20 pb-1">
             <div className="grid grid-cols-2 gap-2 xs:gap-2.5 w-full">
               {/* Card 3: VISUAL BREATHING FEEDBACK */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
                 <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <LungsHealthIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
                   VISUAL BREATHING FEEDBACK
                 </h4>
-                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <div className="w-4 h-[2px] bg-[#ff6900] my-1 rounded-full" />
                 <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
                   See your lung capacity visualised and follow guided inhale and exhale sessions.
                 </p>
               </div>
 
               {/* Card 4: SAVE YOUR PROGRESS */}
-              <div className="rounded-2xl bg-white/95 border border-[#FF5500]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
+              <div className="rounded-2xl bg-white/95 border border-[#ff6900]/20 p-2.5 xs:p-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col items-start">
                 <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-xl bg-[#FFF1E8] flex items-center justify-center shrink-0 mb-1.5">
                   <SaveReportDownloadIcon />
                 </div>
                 <h4 className="text-[#0A1118] font-bold text-[9.5px] xs:text-[10.5px] uppercase tracking-[0.02em] leading-[1.2]">
                   SAVE YOUR PROGRESS
                 </h4>
-                <div className="w-4 h-[2px] bg-[#FF5500] my-1 rounded-full" />
+                <div className="w-4 h-[2px] bg-[#ff6900] my-1 rounded-full" />
                 <p className="text-[#5A6578] text-[8.5px] xs:text-[9.5px] leading-[1.3] font-normal">
                   Download detailed session reports to track your improvement over time.
                 </p>
@@ -995,7 +995,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             className="absolute left-[33%] right-[33%] bottom-[3.2%] h-[4.5%] rounded-full pointer-events-none -z-10"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(235, 85, 15, 0.38) 0%, rgba(255, 105, 0, 0.14) 52%, transparent 78%)',
+                'radial-gradient(ellipse at center, rgba(255, 105, 0, 0.38) 0%, rgba(255, 105, 0, 0.14) 52%, transparent 78%)',
               filter: 'blur(10px)',
               opacity: phoneEase,
             }}
@@ -1036,7 +1036,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               cy="242"
               r="128"
               fill="none"
-              stroke="rgba(255, 95, 20, 0.16)"
+              stroke="rgba(255, 105, 0, 0.16)"
               strokeWidth="1"
               initial={{ scale: 0.85, opacity: 0 }}
               animate={
@@ -1052,7 +1052,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               cy="242"
               r="158"
               fill="none"
-              stroke="rgba(255, 95, 20, 0.12)"
+              stroke="rgba(255, 105, 0, 0.12)"
               strokeWidth="1"
               initial={{ scale: 0.85, opacity: 0 }}
               animate={
@@ -1068,7 +1068,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               cy="242"
               r="186"
               fill="none"
-              stroke="rgba(255, 95, 20, 0.22)"
+              stroke="rgba(255, 105, 0, 0.22)"
               strokeWidth="1.1"
               strokeDasharray="4 5"
               initial={{ scale: 0.88, opacity: 0 }}
@@ -1085,7 +1085,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 409 98 L 371 83 L 288 83"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1103,7 +1103,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="94"
               x2="198"
               y2="94"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -1119,7 +1119,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 445 313 L 326 313"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1137,7 +1137,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="313"
               x2="166"
               y2="313"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -1153,7 +1153,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 517 175 L 657 175 L 709 127 L 745 127"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1171,7 +1171,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="127"
               x2="845"
               y2="127"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -1187,7 +1187,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
             <motion.path
               d="M 594 238 L 620 254 L 713 254 L 749 295 L 764 295"
               fill="none"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1205,7 +1205,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               y1="305"
               x2="864"
               y2="305"
-              stroke="#FF5500"
+              stroke="#ff6900"
               strokeWidth="1.25"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -1227,7 +1227,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               <g key={idx}>
                 {/* Radiating Sonar Pulse Ring */}
                 {arePhonePointersActive && (
-                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#FF5500" strokeWidth="1.15" opacity="0.7">
+                  <circle cx={dot.cx} cy={dot.cy} r="4.5" fill="none" stroke="#ff6900" strokeWidth="1.15" opacity="0.7">
                     <animate attributeName="r" values="4.5; 11.5; 11.5" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
                     <animate attributeName="opacity" values="0.7; 0; 0" keyTimes="0; 0.7; 1" dur="1.8s" begin={`${dot.delay + 0.3}s`} repeatCount="indefinite" />
                   </circle>
@@ -1249,7 +1249,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
                   style={{ transformOrigin: `${dot.cx}px ${dot.cy}px` }}
                 >
                   <circle cx={dot.cx} cy={dot.cy} r="6.2" fill="rgba(255, 255, 255, 0.85)" />
-                  <circle cx={dot.cx} cy={dot.cy} r="4.3" fill="#FF5500" />
+                  <circle cx={dot.cx} cy={dot.cy} r="4.3" fill="#ff6900" />
                   <circle cx={dot.cx} cy={dot.cy} r="1.7" fill="#FFFFFF" />
                 </motion.g>
               </g>
@@ -1287,7 +1287,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   SESSION DETAILS
@@ -1333,7 +1333,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   VISUAL BREATHING FEEDBACK
@@ -1379,7 +1379,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   TRAINING PERFORMANCE
@@ -1425,7 +1425,7 @@ export const DashboardSectionOverlay: React.FC<DashboardSectionOverlayProps> = (
               </div>
               <div className="flex-1 min-w-0">
                 <h4
-                  className="text-[#FF5500] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
+                  className="text-[#ff6900] font-bold uppercase tracking-[0.02em] leading-[1.16] whitespace-nowrap"
                   style={{ fontSize: '1.18cqw' }}
                 >
                   SAVE YOUR PROGRESS

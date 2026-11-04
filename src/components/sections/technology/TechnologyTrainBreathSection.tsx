@@ -210,7 +210,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
   }, [renderFrame]);
 
   return (
-    <section className="w-full bg-[#fcfaf7] py-6 sm:py-10 md:py-14 selection:bg-[#fb4403]/20 overflow-hidden">
+    <section className="w-full bg-[#fcfaf7] py-6 sm:py-10 md:py-14 selection:bg-[#ff6900]/20 overflow-hidden">
       <div className="w-[94%] sm:w-[95%] lg:w-[96%] max-w-[1440px] mx-auto">
         {/* ================================================================= */}
         {/* ROUNDED CARD CONTAINER (White card on #fcfaf7 page background)    */}
@@ -227,7 +227,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
               <div className="mb-5 sm:mb-8 md:mb-10">
                 <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[54px] xl:text-[62px] font-black tracking-[-0.035em] leading-[0.98]">
                   <span className="block text-black">Train every</span>
-                  <span className="block text-[#fb4403] mt-1 sm:mt-1.5">breath</span>
+                  <span className="block text-[#ff6900] mt-1 sm:mt-1.5">breath</span>
                 </h2>
               </div>
 
@@ -258,7 +258,7 @@ export const TechnologyTrainBreathSection: React.FC = () => {
                         </span>
                         <span className="flex-shrink-0 ml-4 transition-transform duration-300">
                           {isActive ? (
-                            <ChevronUp className="w-5 h-5 text-[#fb4403]" strokeWidth={2.6} />
+                            <ChevronUp className="w-5 h-5 text-[#ff6900]" strokeWidth={2.6} />
                           ) : (
                             <ChevronDown className="w-5 h-5 text-neutral-400 group-hover:text-neutral-600" strokeWidth={2.4} />
                           )}

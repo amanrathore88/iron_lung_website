@@ -219,10 +219,10 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
       >
         {/* Mobile Decorative Warm Peach Overlapping Circles (contained locally to prevent horizontal overflow) */}
         <div className="md:hidden absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[72px] right-[-24px] w-[240px] h-[240px] rounded-full border border-[#FF5E1E]/[0.11] bg-[#FF5E1E]/[0.025] flex items-center justify-center">
-            <div className="w-[186px] h-[186px] rounded-full bg-[#FF5E1E]/[0.05]" />
+          <div className="absolute top-[72px] right-[-24px] w-[240px] h-[240px] rounded-full border border-[#ff6900]/[0.11] bg-[#ff6900]/[0.025] flex items-center justify-center">
+            <div className="w-[186px] h-[186px] rounded-full bg-[#ff6900]/[0.05]" />
           </div>
-          <div className="absolute top-[96px] right-[38px] w-[175px] h-[175px] rounded-full bg-[#FF5E1E]/[0.035]" />
+          <div className="absolute top-[96px] right-[38px] w-[175px] h-[175px] rounded-full bg-[#ff6900]/[0.035]" />
         </div>
 
         {/* Responsive Content Wrapper: Single-column on mobile, 2-column grid on tablet, absolute canvas on desktop */}
@@ -240,7 +240,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                   initial={{ scale: 0, opacity: 0 }}
                   animate={isEntered ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
                   transition={{ duration: 0.25, ease: 'easeOut' }}
-                  className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-[#FF5E1E] mt-[2px] shrink-0"
+                  className="w-2 h-2 lg:w-2.5 lg:h-2.5 rounded-full bg-[#ff6900] mt-[2px] shrink-0"
                 />
                 <motion.div
                   initial={{ opacity: 0, y: 7 }}
@@ -294,7 +294,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     initial={{ opacity: 0, y: 26 }}
                     animate={isEntered ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
                     transition={{ duration: 0.5, ease: [0.215, 0.61, 0.355, 1], delay: 0.58 }}
-                    className="font-bold text-[26px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#FF5E1E] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] inline-flex items-baseline"
+                    className="font-bold text-[26px] xs:text-[32px] sm:text-[38px] lg:text-[50px] xl:text-[58px] text-[#ff6900] leading-[0.92] lg:leading-[0.92] tracking-[-0.025em] inline-flex items-baseline"
                   >
                     Lives
                     <motion.span
@@ -330,13 +330,13 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                 aria-label="Play Our Story Video"
                 className="group flex items-center gap-3 cursor-pointer focus:outline-none"
               >
-                <div className="w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] xl:w-[46px] xl:h-[46px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-110 group-hover:bg-[#FF5E1E] transition-all duration-300 shrink-0">
+                <div className="w-[34px] h-[34px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] xl:w-[46px] xl:h-[46px] rounded-full bg-[#0A1118] text-white flex items-center justify-center shadow-md group-hover:scale-110 group-hover:bg-[#ff6900] transition-all duration-300 shrink-0">
                   <Play size={12} className="fill-white translate-x-[1px] group-hover:translate-x-[3px] text-white transition-transform duration-300" />
                 </div>
-                <span className="whitespace-nowrap font-manrope font-semibold text-[10px] sm:text-[10px] lg:text-[10.5px] xl:text-[11px] uppercase tracking-[0.22em] text-[#0A1118] group-hover:text-[#FF5E1E] transition-colors">
+                <span className="whitespace-nowrap font-manrope font-semibold text-[10px] sm:text-[10px] lg:text-[10.5px] xl:text-[11px] uppercase tracking-[0.22em] text-[#0A1118] group-hover:text-[#ff6900] transition-colors">
                   OUR STORY
                 </span>
-                <div className="w-10 sm:w-10 lg:w-12 xl:w-14 h-[1.5px] bg-[#0A1118]/30 lg:bg-[#0A1118]/25 transition-all duration-300 group-hover:w-14 sm:group-hover:w-16 group-hover:bg-[#FF5E1E]" />
+                <div className="w-10 sm:w-10 lg:w-12 xl:w-14 h-[1.5px] bg-[#0A1118]/30 lg:bg-[#0A1118]/25 transition-all duration-300 group-hover:w-14 sm:group-hover:w-16 group-hover:bg-[#ff6900]" />
               </motion.button>
             </div>
           </div>
@@ -380,7 +380,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                       TOMORROW <br />
                       FOR EVERYONE
                     </span>
-                    <div className="w-4 h-[2px] bg-[#FF5E1E] mt-1.5 rounded-full sm:hidden" />
+                    <div className="w-4 h-[2px] bg-[#ff6900] mt-1.5 rounded-full sm:hidden" />
                   </motion.div>
                 </motion.div>
               </div>
@@ -416,7 +416,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     animate={isEntered ? { scaleX: 1 } : { scaleX: 0 }}
                     transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1], delay: 0.4 + 4 * 0.11 + 0.05 }}
                     style={{ transformOrigin: 'left' }}
-                    className="w-5 sm:w-5 h-[2px] sm:h-[1.5px] bg-[#FF5E1E] mt-1 sm:mt-1 rounded-full origin-left"
+                    className="w-5 sm:w-5 h-[2px] sm:h-[1.5px] bg-[#ff6900] mt-1 sm:mt-1 rounded-full origin-left"
                   />
                 </div>
               </div>
@@ -453,7 +453,7 @@ export const AboutSectionOverlay: React.FC<AboutSectionOverlayProps> = ({
                     className="absolute bottom-2 left-3 sm:bottom-2 sm:left-3.5 lg:bottom-2.5 lg:left-4 pointer-events-none z-20"
                   >
                     <span className="font-manrope font-bold sm:font-semibold text-[8.5px] xs:text-[9px] sm:text-[8px] lg:text-[9px] xl:text-[10px] tracking-[0.22em] sm:tracking-[0.24em] text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
-                      02 <span className="text-[#FF5E1E] sm:text-white">―</span>
+                      02 <span className="text-[#ff6900] sm:text-white">―</span>
                     </span>
                   </motion.div>
                   <motion.div

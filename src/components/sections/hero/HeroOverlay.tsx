@@ -60,7 +60,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               initialDelay={300}
               animateBy="words"
               direction="top"
-              className="block text-[#FF5E1E] drop-shadow-[0_4px_24px_rgba(255,94,30,0.25)]"
+              className="block text-[#ff6900] drop-shadow-[0_4px_24px_rgba(255,105,0,0.25)]"
             />
           </h1>
 
@@ -92,7 +92,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 delay: 1.12,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-2.5 sm:py-3 md:py-3 lg:py-4 rounded-full bg-[#FF5E1E] hover:bg-[#FF7033] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,94,30,0.35)] hover:shadow-[0_8px_30px_rgba(255,94,30,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
+              className="flex-1 sm:flex-initial px-4 xs:px-5 md:px-4 lg:px-7 py-2.5 sm:py-3 md:py-3 lg:py-4 rounded-full bg-[#ff6900] hover:bg-[#ff7a1a] text-white text-xs xs:text-[13px] md:text-xs lg:text-sm font-bold shadow-[0_6px_24px_rgba(255,105,0,0.35)] hover:shadow-[0_8px_30px_rgba(255,105,0,0.55)] flex items-center justify-center gap-1.5 sm:gap-2 lg:gap-2.5 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
             >
               <span>Discover Iron Lung</span>
               <ArrowRight size={14} className="sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4" />
@@ -142,14 +142,14 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
                 <path
                   d="M6.5 9.2H14.8C16.1 9.2 17.1 8.2 17.1 6.9C17.1 5.6 16.1 4.6 14.8 4.6C13.6 4.6 12.7 5.4 12.5 6.5"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.9"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d="M6.5 14.8H14.8C16.1 14.8 17.1 15.8 17.1 17.1C17.1 18.4 16.1 19.4 14.8 19.4C13.6 19.4 12.7 18.6 12.5 17.5"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.9"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -173,7 +173,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
                 Cleaner
               </span>
-              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
+              <span className="text-xs font-black tracking-wider text-[#ff6900] uppercase leading-tight">
                 Air
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
@@ -202,14 +202,14 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                 <path d="M17.4 18.5V8.2" stroke="#0F172A" strokeWidth="2" strokeLinecap="round" />
                 <path
                   d="M6.2 12.6C9.8 11.6 13.2 9.1 16.2 4.8"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.9"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
                   d="M13.2 4.8H16.3V7.9"
-                  stroke="#FF5E1E"
+                  stroke="#ff6900"
                   strokeWidth="1.9"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -220,7 +220,7 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
               <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
                 Higher
               </span>
-              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
+              <span className="text-xs font-black tracking-wider text-[#ff6900] uppercase leading-tight">
                 Performance
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
@@ -250,15 +250,15 @@ export const HeroOverlay: React.FC<HeroOverlayProps> = ({
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <path d="M17.6 5.9V10.9" stroke="#FF5E1E" strokeWidth="1.9" strokeLinecap="round" />
-                <path d="M15.1 8.4H20.1" stroke="#FF5E1E" strokeWidth="1.9" strokeLinecap="round" />
+                <path d="M17.6 5.9V10.9" stroke="#ff6900" strokeWidth="1.9" strokeLinecap="round" />
+                <path d="M15.1 8.4H20.1" stroke="#ff6900" strokeWidth="1.9" strokeLinecap="round" />
               </svg>
             </div>
             <div className="flex flex-col">
               <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase leading-tight">
                 Healthier
               </span>
-              <span className="text-xs font-black tracking-wider text-[#FF5E1E] uppercase leading-tight">
+              <span className="text-xs font-black tracking-wider text-[#ff6900] uppercase leading-tight">
                 Lives
               </span>
               <span className="text-[10px] text-slate-500 font-medium mt-0.5">

@@ -62,7 +62,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               <a
                 href="mailto:info@ironlung.in"
                 onClick={onEmailClick}
-                className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-3.5 bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98] select-none"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-10 py-3.5 bg-[#ff6900] hover:bg-[#ff7a1a] text-white font-bold text-sm tracking-wider uppercase transition-all duration-200 cursor-pointer shadow-md hover:shadow-lg active:scale-[0.98] select-none"
               >
                 <span>EMAIL ME</span>
               </a>
@@ -84,7 +84,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-serif font-normal tracking-wide text-[#FF5500] uppercase select-none">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[46px] font-serif font-normal tracking-wide text-[#ff6900] uppercase select-none">
                 OUR TEAM
               </h2>
               <div className="mt-4 sm:mt-5 border-b border-neutral-900/40 w-full" />
@@ -126,7 +126,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="text-[#FF5500] hover:text-[#E04B00] hover:scale-115 active:scale-95 transition-all duration-200"
+              className="text-[#ff6900] hover:text-[#ff7a1a] hover:scale-115 active:scale-95 transition-all duration-200"
             >
               <Instagram className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
             </a>
@@ -135,7 +135,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
-              className="text-[#FF5500] hover:text-[#E04B00] hover:scale-115 active:scale-95 transition-all duration-200"
+              className="text-[#ff6900] hover:text-[#ff7a1a] hover:scale-115 active:scale-95 transition-all duration-200"
             >
               <Twitter className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
             </a>
@@ -144,7 +144,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              className="text-[#FF5500] hover:text-[#E04B00] hover:scale-115 active:scale-95 transition-all duration-200"
+              className="text-[#ff6900] hover:text-[#ff7a1a] hover:scale-115 active:scale-95 transition-all duration-200"
             >
               <Facebook className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
             </a>
@@ -153,7 +153,7 @@ export const AboutTeamSection: React.FC<AboutTeamSectionProps> = ({ onEmailClick
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="text-[#FF5500] hover:text-[#E04B00] hover:scale-115 active:scale-95 transition-all duration-200"
+              className="text-[#ff6900] hover:text-[#ff7a1a] hover:scale-115 active:scale-95 transition-all duration-200"
             >
               <Linkedin className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
             </a>

@@ -55,7 +55,7 @@ const MentorCard: React.FC<{ member: Mentor }> = ({ member }) => {
       <div
         className="pointer-events-none absolute inset-0 w-0 h-full rounded-[24px]
                    shadow-[inset_0_0_25px_rgba(0,0,0,0.30)]
-                   bg-gradient-to-r from-[#fe8c00] to-[#f83600]
+                   bg-gradient-to-r from-[#ff7a1a] to-[#ff6900]
                    transition-all duration-300 group-hover/card:w-full"
         aria-hidden
       />
@@ -91,7 +91,7 @@ const MentorCard: React.FC<{ member: Mentor }> = ({ member }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${member.name} on Facebook`}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-gradient-to-r from-[#fe8c00] to-[#f83600] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-[#ff6900] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
                 >
                   <FaFacebookF />
                 </a>
@@ -104,7 +104,7 @@ const MentorCard: React.FC<{ member: Mentor }> = ({ member }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${member.name} on Instagram`}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-gradient-to-r from-[#fe8c00] to-[#f83600] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-[#ff6900] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
                 >
                   <FaInstagram />
                 </a>
@@ -117,7 +117,7 @@ const MentorCard: React.FC<{ member: Mentor }> = ({ member }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${member.name} on LinkedIn`}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-gradient-to-r from-[#fe8c00] to-[#f83600] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-white transition-all duration-300 bg-[#ff6900] group-hover/card:bg-white group-hover/card:text-black group-hover/card:[background-image:none] hover:!bg-[#1d1d1d] hover:!text-white"
                 >
                   <FaLinkedin />
                 </a>

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const TechnologyWhatsAppReportSection: React.FC = () => {
   return (
-    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#FF5500]/20 overflow-hidden">
+    <section className="w-full bg-[#fcfaf7] text-neutral-900 py-12 sm:py-16 md:py-20 lg:py-24 selection:bg-[#ff6900]/20 overflow-hidden">
       <div className="w-[92%] sm:w-[94%] max-w-[1360px] mx-auto">
         
         {/* ===================================================================== */}
@@ -42,7 +42,7 @@ export const TechnologyWhatsAppReportSection: React.FC = () => {
             <h2 className="text-[32px] xs:text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[72px] 2xl:text-[80px] font-black font-sans tracking-[-0.035em] leading-[1.02] text-right select-none">
               <span className="block">
                 <span className="text-black">Your </span>
-                <span className="text-[#FF5500]">Progress</span>
+                <span className="text-[#ff6900]">Progress</span>
               </span>
               <span className="block text-black mt-1 sm:mt-1.5 md:mt-2">
                 Right on
@@ -80,7 +80,7 @@ export const TechnologyWhatsAppReportSection: React.FC = () => {
             <h2 className="text-[34px] xs:text-4xl sm:text-5xl font-black font-sans tracking-[-0.035em] leading-[1.04] text-center select-none">
               <span className="block">
                 <span className="text-black">Your </span>
-                <span className="text-[#FF5500]">Progress</span>
+                <span className="text-[#ff6900]">Progress</span>
               </span>
               <span className="block mt-1 sm:mt-1.5 text-black">
                 Right on <span className="text-[#14A536]">WhatsApp</span>

@@ -38,7 +38,7 @@ interface StatProps {
 
 const Stat: React.FC<StatProps> = ({ value, label }) => (
   <div className="flex flex-col">
-    <span className="text-base sm:text-lg md:text-xl font-bold tracking-tight text-orange-600 uppercase leading-snug">
+    <span className="text-base sm:text-lg md:text-xl font-bold tracking-tight text-[#ff6900] uppercase leading-snug">
       {value}
     </span>
     <span className="text-xs md:text-sm text-neutral-500 font-medium mt-1">{label}</span>
@@ -57,8 +57,8 @@ export const AboutWhoWeAre: React.FC<AboutWhoWeAreProps> = ({ onContactUs }) => 
           transition={{ duration: 0.6 }}
           className="mb-8 md:mb-12"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-medium text-orange-700 shadow-sm">
-            <span className="inline-block h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-medium text-[#ff6900] shadow-sm">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#ff6900] animate-pulse" />
             {ABOUT_DATA.title}
           </div>
           <h2 className="text-3xl md:text-[48px] font-semibold leading-tight text-neutral-900 mt-3">
@@ -93,7 +93,7 @@ export const AboutWhoWeAre: React.FC<AboutWhoWeAreProps> = ({ onContactUs }) => 
                     onContactUs();
                   }
                 }}
-                className="inline-flex items-center justify-center rounded-2xl border border-orange-200 bg-orange-600 px-6 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 cursor-pointer"
+                className="inline-flex items-center justify-center rounded-2xl bg-[#ff6900] hover:bg-[#ff7a1a] px-6 py-3 text-sm font-bold text-white shadow-md shadow-[#ff6900]/25 transition active:scale-[0.98] cursor-pointer"
               >
                 Contact Us
               </a>

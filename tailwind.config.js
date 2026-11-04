@@ -26,9 +26,9 @@ export default {
           border: 'rgba(255, 255, 255, 0.1)',
         },
         brand: {
-          orange: '#FF5E1E',
-          'orange-hover': '#FF7033',
-          'orange-glow': 'rgba(255, 94, 30, 0.45)',
+          orange: '#ff6900',
+          'orange-hover': '#ff7a1a',
+          'orange-glow': 'rgba(255, 105, 0, 0.45)',
           cyan: '#00D2FF',
           'cyan-glow': 'rgba(0, 210, 255, 0.3)',
         },
@@ -79,7 +79,7 @@ export default {
         swis: ['"Swis721 BlkCn BT"', 'sans-serif'],
       },
       boxShadow: {
-        'orange-glow': '0 0 25px rgba(255, 94, 30, 0.45)',
+        'orange-glow': '0 0 25px rgba(255, 105, 0, 0.45)',
         'cyan-glow': '0 0 20px rgba(0, 210, 255, 0.35)',
         'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
         'card-glow': '0 0 16px 0 rgba(255, 105, 0, 0.12)',
